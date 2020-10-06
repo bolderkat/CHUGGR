@@ -16,6 +16,10 @@
 		656D9466252BF60100EDEB7F /* CHUGGRTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D9465252BF60100EDEB7F /* CHUGGRTests.swift */; };
 		656D9471252BF60100EDEB7F /* CHUGGRUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D9470252BF60100EDEB7F /* CHUGGRUITests.swift */; };
 		656D9482252BF6E200EDEB7F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 656D9481252BF6E100EDEB7F /* GoogleService-Info.plist */; };
+		65C50E09252D1BDF00A786A8 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */; };
+		65C50E0E252D1C0200A786A8 /* NewBetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C50E0D252D1C0200A786A8 /* NewBetViewController.swift */; };
+		65C50E13252D1C2700A786A8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C50E12252D1C2700A786A8 /* ProfileViewController.swift */; };
+		65C50E18252D1C9900A786A8 /* VideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C50E17252D1C9900A786A8 /* VideosViewController.swift */; };
 		65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D34C1F252CF494005C6F98 /* BetsViewController.swift */; };
 		E95618B520BB3301EB30C468 /* Pods_CHUGGR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */; };
 /* End PBXBuildFile section */
@@ -54,6 +58,10 @@
 		656D9470252BF60100EDEB7F /* CHUGGRUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHUGGRUITests.swift; sourceTree = "<group>"; };
 		656D9472252BF60100EDEB7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		656D9481252BF6E100EDEB7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
+		65C50E0D252D1C0200A786A8 /* NewBetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetViewController.swift; sourceTree = "<group>"; };
+		65C50E12252D1C2700A786A8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		65C50E17252D1C9900A786A8 /* VideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosViewController.swift; sourceTree = "<group>"; };
 		65D34C1F252CF494005C6F98 /* BetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsViewController.swift; sourceTree = "<group>"; };
 		B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CHUGGR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED0637931D156551F497E941 /* Pods-CHUGGR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHUGGR.debug.xcconfig"; path = "Target Support Files/Pods-CHUGGR/Pods-CHUGGR.debug.xcconfig"; sourceTree = "<group>"; };
@@ -161,6 +169,10 @@
 			children = (
 				656D944F252BF5FE00EDEB7F /* WelcomeViewController.swift */,
 				65D34C1F252CF494005C6F98 /* BetsViewController.swift */,
+				65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */,
+				65C50E0D252D1C0200A786A8 /* NewBetViewController.swift */,
+				65C50E17252D1C9900A786A8 /* VideosViewController.swift */,
+				65C50E12252D1C2700A786A8 /* ProfileViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -376,8 +388,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */,
+				65C50E09252D1BDF00A786A8 /* FriendsViewController.swift in Sources */,
 				656D9450252BF5FE00EDEB7F /* WelcomeViewController.swift in Sources */,
+				65C50E0E252D1C0200A786A8 /* NewBetViewController.swift in Sources */,
+				65C50E13252D1C2700A786A8 /* ProfileViewController.swift in Sources */,
 				656D944C252BF5FE00EDEB7F /* AppDelegate.swift in Sources */,
+				65C50E18252D1C9900A786A8 /* VideosViewController.swift in Sources */,
 				656D944E252BF5FE00EDEB7F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,5 +1,5 @@
 //
-//  BetsViewController.swift
+//  FriendsViewController.swift
 //  CHUGGR
 //
 //  Created by Daniel Edward Luo on 10/6/20.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-class BetsViewController: UITableViewController {
+class FriendsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Bets"
+        title = "Friends"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -19,12 +19,11 @@ class BetsViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 3
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

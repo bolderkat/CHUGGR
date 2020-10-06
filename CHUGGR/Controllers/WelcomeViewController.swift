@@ -13,7 +13,11 @@ class WelcomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
     }
 
     @IBAction func getStartedPressed(_ sender: UIButton) {
@@ -30,6 +34,8 @@ class WelcomeViewController: UIViewController {
         present(authViewController, animated: true, completion: nil)
     }
 
+    @IBAction func unwindToWelcomeViewController(unwindSegue: UIStoryboardSegue) {}
+
 }
 
 extension WelcomeViewController: FUIAuthDelegate {
@@ -38,7 +44,7 @@ extension WelcomeViewController: FUIAuthDelegate {
             print(String(describing: error))
             return
         }
-        performSegue(withIdentifier: "welcomeToBets", sender: self)
+        performSegue(withIdentifier: "welcomeToTabs", sender: self)
     }
 }
 
