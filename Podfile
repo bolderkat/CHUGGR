@@ -5,6 +5,8 @@ target 'CHUGGR' do
   use_frameworks!
 
   # Pods for CHUGGR
+  pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'FirebaseUI', '~> 8.0'
 end
