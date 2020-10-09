@@ -14,8 +14,10 @@ struct K {
     }
     struct colors {
         static let alabaster = "Alabaster"
-        static let orange = "CHUGGR Orange"
+        static let burntUmber = "Burnt Umber"
         static let lightBlue = "Light Blue"
         static let midBlue = "Mid Blue"
+        static let midGray = "Mid Gray"
+        static let orange = "CHUGGR Orange"
     }
 }

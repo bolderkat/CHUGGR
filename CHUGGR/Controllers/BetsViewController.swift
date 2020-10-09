@@ -54,6 +54,28 @@ class BetsViewController: UIViewController {
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .semibold)
         ]
+
+        // Tab bar appearance customization
+        if let tabBar = tabBarController?.tabBar {
+            // Make center item background blue
+            let itemIndex = 2
+            let bgColor = UIColor(named: K.colors.orange)
+            let itemWidth = tabBar.frame.width / CGFloat(tabBar.items!.count)
+            let bgView = UIView(frame: CGRect(x: itemWidth * CGFloat(itemIndex),
+                                              y: 0,
+                                              width: itemWidth,
+                                              height: tabBar.frame.height))
+            bgView.backgroundColor = bgColor
+            tabBar.insertSubview(bgView, at: 0)
+
+            // Other tab bar changes
+            tabBar.unselectedItemTintColor = UIColor.white
+            tabBar.tintColor = UIColor(named: K.colors.midBlue)
+            tabBar.barTintColor = UIColor(named: K.colors.midGray)
+        }
+
+
+
     }
 
 
