@@ -8,9 +8,10 @@
 import Foundation
 
 struct K {
-    struct identifiers {
+    struct cells {
         static let betCell = "BetCell"
         static let betsPendingCell = "BetsPendingCell"
+        static let messageCell = "MessageCell"
     }
     struct colors {
         static let alabaster = "Alabaster"
@@ -19,5 +20,8 @@ struct K {
         static let midBlue = "Mid Blue"
         static let midGray = "Mid Gray"
         static let orange = "CHUGGR Orange"
+    }
+    struct segues{
+        static let betsToDetail = "BetsToDetail"
     }
 }

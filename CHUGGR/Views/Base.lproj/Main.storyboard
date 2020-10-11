@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -216,11 +217,114 @@
                         <outlet property="betsTable" destination="9Fr-N7-dcT" id="2Ag-fh-6Ue"/>
                         <outlet property="pendingBetsLabel" destination="Eaw-cF-Iin" id="Gke-bE-JtL"/>
                         <outlet property="pendingCurrencyLabel" destination="acG-m3-Diu" id="jQx-Xr-OEK"/>
+                        <segue destination="0Wg-Ld-4uy" kind="show" identifier="BetsToDetail" id="4fw-yg-NBD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gim-38-hMr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2180" y="-1047.0443349753696"/>
+        </scene>
+        <!--Bets Detail View Controller-->
+        <scene sceneID="oWJ-YG-1Xo">
+            <objects>
+                <viewController id="0Wg-Ld-4uy" customClass="BetsDetailViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mUM-Gp-TWG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yy3-ze-gNb">
+                                <rect key="frame" x="0.0" y="88" width="414" height="369.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7O-3h-gYM">
+                                        <rect key="frame" x="177.5" y="35" width="59" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="CHUGGR Orange"/>
+                                <constraints>
+                                    <constraint firstItem="x7O-3h-gYM" firstAttribute="top" secondItem="yy3-ze-gNb" secondAttribute="top" constant="35" id="H0E-u4-9Dv"/>
+                                    <constraint firstItem="x7O-3h-gYM" firstAttribute="centerX" secondItem="yy3-ze-gNb" secondAttribute="centerX" id="nHI-cH-QSa"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6tE-Nd-95d">
+                                <rect key="frame" x="0.0" y="753" width="414" height="60"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="h5w-9o-pwO">
+                                        <rect key="frame" x="20" y="10" width="374" height="40"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter trash talk..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1AD-O6-p0B">
+                                                <rect key="frame" x="0.0" y="0.0" width="314" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="nzJ-Gc-TNp"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCd-Wf-ZSs">
+                                                <rect key="frame" x="334" y="0.0" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="5i0-do-dnU"/>
+                                                    <constraint firstAttribute="width" constant="40" id="Wbh-fZ-vGj"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" name="Alabaster"/>
+                                                    <imageReference key="image" image="paperplane.circle.fill" catalog="system" symbolScale="large"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="sendPressed:" destination="0Wg-Ld-4uy" eventType="touchUpInside" id="ijW-cA-1jO"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="xCd-Wf-ZSs" secondAttribute="trailing" id="RZn-bL-lJ0"/>
+                                            <constraint firstItem="1AD-O6-p0B" firstAttribute="leading" secondItem="h5w-9o-pwO" secondAttribute="leading" id="WHd-6d-f48"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" name="Burnt Umber"/>
+                                <constraints>
+                                    <constraint firstItem="h5w-9o-pwO" firstAttribute="centerY" secondItem="6tE-Nd-95d" secondAttribute="centerY" id="Q52-YR-jWu"/>
+                                    <constraint firstAttribute="trailing" secondItem="h5w-9o-pwO" secondAttribute="trailing" constant="20" id="dCl-40-S1b"/>
+                                    <constraint firstItem="h5w-9o-pwO" firstAttribute="leading" secondItem="6tE-Nd-95d" secondAttribute="leading" constant="20" id="lRr-P4-YjT"/>
+                                    <constraint firstAttribute="height" constant="60" id="pBP-o2-DT3"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="m7K-kg-6rF">
+                                <rect key="frame" x="0.0" y="457.5" width="414" height="295.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="PK0-Nd-aem"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6tE-Nd-95d" firstAttribute="leading" secondItem="PK0-Nd-aem" secondAttribute="leading" id="CJd-VR-843"/>
+                            <constraint firstItem="yy3-ze-gNb" firstAttribute="top" secondItem="PK0-Nd-aem" secondAttribute="top" id="JlL-LZ-NOz"/>
+                            <constraint firstItem="6tE-Nd-95d" firstAttribute="top" secondItem="m7K-kg-6rF" secondAttribute="bottom" id="KCR-Z6-cK5"/>
+                            <constraint firstItem="m7K-kg-6rF" firstAttribute="leading" secondItem="PK0-Nd-aem" secondAttribute="leading" id="Kr1-zg-zMN"/>
+                            <constraint firstItem="yy3-ze-gNb" firstAttribute="leading" secondItem="PK0-Nd-aem" secondAttribute="leading" id="L8a-L8-9cR"/>
+                            <constraint firstItem="6tE-Nd-95d" firstAttribute="trailing" secondItem="PK0-Nd-aem" secondAttribute="trailing" id="N81-d6-fVN"/>
+                            <constraint firstItem="m7K-kg-6rF" firstAttribute="trailing" secondItem="PK0-Nd-aem" secondAttribute="trailing" id="RhN-0Q-BmO"/>
+                            <constraint firstItem="m7K-kg-6rF" firstAttribute="height" secondItem="yy3-ze-gNb" secondAttribute="height" multiplier="0.8" id="U3e-8A-OLv"/>
+                            <constraint firstItem="m7K-kg-6rF" firstAttribute="top" secondItem="yy3-ze-gNb" secondAttribute="bottom" id="fT2-3Z-9rH"/>
+                            <constraint firstItem="6tE-Nd-95d" firstAttribute="bottom" secondItem="PK0-Nd-aem" secondAttribute="bottom" id="uG4-vU-iSa"/>
+                            <constraint firstItem="yy3-ze-gNb" firstAttribute="trailing" secondItem="PK0-Nd-aem" secondAttribute="trailing" id="wng-dI-KF5"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ll9-bR-2DV"/>
+                    <connections>
+                        <outlet property="betDescription" destination="x7O-3h-gYM" id="mA2-4M-OdB"/>
+                        <outlet property="messageTableView" destination="m7K-kg-6rF" id="04d-2r-CpK"/>
+                        <outlet property="textField" destination="1AD-O6-p0B" id="DX3-Jq-jGs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A9N-So-LBQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2962.3188405797105" y="-1047.3214285714284"/>
         </scene>
         <!--Friends-->
         <scene sceneID="uS4-gA-ZV0">
@@ -402,12 +506,16 @@
     <resources>
         <image name="WhiteDisclosureIndicator" width="9" height="14.5"/>
         <image name="exclamationmark.bubble.fill" catalog="system" width="128" height="110"/>
+        <image name="paperplane.circle.fill" catalog="system" width="128" height="121"/>
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <image name="person.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
         <image name="video.fill" catalog="system" width="128" height="82"/>
         <namedColor name="Alabaster">
             <color red="0.8784313725490196" green="0.88627450980392153" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Burnt Umber">
+            <color red="0.59607843137254901" green="0.21176470588235294" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="CHUGGR Orange">
             <color red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

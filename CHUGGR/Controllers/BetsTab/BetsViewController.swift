@@ -13,23 +13,11 @@ class BetsViewController: UIViewController {
     @IBOutlet weak var pendingBetsLabel: UILabel!
     @IBOutlet weak var pendingCurrencyLabel: UILabel!
 
-    // MARK:- data for testing
-    let pending = ["3 New Bets Pending!", "4 🍺"]
-    let bets: [Bet] = [
-        Bet(name: "David", betDescription: "OVER Alex Caruso points: 6", currency: "1 🍺", result: "IN PLAY"),
-        Bet(name: "Torrance", betDescription: "Packers LOSE vs Seahawks", currency: "2 🍺", result: "WON")
-    ]
-
-    let otherBets: [Bet] = [
-        Bet(name: "Derek vs. Micekey", betDescription: "Packers LOSE vs Seahawks", currency: "1 🍺", result: "DEREK WON"),
-        Bet(name: "2 people vs. 2 people", betDescription: "A's win ALCS", currency: "1 🍺 1 🥃", result: "IN PLAY"),
-        Bet(name: "Torrance", betDescription: "UCLA gets accredited", currency: "6 🍺 9 🥃", result: "LOST"),
-        Bet(name: "Cheung vs. Linkous", betDescription: "EPL plays full season", currency: "1 🍺 1 🥃", result: "IN PLAY")
-    ]
+   let sampleData = SampleData()
 
     var tableSections: [BetsTableSection] { [
-        BetsTableSection(title: "My Bets", cells: bets),
-        BetsTableSection(title: "Other Bets", cells: otherBets)
+        BetsTableSection(title: "My Bets", cells: sampleData.bets),
+        BetsTableSection(title: "Other Bets", cells: sampleData.otherBets)
     ]
     }
 
@@ -42,12 +30,12 @@ class BetsViewController: UIViewController {
         title = "Bets"
         betsTable.dataSource = self
         betsTable.delegate = self
-        betsTable.register(UINib(nibName: K.identifiers.betCell, bundle: nil),
-                           forCellReuseIdentifier: K.identifiers.betCell)
+        betsTable.register(UINib(nibName: K.cells.betCell, bundle: nil),
+                           forCellReuseIdentifier: K.cells.betCell)
         betsTable.rowHeight = 55.0
 
-        pendingBetsLabel.text = pending[0]
-        pendingCurrencyLabel.text = pending[1]
+        pendingBetsLabel.text = sampleData.pending[0]
+        pendingCurrencyLabel.text = sampleData.pending[1]
 
         navigationController?.navigationBar.barTintColor = UIColor(named: K.colors.orange)
         navigationController?.navigationBar.titleTextAttributes = [
@@ -55,7 +43,9 @@ class BetsViewController: UIViewController {
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .semibold)
         ]
 
-        // Tab bar appearance customization
+    }
+
+    func configureTabBar() {
         if let tabBar = tabBarController?.tabBar {
             // Make center item background blue
             let itemIndex = 2
@@ -73,11 +63,7 @@ class BetsViewController: UIViewController {
             tabBar.tintColor = UIColor(named: K.colors.midBlue)
             tabBar.barTintColor = UIColor(named: K.colors.midGray)
         }
-
-
-
     }
-
 
 
 
@@ -86,8 +72,12 @@ class BetsViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == K.segues.betsToDetail {
+            let destinationVC = segue.destination as! BetsDetailViewController
+            if let indexPath = betsTable.indexPathForSelectedRow {
+                destinationVC.selectedBet = tableSections[indexPath.section].cells[indexPath.row]
+            }
+        }
     }
 }
 
@@ -107,12 +97,14 @@ extension BetsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.identifiers.betCell, for: indexPath) as! BetCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.betCell, for: indexPath) as! BetCell
         cell.bet = tableSections[indexPath.section].cells[indexPath.row]
         return cell
     }
 
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: K.segues.betsToDetail, sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

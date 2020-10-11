@@ -16,6 +16,9 @@
 		656D9466252BF60100EDEB7F /* CHUGGRTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D9465252BF60100EDEB7F /* CHUGGRTests.swift */; };
 		656D9471252BF60100EDEB7F /* CHUGGRUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D9470252BF60100EDEB7F /* CHUGGRUITests.swift */; };
 		656D9482252BF6E200EDEB7F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 656D9481252BF6E100EDEB7F /* GoogleService-Info.plist */; };
+		658F11262532747F003B6303 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F11242532747F003B6303 /* MessageCell.swift */; };
+		658F11272532747F003B6303 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658F11252532747F003B6303 /* MessageCell.xib */; };
+		658F112F25327B2C003B6303 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F112E25327B2C003B6303 /* Message.swift */; };
 		659DCB6D252E9A57009D330E /* BetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659DCB6B252E9A57009D330E /* BetCell.swift */; };
 		659DCB6E252E9A57009D330E /* BetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 659DCB6C252E9A57009D330E /* BetCell.xib */; };
 		659DCB76252E9AD3009D330E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659DCB75252E9AD3009D330E /* Constants.swift */; };
@@ -26,6 +29,8 @@
 		65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D34C1F252CF494005C6F98 /* BetsViewController.swift */; };
 		65F4029B252EA103007892F8 /* Bet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F4029A252EA103007892F8 /* Bet.swift */; };
 		65FBCBA3252F9B6200227121 /* BetsTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FBCBA2252F9B6200227121 /* BetsTableSection.swift */; };
+		65FBCBBB2532542A00227121 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FBCBBA2532542A00227121 /* SampleData.swift */; };
+		65FBCBC1253257CE00227121 /* BetsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FBCBC0253257CE00227121 /* BetsDetailViewController.swift */; };
 		E95618B520BB3301EB30C468 /* Pods_CHUGGR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +68,9 @@
 		656D9470252BF60100EDEB7F /* CHUGGRUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHUGGRUITests.swift; sourceTree = "<group>"; };
 		656D9472252BF60100EDEB7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		656D9481252BF6E100EDEB7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		658F11242532747F003B6303 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		658F11252532747F003B6303 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
+		658F112E25327B2C003B6303 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		659DCB6B252E9A57009D330E /* BetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetCell.swift; sourceTree = "<group>"; };
 		659DCB6C252E9A57009D330E /* BetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetCell.xib; sourceTree = "<group>"; };
 		659DCB75252E9AD3009D330E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -73,6 +81,8 @@
 		65D34C1F252CF494005C6F98 /* BetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsViewController.swift; sourceTree = "<group>"; };
 		65F4029A252EA103007892F8 /* Bet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bet.swift; sourceTree = "<group>"; };
 		65FBCBA2252F9B6200227121 /* BetsTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsTableSection.swift; sourceTree = "<group>"; };
+		65FBCBBA2532542A00227121 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		65FBCBC0253257CE00227121 /* BetsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsDetailViewController.swift; sourceTree = "<group>"; };
 		B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CHUGGR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED0637931D156551F497E941 /* Pods-CHUGGR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHUGGR.debug.xcconfig"; path = "Target Support Files/Pods-CHUGGR/Pods-CHUGGR.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,6 +138,7 @@
 		656D944A252BF5FE00EDEB7F /* CHUGGR */ = {
 			isa = PBXGroup;
 			children = (
+				659DCB75252E9AD3009D330E /* Constants.swift */,
 				65D34C1D252CF434005C6F98 /* Models */,
 				65D34C1C252CF428005C6F98 /* Views */,
 				65D34C1E252CF439005C6F98 /* Controllers */,
@@ -136,7 +147,6 @@
 				656D9457252BF60100EDEB7F /* Assets.xcassets */,
 				656D945C252BF60100EDEB7F /* Info.plist */,
 				656D9481252BF6E100EDEB7F /* GoogleService-Info.plist */,
-				659DCB75252E9AD3009D330E /* Constants.swift */,
 			);
 			path = CHUGGR;
 			sourceTree = "<group>";
@@ -166,6 +176,8 @@
 				656D9459252BF60100EDEB7F /* LaunchScreen.storyboard */,
 				659DCB6B252E9A57009D330E /* BetCell.swift */,
 				659DCB6C252E9A57009D330E /* BetCell.xib */,
+				658F11242532747F003B6303 /* MessageCell.swift */,
+				658F11252532747F003B6303 /* MessageCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -175,6 +187,8 @@
 			children = (
 				65F4029A252EA103007892F8 /* Bet.swift */,
 				65FBCBA2252F9B6200227121 /* BetsTableSection.swift */,
+				65FBCBBA2532542A00227121 /* SampleData.swift */,
+				658F112E25327B2C003B6303 /* Message.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -182,14 +196,23 @@
 		65D34C1E252CF439005C6F98 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				65FBCBBF253257B400227121 /* BetsTab */,
 				656D944F252BF5FE00EDEB7F /* WelcomeViewController.swift */,
-				65D34C1F252CF494005C6F98 /* BetsViewController.swift */,
 				65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */,
 				65C50E0D252D1C0200A786A8 /* NewBetViewController.swift */,
 				65C50E17252D1C9900A786A8 /* VideosViewController.swift */,
 				65C50E12252D1C2700A786A8 /* ProfileViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		65FBCBBF253257B400227121 /* BetsTab */ = {
+			isa = PBXGroup;
+			children = (
+				65D34C1F252CF494005C6F98 /* BetsViewController.swift */,
+				65FBCBC0253257CE00227121 /* BetsDetailViewController.swift */,
+			);
+			path = BetsTab;
 			sourceTree = "<group>";
 		};
 		C58D1C18B638C9A5FCC532B5 /* Frameworks */ = {
@@ -316,6 +339,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				656D945B252BF60100EDEB7F /* LaunchScreen.storyboard in Resources */,
+				658F11272532747F003B6303 /* MessageCell.xib in Resources */,
 				659DCB6E252E9A57009D330E /* BetCell.xib in Resources */,
 				656D9482252BF6E200EDEB7F /* GoogleService-Info.plist in Resources */,
 				656D9458252BF60100EDEB7F /* Assets.xcassets in Resources */,
@@ -406,13 +430,17 @@
 				65FBCBA3252F9B6200227121 /* BetsTableSection.swift in Sources */,
 				65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */,
 				65C50E09252D1BDF00A786A8 /* FriendsViewController.swift in Sources */,
+				65FBCBC1253257CE00227121 /* BetsDetailViewController.swift in Sources */,
 				656D9450252BF5FE00EDEB7F /* WelcomeViewController.swift in Sources */,
 				65C50E0E252D1C0200A786A8 /* NewBetViewController.swift in Sources */,
 				65C50E13252D1C2700A786A8 /* ProfileViewController.swift in Sources */,
 				659DCB76252E9AD3009D330E /* Constants.swift in Sources */,
+				65FBCBBB2532542A00227121 /* SampleData.swift in Sources */,
 				656D944C252BF5FE00EDEB7F /* AppDelegate.swift in Sources */,
 				65C50E18252D1C9900A786A8 /* VideosViewController.swift in Sources */,
+				658F11262532747F003B6303 /* MessageCell.swift in Sources */,
 				659DCB6D252E9A57009D330E /* BetCell.swift in Sources */,
+				658F112F25327B2C003B6303 /* Message.swift in Sources */,
 				656D944E252BF5FE00EDEB7F /* SceneDelegate.swift in Sources */,
 				65F4029B252EA103007892F8 /* Bet.swift in Sources */,
 			);
