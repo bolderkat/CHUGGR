@@ -9,8 +9,7 @@ import UIKit
 import Firebase
 import FirebaseUI
 
-class WelcomeViewController: UIViewController {
-
+class WelcomeViewController: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -44,7 +43,6 @@ extension WelcomeViewController: FUIAuthDelegate {
             print(String(describing: error))
             return
         }
-        performSegue(withIdentifier: "welcomeToTabs", sender: self)
     }
 }
 
