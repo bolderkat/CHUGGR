@@ -35,6 +35,7 @@
 		65FBCBA3252F9B6200227121 /* BetsTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FBCBA2252F9B6200227121 /* BetsTableSection.swift */; };
 		65FBCBBB2532542A00227121 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FBCBBA2532542A00227121 /* SampleData.swift */; };
 		65FBCBC1253257CE00227121 /* BetsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FBCBC0253257CE00227121 /* BetsDetailViewController.swift */; };
+		65FCE6DF2569BB930066BDC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCE6DE2569BB930066BDC5 /* User.swift */; };
 		E95618B520BB3301EB30C468 /* Pods_CHUGGR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +92,7 @@
 		65FBCBA2252F9B6200227121 /* BetsTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsTableSection.swift; sourceTree = "<group>"; };
 		65FBCBBA2532542A00227121 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		65FBCBC0253257CE00227121 /* BetsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsDetailViewController.swift; sourceTree = "<group>"; };
+		65FCE6DE2569BB930066BDC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CHUGGR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED0637931D156551F497E941 /* Pods-CHUGGR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHUGGR.debug.xcconfig"; path = "Target Support Files/Pods-CHUGGR/Pods-CHUGGR.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,6 +211,7 @@
 				65FBCBA2252F9B6200227121 /* BetsTableSection.swift */,
 				65FBCBBA2532542A00227121 /* SampleData.swift */,
 				658F112E25327B2C003B6303 /* Message.swift */,
+				65FCE6DE2569BB930066BDC5 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				658F112F25327B2C003B6303 /* Message.swift in Sources */,
 				656D944E252BF5FE00EDEB7F /* SceneDelegate.swift in Sources */,
 				65F4029B252EA103007892F8 /* Bet.swift in Sources */,
+				65FCE6DF2569BB930066BDC5 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
