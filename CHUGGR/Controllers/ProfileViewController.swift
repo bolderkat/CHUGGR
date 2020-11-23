@@ -8,8 +8,10 @@
 import UIKit
 import FirebaseAuth
 
-class ProfileViewController: UITableViewController {
+class ProfileViewController: UITableViewController, Storyboarded {
 
+    weak var coordinator: ProfileCoordinator?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Profile"
@@ -28,6 +30,7 @@ class ProfileViewController: UITableViewController {
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
+        // Replace with call to main coordinator to switch back to Welcome VC
         performSegue(withIdentifier: "profileToWelcome", sender: self)
     }
     

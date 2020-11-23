@@ -426,7 +426,7 @@
         <!--Profile View Controller-->
         <scene sceneID="fIM-9i-sgl">
             <objects>
-                <tableViewController id="u43-32-eaz" customClass="ProfileViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ProfileViewController" id="u43-32-eaz" customClass="ProfileViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Zsl-jx-0US">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
