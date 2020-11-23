@@ -14,7 +14,7 @@ class BetCell: UITableViewCell {
     @IBOutlet weak var currency: UILabel!
     @IBOutlet weak var result: UILabel!
 
-    var bet: Bet! {
+    var bet: SampleBet! {
         didSet {
             name.text = bet.name
             betDescription.text = bet.betDescription

@@ -7,8 +7,9 @@
 
 import UIKit
 
-class BetsViewController: UIViewController {
+class BetsViewController: UIViewController, Storyboarded {
 
+    weak var coordinator: BetsCoordinator?
     @IBOutlet weak var betsTable: UITableView!
     @IBOutlet weak var pendingBetsLabel: UILabel!
     @IBOutlet weak var pendingCurrencyLabel: UILabel!

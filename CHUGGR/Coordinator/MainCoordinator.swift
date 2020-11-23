@@ -16,7 +16,15 @@ class MainCoordinator: ParentCoordinating {
     }
     
     func start() {
-        window?.rootViewController = WelcomeViewController.instantiate()
+        let vc = WelcomeViewController.instantiate()
+        vc.mainCoordinator = self
+        window?.rootViewController = vc
         window?.makeKeyAndVisible()
+    }
+    
+    func goToTabBar() {
+        let vc = MainTabBarController()
+        vc.coordinator = self
+        window?.rootViewController = vc
     }
 }

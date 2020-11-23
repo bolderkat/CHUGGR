@@ -10,7 +10,7 @@ import UIKit
 class BetsDetailViewController: UIViewController {
 
     let sampleData = SampleData()
-    var selectedBet: Bet?
+    var selectedBet: SampleBet?
     var messages: [Message] {
         sampleData.messages
     }

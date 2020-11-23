@@ -9,5 +9,5 @@ import Foundation
 
 struct BetsTableSection {
     let title: String
-    let cells: [Bet]
+    let cells: [SampleBet]
 }

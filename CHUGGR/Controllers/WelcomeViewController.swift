@@ -10,14 +10,16 @@ import Firebase
 import FirebaseUI
 
 class WelcomeViewController: UIViewController, Storyboarded {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    
+    var mainCoordinator: MainCoordinator?
+    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//    }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//    }
 
     @IBAction func getStartedPressed(_ sender: UIButton) {
         guard let authUI = FUIAuth.defaultAuthUI() else {
@@ -42,6 +44,10 @@ extension WelcomeViewController: FUIAuthDelegate {
         guard error == nil else {
             print(String(describing: error))
             return
+        }
+        // Call coordinator to go to tab bar controller
+        if let coordinator = mainCoordinator {
+            coordinator.goToTabBar()
         }
     }
 }

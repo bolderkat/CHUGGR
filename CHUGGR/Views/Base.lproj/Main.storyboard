@@ -128,7 +128,7 @@
         <!--Bets View Controller-->
         <scene sceneID="ZDX-a4-pLB">
             <objects>
-                <viewController id="EAM-gj-6jT" customClass="BetsViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BetsViewController" id="EAM-gj-6jT" customClass="BetsViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5eI-Ee-PIk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

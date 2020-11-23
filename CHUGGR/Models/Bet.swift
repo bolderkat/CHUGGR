@@ -35,13 +35,12 @@ struct Bet {
     private(set) var invitedUsers: Set<String> // UUIDs
     private(set) var side1Users: Set<String> // UUIDs
     private(set) var side2Users: Set<String> // UUIDs
-    var gunStake: Int
-    var shotStake: Int
-    private(set) var isFinished = false
-    private(set) var winner: Side? // 1 if outcome 1 wins, 2 if outcome 2
+    var stake: Drinks
     let dateOpened: TimeInterval
-    private(set) var dateFinished: TimeInterval? = nil
     var dueDate: TimeInterval?
+    private(set) var isFinished = false
+    private(set) var winner: Side?
+    private(set) var dateFinished: TimeInterval? = nil
     
     mutating func closeBetWith(winningSide: Side) {
         guard !isFinished else { return }
