@@ -7,8 +7,10 @@
 
 import UIKit
 
-class NewBetViewController: UITableViewController {
+class NewBetViewController: UITableViewController, Storyboarded {
 
+    weak var coordinator: ChildCoordinating?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "New Bet"

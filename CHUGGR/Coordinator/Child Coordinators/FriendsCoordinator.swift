@@ -1,13 +1,13 @@
 //
-//  ProfileCoordinator.swift
+//  FriendsCoordinator.swift
 //  CHUGGR
 //
-//  Created by Daniel Luo on 11/23/20.
+//  Created by Daniel Luo on 11/24/20.
 //
 
 import UIKit
 
-class ProfileCoordinator: ChildCoordinating {
+class FriendsCoordinator: ChildCoordinating {
     weak var parentCoordinator: MainCoordinator?
     var childCoordinator = [ChildCoordinating]()
     var navigationController: UINavigationController
@@ -17,12 +17,12 @@ class ProfileCoordinator: ChildCoordinating {
     }
     
     func start() {
-        let vc = ProfileViewController.instantiate()
+        let vc = FriendsViewController.instantiate()
         vc.coordinator = self
         vc.tabBarItem = UITabBarItem(
-            title: "Profile",
-            image: UIImage(systemName: "person.circle.fill"),
-            tag: 4
+            title: "Friends",
+            image: UIImage(systemName: "person.3.fill"),
+            tag: 1
         )
         navigationController.pushViewController(vc, animated: false)
     }

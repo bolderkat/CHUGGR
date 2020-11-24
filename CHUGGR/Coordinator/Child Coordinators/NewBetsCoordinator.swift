@@ -1,13 +1,13 @@
 //
-//  ProfileCoordinator.swift
+//  NewBetsCoordinator.swift
 //  CHUGGR
 //
-//  Created by Daniel Luo on 11/23/20.
+//  Created by Daniel Luo on 11/24/20.
 //
 
 import UIKit
 
-class ProfileCoordinator: ChildCoordinating {
+class NewBetsCoordinator: ChildCoordinating {
     weak var parentCoordinator: MainCoordinator?
     var childCoordinator = [ChildCoordinating]()
     var navigationController: UINavigationController
@@ -17,14 +17,13 @@ class ProfileCoordinator: ChildCoordinating {
     }
     
     func start() {
-        let vc = ProfileViewController.instantiate()
+        let vc = NewBetViewController.instantiate()
         vc.coordinator = self
         vc.tabBarItem = UITabBarItem(
-            title: "Profile",
-            image: UIImage(systemName: "person.circle.fill"),
-            tag: 4
+            title: "New Bet",
+            image: UIImage(systemName: "plus.circle.fill"),
+            tag: 2
         )
         navigationController.pushViewController(vc, animated: false)
     }
 }
-

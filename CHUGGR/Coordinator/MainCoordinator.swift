@@ -43,6 +43,9 @@ class MainCoordinator: ParentCoordinating {
     func startTabBarCoordinators() {
         childCoordinators = [
             BetsCoordinator(navigationController: UINavigationController()),
+            FriendsCoordinator(navigationController: UINavigationController()),
+            NewBetsCoordinator(navigationController: UINavigationController()),
+            VideosCoordinator(navigationController: UINavigationController()),
             ProfileCoordinator(navigationController: UINavigationController())
         ]
         childCoordinators.forEach {

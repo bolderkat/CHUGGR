@@ -7,8 +7,10 @@
 
 import UIKit
 
-class FriendsViewController: UITableViewController {
+class FriendsViewController: UITableViewController, Storyboarded {
 
+    weak var coordinator: ChildCoordinating?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Friends"

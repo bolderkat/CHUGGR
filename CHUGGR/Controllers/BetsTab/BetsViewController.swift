@@ -9,13 +9,13 @@ import UIKit
 
 class BetsViewController: UIViewController, Storyboarded {
 
-    weak var coordinator: BetsCoordinator?
+    weak var coordinator: ChildCoordinating?
     @IBOutlet weak var betsTable: UITableView!
     @IBOutlet weak var pendingBetsLabel: UILabel!
     @IBOutlet weak var pendingCurrencyLabel: UILabel!
 
    let sampleData = SampleData()
-
+    
     var tableSections: [BetsTableSection] { [
         BetsTableSection(title: "My Bets", cells: sampleData.bets),
         BetsTableSection(title: "Other Bets", cells: sampleData.otherBets)

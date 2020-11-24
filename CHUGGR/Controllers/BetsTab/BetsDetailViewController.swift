@@ -7,8 +7,9 @@
 
 import UIKit
 
-class BetsDetailViewController: UIViewController {
+class BetsDetailViewController: UIViewController, Storyboarded {
 
+    weak var coordinator: ChildCoordinating?
     let sampleData = SampleData()
     var selectedBet: SampleBet?
     var messages: [Message] {

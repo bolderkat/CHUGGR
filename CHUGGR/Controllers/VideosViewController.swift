@@ -7,8 +7,10 @@
 
 import UIKit
 
-class VideosViewController: UITableViewController {
+class VideosViewController: UITableViewController, Storyboarded {
 
+    weak var coordinator: ChildCoordinating?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Videos"

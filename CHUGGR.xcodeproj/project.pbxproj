@@ -10,6 +10,9 @@
 		33F2837CAAB91E2DD6A852E1 /* Pods_CHUGGRTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D648B058C51D7AD3E6E0249 /* Pods_CHUGGRTests.framework */; };
 		6533F266256859C5002524B3 /* ParentCoordinating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533F265256859C5002524B3 /* ParentCoordinating.swift */; };
 		6533F26B25685B13002524B3 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533F26A25685B13002524B3 /* Storyboarded.swift */; };
+		65578765256DD33600FC23FC /* FriendsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65578764256DD33600FC23FC /* FriendsCoordinator.swift */; };
+		6557876D256DD45200FC23FC /* NewBetsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557876C256DD45100FC23FC /* NewBetsCoordinator.swift */; };
+		65578772256DD4BC00FC23FC /* VideosCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65578771256DD4BC00FC23FC /* VideosCoordinator.swift */; };
 		65650A3B25686C6E00812395 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65650A3A25686C6E00812395 /* MainCoordinator.swift */; };
 		65650A402568709900812395 /* ChildCoordinating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65650A3F2568709900812395 /* ChildCoordinating.swift */; };
 		656D944C252BF5FE00EDEB7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D944B252BF5FE00EDEB7F /* AppDelegate.swift */; };
@@ -67,6 +70,9 @@
 		5D648B058C51D7AD3E6E0249 /* Pods_CHUGGRTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CHUGGRTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6533F265256859C5002524B3 /* ParentCoordinating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCoordinating.swift; sourceTree = "<group>"; };
 		6533F26A25685B13002524B3 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		65578764256DD33600FC23FC /* FriendsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCoordinator.swift; sourceTree = "<group>"; };
+		6557876C256DD45100FC23FC /* NewBetsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetsCoordinator.swift; sourceTree = "<group>"; };
+		65578771256DD4BC00FC23FC /* VideosCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosCoordinator.swift; sourceTree = "<group>"; };
 		65650A3A25686C6E00812395 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		65650A3F2568709900812395 /* ChildCoordinating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildCoordinating.swift; sourceTree = "<group>"; };
 		656D9448252BF5FE00EDEB7F /* CHUGGR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CHUGGR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +220,9 @@
 			children = (
 				65650A3F2568709900812395 /* ChildCoordinating.swift */,
 				65C97624256C4EF800AA46BA /* BetsCoordinator.swift */,
+				65578764256DD33600FC23FC /* FriendsCoordinator.swift */,
+				6557876C256DD45100FC23FC /* NewBetsCoordinator.swift */,
+				65578771256DD4BC00FC23FC /* VideosCoordinator.swift */,
 				65E6F786256C5A2400252974 /* ProfileCoordinator.swift */,
 			);
 			path = "Child Coordinators";
@@ -248,13 +257,13 @@
 		65D34C1E252CF439005C6F98 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				65FBCBBF253257B400227121 /* BetsTab */,
 				656D944F252BF5FE00EDEB7F /* WelcomeViewController.swift */,
+				65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */,
+				65FBCBBF253257B400227121 /* BetsTab */,
 				65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */,
 				65C50E0D252D1C0200A786A8 /* NewBetViewController.swift */,
 				65C50E17252D1C9900A786A8 /* VideosViewController.swift */,
 				65C50E12252D1C2700A786A8 /* ProfileViewController.swift */,
-				65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -570,14 +579,17 @@
 			files = (
 				65FBCBA3252F9B6200227121 /* BetsTableSection.swift in Sources */,
 				65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */,
+				65578765256DD33600FC23FC /* FriendsCoordinator.swift in Sources */,
 				65C50E09252D1BDF00A786A8 /* FriendsViewController.swift in Sources */,
 				65E6F787256C5A2400252974 /* ProfileCoordinator.swift in Sources */,
 				65FBCBC1253257CE00227121 /* BetsDetailViewController.swift in Sources */,
 				656D9450252BF5FE00EDEB7F /* WelcomeViewController.swift in Sources */,
 				6533F26B25685B13002524B3 /* Storyboarded.swift in Sources */,
 				65FCE6ED256B35530066BDC5 /* MainTabBarController.swift in Sources */,
+				6557876D256DD45200FC23FC /* NewBetsCoordinator.swift in Sources */,
 				65C50E0E252D1C0200A786A8 /* NewBetViewController.swift in Sources */,
 				65C50E13252D1C2700A786A8 /* ProfileViewController.swift in Sources */,
+				65578772256DD4BC00FC23FC /* VideosCoordinator.swift in Sources */,
 				659DCB76252E9AD3009D330E /* Constants.swift in Sources */,
 				65FBCBBB2532542A00227121 /* SampleData.swift in Sources */,
 				656D944C252BF5FE00EDEB7F /* AppDelegate.swift in Sources */,

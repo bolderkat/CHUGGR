@@ -1,13 +1,13 @@
 //
-//  ProfileCoordinator.swift
+//  VideosCoordinator.swift
 //  CHUGGR
 //
-//  Created by Daniel Luo on 11/23/20.
+//  Created by Daniel Luo on 11/24/20.
 //
 
 import UIKit
 
-class ProfileCoordinator: ChildCoordinating {
+class VideosCoordinator: ChildCoordinating {
     weak var parentCoordinator: MainCoordinator?
     var childCoordinator = [ChildCoordinating]()
     var navigationController: UINavigationController
@@ -17,14 +17,13 @@ class ProfileCoordinator: ChildCoordinating {
     }
     
     func start() {
-        let vc = ProfileViewController.instantiate()
+        let vc = VideosViewController.instantiate()
         vc.coordinator = self
         vc.tabBarItem = UITabBarItem(
-            title: "Profile",
-            image: UIImage(systemName: "person.circle.fill"),
-            tag: 4
+            title: "Videos",
+            image: UIImage(systemName: "video.fill"),
+            tag: 3
         )
         navigationController.pushViewController(vc, animated: false)
     }
 }
-

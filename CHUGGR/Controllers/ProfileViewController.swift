@@ -10,7 +10,7 @@ import FirebaseAuth
 
 class ProfileViewController: UITableViewController, Storyboarded {
 
-    weak var coordinator: ProfileCoordinator?
+    weak var coordinator: ChildCoordinating?
     
     override func viewDidLoad() {
         super.viewDidLoad()

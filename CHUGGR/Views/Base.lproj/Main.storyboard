@@ -58,7 +58,7 @@
         <!--Friends View Controller-->
         <scene sceneID="2Ad-7q-Gsv">
             <objects>
-                <tableViewController id="IZq-QC-SDy" customClass="FriendsViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FriendsViewController" id="IZq-QC-SDy" customClass="FriendsViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dKb-ir-GLW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -165,7 +165,7 @@
         <!--Bets Detail View Controller-->
         <scene sceneID="oWJ-YG-1Xo">
             <objects>
-                <viewController id="0Wg-Ld-4uy" customClass="BetsDetailViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BetsDetailViewController" id="0Wg-Ld-4uy" customClass="BetsDetailViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mUM-Gp-TWG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -267,7 +267,7 @@
         <!--Videos View Controller-->
         <scene sceneID="41c-1e-P66">
             <objects>
-                <tableViewController id="qgn-V2-GYi" customClass="VideosViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="VideosViewController" id="qgn-V2-GYi" customClass="VideosViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Qlh-wg-hTJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -296,7 +296,7 @@
         <!--New Bet View Controller-->
         <scene sceneID="UIE-nD-652">
             <objects>
-                <tableViewController id="gjM-zf-kyN" customClass="NewBetViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="NewBetViewController" id="gjM-zf-kyN" customClass="NewBetViewController" customModule="CHUGGR" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="03j-NE-YCl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
