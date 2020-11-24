@@ -41,7 +41,6 @@
 		65FCE6DF2569BB930066BDC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCE6DE2569BB930066BDC5 /* User.swift */; };
 		65FCE6E4256B33F00066BDC5 /* SampleBet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCE6E3256B33F00066BDC5 /* SampleBet.swift */; };
 		65FCE6ED256B35530066BDC5 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */; };
-		65FCE6EE256B35530066BDC5 /* MainTabBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65FCE6EC256B35530066BDC5 /* MainTabBarController.xib */; };
 		C8D113C094F567575BDCF233 /* Pods_CHUGGR_CHUGGRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C485606B2FBFA81584C54A66 /* Pods_CHUGGR_CHUGGRUITests.framework */; };
 		E95618B520BB3301EB30C468 /* Pods_CHUGGR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */; };
 /* End PBXBuildFile section */
@@ -105,7 +104,6 @@
 		65FCE6DE2569BB930066BDC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		65FCE6E3256B33F00066BDC5 /* SampleBet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBet.swift; sourceTree = "<group>"; };
 		65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		65FCE6EC256B35530066BDC5 /* MainTabBarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTabBarController.xib; sourceTree = "<group>"; };
 		8FDFF6DA5BA3C750B95B493E /* Pods-CHUGGRTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHUGGRTests.debug.xcconfig"; path = "Target Support Files/Pods-CHUGGRTests/Pods-CHUGGRTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ADAA051009240AC810ABE037 /* Pods-CHUGGRTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHUGGRTests.release.xcconfig"; path = "Target Support Files/Pods-CHUGGRTests/Pods-CHUGGRTests.release.xcconfig"; sourceTree = "<group>"; };
 		B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CHUGGR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -257,7 +255,6 @@
 				65C50E17252D1C9900A786A8 /* VideosViewController.swift */,
 				65C50E12252D1C2700A786A8 /* ProfileViewController.swift */,
 				65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */,
-				65FCE6EC256B35530066BDC5 /* MainTabBarController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -404,7 +401,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65FCE6EE256B35530066BDC5 /* MainTabBarController.xib in Resources */,
 				656D945B252BF60100EDEB7F /* LaunchScreen.storyboard in Resources */,
 				658F11272532747F003B6303 /* MessageCell.xib in Resources */,
 				659DCB6E252E9A57009D330E /* BetCell.xib in Resources */,

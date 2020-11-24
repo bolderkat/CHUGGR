@@ -65,21 +65,6 @@ class BetsViewController: UIViewController, Storyboarded {
             tabBar.barTintColor = UIColor(named: K.colors.midGray)
         }
     }
-
-
-
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segues.betsToDetail {
-            let destinationVC = segue.destination as! BetsDetailViewController
-            if let indexPath = betsTable.indexPathForSelectedRow {
-                destinationVC.selectedBet = tableSections[indexPath.section].cells[indexPath.row]
-            }
-        }
-    }
 }
 
 
@@ -105,7 +90,6 @@ extension BetsViewController: UITableViewDelegate, UITableViewDataSource {
 
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: K.segues.betsToDetail, sender: self)
-        tableView.deselectRow(at: indexPath, animated: true)
+        // TODO: Tell coordinator to push bet detail view
     }
 }

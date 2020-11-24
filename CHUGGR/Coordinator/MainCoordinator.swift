@@ -17,12 +17,13 @@ class MainCoordinator: ParentCoordinating {
     }
     
     func start() {
-//        goToTabBar()
+        goToTabBar()
         
-        let vc = WelcomeViewController.instantiate()
-        vc.mainCoordinator = self
-        window.rootViewController = vc
-        window.makeKeyAndVisible()
+// Commenting out so I don't have to log in every time...
+//        let vc = WelcomeViewController.instantiate()
+//        vc.mainCoordinator = self
+//        window.rootViewController = vc
+//        window.makeKeyAndVisible()
     }
     
     func goToTabBar() {
@@ -31,6 +32,12 @@ class MainCoordinator: ParentCoordinating {
         startTabBarCoordinators()
         tabController.viewControllers = childCoordinators.map { $0.navigationController }
         window.rootViewController = tabController
+        UIView.transition(
+            with: window,
+            duration: 0.8,
+            options: .transitionCurlUp, // TODO: get a better animation... or don't 😇
+            animations: nil,
+            completion: nil)
     }
     
     func startTabBarCoordinators() {
@@ -50,7 +57,7 @@ class MainCoordinator: ParentCoordinating {
         window.rootViewController = vc
         UIView.transition(
             with: window,
-            duration: 0.3,
+            duration: 0.5,
             options: .transitionCrossDissolve,
             animations: nil,
             completion: nil)
