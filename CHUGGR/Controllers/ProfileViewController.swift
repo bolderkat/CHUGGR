@@ -30,8 +30,9 @@ class ProfileViewController: UITableViewController, Storyboarded {
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
-        // Replace with call to main coordinator to switch back to Welcome VC
-        performSegue(withIdentifier: "profileToWelcome", sender: self)
+        if let coordinator = coordinator, let mainCoordinator = coordinator.parentCoordinator {
+            mainCoordinator.logOut()
+        }
     }
     
     // MARK: - Table view data source

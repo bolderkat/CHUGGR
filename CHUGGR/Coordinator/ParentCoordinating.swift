@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ParentCoordinating: AnyObject {
-    var window: UIWindow? { get set }
+    var window: UIWindow { get set }
     var childCoordinators: [ChildCoordinating] { get set }
     func start()
 }
