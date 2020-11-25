@@ -12,16 +12,32 @@ class BetsDetailViewController: UIViewController, Storyboarded {
     weak var coordinator: ChildCoordinating?
     let sampleData = SampleData()
     var selectedBet: SampleBet?
-    var messages: [Message] {
-        sampleData.messages
-    }
+    var messages: [Message] = []
 
-    @IBOutlet weak var betDescription: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var betTypeLabel: UILabel!
+    @IBOutlet weak var leftLabel1: UILabel!
+    @IBOutlet weak var rightLabel1: UILabel!
+    @IBOutlet weak var leftLabel2: UILabel!
+    @IBOutlet weak var rightLabel2: UILabel!
+    @IBOutlet weak var leftLabel3: UILabel!
+    @IBOutlet weak var rightLabel3: UILabel!
+    @IBOutlet weak var leftLabel4: UILabel!
+    @IBOutlet weak var rightLabel4: UILabel!
+    @IBOutlet weak var leftLabel5: UILabel!
+    @IBOutlet weak var rightLabel5: UILabel!
+    @IBOutlet weak var leftLabel6: UILabel!
+    @IBOutlet weak var rightLabel6: UILabel!
     @IBOutlet weak var messageTableView: UITableView!
     @IBOutlet weak var textField: UITextField!
-
+    @IBOutlet weak var betCard: UIView!
+    @IBOutlet weak var closeBetButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Bet Details"
+        betCard.layer.cornerRadius = 30
+        closeBetButton.layer.cornerRadius = 15
         messageTableView.delegate = self
         messageTableView.dataSource = self
         messageTableView.register(UINib(nibName: K.cells.messageCell, bundle: nil),
@@ -33,7 +49,7 @@ class BetsDetailViewController: UIViewController, Storyboarded {
         // scroll to bottom of table, to put in message load/sort function later
 //        let indexPath = IndexPath(row: messages.count - 1, section: 0)
 //        messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-        betDescription.text = selectedBet?.betDescription
+        titleLabel.text = selectedBet?.betDescription
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {

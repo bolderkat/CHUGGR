@@ -9,7 +9,7 @@ import UIKit
 
 class BetsViewController: UIViewController, Storyboarded {
 
-    weak var coordinator: ChildCoordinating?
+    weak var coordinator: BetsCoordinator?
     @IBOutlet weak var betsTable: UITableView!
     @IBOutlet weak var pendingBetsLabel: UILabel!
     @IBOutlet weak var pendingCurrencyLabel: UILabel!
@@ -39,31 +39,12 @@ class BetsViewController: UIViewController, Storyboarded {
         pendingCurrencyLabel.text = sampleData.pending[1]
 
         navigationController?.navigationBar.barTintColor = UIColor(named: K.colors.orange)
+        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .semibold)
         ]
 
-    }
-
-    func configureTabBar() {
-        if let tabBar = tabBarController?.tabBar {
-            // Make center item background blue
-            let itemIndex = 2
-            let bgColor = UIColor(named: K.colors.orange)
-            let itemWidth = tabBar.frame.width / CGFloat(tabBar.items!.count)
-            let bgView = UIView(frame: CGRect(x: itemWidth * CGFloat(itemIndex),
-                                              y: 0,
-                                              width: itemWidth,
-                                              height: tabBar.frame.height))
-            bgView.backgroundColor = bgColor
-            tabBar.insertSubview(bgView, at: 0)
-
-            // Other tab bar changes
-            tabBar.unselectedItemTintColor = UIColor.white
-            tabBar.tintColor = UIColor(named: K.colors.midBlue)
-            tabBar.barTintColor = UIColor(named: K.colors.midGray)
-        }
     }
 }
 
@@ -90,6 +71,7 @@ extension BetsViewController: UITableViewDelegate, UITableViewDataSource {
 
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: Tell coordinator to push bet detail view
+        coordinator?.openBetDetail(for: tableSections[indexPath.section].cells[indexPath.row])
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

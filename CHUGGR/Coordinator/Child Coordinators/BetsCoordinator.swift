@@ -26,4 +26,11 @@ class BetsCoordinator: ChildCoordinating {
         )
         navigationController.pushViewController(vc, animated: false)
     }
+    
+    func openBetDetail(for selectedBet: SampleBet) {
+        let vc = BetsDetailViewController.instantiate()
+        vc.coordinator = self
+        vc.selectedBet = selectedBet
+        navigationController.pushViewController(vc, animated: true)
+    }
 }

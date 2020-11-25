@@ -18,10 +18,16 @@ struct K {
         static let burntUmber = "Burnt Umber"
         static let lightBlue = "Light Blue"
         static let midBlue = "Mid Blue"
+        static let darkBlue = "Dark Blue"
         static let midGray = "Mid Gray"
         static let orange = "CHUGGR Orange"
-    }
-    struct segues{
-        static let betsToDetail = "BetsToDetail"
+        static let forestGreen = "Forest Green"
+        static let gray1 = "Gray 1"
+        static let gray2 = "Gray 2"
+        static let gray3 = "Gray 3"
+        static let gray4 = "Gray 4"
+        static let gray5 = "Gray 5"
+        static let gray6 = "Gray 6"
+        static let yellow = "Yellow"
     }
 }
