@@ -14,5 +14,8 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         selectedIndex = 0
+        tabBar.tintColor = UIColor(named: K.colors.orange)
+        tabBar.unselectedItemTintColor = .black
+        
     }
 }
