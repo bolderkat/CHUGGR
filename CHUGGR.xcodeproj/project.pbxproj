@@ -30,8 +30,9 @@
 		659DCB6D252E9A57009D330E /* BetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659DCB6B252E9A57009D330E /* BetCell.swift */; };
 		659DCB6E252E9A57009D330E /* BetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 659DCB6C252E9A57009D330E /* BetCell.xib */; };
 		659DCB76252E9AD3009D330E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659DCB75252E9AD3009D330E /* Constants.swift */; };
+		65C237FD256EF82B001EA95D /* NewBetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C237FC256EF82B001EA95D /* NewBetViewController.swift */; };
+		65C23805256EFAA3001EA95D /* HairlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C23804256EFAA3001EA95D /* HairlineView.swift */; };
 		65C50E09252D1BDF00A786A8 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */; };
-		65C50E0E252D1C0200A786A8 /* NewBetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C50E0D252D1C0200A786A8 /* NewBetViewController.swift */; };
 		65C50E13252D1C2700A786A8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C50E12252D1C2700A786A8 /* ProfileViewController.swift */; };
 		65C50E18252D1C9900A786A8 /* VideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C50E17252D1C9900A786A8 /* VideosViewController.swift */; };
 		65C97625256C4EF800AA46BA /* BetsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C97624256C4EF800AA46BA /* BetsCoordinator.swift */; };
@@ -96,8 +97,9 @@
 		659DCB6B252E9A57009D330E /* BetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetCell.swift; sourceTree = "<group>"; };
 		659DCB6C252E9A57009D330E /* BetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetCell.xib; sourceTree = "<group>"; };
 		659DCB75252E9AD3009D330E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		65C237FC256EF82B001EA95D /* NewBetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetViewController.swift; sourceTree = "<group>"; };
+		65C23804256EFAA3001EA95D /* HairlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HairlineView.swift; sourceTree = "<group>"; };
 		65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
-		65C50E0D252D1C0200A786A8 /* NewBetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetViewController.swift; sourceTree = "<group>"; };
 		65C50E12252D1C2700A786A8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		65C50E17252D1C9900A786A8 /* VideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosViewController.swift; sourceTree = "<group>"; };
 		65C97624256C4EF800AA46BA /* BetsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsCoordinator.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				65D34C1D252CF434005C6F98 /* Models */,
 				65D34C1C252CF428005C6F98 /* Views */,
 				65D34C1E252CF439005C6F98 /* Controllers */,
+				65C23809256EFE44001EA95D /* View Models */,
 				656D944B252BF5FE00EDEB7F /* AppDelegate.swift */,
 				656D944D252BF5FE00EDEB7F /* SceneDelegate.swift */,
 				656D9457252BF60100EDEB7F /* Assets.xcassets */,
@@ -215,6 +218,13 @@
 			path = CHUGGRUITests;
 			sourceTree = "<group>";
 		};
+		65C23809256EFE44001EA95D /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
 		65C97623256C4EC900AA46BA /* Child Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,6 +247,7 @@
 				659DCB6C252E9A57009D330E /* BetCell.xib */,
 				658F11242532747F003B6303 /* MessageCell.swift */,
 				658F11252532747F003B6303 /* MessageCell.xib */,
+				65C23804256EFAA3001EA95D /* HairlineView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -261,7 +272,7 @@
 				65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */,
 				65FBCBBF253257B400227121 /* BetsTab */,
 				65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */,
-				65C50E0D252D1C0200A786A8 /* NewBetViewController.swift */,
+				65C237FC256EF82B001EA95D /* NewBetViewController.swift */,
 				65C50E17252D1C9900A786A8 /* VideosViewController.swift */,
 				65C50E12252D1C2700A786A8 /* ProfileViewController.swift */,
 			);
@@ -578,6 +589,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65FBCBA3252F9B6200227121 /* BetsTableSection.swift in Sources */,
+				65C237FD256EF82B001EA95D /* NewBetViewController.swift in Sources */,
 				65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */,
 				65578765256DD33600FC23FC /* FriendsCoordinator.swift in Sources */,
 				65C50E09252D1BDF00A786A8 /* FriendsViewController.swift in Sources */,
@@ -586,8 +598,8 @@
 				656D9450252BF5FE00EDEB7F /* WelcomeViewController.swift in Sources */,
 				6533F26B25685B13002524B3 /* Storyboarded.swift in Sources */,
 				65FCE6ED256B35530066BDC5 /* MainTabBarController.swift in Sources */,
+				65C23805256EFAA3001EA95D /* HairlineView.swift in Sources */,
 				6557876D256DD45200FC23FC /* NewBetsCoordinator.swift in Sources */,
-				65C50E0E252D1C0200A786A8 /* NewBetViewController.swift in Sources */,
 				65C50E13252D1C2700A786A8 /* ProfileViewController.swift in Sources */,
 				65578772256DD4BC00FC23FC /* VideosCoordinator.swift in Sources */,
 				659DCB76252E9AD3009D330E /* Constants.swift in Sources */,

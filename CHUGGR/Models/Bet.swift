@@ -35,6 +35,11 @@ struct Bet {
     private(set) var invitedUsers: Set<String> // UUIDs
     private(set) var side1Users: Set<String> // UUIDs
     private(set) var side2Users: Set<String> // UUIDs
+    var allUsers: Set<String> {
+        var set = invitedUsers.union(side1Users)
+        set = set.union(side2Users)
+        return set
+    }
     var stake: Drinks
     let dateOpened: TimeInterval
     var dueDate: TimeInterval?

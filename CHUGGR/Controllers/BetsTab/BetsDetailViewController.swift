@@ -42,6 +42,9 @@ class BetsDetailViewController: UIViewController, Storyboarded {
         messageTableView.dataSource = self
         messageTableView.register(UINib(nibName: K.cells.messageCell, bundle: nil),
                                   forCellReuseIdentifier: K.cells.messageCell)
+        
+        
+        
 //        messageTableView.rowHeight = UITableView.automaticDimension
 //        
 //        messageTableView.estimatedRowHeight = 200
@@ -53,6 +56,10 @@ class BetsDetailViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
+    }
+    
+    func setUpBetCard(for betType: BetType) {
+        // switch on betType to set up view
     }
 
 }
