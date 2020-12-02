@@ -64,7 +64,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VJi-IK-lYg">
-                                <rect key="frame" x="0.0" y="44" width="414" height="472"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="392"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yrh-ag-SBq">
                                         <rect key="frame" x="16" y="20" width="382" height="32"/>
@@ -73,13 +73,19 @@
                                             <segment title="Moneyline"/>
                                             <segment title="Event"/>
                                         </segments>
+                                        <connections>
+                                            <action selector="topControlChanged:" destination="Z9M-Te-9tu" eventType="valueChanged" id="qgU-vn-s3p"/>
+                                        </connections>
                                     </segmentedControl>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Xv9-7G-UrZ">
-                                        <rect key="frame" x="16" y="424" width="382" height="32"/>
+                                        <rect key="frame" x="16" y="344" width="382" height="32"/>
                                         <segments>
                                             <segment title="Over"/>
                                             <segment title="Under"/>
                                         </segments>
+                                        <connections>
+                                            <action selector="bottomControlChanged:" destination="Z9M-Te-9tu" eventType="valueChanged" id="GR3-hO-hOc"/>
+                                        </connections>
                                     </segmentedControl>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFG-Vu-wz3" customClass="HairlineView" customModule="CHUGGR" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="71" width="414" height="1"/>
@@ -89,23 +95,23 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kot-Bx-PKI" customClass="HairlineView" customModule="CHUGGR" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="471" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="391" width="414" height="1"/>
                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="999" constant="1" id="nzQ-9x-tmL"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHOOSE A SIDE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZG-BX-IC2">
-                                        <rect key="frame" x="16" y="396" width="382" height="16"/>
+                                        <rect key="frame" x="16" y="316" width="382" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" name="Gray 3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7zH-g6-czI">
-                                        <rect key="frame" x="0.0" y="72" width="414" height="300"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7zH-g6-czI">
+                                        <rect key="frame" x="0.0" y="72" width="414" height="220"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="300" id="55p-TF-WLe"/>
+                                            <constraint firstAttribute="height" constant="220" id="55p-TF-WLe"/>
                                         </constraints>
                                     </tableView>
                                 </subviews>
@@ -143,6 +149,9 @@
                                 <state key="normal" title="SEND BET">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="sendButtonPressed:" destination="Z9M-Te-9tu" eventType="touchUpInside" id="H24-er-CAb"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wif-70-Buu"/>

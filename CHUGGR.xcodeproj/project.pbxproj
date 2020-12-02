@@ -10,6 +10,11 @@
 		33F2837CAAB91E2DD6A852E1 /* Pods_CHUGGRTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D648B058C51D7AD3E6E0249 /* Pods_CHUGGRTests.framework */; };
 		6533F266256859C5002524B3 /* ParentCoordinating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533F265256859C5002524B3 /* ParentCoordinating.swift */; };
 		6533F26B25685B13002524B3 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533F26A25685B13002524B3 /* Storyboarded.swift */; };
+		6535F503256F479F00C5FC72 /* BetEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6535F501256F479F00C5FC72 /* BetEntryCell.swift */; };
+		6535F504256F479F00C5FC72 /* BetEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6535F502256F479F00C5FC72 /* BetEntryCell.xib */; };
+		654AC028257740A900AEBADF /* NewBetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654AC027257740A900AEBADF /* NewBetViewModel.swift */; };
+		65543D0A25772B7100B8C549 /* StakeEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65543D0825772B7100B8C549 /* StakeEntryCell.swift */; };
+		65543D0B25772B7100B8C549 /* StakeEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65543D0925772B7100B8C549 /* StakeEntryCell.xib */; };
 		65578765256DD33600FC23FC /* FriendsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65578764256DD33600FC23FC /* FriendsCoordinator.swift */; };
 		6557876D256DD45200FC23FC /* NewBetsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557876C256DD45100FC23FC /* NewBetsCoordinator.swift */; };
 		65578772256DD4BC00FC23FC /* VideosCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65578771256DD4BC00FC23FC /* VideosCoordinator.swift */; };
@@ -71,6 +76,11 @@
 		5D648B058C51D7AD3E6E0249 /* Pods_CHUGGRTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CHUGGRTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6533F265256859C5002524B3 /* ParentCoordinating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCoordinating.swift; sourceTree = "<group>"; };
 		6533F26A25685B13002524B3 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		6535F501256F479F00C5FC72 /* BetEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetEntryCell.swift; sourceTree = "<group>"; };
+		6535F502256F479F00C5FC72 /* BetEntryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetEntryCell.xib; sourceTree = "<group>"; };
+		654AC027257740A900AEBADF /* NewBetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetViewModel.swift; sourceTree = "<group>"; };
+		65543D0825772B7100B8C549 /* StakeEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeEntryCell.swift; sourceTree = "<group>"; };
+		65543D0925772B7100B8C549 /* StakeEntryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StakeEntryCell.xib; sourceTree = "<group>"; };
 		65578764256DD33600FC23FC /* FriendsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCoordinator.swift; sourceTree = "<group>"; };
 		6557876C256DD45100FC23FC /* NewBetsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetsCoordinator.swift; sourceTree = "<group>"; };
 		65578771256DD4BC00FC23FC /* VideosCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosCoordinator.swift; sourceTree = "<group>"; };
@@ -149,6 +159,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65543D0725772B4E00B8C549 /* Custom Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				658F11242532747F003B6303 /* MessageCell.swift */,
+				658F11252532747F003B6303 /* MessageCell.xib */,
+				659DCB6B252E9A57009D330E /* BetCell.swift */,
+				659DCB6C252E9A57009D330E /* BetCell.xib */,
+				6535F501256F479F00C5FC72 /* BetEntryCell.swift */,
+				6535F502256F479F00C5FC72 /* BetEntryCell.xib */,
+				65543D0825772B7100B8C549 /* StakeEntryCell.swift */,
+				65543D0925772B7100B8C549 /* StakeEntryCell.xib */,
+			);
+			path = "Custom Table Cells";
+			sourceTree = "<group>";
+		};
 		65650A4D2568B7E900812395 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +246,7 @@
 		65C23809256EFE44001EA95D /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				654AC027257740A900AEBADF /* NewBetViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -241,12 +267,9 @@
 		65D34C1C252CF428005C6F98 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				65543D0725772B4E00B8C549 /* Custom Table Cells */,
 				656D9451252BF5FE00EDEB7F /* Main.storyboard */,
 				656D9459252BF60100EDEB7F /* LaunchScreen.storyboard */,
-				659DCB6B252E9A57009D330E /* BetCell.swift */,
-				659DCB6C252E9A57009D330E /* BetCell.xib */,
-				658F11242532747F003B6303 /* MessageCell.swift */,
-				658F11252532747F003B6303 /* MessageCell.xib */,
 				65C23804256EFAA3001EA95D /* HairlineView.swift */,
 			);
 			path = Views;
@@ -422,9 +445,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				656D945B252BF60100EDEB7F /* LaunchScreen.storyboard in Resources */,
+				6535F504256F479F00C5FC72 /* BetEntryCell.xib in Resources */,
 				658F11272532747F003B6303 /* MessageCell.xib in Resources */,
 				659DCB6E252E9A57009D330E /* BetCell.xib in Resources */,
 				656D9482252BF6E200EDEB7F /* GoogleService-Info.plist in Resources */,
+				65543D0B25772B7100B8C549 /* StakeEntryCell.xib in Resources */,
 				656D9458252BF60100EDEB7F /* Assets.xcassets in Resources */,
 				656D9453252BF5FE00EDEB7F /* Main.storyboard in Resources */,
 			);
@@ -589,7 +614,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				65FBCBA3252F9B6200227121 /* BetsTableSection.swift in Sources */,
+				654AC028257740A900AEBADF /* NewBetViewModel.swift in Sources */,
 				65C237FD256EF82B001EA95D /* NewBetViewController.swift in Sources */,
+				6535F503256F479F00C5FC72 /* BetEntryCell.swift in Sources */,
 				65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */,
 				65578765256DD33600FC23FC /* FriendsCoordinator.swift in Sources */,
 				65C50E09252D1BDF00A786A8 /* FriendsViewController.swift in Sources */,
@@ -608,6 +635,7 @@
 				6533F266256859C5002524B3 /* ParentCoordinating.swift in Sources */,
 				65C50E18252D1C9900A786A8 /* VideosViewController.swift in Sources */,
 				65650A402568709900812395 /* ChildCoordinating.swift in Sources */,
+				65543D0A25772B7100B8C549 /* StakeEntryCell.swift in Sources */,
 				658F11262532747F003B6303 /* MessageCell.swift in Sources */,
 				65650A3B25686C6E00812395 /* MainCoordinator.swift in Sources */,
 				659DCB6D252E9A57009D330E /* BetCell.swift in Sources */,

@@ -13,14 +13,23 @@ class WelcomeViewController: UIViewController, Storyboarded {
     
     var mainCoordinator: MainCoordinator?
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Skip auth if user already logged in.
+        if let _ = Auth.auth().currentUser?.uid {
+            continueWhenUserPresent()
+        }
+    }
 
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//    }
-
+    // Auth persistence from https://stackoverflow.com/questions/48561643/firebase-login-persistence-swift
+    private func continueWhenUserPresent() {
+        // Call coordinator to go to tab bar controller
+        if let coordinator = mainCoordinator {
+            coordinator.goToTabBar()
+        }
+    }
+    
     @IBAction func getStartedPressed(_ sender: UIButton) {
         guard let authUI = FUIAuth.defaultAuthUI() else {
             print("Error initializing Firebase Auth UI")
@@ -45,10 +54,7 @@ extension WelcomeViewController: FUIAuthDelegate {
             print(String(describing: error))
             return
         }
-        // Call coordinator to go to tab bar controller
-        if let coordinator = mainCoordinator {
-            coordinator.goToTabBar()
-        }
+        continueWhenUserPresent()
     }
 }
 

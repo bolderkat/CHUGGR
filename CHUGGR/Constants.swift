@@ -10,8 +10,10 @@ import Foundation
 struct K {
     struct cells {
         static let betCell = "BetCell"
+        static let betEntryCell = "BetEntryCell"
         static let betsPendingCell = "BetsPendingCell"
         static let messageCell = "MessageCell"
+        static let stakeCell = "StakeEntryCell"
     }
     struct colors {
         static let alabaster = "Alabaster"
