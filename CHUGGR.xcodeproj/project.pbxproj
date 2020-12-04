@@ -161,22 +161,100 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		65543D0725772B4E00B8C549 /* Custom Table Cells */ = {
+		6545C03C257AEEAF0092C02A /* Bets Tab */ = {
 			isa = PBXGroup;
 			children = (
-				658F11242532747F003B6303 /* MessageCell.swift */,
-				658F11252532747F003B6303 /* MessageCell.xib */,
+				6545C054257AEF070092C02A /* Bet Detail */,
+				6545C042257AEEEB0092C02A /* Bet Dashboard */,
+			);
+			path = "Bets Tab";
+			sourceTree = "<group>";
+		};
+		6545C042257AEEEB0092C02A /* Bet Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				65D34C1F252CF494005C6F98 /* BetsViewController.swift */,
 				659DCB6B252E9A57009D330E /* BetCell.swift */,
 				659DCB6C252E9A57009D330E /* BetCell.xib */,
+			);
+			path = "Bet Dashboard";
+			sourceTree = "<group>";
+		};
+		6545C054257AEF070092C02A /* Bet Detail */ = {
+			isa = PBXGroup;
+			children = (
+				65FBCBC0253257CE00227121 /* BetsDetailViewController.swift */,
+				658F11242532747F003B6303 /* MessageCell.swift */,
+				658F11252532747F003B6303 /* MessageCell.xib */,
+			);
+			path = "Bet Detail";
+			sourceTree = "<group>";
+		};
+		6545C05B257AEF2C0092C02A /* New Bet Entry */ = {
+			isa = PBXGroup;
+			children = (
+				6545C05C257AEF670092C02A /* Custom Cells */,
+				65C237FC256EF82B001EA95D /* NewBetViewController.swift */,
+				654AC027257740A900AEBADF /* NewBetViewModel.swift */,
+			);
+			path = "New Bet Entry";
+			sourceTree = "<group>";
+		};
+		6545C05C257AEF670092C02A /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				650371F7257AD2B700F59D95 /* BetEntryCellViewModel.swift */,
 				6535F501256F479F00C5FC72 /* BetEntryCell.swift */,
 				6535F502256F479F00C5FC72 /* BetEntryCell.xib */,
 				65543D0825772B7100B8C549 /* StakeEntryCell.swift */,
 				65543D0925772B7100B8C549 /* StakeEntryCell.xib */,
+				65C23804256EFAA3001EA95D /* HairlineView.swift */,
 			);
-			path = "Custom Table Cells";
+			path = "Custom Cells";
 			sourceTree = "<group>";
 		};
-		65650A4D2568B7E900812395 /* Coordinator */ = {
+		6545C05D257AEF9B0092C02A /* Friends Tab */ = {
+			isa = PBXGroup;
+			children = (
+				65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */,
+			);
+			path = "Friends Tab";
+			sourceTree = "<group>";
+		};
+		6545C05E257AEFAC0092C02A /* Videos Tab */ = {
+			isa = PBXGroup;
+			children = (
+				65C50E17252D1C9900A786A8 /* VideosViewController.swift */,
+			);
+			path = "Videos Tab";
+			sourceTree = "<group>";
+		};
+		6545C05F257AEFB60092C02A /* Profile Tab */ = {
+			isa = PBXGroup;
+			children = (
+				65C50E12252D1C2700A786A8 /* ProfileViewController.swift */,
+			);
+			path = "Profile Tab";
+			sourceTree = "<group>";
+		};
+		6545C063257AF02F0092C02A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				656D944F252BF5FE00EDEB7F /* WelcomeViewController.swift */,
+				65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		65543D0725772B4E00B8C549 /* New Bet Tab */ = {
+			isa = PBXGroup;
+			children = (
+				6545C05B257AEF2C0092C02A /* New Bet Entry */,
+			);
+			path = "New Bet Tab";
+			sourceTree = "<group>";
+		};
+		65650A4D2568B7E900812395 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
 				65C97623256C4EC900AA46BA /* Child Coordinators */,
@@ -184,7 +262,7 @@
 				6533F265256859C5002524B3 /* ParentCoordinating.swift */,
 				6533F26A25685B13002524B3 /* Storyboarded.swift */,
 			);
-			path = Coordinator;
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		656D943F252BF5FE00EDEB7F = {
@@ -213,16 +291,12 @@
 			isa = PBXGroup;
 			children = (
 				659DCB75252E9AD3009D330E /* Constants.swift */,
-				65650A4D2568B7E900812395 /* Coordinator */,
+				65650A4D2568B7E900812395 /* Coordinators */,
 				65D34C1D252CF434005C6F98 /* Models */,
 				65D34C1C252CF428005C6F98 /* Views */,
-				65D34C1E252CF439005C6F98 /* Controllers */,
-				65C23809256EFE44001EA95D /* View Models */,
-				656D944B252BF5FE00EDEB7F /* AppDelegate.swift */,
-				656D944D252BF5FE00EDEB7F /* SceneDelegate.swift */,
 				656D9457252BF60100EDEB7F /* Assets.xcassets */,
-				656D945C252BF60100EDEB7F /* Info.plist */,
 				656D9481252BF6E100EDEB7F /* GoogleService-Info.plist */,
+				656D945C252BF60100EDEB7F /* Info.plist */,
 			);
 			path = CHUGGR;
 			sourceTree = "<group>";
@@ -245,15 +319,6 @@
 			path = CHUGGRUITests;
 			sourceTree = "<group>";
 		};
-		65C23809256EFE44001EA95D /* View Models */ = {
-			isa = PBXGroup;
-			children = (
-				654AC027257740A900AEBADF /* NewBetViewModel.swift */,
-				650371F7257AD2B700F59D95 /* BetEntryCellViewModel.swift */,
-			);
-			path = "View Models";
-			sourceTree = "<group>";
-		};
 		65C97623256C4EC900AA46BA /* Child Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,10 +335,16 @@
 		65D34C1C252CF428005C6F98 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				65543D0725772B4E00B8C549 /* Custom Table Cells */,
 				656D9451252BF5FE00EDEB7F /* Main.storyboard */,
 				656D9459252BF60100EDEB7F /* LaunchScreen.storyboard */,
-				65C23804256EFAA3001EA95D /* HairlineView.swift */,
+				656D944B252BF5FE00EDEB7F /* AppDelegate.swift */,
+				656D944D252BF5FE00EDEB7F /* SceneDelegate.swift */,
+				6545C063257AF02F0092C02A /* Main */,
+				6545C03C257AEEAF0092C02A /* Bets Tab */,
+				6545C05D257AEF9B0092C02A /* Friends Tab */,
+				65543D0725772B4E00B8C549 /* New Bet Tab */,
+				6545C05E257AEFAC0092C02A /* Videos Tab */,
+				6545C05F257AEFB60092C02A /* Profile Tab */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -289,29 +360,6 @@
 				658F112E25327B2C003B6303 /* Message.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		65D34C1E252CF439005C6F98 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				656D944F252BF5FE00EDEB7F /* WelcomeViewController.swift */,
-				65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */,
-				65FBCBBF253257B400227121 /* BetsTab */,
-				65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */,
-				65C237FC256EF82B001EA95D /* NewBetViewController.swift */,
-				65C50E17252D1C9900A786A8 /* VideosViewController.swift */,
-				65C50E12252D1C2700A786A8 /* ProfileViewController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		65FBCBBF253257B400227121 /* BetsTab */ = {
-			isa = PBXGroup;
-			children = (
-				65D34C1F252CF494005C6F98 /* BetsViewController.swift */,
-				65FBCBC0253257CE00227121 /* BetsDetailViewController.swift */,
-			);
-			path = BetsTab;
 			sourceTree = "<group>";
 		};
 		C58D1C18B638C9A5FCC532B5 /* Frameworks */ = {
