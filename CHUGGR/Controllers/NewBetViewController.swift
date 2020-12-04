@@ -10,21 +10,22 @@ import UIKit
 class NewBetViewController: UIViewController, Storyboarded {
 
     weak var coordinator: ChildCoordinating?
-    var dataSource: UITableViewDiffableDataSource<Section, EntryRow>!
-    var viewModel = NewBetViewModel()
+    var dataSource: UITableViewDiffableDataSource<Section, BetEntryRowViewModel>!
+    private lazy var viewModel: NewBetViewModel = {
+        return NewBetViewModel()
+    }()
     
     @IBOutlet weak var topControl: UISegmentedControl!
     @IBOutlet weak var entryTable: UITableView!
     @IBOutlet weak var bottomControl: UISegmentedControl!
     @IBOutlet weak var sendBetButton: UIButton!
     
-    var selectedBetType: BetType = .spread
-    var selectedSide: Side = .one
-    var rows = [EntryRow]()
+    var rows = [BetEntryRowViewModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViewController()
+        initViewModel()
         configureTableView()
         configureDataSource()
         updateUI()
@@ -42,33 +43,26 @@ class NewBetViewController: UIViewController, Storyboarded {
         sendBetButton.layer.cornerRadius = 15
     }
     
-    @IBAction func topControlChanged(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            selectedBetType = .spread
-        case 1:
-            selectedBetType = .moneyline
-        case 2:
-            selectedBetType = .event
-        default:
-            return
+    func initViewModel() {
+        viewModel.createCellVMs()
+        
+        // Naive binding
+        viewModel.reloadTableViewClosure = { [weak self] in
+            self?.updateUI()
         }
-        updateUI(for: selectedBetType)
     }
     
+    @IBAction func topControlChanged(_ sender: UISegmentedControl) {
+        viewModel.changeBetType(sender.selectedSegmentIndex)
+    }
+
+    
     @IBAction func bottomControlChanged(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            selectedSide = .one
-        case 1:
-            selectedSide = .two
-        default:
-            return
-        }
+        viewModel.changeSide(sender.selectedSegmentIndex)
     }
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
-        
+        viewModel.createNewBet()
     }
     
 }
@@ -78,28 +72,34 @@ extension NewBetViewController {
     enum Section {
         case main
     }
-    
 
     func configureDataSource() {
-        dataSource = UITableViewDiffableDataSource<Section, EntryRow>(
+        dataSource = UITableViewDiffableDataSource<Section, BetEntryRowViewModel>(
             tableView: entryTable,
-            cellProvider: { tableView, indexPath, entryRow in
-                if entryRow.title == "Stake" {
-                    return tableView.dequeueReusableCell(withIdentifier: K.cells.stakeCell, for: indexPath) as! StakeEntryCell
+            cellProvider: { tableView, indexPath, rowVM in
+                // Custom cell setup for stake entry cell
+                if rowVM.type == .stake {
+                    return tableView.dequeueReusableCell(withIdentifier: K.cells.stakeCell,
+                                                             for: indexPath) as? StakeEntryCell
                 } else {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.betEntryCell, for: indexPath) as! BetEntryCell
-                    cell.titleLabel.text = entryRow.title
-                    cell.textField.placeholder = entryRow.placeholder ?? ""
+                    // All other cell types
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.betEntryCell,
+                                                                   for: indexPath) as? BetEntryCell else {
+                        fatalError("Cell does not exist in storyboard")
+                    }
+                    cell.titleLabel.text = rowVM.title
+                    cell.textField.placeholder = rowVM.placeholder ?? ""
+                    cell.rowType = rowVM.type
                     return cell
                 }
             }
         )
     }
     
-    func updateUI(for betType: BetType = .spread, animated: Bool = false) {
+    func updateUI(animated: Bool = false) {
         // Set up table rows
-        rows = viewModel.getRowLabels(for: betType)
-        var snapshot = NSDiffableDataSourceSnapshot<Section, EntryRow>()
+        rows = viewModel.cellViewModels
+        var snapshot = NSDiffableDataSourceSnapshot<Section, BetEntryRowViewModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(rows)
         dataSource.apply(snapshot, animatingDifferences: animated, completion: nil)
@@ -107,7 +107,7 @@ extension NewBetViewController {
         // Set up bottom seg. control labels
         var leftLabel = ""
         var rightLabel = ""
-        switch betType {
+        switch viewModel.selectedBetType {
         case .spread:
             leftLabel = "Over"
             rightLabel = "Under"
@@ -133,7 +133,7 @@ extension NewBetViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if rows[indexPath.row].title == "Stat" || rows[indexPath.row].title == "Event" {
+        if rows[indexPath.row].type == .stat || rows[indexPath.row].type == .event {
             return 70
         }
         else {
@@ -145,4 +145,11 @@ extension NewBetViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+}
+
+// MARK:- Text Field Delegate
+extension NewBetViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        textField.addTarget(self, action: #selector(valueChanged), for: .editingChanged)
+    }
 }

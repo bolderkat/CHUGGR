@@ -9,15 +9,14 @@ import UIKit
 
 class BetEntryCell: UITableViewCell {
     
+    var rowType: EntryRowType?
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        if titleLabel?.text == "Stat" || titleLabel?.text == "Event" {
-            self.bounds.size.height = 70
-        }
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

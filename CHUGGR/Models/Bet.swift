@@ -7,14 +7,14 @@
 
 import Foundation
 
-enum BetType: String {
+enum BetType: Int {
     case spread
     case moneyline
     case event
 }
 
 enum Side: Int {
-    case one = 1
+    case one = 0
     case two
 }
 
@@ -29,7 +29,7 @@ enum BetUserAction {
 struct Bet {
     let type: BetType
     let title: String
-    var line: Float
+    var line: Float?
     let team1: String?
     let team2: String?
     private(set) var invitedUsers: Set<String> // UUIDs
