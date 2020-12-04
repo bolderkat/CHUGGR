@@ -10,7 +10,7 @@ import UIKit
 class NewBetViewController: UIViewController, Storyboarded {
 
     weak var coordinator: ChildCoordinating?
-    var dataSource: UITableViewDiffableDataSource<Section, BetEntryRowViewModel>!
+    var dataSource: UITableViewDiffableDataSource<Section, BetEntryCellViewModel>!
     private lazy var viewModel: NewBetViewModel = {
         return NewBetViewModel()
     }()
@@ -19,8 +19,6 @@ class NewBetViewController: UIViewController, Storyboarded {
     @IBOutlet weak var entryTable: UITableView!
     @IBOutlet weak var bottomControl: UISegmentedControl!
     @IBOutlet weak var sendBetButton: UIButton!
-    
-    var rows = [BetEntryRowViewModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,13 +72,16 @@ extension NewBetViewController {
     }
 
     func configureDataSource() {
-        dataSource = UITableViewDiffableDataSource<Section, BetEntryRowViewModel>(
+        dataSource = UITableViewDiffableDataSource<Section, BetEntryCellViewModel>(
             tableView: entryTable,
             cellProvider: { tableView, indexPath, rowVM in
                 // Custom cell setup for stake entry cell
                 if rowVM.type == .stake {
-                    return tableView.dequeueReusableCell(withIdentifier: K.cells.stakeCell,
-                                                             for: indexPath) as? StakeEntryCell
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.stakeCell,
+                                                                   for: indexPath) as? StakeEntryCell else {
+                        fatalError("Cell does not exist in storyboard")
+                    }
+                    return cell
                 } else {
                     // All other cell types
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.betEntryCell,
@@ -98,8 +99,8 @@ extension NewBetViewController {
     
     func updateUI(animated: Bool = false) {
         // Set up table rows
-        rows = viewModel.cellViewModels
-        var snapshot = NSDiffableDataSourceSnapshot<Section, BetEntryRowViewModel>()
+        let rows = viewModel.cellViewModels
+        var snapshot = NSDiffableDataSourceSnapshot<Section, BetEntryCellViewModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(rows)
         dataSource.apply(snapshot, animatingDifferences: animated, completion: nil)
@@ -133,7 +134,8 @@ extension NewBetViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if rows[indexPath.row].type == .stat || rows[indexPath.row].type == .event {
+        let cell = viewModel.getCellViewModel(at: indexPath)
+        if cell.type == .stat || cell.type == .event {
             return 70
         }
         else {
@@ -145,11 +147,4 @@ extension NewBetViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-}
-
-// MARK:- Text Field Delegate
-extension NewBetViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        textField.addTarget(self, action: #selector(valueChanged), for: .editingChanged)
-    }
 }

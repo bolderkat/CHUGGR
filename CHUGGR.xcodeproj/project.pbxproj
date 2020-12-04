@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		33F2837CAAB91E2DD6A852E1 /* Pods_CHUGGRTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D648B058C51D7AD3E6E0249 /* Pods_CHUGGRTests.framework */; };
-		650371F8257AD2B700F59D95 /* BetEntryRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650371F7257AD2B700F59D95 /* BetEntryRowViewModel.swift */; };
+		650371F8257AD2B700F59D95 /* BetEntryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650371F7257AD2B700F59D95 /* BetEntryCellViewModel.swift */; };
 		6533F266256859C5002524B3 /* ParentCoordinating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533F265256859C5002524B3 /* ParentCoordinating.swift */; };
 		6533F26B25685B13002524B3 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533F26A25685B13002524B3 /* Storyboarded.swift */; };
 		6535F503256F479F00C5FC72 /* BetEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6535F501256F479F00C5FC72 /* BetEntryCell.swift */; };
@@ -75,7 +75,7 @@
 /* Begin PBXFileReference section */
 		5CE5F6A2FF71B1062949620C /* Pods-CHUGGR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHUGGR.release.xcconfig"; path = "Target Support Files/Pods-CHUGGR/Pods-CHUGGR.release.xcconfig"; sourceTree = "<group>"; };
 		5D648B058C51D7AD3E6E0249 /* Pods_CHUGGRTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CHUGGRTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		650371F7257AD2B700F59D95 /* BetEntryRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetEntryRowViewModel.swift; sourceTree = "<group>"; };
+		650371F7257AD2B700F59D95 /* BetEntryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetEntryCellViewModel.swift; sourceTree = "<group>"; };
 		6533F265256859C5002524B3 /* ParentCoordinating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCoordinating.swift; sourceTree = "<group>"; };
 		6533F26A25685B13002524B3 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		6535F501256F479F00C5FC72 /* BetEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetEntryCell.swift; sourceTree = "<group>"; };
@@ -249,7 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				654AC027257740A900AEBADF /* NewBetViewModel.swift */,
-				650371F7257AD2B700F59D95 /* BetEntryRowViewModel.swift */,
+				650371F7257AD2B700F59D95 /* BetEntryCellViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -617,7 +617,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65FBCBA3252F9B6200227121 /* BetsTableSection.swift in Sources */,
-				650371F8257AD2B700F59D95 /* BetEntryRowViewModel.swift in Sources */,
+				650371F8257AD2B700F59D95 /* BetEntryCellViewModel.swift in Sources */,
 				654AC028257740A900AEBADF /* NewBetViewModel.swift in Sources */,
 				65C237FD256EF82B001EA95D /* NewBetViewController.swift in Sources */,
 				6535F503256F479F00C5FC72 /* BetEntryCell.swift in Sources */,

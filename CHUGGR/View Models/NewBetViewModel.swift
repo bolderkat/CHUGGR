@@ -27,7 +27,7 @@ class NewBetViewModel {
     }
     private(set) var selectedSide: Side = .one
     
-    private(set) var cellViewModels: [BetEntryRowViewModel] = [BetEntryRowViewModel]() {
+    private(set) var cellViewModels: [BetEntryCellViewModel] = [BetEntryCellViewModel]() {
         didSet {
             reloadTableViewClosure?()
         }
@@ -68,7 +68,7 @@ class NewBetViewModel {
         
         // Create containers for row types and cell VMs
         var rowTypes = [EntryRowType]()
-        var vms = [BetEntryRowViewModel]()
+        var vms = [BetEntryCellViewModel]()
         
         // Provide row types based on selected bet type
         switch selectedBetType {
@@ -82,13 +82,16 @@ class NewBetViewModel {
         
         // Create cell VM instances based on selected bet type
         for type in rowTypes {
-            vms.append(BetEntryRowViewModel(type: type))
+            vms.append(BetEntryCellViewModel(type: type))
         }
         
         // Assign to array of cellViewModels which is provided to table view data source
         // Replaces old cells if present.
         cellViewModels = vms
-        
+    }
+    
+    func getCellViewModel(at indexPath: IndexPath) -> BetEntryCellViewModel {
+        cellViewModels[indexPath.row]
     }
     
     func changeBetType(_ type: Int) {
@@ -110,7 +113,7 @@ class NewBetViewModel {
     }
     
     func createNewBet() {
- 
+        // here's where the fun happens...
     }
 
 }

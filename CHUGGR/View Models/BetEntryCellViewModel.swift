@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BetEntryRowViewModel: Hashable {
+struct BetEntryCellViewModel: Hashable {
     let type: EntryRowType
     let title: String
     let placeholder: String?
