@@ -339,6 +339,8 @@
 			isa = PBXGroup;
 			children = (
 				65C6E408257F408600EA7AA4 /* FirestoreHelper.swift */,
+				656D944B252BF5FE00EDEB7F /* AppDelegate.swift */,
+				656D944D252BF5FE00EDEB7F /* SceneDelegate.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -361,8 +363,6 @@
 			children = (
 				656D9451252BF5FE00EDEB7F /* Main.storyboard */,
 				656D9459252BF60100EDEB7F /* LaunchScreen.storyboard */,
-				656D944B252BF5FE00EDEB7F /* AppDelegate.swift */,
-				656D944D252BF5FE00EDEB7F /* SceneDelegate.swift */,
 				6545C063257AF02F0092C02A /* Main */,
 				6545C03C257AEEAF0092C02A /* Bet Dashboard Tab */,
 				6545C05D257AEF9B0092C02A /* Friends Tab */,

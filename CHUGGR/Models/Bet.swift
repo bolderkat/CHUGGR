@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum BetType: Int, Codable {
+enum BetType: String, Codable {
     case spread
     case moneyline
     case event
@@ -35,9 +35,7 @@ struct Bet: Codable {
     private(set) var invitedUsers = Set<String>() // UUIDs
     private(set) var side1Users = Set<String>() // UUIDs
     private(set) var side2Users = Set<String>() // UUIDs
-    var allUsers: Set<String> {
-        invitedUsers.union(side1Users).union(side2Users)
-    }
+    private(set) var allUsers = Set<String>() // UUIDs
     var stake: Drinks
     let dateOpened: TimeInterval
     var dueDate: TimeInterval
@@ -58,8 +56,10 @@ struct Bet: Codable {
         switch action {
         case .invite:
             invitedUsers.insert(uuid)
+            allUsers.insert(uuid)
         case .uninvite:
             invitedUsers.remove(uuid)
+            allUsers.remove(uuid)
         case .addToSide1:
             if invitedUsers.contains(uuid) && !side2Users.contains(uuid) {
                 invitedUsers.remove(uuid)
@@ -73,6 +73,7 @@ struct Bet: Codable {
         case .removeFromSide:
             side1Users.remove(uuid)
             side2Users.remove(uuid)
+            allUsers.remove(uuid)
         }
     }
 }

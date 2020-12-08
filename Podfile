@@ -9,6 +9,7 @@ target 'CHUGGR' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'FirebaseUI', '~> 8.0'
+  pod 'FirebaseFirestoreSwift'
 
   target 'CHUGGRTests' do
     inherit! :search_paths

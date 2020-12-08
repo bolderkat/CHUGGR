@@ -33,4 +33,10 @@ struct K {
         static let gray6 = "Gray 6"
         static let yellow = "Yellow"
     }
+    struct Firestore {
+        static let bets = "bets"
+        static let chatRooms = "chatRooms"
+        static let users = "users"
+        static let videos = "videos"
+    }
 }

@@ -9,7 +9,9 @@ import Foundation
 import Firebase
 
 class NewBetViewModel {
-   private(set) var selectedBetType: BetType = .spread {
+    let firestoreHelper = FirestoreHelper()
+    
+    private(set) var selectedBetType: BetType = .spread {
         didSet {
             createCellVMs() // initiate VMs for new cells when bet type changed
             clearInputStorage() // start fresh when user changes bet type
@@ -95,8 +97,12 @@ class NewBetViewModel {
     func changeBetType(_ type: Int) {
         // Handle user toggling bet type selection control
         switch type {
-        case 0...2:
-            selectedBetType = BetType(rawValue: type) ?? .spread
+        case 0:
+            selectedBetType = BetType.spread
+        case 1:
+            selectedBetType = BetType.moneyline
+        case 2:
+            selectedBetType = BetType.event
         default:
             return
         }
@@ -214,7 +220,7 @@ class NewBetViewModel {
         // If none of the above conditions are satisfied, input is incomplete.
         isInputComplete = false
     }
-
+    
     
     // MARK:- New bet creation
     
@@ -275,25 +281,27 @@ class NewBetViewModel {
             }
             
             bet = Bet(type: selectedBetType,
-                          title: title,
-                          team1: nil,
-                          team2: nil,
-                          stake: stake,
-                          dateOpened: currentDate,
-                          dueDate: dueDate
+                      title: title,
+                      team1: nil,
+                      team2: nil,
+                      stake: stake,
+                      dateOpened: currentDate,
+                      dueDate: dueDate
             )
         }
         
+        // Make sure we actually have a bet instance after all the above
+        guard var enteredBet = bet else { return }
         // Add user to bet then assign to selected side.
-        bet?.perform(action: .invite, with: currentUserID)
+        enteredBet.perform(action: .invite, with: currentUserID)
         switch selectedSide {
         case .one:
-            bet?.perform(action: .addToSide1, with: currentUserID)
+            enteredBet.perform(action: .addToSide1, with: currentUserID)
         case .two:
-            bet?.perform(action: .addToSide2, with: currentUserID)
+            enteredBet.perform(action: .addToSide2, with: currentUserID)
         }
-        print(bet)
-        print(bet?.allUsers)
+        
+        firestoreHelper.writeNewBet(bet: enteredBet)
     }
     
 }
