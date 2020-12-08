@@ -7,6 +7,18 @@
 
 import Foundation
 
+// Define entry row types
+enum EntryRowType {
+    case stat
+    case line
+    case team1
+    case team2
+    case gameday
+    case event
+    case dueDate
+    case stake
+}
+
 struct BetEntryCellViewModel: Hashable {
     let type: EntryRowType
     let title: String
@@ -28,13 +40,13 @@ struct BetEntryCellViewModel: Hashable {
             placeholder = "Ex: Dodgers"
         case .gameday:
             title = "Gameday"
-            placeholder = "Enter date bet will occur"
+            placeholder = "Date bet will occur"
         case .event:
             title = "Event"
             placeholder = "Ex: Half Life 3 announced"
         case .dueDate:
             title = "Due date"
-            placeholder = "Optional bet expiration date"
+            placeholder = "Bet expiration date"
         case .stake:
             title = "Stake"
             placeholder = nil

@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum BetType: Int {
+enum BetType: Int, Codable {
     case spread
     case moneyline
     case event
 }
 
-enum Side: Int {
+enum Side: Int, Codable {
     case one = 0
     case two
 }
@@ -26,23 +26,21 @@ enum BetUserAction {
     case removeFromSide
 }
 
-struct Bet {
+struct Bet: Codable {
     let type: BetType
     let title: String
-    var line: Float?
+    var line: Double?
     let team1: String?
     let team2: String?
-    private(set) var invitedUsers: Set<String> // UUIDs
-    private(set) var side1Users: Set<String> // UUIDs
-    private(set) var side2Users: Set<String> // UUIDs
+    private(set) var invitedUsers = Set<String>() // UUIDs
+    private(set) var side1Users = Set<String>() // UUIDs
+    private(set) var side2Users = Set<String>() // UUIDs
     var allUsers: Set<String> {
-        var set = invitedUsers.union(side1Users)
-        set = set.union(side2Users)
-        return set
+        invitedUsers.union(side1Users).union(side2Users)
     }
     var stake: Drinks
     let dateOpened: TimeInterval
-    var dueDate: TimeInterval?
+    var dueDate: TimeInterval
     private(set) var isFinished = false
     private(set) var winner: Side?
     private(set) var dateFinished: TimeInterval? = nil
@@ -54,10 +52,9 @@ struct Bet {
         dateFinished = Date().timeIntervalSince1970
     }
     
-    mutating func perform(action: BetUserAction, on user: User) {
+    mutating func perform(action: BetUserAction, with uuid: String) {
         guard !isFinished else { return }
         
-        let uuid = user.uuid
         switch action {
         case .invite:
             invitedUsers.insert(uuid)
@@ -78,4 +75,25 @@ struct Bet {
             side2Users.remove(uuid)
         }
     }
+}
+
+
+struct CodableBet: Codable {
+    let type: BetType
+    let title: String
+    var line: Double?
+    let team1: String?
+    let team2: String?
+    private(set) var invitedUsers = Set<String>() // UUIDs
+    private(set) var side1Users = Set<String>() // UUIDs
+    private(set) var side2Users = Set<String>() // UUIDs
+    var allUsers: Set<String> {
+        invitedUsers.union(side1Users).union(side2Users)
+    }
+//    var stake: Drinks
+    let dateOpened: TimeInterval
+    var dueDate: TimeInterval
+    private(set) var isFinished = false
+    private(set) var winner: Side?
+    private(set) var dateFinished: TimeInterval? = nil
 }

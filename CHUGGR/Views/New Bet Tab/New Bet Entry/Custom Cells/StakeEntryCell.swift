@@ -9,18 +9,51 @@ import UIKit
 
 class StakeEntryCell: UITableViewCell {
 
+    var onStakeInput: ((String?, String?) -> ())?
+    
     @IBOutlet weak var beerField: UITextField!
     @IBOutlet weak var shotField: UITextField!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        
+        beerField.delegate = self
+        beerField.keyboardType = .numberPad
+        beerField.addDoneButtonOnKeyboard()
+        
+        shotField.delegate = self
+        shotField.keyboardType = .numberPad
+        shotField.addDoneButtonOnKeyboard()
     }
     
+}
+
+extension StakeEntryCell: UITextFieldDelegate {
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String)
+    -> Bool {
+        
+        // Limit to 1 character
+        let characterLimit = 1
+        
+        // Determine length of new entry
+        let startingLength = textField.text?.count ?? 0
+        let lengthToAdd = string.count
+        let lengthToReplace = range.length
+        let newLength = startingLength + lengthToAdd - lengthToReplace
+
+        // Filter out any non-numeric entries.
+        let aSet = NSCharacterSet(charactersIn:"0123456789").inverted
+        let compSepByCharInSet = string.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
+        
+        // Only allow text field change if less than 1 chars and if only numbers.
+        return newLength <= characterLimit && string == numberFiltered
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        onStakeInput?(beerField.text, shotField.text)
+    }
 }

@@ -22,6 +22,7 @@ class NewBetViewController: UIViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dismissKeyboard() // sets up keyboard dismissal on touch outside from extension
         setUpViewController()
         initViewModel()
         configureTableView()
@@ -38,15 +39,25 @@ class NewBetViewController: UIViewController, Storyboarded {
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .semibold)
         ]
+        
+        updateButtonStatus()
         sendBetButton.layer.cornerRadius = 15
+        
+        entryTable.isScrollEnabled = false
+        entryTable.allowsSelection = false
+
     }
     
     func initViewModel() {
         viewModel.createCellVMs()
         
-        // Naive binding
+        // Pass UI update functions to VM so view can reflect state in VM
         viewModel.reloadTableViewClosure = { [weak self] in
             self?.updateUI()
+        }
+        
+        viewModel.updateButtonStatus = { [weak self] in
+            self?.updateButtonStatus()
         }
     }
     
@@ -75,22 +86,54 @@ extension NewBetViewController {
         dataSource = UITableViewDiffableDataSource<Section, BetEntryCellViewModel>(
             tableView: entryTable,
             cellProvider: { tableView, indexPath, rowVM in
+                
                 // Custom cell setup for stake entry cell
-                if rowVM.type == .stake {
-                    guard let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.stakeCell,
-                                                                   for: indexPath) as? StakeEntryCell else {
+                switch rowVM.type {
+                case .stake:
+                    guard let cell = tableView.dequeueReusableCell(
+                            withIdentifier: K.cells.stakeCell,
+                            for: indexPath) as? StakeEntryCell else {
                         fatalError("Cell does not exist in storyboard")
                     }
+                    // Make sure entry fields are blank when cell is reused
+                    cell.beerField.text = ""
+                    cell.shotField.text = ""
+                    cell.onStakeInput = self.viewModel.handle(beerStake:shotStake:)
                     return cell
-                } else {
+                    
+                case .dueDate, .gameday:
+                    // Provide compact date picker in cell if iOS 14 or higher
+                    if #available(iOS 14, *) {
+                        guard let cell = tableView.dequeueReusableCell(
+                                withIdentifier: K.cells.dateCell,
+                                for: indexPath) as? DateEntryCell else {
+                            fatalError("Cell does not exist in storyboard")
+                        }
+
+                        cell.titleLabel.text = rowVM.title
+                        cell.datePicker.date = Date.init()
+                        cell.onDateInput = self.viewModel.handle(date:)
+                        return cell
+                    } else {
+                        fallthrough
+                    }
+                    
+                default:
                     // All other cell types
-                    guard let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.betEntryCell,
-                                                                   for: indexPath) as? BetEntryCell else {
+                    guard let cell = tableView.dequeueReusableCell(
+                        withIdentifier: K.cells.betEntryCell,
+                        for: indexPath
+                    ) as? BetEntryCell else {
                         fatalError("Cell does not exist in storyboard")
                     }
                     cell.titleLabel.text = rowVM.title
+                    
+                    // Make sure textfields are empty when cell reused
                     cell.textField.placeholder = rowVM.placeholder ?? ""
+                    cell.textField.text = ""
                     cell.rowType = rowVM.type
+                    cell.onTextInput = self.viewModel.handle(text:for:)
+                    cell.onDateInput = self.viewModel.handle(date:) // for iOS 13 and earlier
                     return cell
                 }
             }
@@ -122,6 +165,12 @@ extension NewBetViewController {
         bottomControl.setTitle(leftLabel, forSegmentAt: 0)
         bottomControl.setTitle(rightLabel, forSegmentAt: 1)
     }
+    
+    func updateButtonStatus() {
+        sendBetButton.isEnabled = viewModel.isInputComplete
+        sendBetButton.backgroundColor = sendBetButton.isEnabled ?
+            UIColor(named: K.colors.orange) : UIColor(named: K.colors.gray3)
+    }
 }
 
 
@@ -129,8 +178,12 @@ extension NewBetViewController {
 extension NewBetViewController: UITableViewDelegate {
     func configureTableView() {
         entryTable.delegate = self
-        entryTable.register(UINib(nibName: K.cells.betEntryCell, bundle: nil), forCellReuseIdentifier: K.cells.betEntryCell)
-        entryTable.register(UINib(nibName: K.cells.stakeCell, bundle: nil), forCellReuseIdentifier: K.cells.stakeCell)
+        entryTable.register(UINib(nibName: K.cells.betEntryCell, bundle: nil),
+                            forCellReuseIdentifier: K.cells.betEntryCell)
+        entryTable.register(UINib(nibName: K.cells.stakeCell, bundle: nil),
+                            forCellReuseIdentifier: K.cells.stakeCell)
+        entryTable.register(UINib(nibName: K.cells.dateCell, bundle: nil),
+                            forCellReuseIdentifier: K.cells.dateCell)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

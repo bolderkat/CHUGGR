@@ -7,7 +7,10 @@
 
 import Foundation
 
-typealias Drinks = (shotguns: Int, shots: Int)
+struct Drinks: Codable {
+    var beers: Int
+    var shots: Int
+}
 
 enum UserAction {
     case add

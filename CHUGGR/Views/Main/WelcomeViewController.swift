@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  WelcomeViewController.swift
 //  CHUGGR
 //
 //  Created by Daniel Edward Luo on 10/5/20.

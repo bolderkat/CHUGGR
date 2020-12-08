@@ -6,46 +6,44 @@
 //
 
 import Foundation
-
-// Define entry row types
-enum EntryRowType {
-    case stat
-    case line
-    case team1
-    case team2
-    case gameday
-    case event
-    case dueDate
-    case stake
-}
+import Firebase
 
 class NewBetViewModel {
    private(set) var selectedBetType: BetType = .spread {
         didSet {
-            createCellVMs()
+            createCellVMs() // initiate VMs for new cells when bet type changed
+            clearInputStorage() // start fresh when user changes bet type
         }
     }
     private(set) var selectedSide: Side = .one
     
     private(set) var cellViewModels: [BetEntryCellViewModel] = [BetEntryCellViewModel]() {
         didSet {
-            reloadTableViewClosure?()
+            reloadTableViewClosure?() // update tableview when cell VMs change
+        }
+    }
+    
+    private(set) var isInputComplete = false {
+        didSet {
+            updateButtonStatus?() // enable/disable button based on user input
         }
     }
     
     var titleInput: String?
-    var lineInput: String?
+    var lineInput: Double?
     var team1Input: String?
     var team2Input: String?
-    var dueDateInput: String?
-    var beersInput: String?
-    var shotsInput: String?
+    var dueDateInput: TimeInterval?
+    var stakeInput: Drinks?
     
     var reloadTableViewClosure: (() -> ())?
+    var updateButtonStatus: (() -> ())?
+    var setSendButtonState: (() -> ())?
     
     
     
     func createCellVMs() {
+        // Define user input rows for each bet type
         let spreadLabels = [
             EntryRowType.stat,
             EntryRowType.line,
@@ -95,6 +93,7 @@ class NewBetViewModel {
     }
     
     func changeBetType(_ type: Int) {
+        // Handle user toggling bet type selection control
         switch type {
         case 0...2:
             selectedBetType = BetType(rawValue: type) ?? .spread
@@ -103,7 +102,19 @@ class NewBetViewModel {
         }
     }
     
+    func clearInputStorage() {
+        // So user input doesn't stick around after user changes bet type.
+        titleInput = nil
+        lineInput = nil
+        team1Input = nil
+        team2Input = nil
+        dueDateInput = nil
+        stakeInput = nil
+        validateInput()
+    }
+    
     func changeSide(_ side: Int) {
+        // Handle user toggling side selection control
         switch side {
         case 0...1:
             selectedSide = Side(rawValue: side) ?? .one
@@ -112,8 +123,177 @@ class NewBetViewModel {
         }
     }
     
-    func createNewBet() {
-        // here's where the fun happens...
+    // MARK:- Input processing from cells
+    
+    func handle(text: String, for rowType: EntryRowType) {
+        // Store textfield input into variables based on row type
+        switch rowType {
+        case .stat:
+            titleInput = text
+        case .event:
+            titleInput = text
+        case .line:
+            if text == "" || text == "." {
+                lineInput = nil
+                break
+            }
+            
+            var lineText = text
+            // Clean input if string ends with "."
+            if text.last == "." {
+                lineText = String(text.dropLast())
+            }
+            
+            // Lines need to be positive numbers
+            if let line = Double(lineText), line > 0 {
+                lineInput = line
+            }
+        case .team1:
+            team1Input = text
+        case .team2:
+            team2Input = text
+        default:
+            break
+        }
+        validateInput()
+    }
+    
+    func handle(date: TimeInterval) {
+        dueDateInput = date
+        validateInput()
+    }
+    
+    func handle(beerStake: String?, shotStake: String?) {
+        // Blank or noninteger input results in 0
+        let beers = Int(beerStake ?? "0") ?? 0
+        let shots = Int(shotStake ?? "0") ?? 0
+        stakeInput = Drinks(beers: beers, shots: shots)
+        validateInput()
+    }
+    
+    
+    // MARK:- Input validation to determine if user allowed to submit bet
+    
+    func validateInput() {
+        guard let date = dueDateInput,
+              let stake = stakeInput else {
+            isInputComplete = false
+            return
+        }
+        
+        // Do not allow due date in the past
+        let isSelectedDateInFuture: Bool = (date - Date.init().timeIntervalSince1970) > 0
+        
+        // Stake must have positive value in at least one field
+        let isStakeValid: Bool = !(stake.beers == 0 && stake.shots == 0)
+        switch selectedBetType {
+        case .spread:
+            if !(titleInput ?? "").isEmpty,
+               lineInput != nil,
+               isSelectedDateInFuture,
+               isStakeValid {
+                isInputComplete = true
+                return
+            }
+        case .moneyline:
+            if !(team1Input ?? "").isEmpty,
+               !(team2Input ?? "").isEmpty,
+               isSelectedDateInFuture,
+               isStakeValid {
+                isInputComplete = true
+                return
+            }
+        case .event:
+            if !(titleInput ?? "").isEmpty,
+               isSelectedDateInFuture,
+               isStakeValid {
+                isInputComplete = true
+                return
+            }
+        }
+        // If none of the above conditions are satisfied, input is incomplete.
+        isInputComplete = false
     }
 
+    
+    // MARK:- New bet creation
+    
+    func createNewBet() {
+        
+        // Check for user auth
+        guard let currentUserID = Auth.auth().currentUser?.uid else {
+            fatalError("Unable to find current authorized user.")
+        }
+        
+        var bet: Bet?
+        let currentDate = Date.init().timeIntervalSince1970
+        
+        // Switch on bet type to decide which values to unwrap
+        switch selectedBetType {
+        case .spread:
+            guard let title = titleInput,
+                  let line = lineInput,
+                  let dueDate = dueDateInput,
+                  let stake = stakeInput else {
+                fatalError("Invalid data for creation of spread bet.")
+            }
+            
+            bet = Bet(
+                type: selectedBetType,
+                title: title,
+                line: line,
+                team1: nil,
+                team2: nil,
+                stake: stake,
+                dateOpened: currentDate,
+                dueDate: dueDate
+            )
+            
+        case .moneyline:
+            guard let team1 = team1Input,
+                  let team2 = team2Input,
+                  let dueDate = dueDateInput,
+                  let stake = stakeInput else {
+                fatalError("Invalid data for creation of moneyline bet.")
+            }
+            
+            bet = Bet(
+                type: selectedBetType,
+                title: "\(team1) vs. \(team2)",
+                team1: team1,
+                team2: team2,
+                stake: stake,
+                dateOpened: currentDate,
+                dueDate: dueDate
+            )
+            
+        case .event:
+            guard let title = titleInput,
+                  let dueDate = dueDateInput,
+                  let stake = stakeInput else {
+                fatalError("Invalid data for creation of event bet.")
+            }
+            
+            bet = Bet(type: selectedBetType,
+                          title: title,
+                          team1: nil,
+                          team2: nil,
+                          stake: stake,
+                          dateOpened: currentDate,
+                          dueDate: dueDate
+            )
+        }
+        
+        // Add user to bet then assign to selected side.
+        bet?.perform(action: .invite, with: currentUserID)
+        switch selectedSide {
+        case .one:
+            bet?.perform(action: .addToSide1, with: currentUserID)
+        case .two:
+            bet?.perform(action: .addToSide2, with: currentUserID)
+        }
+        print(bet)
+        print(bet?.allUsers)
+    }
+    
 }

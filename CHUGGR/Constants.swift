@@ -14,6 +14,7 @@ struct K {
         static let betsPendingCell = "BetsPendingCell"
         static let messageCell = "MessageCell"
         static let stakeCell = "StakeEntryCell"
+        static let dateCell = "DateEntryCell"
     }
     struct colors {
         static let alabaster = "Alabaster"

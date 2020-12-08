@@ -27,7 +27,7 @@
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Placeholder" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oox-sD-grv">
                         <rect key="frame" x="108" y="14" width="196" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                     </textField>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOW-Qf-IEM" customClass="HairlineView" customModule="CHUGGR" customModuleProvider="target">
                         <rect key="frame" x="108" y="49" width="212" height="1"/>
