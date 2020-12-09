@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 protocol ChildCoordinating: AnyObject {
     var parentCoordinator: MainCoordinator? { get set }
@@ -13,5 +14,6 @@ protocol ChildCoordinating: AnyObject {
     var navigationController: UINavigationController { get set }
     
     func start()
+    func openBetDetail(withBetID id: String)
 }
 

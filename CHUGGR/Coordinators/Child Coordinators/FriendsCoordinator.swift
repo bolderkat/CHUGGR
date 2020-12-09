@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import Firebase
 
 class FriendsCoordinator: ChildCoordinating {
+    
     weak var parentCoordinator: MainCoordinator?
     var childCoordinator = [ChildCoordinating]()
     var navigationController: UINavigationController
@@ -25,6 +27,16 @@ class FriendsCoordinator: ChildCoordinating {
             tag: 1
         )
         navigationController.pushViewController(vc, animated: false)
+    }
+
+    func openBetDetail(withBetID id: String) {
+        let vc = BetsDetailViewController.instantiate()
+        vc.coordinator = self
+        
+        let vm = BetsDetailViewModel()
+        vm.setBetDocID(withBetID: id)
+        vc.setViewModel(viewModel: vm)
+        navigationController.pushViewController(vc, animated: true)
     }
 }
 

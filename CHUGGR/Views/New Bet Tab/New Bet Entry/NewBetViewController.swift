@@ -71,7 +71,8 @@ class NewBetViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
-        viewModel.createNewBet()
+        guard let id = viewModel.createNewBet() else { return }
+        coordinator?.openBetDetail(withBetID: id)
     }
     
 }

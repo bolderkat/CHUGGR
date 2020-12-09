@@ -7,11 +7,6 @@
 
 import Foundation
 
-struct Drinks: Codable {
-    var beers: Int
-    var shots: Int
-}
-
 enum UserAction {
     case add
     case delete

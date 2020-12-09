@@ -45,6 +45,9 @@
 		65C6E400257EE5AC00EA7AA4 /* UIViewController+DismissKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6E3FF257EE5AC00EA7AA4 /* UIViewController+DismissKeyboard.swift */; };
 		65C6E409257F408600EA7AA4 /* FirestoreHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6E408257F408600EA7AA4 /* FirestoreHelper.swift */; };
 		65C97625256C4EF800AA46BA /* BetsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C97624256C4EF800AA46BA /* BetsCoordinator.swift */; };
+		65D18D972580266F00E562C1 /* BetsDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D18D962580266F00E562C1 /* BetsDetailViewModel.swift */; };
+		65D18D9C2580520200E562C1 /* FirestoreHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D18D9B2580520200E562C1 /* FirestoreHelperTests.swift */; };
+		65D18DAD258053EC00E562C1 /* Drinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D18DAC258053EC00E562C1 /* Drinks.swift */; };
 		65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D34C1F252CF494005C6F98 /* BetsViewController.swift */; };
 		65E6F787256C5A2400252974 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6F786256C5A2400252974 /* ProfileCoordinator.swift */; };
 		65F4029B252EA103007892F8 /* Bet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F4029A252EA103007892F8 /* Bet.swift */; };
@@ -124,6 +127,9 @@
 		65C6E3FF257EE5AC00EA7AA4 /* UIViewController+DismissKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+DismissKeyboard.swift"; sourceTree = "<group>"; };
 		65C6E408257F408600EA7AA4 /* FirestoreHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreHelper.swift; sourceTree = "<group>"; };
 		65C97624256C4EF800AA46BA /* BetsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsCoordinator.swift; sourceTree = "<group>"; };
+		65D18D962580266F00E562C1 /* BetsDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsDetailViewModel.swift; sourceTree = "<group>"; };
+		65D18D9B2580520200E562C1 /* FirestoreHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreHelperTests.swift; sourceTree = "<group>"; };
+		65D18DAC258053EC00E562C1 /* Drinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drinks.swift; sourceTree = "<group>"; };
 		65D34C1F252CF494005C6F98 /* BetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsViewController.swift; sourceTree = "<group>"; };
 		65E6F786256C5A2400252974 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		65F4029A252EA103007892F8 /* Bet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bet.swift; sourceTree = "<group>"; };
@@ -198,6 +204,7 @@
 				65FBCBC0253257CE00227121 /* BetsDetailViewController.swift */,
 				658F11242532747F003B6303 /* MessageCell.swift */,
 				658F11252532747F003B6303 /* MessageCell.xib */,
+				65D18D962580266F00E562C1 /* BetsDetailViewModel.swift */,
 			);
 			path = "Bet Detail";
 			sourceTree = "<group>";
@@ -321,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				656D9465252BF60100EDEB7F /* CHUGGRTests.swift */,
+				65D18D9B2580520200E562C1 /* FirestoreHelperTests.swift */,
 				656D9467252BF60100EDEB7F /* Info.plist */,
 			);
 			path = CHUGGRTests;
@@ -377,6 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				65F4029A252EA103007892F8 /* Bet.swift */,
+				65D18DAC258053EC00E562C1 /* Drinks.swift */,
 				65FCE6DE2569BB930066BDC5 /* User.swift */,
 				65FBCBA2252F9B6200227121 /* BetsTableSection.swift */,
 				65FCE6E3256B33F00066BDC5 /* SampleBet.swift */,
@@ -725,12 +734,14 @@
 				6533F266256859C5002524B3 /* ParentCoordinating.swift in Sources */,
 				65C50E18252D1C9900A786A8 /* VideosViewController.swift in Sources */,
 				65650A402568709900812395 /* ChildCoordinating.swift in Sources */,
+				65D18DAD258053EC00E562C1 /* Drinks.swift in Sources */,
 				65543D0A25772B7100B8C549 /* StakeEntryCell.swift in Sources */,
 				658F11262532747F003B6303 /* MessageCell.swift in Sources */,
 				65C6E400257EE5AC00EA7AA4 /* UIViewController+DismissKeyboard.swift in Sources */,
 				65650A3B25686C6E00812395 /* MainCoordinator.swift in Sources */,
 				659DCB6D252E9A57009D330E /* BetCell.swift in Sources */,
 				65C97625256C4EF800AA46BA /* BetsCoordinator.swift in Sources */,
+				65D18D972580266F00E562C1 /* BetsDetailViewModel.swift in Sources */,
 				658F112F25327B2C003B6303 /* Message.swift in Sources */,
 				65C6E409257F408600EA7AA4 /* FirestoreHelper.swift in Sources */,
 				656D944E252BF5FE00EDEB7F /* SceneDelegate.swift in Sources */,
@@ -745,6 +756,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				656D9466252BF60100EDEB7F /* CHUGGRTests.swift in Sources */,
+				65D18D9C2580520200E562C1 /* FirestoreHelperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

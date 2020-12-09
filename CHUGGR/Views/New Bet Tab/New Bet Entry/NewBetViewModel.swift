@@ -224,7 +224,7 @@ class NewBetViewModel {
     
     // MARK:- New bet creation
     
-    func createNewBet() {
+    func createNewBet() -> String? {
         
         // Check for user auth
         guard let currentUserID = Auth.auth().currentUser?.uid else {
@@ -291,7 +291,7 @@ class NewBetViewModel {
         }
         
         // Make sure we actually have a bet instance after all the above
-        guard var enteredBet = bet else { return }
+        guard var enteredBet = bet else { return nil }
         // Add user to bet then assign to selected side.
         enteredBet.perform(action: .invite, with: currentUserID)
         switch selectedSide {
@@ -301,7 +301,8 @@ class NewBetViewModel {
             enteredBet.perform(action: .addToSide2, with: currentUserID)
         }
         
-        firestoreHelper.writeNewBet(bet: enteredBet)
+        let docID = firestoreHelper.writeNewBet(bet: enteredBet)
+        return docID
     }
     
 }

@@ -35,6 +35,7 @@ struct K {
     }
     struct Firestore {
         static let bets = "bets"
+        static let betID = "betID"
         static let chatRooms = "chatRooms"
         static let users = "users"
         static let videos = "videos"

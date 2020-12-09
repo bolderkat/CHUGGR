@@ -71,7 +71,7 @@ extension BetsViewController: UITableViewDelegate, UITableViewDataSource {
 
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator?.openBetDetail(for: tableSections[indexPath.section].cells[indexPath.row])
+//        coordinator?.openBetDetail(for: tableSections[indexPath.section].cells[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

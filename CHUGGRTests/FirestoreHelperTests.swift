@@ -1,29 +1,25 @@
 //
-//  FirestoreHelper.swift
-//  CHUGGR
+//  FirestoreHelperTests.swift
+//  CHUGGRTests
 //
-//  Created by Daniel Luo on 12/7/20.
+//  Created by Daniel Luo on 12/8/20.
 //
 
-import Foundation
+@testable import CHUGGR
+import XCTest
 import Firebase
 import FirebaseFirestoreSwift
 
-class FirestoreHelper {
-    private let db = Firestore.firestore()
+class FirestoreHelperTests: XCTestCase {
+    let db = Firestore.firestore()
+    var bet: Bet?
     
-    func writeNewBet(bet: Bet) -> String? {
-        let ref = db.collection(K.Firestore.bets).document()
-        
-        do {
-            try ref.setData(from: bet)
-            ref.updateData(["betID": ref.documentID]) // add auto-gen betID to doc for reads
-        } catch {
-            print("Error writing bet to db")
-            return nil
-            // TODO: full error handling
-        }
-        return ref.documentID
+    override func setUpWithError() throws {
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+    }
+    
+    override func tearDownWithError() throws {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
     func readBet(withBetID id: String?, completion: @escaping (_ bet: Bet) -> ()) {
@@ -57,4 +53,16 @@ class FirestoreHelper {
         }
     }
     
+        
+        func testReadBet() {
+            let expectation = self.expectation(description: "Reading from db")
+            readBet(withBetID: "OukDGC0YUgTcT98afOhh") { [weak self] (bet) in
+                self?.bet = bet
+                expectation.fulfill()
+            }
+            
+            waitForExpectations(timeout: 5, handler: nil)
+            XCTAssertNotNil(self.bet)
+        }
+        
 }
