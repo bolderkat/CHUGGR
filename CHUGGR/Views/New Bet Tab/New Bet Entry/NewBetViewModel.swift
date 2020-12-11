@@ -226,7 +226,7 @@ class NewBetViewModel {
     
     // MARK:- New bet creation
     
-    func createNewBet() -> String? {
+    func createNewBet() -> BetID? {
         
         // Check for user auth
         guard let currentUserID = Auth.auth().currentUser?.uid else {

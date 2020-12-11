@@ -11,6 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var coordinator: MainCoordinator?
+    let firestoreHelper = FirestoreHelper()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -21,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Pass control of window to MainCoordinator
         coordinator = MainCoordinator(window: window,
-                                      firestoreHelper: FirestoreHelper())
+                                      firestoreHelper: firestoreHelper)
         coordinator?.start()
     }
 

@@ -15,6 +15,6 @@ protocol ChildCoordinating: AnyObject {
     var firestoreHelper: FirestoreHelper { get }
     
     func start()
-    func openBetDetail(withBetID id: String)
+    func openBetDetail(withBetID id: BetID)
 }
 

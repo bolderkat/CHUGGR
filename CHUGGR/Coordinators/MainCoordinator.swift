@@ -19,13 +19,13 @@ class MainCoordinator: ParentCoordinating {
     }
     
     func start() {
-//        presentUserDetailEntry()
-                let vc = WelcomeViewController.instantiate()
-        vc.setViewModel(
-            WelcomeViewModel(firestoreHelper: firestoreHelper)
-        )
-        vc.mainCoordinator = self
-        window.rootViewController = vc
+        presentUserDetailEntry()
+//                let vc = WelcomeViewController.instantiate()
+//        vc.setViewModel(
+//            WelcomeViewModel(firestoreHelper: firestoreHelper)
+//        )
+//        vc.mainCoordinator = self
+//        window.rootViewController = vc
         window.makeKeyAndVisible()
     }
     

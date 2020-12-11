@@ -12,6 +12,9 @@ class UserDetailEntryViewController: UIViewController {
     weak var coordinator: MainCoordinator?
     private var dataSource: UITableViewDiffableDataSource<Section, UserDetailEntryCellViewModel>!
     private let viewModel: UserDetailEntryViewModel
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var usernameTakenLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,17 +51,20 @@ class UserDetailEntryViewController: UIViewController {
             self?.updateButtonStatus()
         }
         
+        viewModel.ifScreenNameTaken = { [weak self] in
+            self?.showUsernameTakenLabel()
+        }
+        
         viewModel.createCellVMs()
     }
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var submitButton: UIButton!
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {
-        print(viewModel.firstNameInput)
-        print(viewModel.lastNameInput)
-        print(viewModel.screenNameInput)
-        print(viewModel.bioInput)
+        viewModel.submitInput()
+    }
+    
+    func showUsernameTakenLabel() {
+        usernameTakenLabel.isHidden = false
     }
 }
 

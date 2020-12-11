@@ -28,6 +28,7 @@ class UserDetailEntryViewModel {
     
     var reloadTableViewClosure: (() -> ())?
     var updateButtonStatus: (() -> ())?
+    var ifScreenNameTaken: (() -> ())?
     
     init(firestoreHelper: FirestoreHelper) {
         self.firestoreHelper = firestoreHelper
@@ -80,5 +81,16 @@ class UserDetailEntryViewModel {
         } else {
             isInputComplete = false
         }
+    }
+    
+    func submitInput() {
+        guard let ifScreenNameTaken = ifScreenNameTaken else { return }
+        firestoreHelper.createNewUser(
+            firstName: firstNameInput,
+            lastName: lastNameInput,
+            screenName: screenNameInput,
+            bio: bioInput,
+            ifScreenNameTaken: ifScreenNameTaken
+        )
     }
 }

@@ -10,7 +10,7 @@ import Firebase
 
 class BetsDetailViewModel {
     private let firestoreHelper: FirestoreHelper
-    private var betDocID: String?
+    private var betDocID: BetID?
     private(set) var bet: Bet? {
         didSet {
             DispatchQueue.main.async {
@@ -24,7 +24,7 @@ class BetsDetailViewModel {
         self.firestoreHelper = firestoreHelper
     }
     
-    func setBetDocID(withBetID id: String) {
+    func setBetDocID(withBetID id: BetID) {
         self.betDocID = id
     }
     

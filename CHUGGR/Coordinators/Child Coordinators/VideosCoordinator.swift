@@ -31,7 +31,7 @@ class VideosCoordinator: ChildCoordinating {
         navigationController.pushViewController(vc, animated: false)
     }
     
-    func openBetDetail(withBetID id: String) {
+    func openBetDetail(withBetID id: BetID) {
         let vc = BetsDetailViewController.instantiate()
         vc.coordinator = self
         
