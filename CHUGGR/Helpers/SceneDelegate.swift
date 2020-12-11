@@ -20,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         
         // Pass control of window to MainCoordinator
-        coordinator = MainCoordinator(window: window)
+        coordinator = MainCoordinator(window: window,
+                                      firestoreHelper: FirestoreHelper())
         coordinator?.start()
     }
 

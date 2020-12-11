@@ -11,10 +11,13 @@ import Firebase
 class NewBetsCoordinator: ChildCoordinating {
     weak var parentCoordinator: MainCoordinator?
     var childCoordinator = [ChildCoordinating]()
-    var navigationController: UINavigationController
+    let navigationController: UINavigationController
+    let firestoreHelper: FirestoreHelper
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController,
+         firestoreHelper: FirestoreHelper) {
         self.navigationController = navigationController
+        self.firestoreHelper = firestoreHelper
     }
     
     func start() {
@@ -25,6 +28,10 @@ class NewBetsCoordinator: ChildCoordinating {
             image: UIImage(systemName: "plus.circle.fill"),
             tag: 2
         )
+        
+        let vm = NewBetViewModel(firestoreHelper: firestoreHelper)
+        vc.setViewModel(vm)
+        
         navigationController.pushViewController(vc, animated: false)
     }
     
@@ -32,7 +39,7 @@ class NewBetsCoordinator: ChildCoordinating {
         let vc = BetsDetailViewController.instantiate()
         vc.coordinator = self
         
-        let vm = BetsDetailViewModel()
+        let vm = BetsDetailViewModel(firestoreHelper: firestoreHelper)
         vm.setBetDocID(withBetID: id)
         vc.setViewModel(viewModel: vm)
         navigationController.pushViewController(vc, animated: true)

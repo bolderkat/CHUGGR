@@ -33,7 +33,7 @@ class BetsDetailViewController: UIViewController, Storyboarded {
     @IBOutlet weak var betCard: UIView!
     @IBOutlet weak var closeBetButton: UIButton!
     
-    // TODO: Show loading indicator while waiting for bet from DB
+    // TODO: Show loading indicator while waiting for bet from DB!
     
     
     override func viewDidLoad() {

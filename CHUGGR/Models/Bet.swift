@@ -28,14 +28,16 @@ enum BetUserAction {
 
 struct Bet: Codable {
     let type: BetType
+    var betID: String?
     let title: String
     var line: Double?
     let team1: String?
     let team2: String?
-    private(set) var invitedUsers = Set<String>() // UUIDs
-    private(set) var side1Users = Set<String>() // UUIDs
-    private(set) var side2Users = Set<String>() // UUIDs
-    private(set) var allUsers = Set<String>() // UUIDs
+    private(set) var invitedUsers = Set<String>() // UIDs
+    private(set) var side1Users = Set<String>() // UIDs
+    private(set) var side2Users = Set<String>() // UIDs
+    private(set) var allUsers = Set<String>() // UIDs
+    private(set) var acceptedUsers = Set<String>() // UIDs
     var stake: Drinks
     let dateOpened: TimeInterval
     var dueDate: TimeInterval
@@ -50,30 +52,33 @@ struct Bet: Codable {
         dateFinished = Date().timeIntervalSince1970
     }
     
-    mutating func perform(action: BetUserAction, with uuid: String) {
+    mutating func perform(action: BetUserAction, with uid: String) {
         guard !isFinished else { return }
         
         switch action {
         case .invite:
-            invitedUsers.insert(uuid)
-            allUsers.insert(uuid)
+            invitedUsers.insert(uid)
+            allUsers.insert(uid)
         case .uninvite:
-            invitedUsers.remove(uuid)
-            allUsers.remove(uuid)
+            invitedUsers.remove(uid)
+            allUsers.remove(uid)
         case .addToSide1:
-            if invitedUsers.contains(uuid) && !side2Users.contains(uuid) {
-                invitedUsers.remove(uuid)
-                side1Users.insert(uuid)
+            if invitedUsers.contains(uid) && !side2Users.contains(uid) {
+                invitedUsers.remove(uid)
+                side1Users.insert(uid)
+                acceptedUsers.insert(uid)
             }
         case .addToSide2:
-            if invitedUsers.contains(uuid) && !side1Users.contains(uuid) {
-                invitedUsers.remove(uuid)
-                side2Users.insert(uuid)
+            if invitedUsers.contains(uid) && !side1Users.contains(uid) {
+                invitedUsers.remove(uid)
+                side2Users.insert(uid)
+                acceptedUsers.insert(uid)
             }
         case .removeFromSide:
-            side1Users.remove(uuid)
-            side2Users.remove(uuid)
-            allUsers.remove(uuid)
+            side1Users.remove(uid)
+            side2Users.remove(uid)
+            allUsers.remove(uid)
+            acceptedUsers.remove(uid)
         }
     }
 }

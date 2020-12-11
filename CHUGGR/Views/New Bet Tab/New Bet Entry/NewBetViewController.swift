@@ -11,9 +11,7 @@ class NewBetViewController: UIViewController, Storyboarded {
 
     weak var coordinator: ChildCoordinating?
     var dataSource: UITableViewDiffableDataSource<Section, BetEntryCellViewModel>!
-    private lazy var viewModel: NewBetViewModel = {
-        return NewBetViewModel()
-    }()
+    private var viewModel: NewBetViewModel?
     
     @IBOutlet weak var topControl: UISegmentedControl!
     @IBOutlet weak var entryTable: UITableView!
@@ -48,30 +46,34 @@ class NewBetViewController: UIViewController, Storyboarded {
 
     }
     
+    func setViewModel(_ viewModel: NewBetViewModel) {
+        self.viewModel = viewModel
+    }
+    
     func initViewModel() {
-        viewModel.createCellVMs()
+        viewModel?.createCellVMs()
         
         // Pass UI update functions to VM so view can reflect state in VM
-        viewModel.reloadTableViewClosure = { [weak self] in
+        viewModel?.reloadTableViewClosure = { [weak self] in
             self?.updateUI()
         }
         
-        viewModel.updateButtonStatus = { [weak self] in
+        viewModel?.updateButtonStatus = { [weak self] in
             self?.updateButtonStatus()
         }
     }
     
     @IBAction func topControlChanged(_ sender: UISegmentedControl) {
-        viewModel.changeBetType(sender.selectedSegmentIndex)
+        viewModel?.changeBetType(sender.selectedSegmentIndex)
     }
 
     
     @IBAction func bottomControlChanged(_ sender: UISegmentedControl) {
-        viewModel.changeSide(sender.selectedSegmentIndex)
+        viewModel?.changeSide(sender.selectedSegmentIndex)
     }
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
-        guard let id = viewModel.createNewBet() else { return }
+        guard let id = viewModel?.createNewBet() else { return }
         coordinator?.openBetDetail(withBetID: id)
     }
     
@@ -99,7 +101,7 @@ extension NewBetViewController {
                     // Make sure entry fields are blank when cell is reused
                     cell.beerField.text = ""
                     cell.shotField.text = ""
-                    cell.onStakeInput = self.viewModel.handle(beerStake:shotStake:)
+                    cell.onStakeInput = self.viewModel?.handle(beerStake:shotStake:)
                     return cell
                     
                 case .dueDate, .gameday:
@@ -113,7 +115,7 @@ extension NewBetViewController {
 
                         cell.titleLabel.text = rowVM.title
                         cell.datePicker.date = Date.init()
-                        cell.onDateInput = self.viewModel.handle(date:)
+                        cell.onDateInput = self.viewModel?.handle(date:)
                         return cell
                     } else {
                         fallthrough
@@ -133,8 +135,8 @@ extension NewBetViewController {
                     cell.textField.placeholder = rowVM.placeholder ?? ""
                     cell.textField.text = ""
                     cell.rowType = rowVM.type
-                    cell.onTextInput = self.viewModel.handle(text:for:)
-                    cell.onDateInput = self.viewModel.handle(date:) // for iOS 13 and earlier
+                    cell.onTextInput = self.viewModel?.handle(text:for:)
+                    cell.onDateInput = self.viewModel?.handle(date:) // for iOS 13 and earlier
                     return cell
                 }
             }
@@ -143,7 +145,7 @@ extension NewBetViewController {
     
     func updateUI(animated: Bool = false) {
         // Set up table rows
-        let rows = viewModel.cellViewModels
+        guard let rows = viewModel?.cellViewModels else { return }
         var snapshot = NSDiffableDataSourceSnapshot<Section, BetEntryCellViewModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(rows)
@@ -152,7 +154,7 @@ extension NewBetViewController {
         // Set up bottom seg. control labels
         var leftLabel = ""
         var rightLabel = ""
-        switch viewModel.selectedBetType {
+        switch viewModel?.selectedBetType {
         case .spread:
             leftLabel = "Over"
             rightLabel = "Under"
@@ -162,12 +164,16 @@ extension NewBetViewController {
         case .event:
             leftLabel = "For"
             rightLabel = "Against"
+        case .none:
+            leftLabel = ""
+            rightLabel = ""
         }
         bottomControl.setTitle(leftLabel, forSegmentAt: 0)
         bottomControl.setTitle(rightLabel, forSegmentAt: 1)
     }
     
     func updateButtonStatus() {
+        guard let viewModel = viewModel else { return }
         sendBetButton.isEnabled = viewModel.isInputComplete
         sendBetButton.backgroundColor = sendBetButton.isEnabled ?
             UIColor(named: K.colors.orange) : UIColor(named: K.colors.gray3)
@@ -188,8 +194,8 @@ extension NewBetViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let cell = viewModel.getCellViewModel(at: indexPath)
-        if cell.type == .stat || cell.type == .event {
+        let cell = viewModel?.getCellViewModel(at: indexPath)
+        if cell?.type == .stat || cell?.type == .event {
             return 70
         }
         else {

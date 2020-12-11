@@ -10,10 +10,12 @@ import UIKit
 class MainCoordinator: ParentCoordinating {
     var window: UIWindow
     var childCoordinators = [ChildCoordinating]()
+    let firestoreHelper: FirestoreHelper
     
-    init?(window: UIWindow?) {
+    init?(window: UIWindow?, firestoreHelper: FirestoreHelper) {
         guard let window = window else { return nil } // fail init if no window
         self.window = window
+        self.firestoreHelper = firestoreHelper
     }
     
     func start() {
@@ -39,11 +41,16 @@ class MainCoordinator: ParentCoordinating {
     
     func startTabBarCoordinators() {
         childCoordinators = [
-            BetsCoordinator(navigationController: UINavigationController()),
-            FriendsCoordinator(navigationController: UINavigationController()),
-            NewBetsCoordinator(navigationController: UINavigationController()),
-            VideosCoordinator(navigationController: UINavigationController()),
-            ProfileCoordinator(navigationController: UINavigationController())
+            BetsCoordinator(navigationController: UINavigationController(),
+                            firestoreHelper: firestoreHelper),
+            FriendsCoordinator(navigationController: UINavigationController(),
+                               firestoreHelper: firestoreHelper),
+            NewBetsCoordinator(navigationController: UINavigationController(),
+                               firestoreHelper: firestoreHelper),
+            VideosCoordinator(navigationController: UINavigationController(),
+                              firestoreHelper: firestoreHelper),
+            ProfileCoordinator(navigationController: UINavigationController(),
+                               firestoreHelper: firestoreHelper)
         ]
         childCoordinators.forEach {
             $0.parentCoordinator = self

@@ -12,6 +12,17 @@ import FirebaseFirestoreSwift
 class FirestoreHelper {
     private let db = Firestore.firestore()
     
+    
+    // MARK:- User CRUD
+    func getCurrentUser(withID id: String, completion: @escaping (_ user: CurrentUser) -> ()) {
+        
+    }
+    
+    
+    
+    
+    
+    // MARK:- Bet CRUD
     func writeNewBet(bet: Bet) -> String? {
         let ref = db.collection(K.Firestore.bets).document()
         

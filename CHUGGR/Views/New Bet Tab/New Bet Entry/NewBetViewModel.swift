@@ -8,8 +8,8 @@
 import Foundation
 import Firebase
 
-class NewBetViewModel {
-    let firestoreHelper = FirestoreHelper()
+class NewBetViewModel: ViewModel {
+    private let firestoreHelper: FirestoreHelper
     
     private(set) var selectedBetType: BetType = .spread {
         didSet {
@@ -42,7 +42,9 @@ class NewBetViewModel {
     var updateButtonStatus: (() -> ())?
     var setSendButtonState: (() -> ())?
     
-    
+    init(firestoreHelper: FirestoreHelper) {
+        self.firestoreHelper = firestoreHelper
+    }
     
     func createCellVMs() {
         // Define user input rows for each bet type

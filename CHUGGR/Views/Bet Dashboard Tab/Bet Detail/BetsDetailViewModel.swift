@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 class BetsDetailViewModel {
-    let firestoreHelper = FirestoreHelper()
+    private let firestoreHelper: FirestoreHelper
     private var betDocID: String?
     private(set) var bet: Bet? {
         didSet {
@@ -20,6 +20,10 @@ class BetsDetailViewModel {
     }
     var updateBetCard: (() -> ())?
     
+    init(firestoreHelper: FirestoreHelper) {
+        self.firestoreHelper = firestoreHelper
+    }
+    
     func setBetDocID(withBetID id: String) {
         self.betDocID = id
     }
@@ -29,6 +33,7 @@ class BetsDetailViewModel {
             self?.bet = bet
         }
     }
+    
     
     func getDateString() -> String? {
         guard let bet = bet else { return nil }

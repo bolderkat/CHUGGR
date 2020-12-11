@@ -11,7 +11,8 @@ import Firebase
 protocol ChildCoordinating: AnyObject {
     var parentCoordinator: MainCoordinator? { get set }
     var childCoordinator: [ChildCoordinating] { get set }
-    var navigationController: UINavigationController { get set }
+    var navigationController: UINavigationController { get }
+    var firestoreHelper: FirestoreHelper { get }
     
     func start()
     func openBetDetail(withBetID id: String)

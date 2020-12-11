@@ -6,6 +6,7 @@
 //
 
 import UIKit
+// Storyboarded protocol from https://www.hackingwithswift.com/articles/71/how-to-use-the-coordinator-pattern-in-ios-apps
 
 protocol Storyboarded: AnyObject {
     static func instantiate() -> Self

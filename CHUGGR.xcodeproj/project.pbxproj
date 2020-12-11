@@ -13,6 +13,7 @@
 		6533F26B25685B13002524B3 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533F26A25685B13002524B3 /* Storyboarded.swift */; };
 		6535F503256F479F00C5FC72 /* BetEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6535F501256F479F00C5FC72 /* BetEntryCell.swift */; };
 		6535F504256F479F00C5FC72 /* BetEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6535F502256F479F00C5FC72 /* BetEntryCell.xib */; };
+		6537BC1A2582FBD300880C2B /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6537BC192582FBD300880C2B /* ViewModel.swift */; };
 		654AC028257740A900AEBADF /* NewBetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654AC027257740A900AEBADF /* NewBetViewModel.swift */; };
 		65543D0A25772B7100B8C549 /* StakeEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65543D0825772B7100B8C549 /* StakeEntryCell.swift */; };
 		65543D0B25772B7100B8C549 /* StakeEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65543D0925772B7100B8C549 /* StakeEntryCell.xib */; };
@@ -60,6 +61,8 @@
 		65FCE6DF2569BB930066BDC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCE6DE2569BB930066BDC5 /* User.swift */; };
 		65FCE6E4256B33F00066BDC5 /* SampleBet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCE6E3256B33F00066BDC5 /* SampleBet.swift */; };
 		65FCE6ED256B35530066BDC5 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */; };
+		65FD451A2581D94100481F50 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FD45192581D94100481F50 /* CurrentUser.swift */; };
+		65FD45222581EDE900481F50 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FD45212581EDE900481F50 /* Friend.swift */; };
 		C8D113C094F567575BDCF233 /* Pods_CHUGGR_CHUGGRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C485606B2FBFA81584C54A66 /* Pods_CHUGGR_CHUGGRUITests.framework */; };
 		E95618B520BB3301EB30C468 /* Pods_CHUGGR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */; };
 /* End PBXBuildFile section */
@@ -89,6 +92,7 @@
 		6533F26A25685B13002524B3 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		6535F501256F479F00C5FC72 /* BetEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetEntryCell.swift; sourceTree = "<group>"; };
 		6535F502256F479F00C5FC72 /* BetEntryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetEntryCell.xib; sourceTree = "<group>"; };
+		6537BC192582FBD300880C2B /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		654AC027257740A900AEBADF /* NewBetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetViewModel.swift; sourceTree = "<group>"; };
 		65543D0825772B7100B8C549 /* StakeEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeEntryCell.swift; sourceTree = "<group>"; };
 		65543D0925772B7100B8C549 /* StakeEntryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StakeEntryCell.xib; sourceTree = "<group>"; };
@@ -142,6 +146,8 @@
 		65FCE6DE2569BB930066BDC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		65FCE6E3256B33F00066BDC5 /* SampleBet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBet.swift; sourceTree = "<group>"; };
 		65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		65FD45192581D94100481F50 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
+		65FD45212581EDE900481F50 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		8FDFF6DA5BA3C750B95B493E /* Pods-CHUGGRTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHUGGRTests.debug.xcconfig"; path = "Target Support Files/Pods-CHUGGRTests/Pods-CHUGGRTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ADAA051009240AC810ABE037 /* Pods-CHUGGRTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHUGGRTests.release.xcconfig"; path = "Target Support Files/Pods-CHUGGRTests/Pods-CHUGGRTests.release.xcconfig"; sourceTree = "<group>"; };
 		B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CHUGGR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -384,13 +390,16 @@
 		65D34C1D252CF434005C6F98 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				65FCE6DE2569BB930066BDC5 /* User.swift */,
+				65FD45192581D94100481F50 /* CurrentUser.swift */,
+				65FD45212581EDE900481F50 /* Friend.swift */,
 				65F4029A252EA103007892F8 /* Bet.swift */,
 				65D18DAC258053EC00E562C1 /* Drinks.swift */,
-				65FCE6DE2569BB930066BDC5 /* User.swift */,
 				65FBCBA2252F9B6200227121 /* BetsTableSection.swift */,
 				65FCE6E3256B33F00066BDC5 /* SampleBet.swift */,
 				65FBCBBA2532542A00227121 /* SampleData.swift */,
 				658F112E25327B2C003B6303 /* Message.swift */,
+				6537BC192582FBD300880C2B /* ViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -716,12 +725,15 @@
 				65F69D98257B2EFF00CE7371 /* DateEntryCell.swift in Sources */,
 				65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */,
 				65578765256DD33600FC23FC /* FriendsCoordinator.swift in Sources */,
+				65FD451A2581D94100481F50 /* CurrentUser.swift in Sources */,
 				65C50E09252D1BDF00A786A8 /* FriendsViewController.swift in Sources */,
 				65E6F787256C5A2400252974 /* ProfileCoordinator.swift in Sources */,
 				65FBCBC1253257CE00227121 /* BetsDetailViewController.swift in Sources */,
 				656D9450252BF5FE00EDEB7F /* WelcomeViewController.swift in Sources */,
+				6537BC1A2582FBD300880C2B /* ViewModel.swift in Sources */,
 				6533F26B25685B13002524B3 /* Storyboarded.swift in Sources */,
 				65FCE6ED256B35530066BDC5 /* MainTabBarController.swift in Sources */,
+				65FD45222581EDE900481F50 /* Friend.swift in Sources */,
 				65C23805256EFAA3001EA95D /* HairlineView.swift in Sources */,
 				65C6E3FB257EE30F00EA7AA4 /* UITextField+DoneToolbar.swift in Sources */,
 				6557876D256DD45200FC23FC /* NewBetsCoordinator.swift in Sources */,
