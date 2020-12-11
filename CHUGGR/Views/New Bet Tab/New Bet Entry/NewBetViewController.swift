@@ -10,7 +10,7 @@ import UIKit
 class NewBetViewController: UIViewController, Storyboarded {
 
     weak var coordinator: ChildCoordinating?
-    var dataSource: UITableViewDiffableDataSource<Section, BetEntryCellViewModel>!
+    private var dataSource: UITableViewDiffableDataSource<Section, BetEntryCellViewModel>!
     private var viewModel: NewBetViewModel?
     
     @IBOutlet weak var topControl: UISegmentedControl!
@@ -21,11 +21,10 @@ class NewBetViewController: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         dismissKeyboard() // sets up keyboard dismissal on touch outside from extension
-        setUpViewController()
-        initViewModel()
-        configureTableView()
         configureDataSource()
-        updateUI()
+        initViewModel()
+        setUpViewController()
+        configureTableView()
         
     }
     
@@ -40,19 +39,13 @@ class NewBetViewController: UIViewController, Storyboarded {
         
         updateButtonStatus()
         sendBetButton.layer.cornerRadius = 15
-        
-        entryTable.isScrollEnabled = false
-        entryTable.allowsSelection = false
-
     }
     
     func setViewModel(_ viewModel: NewBetViewModel) {
         self.viewModel = viewModel
     }
     
-    func initViewModel() {
-        viewModel?.createCellVMs()
-        
+    func initViewModel() {        
         // Pass UI update functions to VM so view can reflect state in VM
         viewModel?.reloadTableViewClosure = { [weak self] in
             self?.updateUI()
@@ -61,6 +54,7 @@ class NewBetViewController: UIViewController, Storyboarded {
         viewModel?.updateButtonStatus = { [weak self] in
             self?.updateButtonStatus()
         }
+        viewModel?.createCellVMs()
     }
     
     @IBAction func topControlChanged(_ sender: UISegmentedControl) {
@@ -79,7 +73,7 @@ class NewBetViewController: UIViewController, Storyboarded {
     
 }
 
-// MARK:- Data Source
+// MARK:- Table View Data Source
 extension NewBetViewController {
     enum Section {
         case main
@@ -96,7 +90,7 @@ extension NewBetViewController {
                     guard let cell = tableView.dequeueReusableCell(
                             withIdentifier: K.cells.stakeCell,
                             for: indexPath) as? StakeEntryCell else {
-                        fatalError("Cell does not exist in storyboard")
+                        fatalError("Bet stake entry cell nib does not exist")
                     }
                     // Make sure entry fields are blank when cell is reused
                     cell.beerField.text = ""
@@ -110,7 +104,7 @@ extension NewBetViewController {
                         guard let cell = tableView.dequeueReusableCell(
                                 withIdentifier: K.cells.dateCell,
                                 for: indexPath) as? DateEntryCell else {
-                            fatalError("Cell does not exist in storyboard")
+                            fatalError("Bet date entry cell nib does not exist")
                         }
 
                         cell.titleLabel.text = rowVM.title
@@ -127,7 +121,7 @@ extension NewBetViewController {
                         withIdentifier: K.cells.betEntryCell,
                         for: indexPath
                     ) as? BetEntryCell else {
-                        fatalError("Cell does not exist in storyboard")
+                        fatalError("Bet entry cell nib does not exist")
                     }
                     cell.titleLabel.text = rowVM.title
                     
@@ -185,6 +179,8 @@ extension NewBetViewController {
 extension NewBetViewController: UITableViewDelegate {
     func configureTableView() {
         entryTable.delegate = self
+        entryTable.isScrollEnabled = false
+        entryTable.allowsSelection = false
         entryTable.register(UINib(nibName: K.cells.betEntryCell, bundle: nil),
                             forCellReuseIdentifier: K.cells.betEntryCell)
         entryTable.register(UINib(nibName: K.cells.stakeCell, bundle: nil),

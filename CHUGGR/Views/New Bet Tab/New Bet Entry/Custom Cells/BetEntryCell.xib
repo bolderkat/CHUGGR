@@ -25,7 +25,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Placeholder" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oox-sD-grv">
-                        <rect key="frame" x="108" y="14" width="196" height="22"/>
+                        <rect key="frame" x="108" y="0.0" width="196" height="50"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                     </textField>
@@ -41,7 +41,8 @@
                     <constraint firstItem="IZk-qA-d6J" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="0wq-NP-bvf"/>
                     <constraint firstItem="jOW-Qf-IEM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="108" id="7t1-Tp-uYK"/>
                     <constraint firstItem="jOW-Qf-IEM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="108" id="K7O-ti-9Tf"/>
-                    <constraint firstItem="oox-sD-grv" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="OQi-pr-qzs"/>
+                    <constraint firstAttribute="bottom" secondItem="oox-sD-grv" secondAttribute="bottom" id="KoF-8S-42k"/>
+                    <constraint firstItem="oox-sD-grv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Ngz-BH-80n"/>
                     <constraint firstItem="oox-sD-grv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="108" id="Q9z-qu-BlR"/>
                     <constraint firstAttribute="trailing" secondItem="oox-sD-grv" secondAttribute="trailing" constant="16" id="V7Q-uy-I9b"/>
                     <constraint firstAttribute="bottom" secondItem="jOW-Qf-IEM" secondAttribute="bottom" id="Zes-Fx-8uY"/>

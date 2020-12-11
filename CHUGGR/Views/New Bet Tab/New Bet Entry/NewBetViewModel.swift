@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-class NewBetViewModel: ViewModel {
+class NewBetViewModel {
     private let firestoreHelper: FirestoreHelper
     
     private(set) var selectedBetType: BetType = .spread {
@@ -49,27 +49,27 @@ class NewBetViewModel: ViewModel {
     func createCellVMs() {
         // Define user input rows for each bet type
         let spreadLabels = [
-            EntryRowType.stat,
-            EntryRowType.line,
-            EntryRowType.gameday,
-            EntryRowType.stake
+            BetEntryRowType.stat,
+            BetEntryRowType.line,
+            BetEntryRowType.gameday,
+            BetEntryRowType.stake
         ]
         
         let moneylineLabels = [
-            EntryRowType.team1,
-            EntryRowType.team2,
-            EntryRowType.gameday,
-            EntryRowType.stake
+            BetEntryRowType.team1,
+            BetEntryRowType.team2,
+            BetEntryRowType.gameday,
+            BetEntryRowType.stake
         ]
         
         let eventLabels = [
-            EntryRowType.event,
-            EntryRowType.dueDate,
-            EntryRowType.stake
+            BetEntryRowType.event,
+            BetEntryRowType.dueDate,
+            BetEntryRowType.stake
         ]
         
         // Create containers for row types and cell VMs
-        var rowTypes = [EntryRowType]()
+        var rowTypes = [BetEntryRowType]()
         var vms = [BetEntryCellViewModel]()
         
         // Provide row types based on selected bet type
@@ -133,7 +133,7 @@ class NewBetViewModel: ViewModel {
     
     // MARK:- Input processing from cells
     
-    func handle(text: String, for rowType: EntryRowType) {
+    func handle(text: String, for rowType: BetEntryRowType) {
         // Store textfield input into variables based on row type
         switch rowType {
         case .stat:

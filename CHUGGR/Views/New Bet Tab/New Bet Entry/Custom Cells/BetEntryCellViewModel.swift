@@ -8,7 +8,7 @@
 import Foundation
 
 // Define entry row types
-enum EntryRowType {
+enum BetEntryRowType {
     case stat
     case line
     case team1
@@ -20,11 +20,11 @@ enum EntryRowType {
 }
 
 struct BetEntryCellViewModel: Hashable {
-    let type: EntryRowType
+    let type: BetEntryRowType
     let title: String
     let placeholder: String?
     
-    init(type: EntryRowType) {
+    init(type: BetEntryRowType) {
         switch type {
         case .stat:
             title = "Stat"

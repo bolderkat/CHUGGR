@@ -9,8 +9,8 @@ import UIKit
 
 class BetEntryCell: UITableViewCell {
     
-    var rowType: EntryRowType?
-    var onTextInput: ((String, EntryRowType) -> ())?
+    var rowType: BetEntryRowType?
+    var onTextInput: ((String, BetEntryRowType) -> ())?
     var onDateInput: ((TimeInterval) -> ())?
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -21,7 +21,7 @@ class BetEntryCell: UITableViewCell {
         textField.delegate = self
 
     }
-    
+    // TODO: Use UITextView for title entry fields to allow for multi-line input
 }
 
 // MARK:- Text field delegate

@@ -12,22 +12,38 @@ import FirebaseUI
 class WelcomeViewController: UIViewController, Storyboarded {
     
     var mainCoordinator: MainCoordinator?
+    private var viewModel: WelcomeViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Skip auth if user already logged in.
-        if let _ = Auth.auth().currentUser?.uid {
-            continueWhenUserPresent()
+        if let uid = Auth.auth().currentUser?.uid {
+            viewModel?.getCurrentUserDetails(with: uid)
+            
+            // TODO: display loading indicator if needed?
         }
     }
+    
+    func setViewModel(_ viewModel: WelcomeViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    func initViewModel() {
+        viewModel?.onUserRead = continueWhenUserPresent
+        viewModel?.onUserReadFail = userReadDidFail
+    }
 
-    // Auth persistence from https://stackoverflow.com/questions/48561643/firebase-login-persistence-swift
     private func continueWhenUserPresent() {
         // Call coordinator to go to tab bar controller
         if let coordinator = mainCoordinator {
             coordinator.goToTabBar()
         }
+    }
+    
+    private func userReadDidFail() {
+        // TODO: fail more gracefully
+        fatalError("Failed to read user from DB")
     }
     
     @IBAction func getStartedPressed(_ sender: UIButton) {
@@ -44,8 +60,6 @@ class WelcomeViewController: UIViewController, Storyboarded {
         present(authViewController, animated: true, completion: nil)
     }
 
-    @IBAction func unwindToWelcomeViewController(unwindSegue: UIStoryboardSegue) {}
-
 }
 
 extension WelcomeViewController: FUIAuthDelegate {
@@ -56,5 +70,6 @@ extension WelcomeViewController: FUIAuthDelegate {
         }
         continueWhenUserPresent()
     }
+
 }
 

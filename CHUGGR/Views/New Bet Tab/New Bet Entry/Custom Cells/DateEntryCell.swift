@@ -9,7 +9,7 @@ import UIKit
 
 class DateEntryCell: UITableViewCell {
 
-    var rowType: EntryRowType?
+    var rowType: BetEntryRowType?
     var onDateInput: ((TimeInterval) -> ())?
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!

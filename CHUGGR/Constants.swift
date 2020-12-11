@@ -15,6 +15,7 @@ struct K {
         static let messageCell = "MessageCell"
         static let stakeCell = "StakeEntryCell"
         static let dateCell = "DateEntryCell"
+        static let userEntryCell = "UserDetailEntryCell"
     }
     struct colors {
         static let alabaster = "Alabaster"
@@ -37,6 +38,7 @@ struct K {
         static let bets = "bets"
         static let betID = "betID"
         static let chatRooms = "chatRooms"
+        static let uid = "uid"
         static let users = "users"
         static let videos = "videos"
     }

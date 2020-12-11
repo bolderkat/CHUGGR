@@ -19,10 +19,23 @@ class MainCoordinator: ParentCoordinating {
     }
     
     func start() {
-        let vc = WelcomeViewController.instantiate()
-        vc.mainCoordinator = self
-        window.rootViewController = vc
+        presentUserDetailEntry()
+        //        let vc = WelcomeViewController.instantiate()
+//        vc.setViewModel(
+//            WelcomeViewModel(firestoreHelper: firestoreHelper)
+//        )
+//        vc.mainCoordinator = self
+//        window.rootViewController = vc
         window.makeKeyAndVisible()
+    }
+    
+    func presentUserDetailEntry() {
+        let vc = UserDetailEntryViewController(
+            viewModel: UserDetailEntryViewModel(firestoreHelper: firestoreHelper),
+            nibName: nil,
+            bundle: nil
+        )
+        window.rootViewController = vc
     }
     
     func goToTabBar() {
