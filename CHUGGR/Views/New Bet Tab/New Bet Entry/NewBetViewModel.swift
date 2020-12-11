@@ -303,7 +303,7 @@ class NewBetViewModel {
             enteredBet.perform(action: .addToSide2, with: currentUserID)
         }
         
-        let docID = firestoreHelper.writeNewBet(bet: enteredBet)
+        let docID = firestoreHelper.writeNewBet(bet: &enteredBet)
         return docID
     }
     

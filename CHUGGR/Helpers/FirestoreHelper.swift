@@ -52,12 +52,12 @@ class FirestoreHelper {
     
     
     // MARK:- Bet CRUD
-    func writeNewBet(bet: Bet) -> String? {
+    func writeNewBet(bet: inout Bet) -> String? {
         let ref = db.collection(K.Firestore.bets).document()
-        
+        bet.setBetID(withID: ref.documentID) // add auto-gen betID to bet for reads
         do {
+            
             try ref.setData(from: bet)
-            ref.updateData(["betID": ref.documentID]) // add auto-gen betID to doc for reads
         } catch {
             print("Error writing bet to db")
             return nil

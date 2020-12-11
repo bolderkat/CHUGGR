@@ -19,8 +19,8 @@ class WelcomeViewController: UIViewController, Storyboarded {
         
         // Skip auth if user already logged in.
         if let uid = Auth.auth().currentUser?.uid {
-            viewModel?.getCurrentUserDetails(with: uid)
-            
+//            viewModel?.getCurrentUserDetails(with: uid)
+            continueWhenUserPresent()
             // TODO: display loading indicator if needed?
         }
     }

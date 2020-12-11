@@ -28,7 +28,7 @@ enum BetUserAction {
 
 struct Bet: Codable {
     let type: BetType
-    var betID: String?
+    private(set) var betID: String?
     let title: String
     var line: Double?
     let team1: String?
@@ -44,6 +44,10 @@ struct Bet: Codable {
     private(set) var isFinished = false
     private(set) var winner: Side?
     private(set) var dateFinished: TimeInterval? = nil
+    
+    mutating func setBetID(withID id: String) {
+        self.betID = id
+    }
     
     mutating func closeBetWith(winningSide: Side) {
         guard !isFinished else { return }
