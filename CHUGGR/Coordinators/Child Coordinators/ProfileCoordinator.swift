@@ -21,7 +21,9 @@ class ProfileCoordinator: ChildCoordinating {
     }
     
     func start() {
-        let vc = ProfileViewController.instantiate()
+        let vc = ProfileViewController(
+            viewModel: ProfileViewModel(firestoreHelper: firestoreHelper)
+        )
         vc.coordinator = self
         vc.tabBarItem = UITabBarItem(
             title: "Profile",

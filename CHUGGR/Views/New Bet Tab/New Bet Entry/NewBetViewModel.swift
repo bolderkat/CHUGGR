@@ -229,7 +229,8 @@ class NewBetViewModel {
     func createNewBet() -> BetID? {
         
         // Check for user auth
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
+        guard let currentUserID = firestoreHelper.currentUser?.uid,
+              let currentUserFirstName = firestoreHelper.currentUser?.firstName else {
             fatalError("Unable to find current authorized user.")
         }
         
@@ -295,12 +296,12 @@ class NewBetViewModel {
         // Make sure we actually have a bet instance after all the above
         guard var enteredBet = bet else { return nil }
         // Add user to bet then assign to selected side.
-        enteredBet.perform(action: .invite, with: currentUserID)
+        enteredBet.perform(action: .invite, withID: currentUserID, firstName: currentUserFirstName)
         switch selectedSide {
         case .one:
-            enteredBet.perform(action: .addToSide1, with: currentUserID)
+            enteredBet.perform(action: .addToSide1, withID: currentUserID, firstName: currentUserFirstName)
         case .two:
-            enteredBet.perform(action: .addToSide2, with: currentUserID)
+            enteredBet.perform(action: .addToSide2, withID: currentUserID, firstName: currentUserFirstName)
         }
         
         let docID = firestoreHelper.writeNewBet(bet: &enteredBet)

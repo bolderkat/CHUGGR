@@ -9,7 +9,7 @@ import UIKit
 
 class UserDetailEntryViewController: UIViewController {
 
-    weak var coordinator: MainCoordinator?
+    weak var mainCoordinator: MainCoordinator?
     private var dataSource: UITableViewDiffableDataSource<Section, UserDetailEntryCellViewModel>!
     private let viewModel: UserDetailEntryViewModel
     @IBOutlet weak var tableView: UITableView!
@@ -27,8 +27,9 @@ class UserDetailEntryViewController: UIViewController {
     
     // Custom init help from https://stackoverflow.com/a/58017901
     init(viewModel: UserDetailEntryViewModel,
-         nibName: String?,
-         bundle: Bundle?) {
+         nibName: String? = nil,
+         bundle: Bundle? = nil
+    ) {
         self.viewModel = viewModel
         super.init(nibName: nibName, bundle: bundle)
     }
@@ -55,15 +56,28 @@ class UserDetailEntryViewController: UIViewController {
             self?.showUsernameTakenLabel()
         }
         
+        viewModel.onUserLoad = { [weak self] in
+            self?.proceedToDashboard()
+        }
+        
         viewModel.createCellVMs()
     }
     
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {
         viewModel.submitInput()
+        usernameTakenLabel.isHidden = false
+        // TODO: show loading indicator?
     }
     
-    func showUsernameTakenLabel() {
+    private func proceedToDashboard() {
+        // Call coordinator to go to tab bar controller
+        if let coordinator = mainCoordinator {
+            coordinator.goToTabBar()
+        }
+    }
+    
+    private func showUsernameTakenLabel() {
         usernameTakenLabel.isHidden = false
     }
 }

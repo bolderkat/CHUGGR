@@ -9,35 +9,58 @@ import UIKit
 import Firebase
 import FirebaseUI
 
-class WelcomeViewController: UIViewController, Storyboarded {
+class WelcomeViewController: UIViewController {
     
     var mainCoordinator: MainCoordinator?
-    private var viewModel: WelcomeViewModel?
+    private var viewModel: WelcomeViewModel
+    
+    @IBOutlet weak var getStartedButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Skip auth if user already logged in.
-        if let uid = Auth.auth().currentUser?.uid {
-//            viewModel?.getCurrentUserDetails(with: uid)
-            continueWhenUserPresent()
-            // TODO: display loading indicator if needed?
-        }
+        initViewModel()
+        continueIfLoggedIn()
+        getStartedButton.layer.cornerRadius = 15
     }
     
-    func setViewModel(_ viewModel: WelcomeViewModel) {
+    init(
+        viewModel: WelcomeViewModel,
+         nibName: String? = nil,
+         bundle: Bundle? = nil
+    ) {
         self.viewModel = viewModel
+        super.init(nibName: nibName, bundle: bundle)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func initViewModel() {
-        viewModel?.onUserRead = continueWhenUserPresent
-        viewModel?.onUserReadFail = userReadDidFail
+        viewModel.onUserRead = proceedToDashboard
+        viewModel.onUserDocNotFound = onUserDocNotFound
+        viewModel.onUserReadFail = userReadDidFail
+    }
+    
+    func continueIfLoggedIn() {
+        // Check auth status.
+        if let uid = Auth.auth().currentUser?.uid {
+            viewModel.getCurrentUserDetails(with: uid)
+            // if doc not found, go to user details
+            // TODO: display loading indicator if needed?
+        }
     }
 
-    private func continueWhenUserPresent() {
+    private func proceedToDashboard() {
         // Call coordinator to go to tab bar controller
         if let coordinator = mainCoordinator {
             coordinator.goToTabBar()
+        }
+    }
+    
+    private func onUserDocNotFound() {
+        if let coordinator = mainCoordinator {
+            coordinator.presentUserDetailEntry()
         }
     }
     
@@ -46,6 +69,7 @@ class WelcomeViewController: UIViewController, Storyboarded {
         fatalError("Failed to read user from DB")
     }
     
+
     @IBAction func getStartedPressed(_ sender: UIButton) {
         guard let authUI = FUIAuth.defaultAuthUI() else {
             print("Error initializing Firebase Auth UI")
@@ -68,7 +92,7 @@ extension WelcomeViewController: FUIAuthDelegate {
             print(String(describing: error))
             return
         }
-        continueWhenUserPresent()
+        continueIfLoggedIn()
     }
 
 }

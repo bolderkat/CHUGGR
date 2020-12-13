@@ -12,6 +12,8 @@ enum UserAction {
     case delete
 }
 
+typealias UID = String
+
 protocol User {
     mutating func modifyBetCount(with action: UserAction)
     mutating func modifyFriendCount(with action: UserAction)

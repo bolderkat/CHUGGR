@@ -30,16 +30,16 @@ enum BetUserAction {
 
 struct Bet: Codable {
     let type: BetType
-    private(set) var betID: String?
+    private(set) var betID: BetID?
     let title: String
     var line: Double?
     let team1: String?
     let team2: String?
-    private(set) var invitedUsers = Set<String>() // UIDs
-    private(set) var side1Users = Set<String>() // UIDs
-    private(set) var side2Users = Set<String>() // UIDs
-    private(set) var allUsers = Set<String>() // UIDs
-    private(set) var acceptedUsers = Set<String>() // UIDs
+    private(set) var invitedUsers = [UID: String]() // UID and firstName
+    private(set) var side1Users = [UID: String]()
+    private(set) var side2Users = [UID: String]()
+    private(set) var allUsers = Set<String>()
+    private(set) var acceptedUsers = Set<String>()
     var stake: Drinks
     let dateOpened: TimeInterval
     var dueDate: TimeInterval
@@ -58,31 +58,31 @@ struct Bet: Codable {
         dateFinished = Date().timeIntervalSince1970
     }
     
-    mutating func perform(action: BetUserAction, with uid: String) {
+    mutating func perform(action: BetUserAction, withID uid: UID, firstName name: String) {
         guard !isFinished else { return }
         
         switch action {
         case .invite:
-            invitedUsers.insert(uid)
+            invitedUsers[uid] = name
             allUsers.insert(uid)
         case .uninvite:
-            invitedUsers.remove(uid)
+            invitedUsers[uid] = nil
             allUsers.remove(uid)
         case .addToSide1:
-            if invitedUsers.contains(uid) && !side2Users.contains(uid) {
-                invitedUsers.remove(uid)
-                side1Users.insert(uid)
+            if invitedUsers[uid] != nil && side2Users[uid] == nil {
+                invitedUsers[uid] = nil
+                side1Users[uid] = name
                 acceptedUsers.insert(uid)
             }
         case .addToSide2:
-            if invitedUsers.contains(uid) && !side1Users.contains(uid) {
-                invitedUsers.remove(uid)
-                side2Users.insert(uid)
+            if invitedUsers[uid] != nil && side1Users[uid] == nil {
+                invitedUsers[uid] = nil
+                side2Users[uid] = name
                 acceptedUsers.insert(uid)
             }
         case .removeFromSide:
-            side1Users.remove(uid)
-            side2Users.remove(uid)
+            side1Users[uid] = nil
+            side2Users[uid] = nil
             allUsers.remove(uid)
             acceptedUsers.remove(uid)
         }

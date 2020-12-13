@@ -82,10 +82,9 @@ class BetsDetailViewController: UIViewController, Storyboarded {
             leftLabel1.text = BetsDetailViewModel.Labels.Spread.leftLabel1
             rightLabel1.text = "\(bet?.line ?? 0)"
             leftLabel2.text = BetsDetailViewModel.Labels.Spread.leftLabel2
-            // TODO: currently shows UUIDs. Need to fetch user first names via FirestoreHelper -> VM
-            rightLabel2.text = "\(bet?.side1Users)"
+            rightLabel2.text = viewModel?.getSideNames(forSide: .one)
             leftLabel3.text = BetsDetailViewModel.Labels.Spread.leftLabel3
-            rightLabel3.text = "\(bet?.side2Users)"
+            rightLabel3.text = viewModel?.getSideNames(forSide: .two)
             leftLabel4.text = BetsDetailViewModel.Labels.Spread.leftLabel4
             rightLabel4.text = viewModel?.getDateString()
             leftLabel5.text = BetsDetailViewModel.Labels.Spread.leftLabel5
@@ -100,9 +99,9 @@ class BetsDetailViewController: UIViewController, Storyboarded {
             rightLabel1.text = nil
             leftLabel2.text = bet?.team1
             // TODO: currently shows UUIDs. Need to fetch user first names via FirestoreHelper -> VM
-            rightLabel2.text = "\(bet?.side1Users)"
+            rightLabel2.text = viewModel?.getSideNames(forSide: .one)
             leftLabel3.text = bet?.team2
-            rightLabel3.text = "\(bet?.side2Users)"
+            rightLabel3.text = viewModel?.getSideNames(forSide: .two)
             leftLabel4.text = BetsDetailViewModel.Labels.Moneyline.leftLabel4
             rightLabel4.text = viewModel?.getDateString()
             leftLabel5.text = BetsDetailViewModel.Labels.Moneyline.leftLabel5
@@ -117,9 +116,9 @@ class BetsDetailViewController: UIViewController, Storyboarded {
             rightLabel1.text = nil
             leftLabel2.text = BetsDetailViewModel.Labels.Event.leftLabel2
             // TODO: currently shows UUIDs. Need to fetch user first names via FirestoreHelper -> VM
-            rightLabel2.text = "\(bet?.side1Users)"
+            rightLabel2.text = viewModel?.getSideNames(forSide: .one)
             leftLabel3.text = BetsDetailViewModel.Labels.Event.leftLabel3
-            rightLabel3.text = "\(bet?.side2Users)"
+            rightLabel3.text = viewModel?.getSideNames(forSide: .two)
             leftLabel4.text = BetsDetailViewModel.Labels.Event.leftLabel4
             rightLabel4.text = viewModel?.getDateString()
             leftLabel5.text = BetsDetailViewModel.Labels.Event.leftLabel5

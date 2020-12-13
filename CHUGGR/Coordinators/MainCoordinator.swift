@@ -19,22 +19,19 @@ class MainCoordinator: ParentCoordinating {
     }
     
     func start() {
-        presentUserDetailEntry()
-//                let vc = WelcomeViewController.instantiate()
-//        vc.setViewModel(
-//            WelcomeViewModel(firestoreHelper: firestoreHelper)
-//        )
-//        vc.mainCoordinator = self
-//        window.rootViewController = vc
+        let vc = WelcomeViewController(
+            viewModel: WelcomeViewModel(firestoreHelper: firestoreHelper)
+        )
+        vc.mainCoordinator = self
+        window.rootViewController = vc
         window.makeKeyAndVisible()
     }
     
     func presentUserDetailEntry() {
         let vc = UserDetailEntryViewController(
-            viewModel: UserDetailEntryViewModel(firestoreHelper: firestoreHelper),
-            nibName: nil,
-            bundle: nil
+            viewModel: UserDetailEntryViewModel(firestoreHelper: firestoreHelper)
         )
+        vc.mainCoordinator = self
         window.rootViewController = vc
     }
     
@@ -43,13 +40,13 @@ class MainCoordinator: ParentCoordinating {
         tabController.coordinator = self
         startTabBarCoordinators()
         tabController.viewControllers = childCoordinators.map { $0.navigationController }
-        window.rootViewController = tabController
         UIView.transition(
             with: window,
             duration: 0.8,
             options: .transitionCurlUp, // TODO: get a better animation... or don't 😇
             animations: nil,
             completion: nil)
+        window.rootViewController = tabController
     }
     
     func startTabBarCoordinators() {
@@ -72,7 +69,9 @@ class MainCoordinator: ParentCoordinating {
     }
     
     func logOut() {
-        let vc = WelcomeViewController.instantiate()
+        let vc = WelcomeViewController(
+            viewModel: WelcomeViewModel(firestoreHelper: firestoreHelper)
+        )
         vc.mainCoordinator = self
         window.rootViewController = vc
         UIView.transition(

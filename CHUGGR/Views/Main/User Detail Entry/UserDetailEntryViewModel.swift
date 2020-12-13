@@ -29,6 +29,7 @@ class UserDetailEntryViewModel {
     var reloadTableViewClosure: (() -> ())?
     var updateButtonStatus: (() -> ())?
     var ifScreenNameTaken: (() -> ())?
+    var onUserLoad: (() -> ())?
     
     init(firestoreHelper: FirestoreHelper) {
         self.firestoreHelper = firestoreHelper
@@ -90,7 +91,8 @@ class UserDetailEntryViewModel {
             lastName: lastNameInput,
             screenName: screenNameInput,
             bio: bioInput,
-            ifScreenNameTaken: ifScreenNameTaken
+            ifScreenNameTaken: ifScreenNameTaken,
+            completion: onUserLoad
         )
     }
 }

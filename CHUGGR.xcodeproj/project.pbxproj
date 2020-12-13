@@ -26,6 +26,10 @@
 		65578765256DD33600FC23FC /* FriendsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65578764256DD33600FC23FC /* FriendsCoordinator.swift */; };
 		6557876D256DD45200FC23FC /* NewBetsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557876C256DD45100FC23FC /* NewBetsCoordinator.swift */; };
 		65578772256DD4BC00FC23FC /* VideosCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65578771256DD4BC00FC23FC /* VideosCoordinator.swift */; };
+		6563F92525843F3F00DE69EC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6563F92325843F3F00DE69EC /* ProfileViewController.swift */; };
+		6563F92625843F3F00DE69EC /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6563F92425843F3F00DE69EC /* ProfileViewController.xib */; };
+		6563F92B25843FCF00DE69EC /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6563F92A25843FCF00DE69EC /* ProfileViewModel.swift */; };
+		6563F93025844DC800DE69EC /* WelcomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6563F92F25844DC800DE69EC /* WelcomeView.xib */; };
 		65650A3B25686C6E00812395 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65650A3A25686C6E00812395 /* MainCoordinator.swift */; };
 		65650A402568709900812395 /* ChildCoordinating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65650A3F2568709900812395 /* ChildCoordinating.swift */; };
 		656D944C252BF5FE00EDEB7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D944B252BF5FE00EDEB7F /* AppDelegate.swift */; };
@@ -43,10 +47,10 @@
 		659DCB6D252E9A57009D330E /* BetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659DCB6B252E9A57009D330E /* BetCell.swift */; };
 		659DCB6E252E9A57009D330E /* BetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 659DCB6C252E9A57009D330E /* BetCell.xib */; };
 		659DCB76252E9AD3009D330E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659DCB75252E9AD3009D330E /* Constants.swift */; };
+		65AF9BE32585995800FA96F2 /* BetModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AF9BE22585995800FA96F2 /* BetModelTests.swift */; };
 		65C237FD256EF82B001EA95D /* NewBetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C237FC256EF82B001EA95D /* NewBetViewController.swift */; };
 		65C23805256EFAA3001EA95D /* HairlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C23804256EFAA3001EA95D /* HairlineView.swift */; };
 		65C50E09252D1BDF00A786A8 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */; };
-		65C50E13252D1C2700A786A8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C50E12252D1C2700A786A8 /* ProfileViewController.swift */; };
 		65C50E18252D1C9900A786A8 /* VideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C50E17252D1C9900A786A8 /* VideosViewController.swift */; };
 		65C6E3FB257EE30F00EA7AA4 /* UITextField+DoneToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6E3FA257EE30F00EA7AA4 /* UITextField+DoneToolbar.swift */; };
 		65C6E400257EE5AC00EA7AA4 /* UIViewController+DismissKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6E3FF257EE5AC00EA7AA4 /* UIViewController+DismissKeyboard.swift */; };
@@ -111,6 +115,10 @@
 		65578764256DD33600FC23FC /* FriendsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCoordinator.swift; sourceTree = "<group>"; };
 		6557876C256DD45100FC23FC /* NewBetsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetsCoordinator.swift; sourceTree = "<group>"; };
 		65578771256DD4BC00FC23FC /* VideosCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosCoordinator.swift; sourceTree = "<group>"; };
+		6563F92325843F3F00DE69EC /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		6563F92425843F3F00DE69EC /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		6563F92A25843FCF00DE69EC /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		6563F92F25844DC800DE69EC /* WelcomeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WelcomeView.xib; sourceTree = "<group>"; };
 		65650A3A25686C6E00812395 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		65650A3F2568709900812395 /* ChildCoordinating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildCoordinating.swift; sourceTree = "<group>"; };
 		656D9448252BF5FE00EDEB7F /* CHUGGR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CHUGGR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,10 +142,10 @@
 		659DCB6B252E9A57009D330E /* BetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetCell.swift; sourceTree = "<group>"; };
 		659DCB6C252E9A57009D330E /* BetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetCell.xib; sourceTree = "<group>"; };
 		659DCB75252E9AD3009D330E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		65AF9BE22585995800FA96F2 /* BetModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetModelTests.swift; sourceTree = "<group>"; };
 		65C237FC256EF82B001EA95D /* NewBetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetViewController.swift; sourceTree = "<group>"; };
 		65C23804256EFAA3001EA95D /* HairlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HairlineView.swift; sourceTree = "<group>"; };
 		65C50E08252D1BDF00A786A8 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
-		65C50E12252D1C2700A786A8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		65C50E17252D1C9900A786A8 /* VideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosViewController.swift; sourceTree = "<group>"; };
 		65C6E3FA257EE30F00EA7AA4 /* UITextField+DoneToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+DoneToolbar.swift"; sourceTree = "<group>"; };
 		65C6E3FF257EE5AC00EA7AA4 /* UIViewController+DismissKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+DismissKeyboard.swift"; sourceTree = "<group>"; };
@@ -241,9 +249,9 @@
 			isa = PBXGroup;
 			children = (
 				65FBCBC0253257CE00227121 /* BetsDetailViewController.swift */,
+				65D18D962580266F00E562C1 /* BetsDetailViewModel.swift */,
 				658F11242532747F003B6303 /* MessageCell.swift */,
 				658F11252532747F003B6303 /* MessageCell.xib */,
-				65D18D962580266F00E562C1 /* BetsDetailViewModel.swift */,
 			);
 			path = "Bet Detail";
 			sourceTree = "<group>";
@@ -292,7 +300,9 @@
 		6545C05F257AEFB60092C02A /* Profile Tab */ = {
 			isa = PBXGroup;
 			children = (
-				65C50E12252D1C2700A786A8 /* ProfileViewController.swift */,
+				6563F92325843F3F00DE69EC /* ProfileViewController.swift */,
+				6563F92425843F3F00DE69EC /* ProfileViewController.xib */,
+				6563F92A25843FCF00DE69EC /* ProfileViewModel.swift */,
 			);
 			path = "Profile Tab";
 			sourceTree = "<group>";
@@ -302,6 +312,7 @@
 			children = (
 				6537BC2E2583132700880C2B /* User Detail Entry */,
 				656D944F252BF5FE00EDEB7F /* WelcomeViewController.swift */,
+				6563F92F25844DC800DE69EC /* WelcomeView.xib */,
 				6537BC262583054200880C2B /* WelcomeViewModel.swift */,
 				65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */,
 			);
@@ -369,6 +380,7 @@
 			isa = PBXGroup;
 			children = (
 				656D9465252BF60100EDEB7F /* CHUGGRTests.swift */,
+				65AF9BE22585995800FA96F2 /* BetModelTests.swift */,
 				65D18D9B2580520200E562C1 /* FirestoreHelperTests.swift */,
 				656D9467252BF60100EDEB7F /* Info.plist */,
 			);
@@ -587,11 +599,13 @@
 				658F11272532747F003B6303 /* MessageCell.xib in Resources */,
 				65F69D99257B2EFF00CE7371 /* DateEntryCell.xib in Resources */,
 				6537BC3E2583143700880C2B /* UserDetailEntryCell.xib in Resources */,
+				6563F92625843F3F00DE69EC /* ProfileViewController.xib in Resources */,
 				659DCB6E252E9A57009D330E /* BetCell.xib in Resources */,
 				656D9482252BF6E200EDEB7F /* GoogleService-Info.plist in Resources */,
 				65543D0B25772B7100B8C549 /* StakeEntryCell.xib in Resources */,
 				656D9458252BF60100EDEB7F /* Assets.xcassets in Resources */,
 				656D9453252BF5FE00EDEB7F /* Main.storyboard in Resources */,
+				6563F93025844DC800DE69EC /* WelcomeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,6 +775,7 @@
 				65F69D98257B2EFF00CE7371 /* DateEntryCell.swift in Sources */,
 				65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */,
 				6537BC372583138200880C2B /* UserDetailEntryViewModel.swift in Sources */,
+				6563F92525843F3F00DE69EC /* ProfileViewController.swift in Sources */,
 				65578765256DD33600FC23FC /* FriendsCoordinator.swift in Sources */,
 				65FD451A2581D94100481F50 /* CurrentUser.swift in Sources */,
 				65C50E09252D1BDF00A786A8 /* FriendsViewController.swift in Sources */,
@@ -774,7 +789,6 @@
 				65C23805256EFAA3001EA95D /* HairlineView.swift in Sources */,
 				65C6E3FB257EE30F00EA7AA4 /* UITextField+DoneToolbar.swift in Sources */,
 				6557876D256DD45200FC23FC /* NewBetsCoordinator.swift in Sources */,
-				65C50E13252D1C2700A786A8 /* ProfileViewController.swift in Sources */,
 				65578772256DD4BC00FC23FC /* VideosCoordinator.swift in Sources */,
 				65F69D8E257B2D5000CE7371 /* UITextField+InputView.swift in Sources */,
 				659DCB76252E9AD3009D330E /* Constants.swift in Sources */,
@@ -783,6 +797,7 @@
 				656D944C252BF5FE00EDEB7F /* AppDelegate.swift in Sources */,
 				6533F266256859C5002524B3 /* ParentCoordinating.swift in Sources */,
 				65C50E18252D1C9900A786A8 /* VideosViewController.swift in Sources */,
+				6563F92B25843FCF00DE69EC /* ProfileViewModel.swift in Sources */,
 				65650A402568709900812395 /* ChildCoordinating.swift in Sources */,
 				65D18DAD258053EC00E562C1 /* Drinks.swift in Sources */,
 				65543D0A25772B7100B8C549 /* StakeEntryCell.swift in Sources */,
@@ -808,6 +823,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				656D9466252BF60100EDEB7F /* CHUGGRTests.swift in Sources */,
+				65AF9BE32585995800FA96F2 /* BetModelTests.swift in Sources */,
 				65D18D9C2580520200E562C1 /* FirestoreHelperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

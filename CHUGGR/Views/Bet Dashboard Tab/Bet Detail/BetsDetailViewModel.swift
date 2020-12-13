@@ -18,6 +18,9 @@ class BetsDetailViewModel {
             }
         }
     }
+    // First names for users involved in bets, read from db
+    private(set) var side1 = [String]()
+    private(set) var side2 = [String]()
     var updateBetCard: (() -> ())?
     
     init(firestoreHelper: FirestoreHelper) {
@@ -29,8 +32,36 @@ class BetsDetailViewModel {
     }
     
     func fetchBet() {
-        firestoreHelper.readBet(withBetID: betDocID) { [weak self] bet in
+        // Need to put on background queue here?
+        firestoreHelper.readBet(withBetID: betDocID) { [weak self] (bet) in
             self?.bet = bet
+        }
+    }
+    
+    func getSideNames(forSide side: Side) -> String? {
+        guard let bet = bet else { return nil }
+        var names = [String]()
+        
+        switch side {
+        case .one:
+            for user in bet.side1Users {
+                names.append(user.value)
+            }
+        case .two:
+            for user in bet.side2Users {
+                names.append(user.value)
+            }
+        }
+        
+        switch names.count {
+        case 0:
+            return "No one yet"
+        case 1:
+            return names.first
+        case 2:
+            return "(\(names[0]), \(names[1])"
+        default:
+            return "\(names.count) users"
         }
     }
     

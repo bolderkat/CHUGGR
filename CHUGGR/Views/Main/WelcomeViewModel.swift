@@ -10,6 +10,7 @@ import Foundation
 class WelcomeViewModel {
     private let firestoreHelper: FirestoreHelper
     var onUserRead: (() -> ())?
+    var onUserDocNotFound: (() -> ())?
     var onUserReadFail: (() -> ())?
     
     init(firestoreHelper: FirestoreHelper) {
@@ -17,9 +18,10 @@ class WelcomeViewModel {
     }
     
     func getCurrentUserDetails(with uid: String) {
-        firestoreHelper.getCurrentUser(
+        firestoreHelper.readUserOnLogin(
             with: uid,
             completion: onUserRead,
+            onUserDocNotFound: onUserDocNotFound,
             failure: onUserReadFail
         )
     }
