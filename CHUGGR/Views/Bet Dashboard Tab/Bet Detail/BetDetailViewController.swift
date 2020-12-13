@@ -8,10 +8,10 @@
 import UIKit
 import Firebase
 
-class BetsDetailViewController: UIViewController, Storyboarded {
+class BetDetailViewController: UIViewController {
 
     weak var coordinator: ChildCoordinating?
-    private var viewModel: BetsDetailViewModel?
+    private let viewModel: BetDetailViewModel
     var messages: [Message] = []
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -33,6 +33,20 @@ class BetsDetailViewController: UIViewController, Storyboarded {
     @IBOutlet weak var betCard: UIView!
     @IBOutlet weak var closeBetButton: UIButton!
     
+    init(
+        viewModel: BetDetailViewModel,
+        nibName: String? = nil,
+        bundle: Bundle? = nil
+    ) {
+        self.viewModel = viewModel
+        super.init(nibName: nibName, bundle: bundle)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     // TODO: Show loading indicator while waiting for bet from DB!
     
     
@@ -52,8 +66,8 @@ class BetsDetailViewController: UIViewController, Storyboarded {
     
     func setUpViewController() {
         title = "Bet Details"
-        betCard.layer.cornerRadius = 30
         closeBetButton.layer.cornerRadius = 15
+        betCard.layer.cornerRadius = 30
         messageTableView.delegate = self
         messageTableView.dataSource = self
         messageTableView.register(UINib(nibName: K.cells.messageCell, bundle: nil),
@@ -61,70 +75,64 @@ class BetsDetailViewController: UIViewController, Storyboarded {
         updateBetCard()
         titleLabel.text = nil
     }
-    
-    
-    func setViewModel(viewModel: BetsDetailViewModel) {
-        self.viewModel = viewModel
-    }
+
     func initViewModel() {
-        viewModel?.updateBetCard = { [weak self] in
+        viewModel.updateBetCard = { [weak self] in
             self?.updateBetCard()
         }
-        viewModel?.fetchBet()
+        viewModel.fetchBet()
     }
     
     func updateBetCard() {
-        let bet = viewModel?.bet
+        let bet = viewModel.bet
         switch bet?.type {
         case .spread:
             titleLabel.text = bet?.title
             betTypeLabel.text = bet?.type.rawValue.capitalized
-            leftLabel1.text = BetsDetailViewModel.Labels.Spread.leftLabel1
-            rightLabel1.text = "\(bet?.line ?? 0)"
-            leftLabel2.text = BetsDetailViewModel.Labels.Spread.leftLabel2
-            rightLabel2.text = viewModel?.getSideNames(forSide: .one)
-            leftLabel3.text = BetsDetailViewModel.Labels.Spread.leftLabel3
-            rightLabel3.text = viewModel?.getSideNames(forSide: .two)
-            leftLabel4.text = BetsDetailViewModel.Labels.Spread.leftLabel4
-            rightLabel4.text = viewModel?.getDateString()
-            leftLabel5.text = BetsDetailViewModel.Labels.Spread.leftLabel5
-            rightLabel5.text = viewModel?.getDateString()
-            leftLabel6.text = BetsDetailViewModel.Labels.Spread.leftLabel6
-            rightLabel6.text = viewModel?.getBetStatus()
+            leftLabel1.text = BetDetailViewModel.Labels.Spread.leftLabel1
+            rightLabel1.text = viewModel.getBetLine()
+            leftLabel2.text = BetDetailViewModel.Labels.Spread.leftLabel2
+            rightLabel2.text = viewModel.getSideNames(forSide: .one)
+            leftLabel3.text = BetDetailViewModel.Labels.Spread.leftLabel3
+            rightLabel3.text = viewModel.getSideNames(forSide: .two)
+            leftLabel4.text = BetDetailViewModel.Labels.Spread.leftLabel4
+            rightLabel4.text = viewModel.getDateString()
+            leftLabel5.text = BetDetailViewModel.Labels.Spread.leftLabel5
+            rightLabel5.text = viewModel.getDateString()
+            leftLabel6.text = BetDetailViewModel.Labels.Spread.leftLabel6
+            rightLabel6.text = viewModel.getBetStatus()
             
         case .moneyline:
             titleLabel.text = bet?.title
             betTypeLabel.text = bet?.type.rawValue.capitalized
-            leftLabel1.text = BetsDetailViewModel.Labels.Moneyline.leftLabel1
+            leftLabel1.text = BetDetailViewModel.Labels.Moneyline.leftLabel1
             rightLabel1.text = nil
             leftLabel2.text = bet?.team1
-            // TODO: currently shows UUIDs. Need to fetch user first names via FirestoreHelper -> VM
-            rightLabel2.text = viewModel?.getSideNames(forSide: .one)
+            rightLabel2.text = viewModel.getSideNames(forSide: .one)
             leftLabel3.text = bet?.team2
-            rightLabel3.text = viewModel?.getSideNames(forSide: .two)
-            leftLabel4.text = BetsDetailViewModel.Labels.Moneyline.leftLabel4
-            rightLabel4.text = viewModel?.getDateString()
-            leftLabel5.text = BetsDetailViewModel.Labels.Moneyline.leftLabel5
-            rightLabel5.text = viewModel?.getStakeString()
-            leftLabel6.text = BetsDetailViewModel.Labels.Moneyline.leftLabel6
-            rightLabel6.text = viewModel?.getBetStatus()
+            rightLabel3.text = viewModel.getSideNames(forSide: .two)
+            leftLabel4.text = BetDetailViewModel.Labels.Moneyline.leftLabel4
+            rightLabel4.text = viewModel.getDateString()
+            leftLabel5.text = BetDetailViewModel.Labels.Moneyline.leftLabel5
+            rightLabel5.text = viewModel.getStakeString()
+            leftLabel6.text = BetDetailViewModel.Labels.Moneyline.leftLabel6
+            rightLabel6.text = viewModel.getBetStatus()
             
         case .event:
             titleLabel.text = bet?.title
             betTypeLabel.text = bet?.type.rawValue.capitalized
-            leftLabel1.text = BetsDetailViewModel.Labels.Event.leftLabel1
+            leftLabel1.text = BetDetailViewModel.Labels.Event.leftLabel1
             rightLabel1.text = nil
-            leftLabel2.text = BetsDetailViewModel.Labels.Event.leftLabel2
-            // TODO: currently shows UUIDs. Need to fetch user first names via FirestoreHelper -> VM
-            rightLabel2.text = viewModel?.getSideNames(forSide: .one)
-            leftLabel3.text = BetsDetailViewModel.Labels.Event.leftLabel3
-            rightLabel3.text = viewModel?.getSideNames(forSide: .two)
-            leftLabel4.text = BetsDetailViewModel.Labels.Event.leftLabel4
-            rightLabel4.text = viewModel?.getDateString()
-            leftLabel5.text = BetsDetailViewModel.Labels.Event.leftLabel5
-            rightLabel5.text = viewModel?.getStakeString()
-            leftLabel6.text = BetsDetailViewModel.Labels.Event.leftLabel6
-            rightLabel6.text = viewModel?.getBetStatus()
+            leftLabel2.text = BetDetailViewModel.Labels.Event.leftLabel2
+            rightLabel2.text = viewModel.getSideNames(forSide: .one)
+            leftLabel3.text = BetDetailViewModel.Labels.Event.leftLabel3
+            rightLabel3.text = viewModel.getSideNames(forSide: .two)
+            leftLabel4.text = BetDetailViewModel.Labels.Event.leftLabel4
+            rightLabel4.text = viewModel.getDateString()
+            leftLabel5.text = BetDetailViewModel.Labels.Event.leftLabel5
+            rightLabel5.text = viewModel.getStakeString()
+            leftLabel6.text = BetDetailViewModel.Labels.Event.leftLabel6
+            rightLabel6.text = viewModel.getBetStatus()
             
         case .none:
             titleLabel.text = "Bet not found."
@@ -148,13 +156,9 @@ class BetsDetailViewController: UIViewController, Storyboarded {
     @IBAction func sendPressed(_ sender: UIButton) {
     }
     
-    func setUpBetCard(for betType: BetType) {
-        // switch on betType to set up view
-    }
-
 }
 
-extension BetsDetailViewController: UITableViewDelegate, UITableViewDataSource {
+extension BetDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }

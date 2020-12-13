@@ -7,12 +7,13 @@
 
 import UIKit
 
-class BetsViewController: UIViewController, Storyboarded {
+class BetsViewController: UIViewController {
 
     weak var coordinator: BetsCoordinator?
+    private let viewModel: BetsViewModel
     @IBOutlet weak var betsTable: UITableView!
     @IBOutlet weak var pendingBetsLabel: UILabel!
-    @IBOutlet weak var pendingCurrencyLabel: UILabel!
+    @IBOutlet weak var pendingStakeLabel: UILabel!
 
    let sampleData = SampleData()
     
@@ -21,10 +22,25 @@ class BetsViewController: UIViewController, Storyboarded {
         BetsTableSection(title: "Other Bets", cells: sampleData.otherBets)
     ]
     }
+    
+    
+    init(
+        viewModel: BetsViewModel,
+         nibName: String? = nil,
+         bundle: Bundle? = nil
+    ) {
+        self.viewModel = viewModel
+        super.init(nibName: nibName, bundle: bundle)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
 
 
-
-    // MARK:- begin real stuff
+ 
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +52,7 @@ class BetsViewController: UIViewController, Storyboarded {
         betsTable.rowHeight = 55.0
 
         pendingBetsLabel.text = sampleData.pending[0]
-        pendingCurrencyLabel.text = sampleData.pending[1]
+        pendingStakeLabel.text = sampleData.pending[1]
 
         navigationController?.navigationBar.barTintColor = UIColor(named: K.colors.orange)
         navigationController?.navigationBar.isTranslucent = false

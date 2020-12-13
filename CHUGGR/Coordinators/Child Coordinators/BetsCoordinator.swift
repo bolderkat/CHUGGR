@@ -21,7 +21,7 @@ class BetsCoordinator: ChildCoordinating {
     }
     
     func start() {
-        let vc = BetsViewController.instantiate()
+        let vc = BetsViewController(viewModel: BetsViewModel(firestoreHelper: firestoreHelper))
         vc.coordinator = self
         vc.tabBarItem = UITabBarItem(
             title: "Bets",
@@ -32,12 +32,11 @@ class BetsCoordinator: ChildCoordinating {
     }
     
     func openBetDetail(withBetID id: BetID) {
-        let vc = BetsDetailViewController.instantiate()
-        vc.coordinator = self
-        
-        let vm = BetsDetailViewModel(firestoreHelper: firestoreHelper)
+        let vm = BetDetailViewModel(firestoreHelper: firestoreHelper)
         vm.setBetDocID(withBetID: id)
-        vc.setViewModel(viewModel: vm)
+        let vc = BetDetailViewController(viewModel: vm)
+        vc.coordinator = self
+
         navigationController.pushViewController(vc, animated: true)
     }
 }

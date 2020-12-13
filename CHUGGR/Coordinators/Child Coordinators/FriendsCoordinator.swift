@@ -21,7 +21,7 @@ class FriendsCoordinator: ChildCoordinating {
     }
     
     func start() {
-        let vc = FriendsViewController.instantiate()
+        let vc = FriendsViewController(viewModel: FriendsViewModel(firestoreHelper: firestoreHelper))
         vc.coordinator = self
         vc.tabBarItem = UITabBarItem(
             title: "Friends",
@@ -32,12 +32,11 @@ class FriendsCoordinator: ChildCoordinating {
     }
 
     func openBetDetail(withBetID id: BetID) {
-        let vc = BetsDetailViewController.instantiate()
-        vc.coordinator = self
-        
-        let vm = BetsDetailViewModel(firestoreHelper: firestoreHelper)
+        let vm = BetDetailViewModel(firestoreHelper: firestoreHelper)
         vm.setBetDocID(withBetID: id)
-        vc.setViewModel(viewModel: vm)
+        let vc = BetDetailViewController(viewModel: vm)
+        vc.coordinator = self
+
         navigationController.pushViewController(vc, animated: true)
     }
 }

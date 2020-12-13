@@ -10,7 +10,7 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     weak var coordinator: ChildCoordinating?
-    private var viewModel: ProfileViewModel
+    private let viewModel: ProfileViewModel
    
     override func viewDidLoad() {
         super.viewDidLoad()

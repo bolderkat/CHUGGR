@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewBetViewController" customModule="CHUGGR" customModuleProvider="target">
+            <connections>
+                <outlet property="bottomControl" destination="CP8-kb-tcs" id="PwL-wl-mah"/>
+                <outlet property="entryTable" destination="BTH-0h-3k8" id="MD1-Kw-ihw"/>
+                <outlet property="sendBetButton" destination="Qmg-3x-Dke" id="XhG-nW-vOK"/>
+                <outlet property="topControl" destination="l0L-5U-kyg" id="lit-ZP-fEm"/>
+                <outlet property="view" destination="FM9-ZK-vee" id="ybL-vb-7de"/>
+            </connections>
+        </placeholder>
+        <view contentMode="scaleToFill" id="FM9-ZK-vee">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Omk-5X-3Lz">
+                    <rect key="frame" x="0.0" y="44" width="414" height="392"/>
+                    <subviews>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="l0L-5U-kyg">
+                            <rect key="frame" x="16" y="20" width="382" height="32"/>
+                            <segments>
+                                <segment title="Spread"/>
+                                <segment title="Moneyline"/>
+                                <segment title="Event"/>
+                            </segments>
+                            <connections>
+                                <action selector="topControlChanged:" destination="-1" eventType="valueChanged" id="EsP-pE-Nad"/>
+                            </connections>
+                        </segmentedControl>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CP8-kb-tcs">
+                            <rect key="frame" x="16" y="344" width="382" height="32"/>
+                            <segments>
+                                <segment title="Over"/>
+                                <segment title="Under"/>
+                            </segments>
+                            <connections>
+                                <action selector="bottomControlChanged:" destination="-1" eventType="valueChanged" id="s0S-Dl-igo"/>
+                            </connections>
+                        </segmentedControl>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ov-gg-V2d" customClass="HairlineView" customModule="CHUGGR" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="71" width="414" height="1"/>
+                            <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" priority="999" constant="1" id="hPf-71-EW4"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qsH-XB-IP7" customClass="HairlineView" customModule="CHUGGR" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="391" width="414" height="1"/>
+                            <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" priority="999" constant="1" id="mVq-63-D4P"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHOOSE A SIDE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zG-AC-6KG">
+                            <rect key="frame" x="16" y="316" width="382" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" name="Gray 3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BTH-0h-3k8">
+                            <rect key="frame" x="0.0" y="72" width="414" height="220"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="220" id="1BU-oJ-TkR"/>
+                            </constraints>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="0zG-AC-6KG" firstAttribute="top" secondItem="BTH-0h-3k8" secondAttribute="bottom" constant="24" id="03A-7B-P81"/>
+                        <constraint firstItem="l0L-5U-kyg" firstAttribute="leading" secondItem="Omk-5X-3Lz" secondAttribute="leading" constant="16" id="1bq-lv-CHQ"/>
+                        <constraint firstItem="l0L-5U-kyg" firstAttribute="top" secondItem="Omk-5X-3Lz" secondAttribute="top" constant="20" id="2Ws-V5-6AN"/>
+                        <constraint firstItem="0zG-AC-6KG" firstAttribute="leading" secondItem="Omk-5X-3Lz" secondAttribute="leading" constant="16" id="3NR-oe-MW7"/>
+                        <constraint firstAttribute="trailing" secondItem="l0L-5U-kyg" secondAttribute="trailing" constant="16" id="4Ad-OW-Pah"/>
+                        <constraint firstItem="qsH-XB-IP7" firstAttribute="top" secondItem="CP8-kb-tcs" secondAttribute="bottom" constant="16" id="4xO-Cb-paE"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="472" id="6Kq-We-ZYk"/>
+                        <constraint firstItem="0Ov-gg-V2d" firstAttribute="top" secondItem="l0L-5U-kyg" secondAttribute="bottom" constant="20" id="7Za-sG-oVG"/>
+                        <constraint firstAttribute="bottom" secondItem="qsH-XB-IP7" secondAttribute="bottom" id="7bZ-dg-5Pl"/>
+                        <constraint firstAttribute="trailing" secondItem="0Ov-gg-V2d" secondAttribute="trailing" id="9Vx-46-LcF"/>
+                        <constraint firstItem="CP8-kb-tcs" firstAttribute="top" secondItem="0zG-AC-6KG" secondAttribute="bottom" constant="12" id="9bc-by-jvo"/>
+                        <constraint firstItem="0Ov-gg-V2d" firstAttribute="leading" secondItem="Omk-5X-3Lz" secondAttribute="leading" id="CGE-Fz-yzA"/>
+                        <constraint firstAttribute="trailing" secondItem="CP8-kb-tcs" secondAttribute="trailing" constant="16" id="FgI-5n-z2Z"/>
+                        <constraint firstItem="BTH-0h-3k8" firstAttribute="top" secondItem="0Ov-gg-V2d" secondAttribute="bottom" id="ISm-T5-g2Z"/>
+                        <constraint firstAttribute="trailing" secondItem="BTH-0h-3k8" secondAttribute="trailing" id="QcG-HB-Gg7"/>
+                        <constraint firstItem="CP8-kb-tcs" firstAttribute="leading" secondItem="Omk-5X-3Lz" secondAttribute="leading" constant="16" id="VKQ-wv-zad"/>
+                        <constraint firstItem="qsH-XB-IP7" firstAttribute="leading" secondItem="Omk-5X-3Lz" secondAttribute="leading" id="YlX-Eo-nP4"/>
+                        <constraint firstAttribute="trailing" secondItem="qsH-XB-IP7" secondAttribute="trailing" id="od8-y9-p9m"/>
+                        <constraint firstItem="BTH-0h-3k8" firstAttribute="leading" secondItem="Omk-5X-3Lz" secondAttribute="leading" id="sEq-MP-X8w"/>
+                        <constraint firstAttribute="trailing" secondItem="0zG-AC-6KG" secondAttribute="trailing" constant="16" id="uZM-fi-n4f"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qmg-3x-Dke">
+                    <rect key="frame" x="16" y="787" width="382" height="50"/>
+                    <color key="backgroundColor" name="CHUGGR Orange"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="g4M-dg-Iyy"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                    <state key="normal" title="SEND BET">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="sendButtonPressed:" destination="-1" eventType="touchUpInside" id="vCM-Jn-Zwd"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Oe4-Yh-kgS"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="Oe4-Yh-kgS" firstAttribute="bottom" secondItem="Qmg-3x-Dke" secondAttribute="bottom" constant="25" id="0rc-QA-FNc"/>
+                <constraint firstItem="Omk-5X-3Lz" firstAttribute="top" secondItem="Oe4-Yh-kgS" secondAttribute="top" id="DjV-ge-Gjt"/>
+                <constraint firstItem="Omk-5X-3Lz" firstAttribute="leading" secondItem="FM9-ZK-vee" secondAttribute="leading" id="FBe-qp-LNf"/>
+                <constraint firstItem="Oe4-Yh-kgS" firstAttribute="trailing" secondItem="Qmg-3x-Dke" secondAttribute="trailing" constant="16" id="JHi-ce-zRN"/>
+                <constraint firstItem="Oe4-Yh-kgS" firstAttribute="trailing" secondItem="Omk-5X-3Lz" secondAttribute="trailing" id="d2u-zb-Wtb"/>
+                <constraint firstItem="Qmg-3x-Dke" firstAttribute="leading" secondItem="Oe4-Yh-kgS" secondAttribute="leading" constant="16" id="sD7-U7-LuX"/>
+            </constraints>
+            <point key="canvasLocation" x="-36" y="765"/>
+        </view>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+    </objects>
+    <resources>
+        <namedColor name="CHUGGR Orange">
+            <color red="1" green="0.60000002384185791" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Gray 3">
+            <color red="0.61568627450980395" green="0.61568627450980395" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

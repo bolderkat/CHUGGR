@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-class BetsDetailViewModel {
+class BetDetailViewModel {
     private let firestoreHelper: FirestoreHelper
     private var betDocID: BetID?
     private(set) var bet: Bet? {
@@ -36,6 +36,13 @@ class BetsDetailViewModel {
         firestoreHelper.readBet(withBetID: betDocID) { [weak self] (bet) in
             self?.bet = bet
         }
+    }
+    
+    func getBetLine() -> String? {
+        guard let line = bet?.line else { return nil }
+        // Truncate decimal if round number, otherwise keep one decimal.
+        let format = line.truncatingRemainder(dividingBy: 1) == 0 ? "%.0f" : "%.1f"
+        return String(format: format, line)
     }
     
     func getSideNames(forSide side: Side) -> String? {
@@ -85,7 +92,7 @@ class BetsDetailViewModel {
     }
 }
 
-extension BetsDetailViewModel {
+extension BetDetailViewModel {
     // MARK:- Constants for bet card labels
     struct Labels {
         struct Spread {

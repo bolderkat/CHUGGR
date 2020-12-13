@@ -12,7 +12,7 @@ import FirebaseUI
 class WelcomeViewController: UIViewController {
     
     var mainCoordinator: MainCoordinator?
-    private var viewModel: WelcomeViewModel
+    private let viewModel: WelcomeViewModel
     
     @IBOutlet weak var getStartedButton: UIButton!
     
