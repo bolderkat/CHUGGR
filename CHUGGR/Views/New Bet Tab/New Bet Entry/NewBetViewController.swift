@@ -82,6 +82,40 @@ class NewBetViewController: UIViewController {
         coordinator?.openBetDetail(withBetID: id)
     }
     
+    func updateUI(animated: Bool = false) {
+        // Set up table rows
+        let rows = viewModel.cellViewModels
+        var snapshot = NSDiffableDataSourceSnapshot<Section, BetEntryCellViewModel>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(rows)
+        dataSource.apply(snapshot, animatingDifferences: animated, completion: nil)
+        
+        // Set up bottom seg. control labels
+        var leftLabel = ""
+        var rightLabel = ""
+        switch viewModel.selectedBetType {
+        case .spread:
+            leftLabel = "Over"
+            rightLabel = "Under"
+        case .moneyline:
+            leftLabel = "Team 1"
+            rightLabel = "Team 2"
+        case .event:
+            leftLabel = "For"
+            rightLabel = "Against"
+            
+        }
+        bottomControl.setTitle(leftLabel, forSegmentAt: 0)
+        bottomControl.setTitle(rightLabel, forSegmentAt: 1)
+    }
+    
+    func updateButtonStatus() {
+        sendBetButton.isEnabled = viewModel.isInputComplete
+        sendBetButton.backgroundColor = sendBetButton.isEnabled ?
+            UIColor(named: K.colors.orange) : UIColor(named: K.colors.gray3)
+    }
+
+    
 }
 
 // MARK:- Table View Data Source
@@ -93,7 +127,7 @@ extension NewBetViewController {
     func configureDataSource() {
         dataSource = UITableViewDiffableDataSource<Section, BetEntryCellViewModel>(
             tableView: entryTable,
-            cellProvider: { tableView, indexPath, rowVM in
+            cellProvider: { tableView, indexPath, rowVM -> UITableViewCell? in
                 
                 // Custom cell setup for stake entry cell
                 switch rowVM.type {
@@ -148,38 +182,6 @@ extension NewBetViewController {
         )
     }
     
-    func updateUI(animated: Bool = false) {
-        // Set up table rows
-        let rows = viewModel.cellViewModels
-        var snapshot = NSDiffableDataSourceSnapshot<Section, BetEntryCellViewModel>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(rows)
-        dataSource.apply(snapshot, animatingDifferences: animated, completion: nil)
-        
-        // Set up bottom seg. control labels
-        var leftLabel = ""
-        var rightLabel = ""
-        switch viewModel.selectedBetType {
-        case .spread:
-            leftLabel = "Over"
-            rightLabel = "Under"
-        case .moneyline:
-            leftLabel = "Team 1"
-            rightLabel = "Team 2"
-        case .event:
-            leftLabel = "For"
-            rightLabel = "Against"
-
-        }
-        bottomControl.setTitle(leftLabel, forSegmentAt: 0)
-        bottomControl.setTitle(rightLabel, forSegmentAt: 1)
-    }
-    
-    func updateButtonStatus() {
-        sendBetButton.isEnabled = viewModel.isInputComplete
-        sendBetButton.backgroundColor = sendBetButton.isEnabled ?
-            UIColor(named: K.colors.orange) : UIColor(named: K.colors.gray3)
-    }
 }
 
 
