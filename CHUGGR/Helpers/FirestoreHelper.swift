@@ -106,7 +106,7 @@ class FirestoreHelper {
                     if let user = user {
                         self?.currentUser = user
                         // If successful, add a snapshot for this document.
-                        self?.addCurrentUserSnapshot(with: uid)
+                        self?.addCurrentUserListener(with: uid)
                         
                         DispatchQueue.main.async {
                             completion?()
@@ -123,7 +123,7 @@ class FirestoreHelper {
         
     }
     
-    func addCurrentUserSnapshot(with uid: String) {
+    func addCurrentUserListener(with uid: String) {
         let listener = self.db.collection(K.Firestore.users).whereField(K.Firestore.uid, isEqualTo: uid)
             .addSnapshotListener { [weak self] (querySnapshot, error) in
                 guard let document = querySnapshot?.documents.first else {
@@ -185,18 +185,132 @@ class FirestoreHelper {
                     switch result {
                     case .success(let betFromDoc):
                         if let unwrappedBet = betFromDoc {
-                            // Successfully initialized a Bet value from DocumentSnapshot
+                            // Successfully initialized a Bet value from QuerySnapshot
                             // call and pass completion to getBetFirstNames
                             completion(unwrappedBet)
                         } else {
-                            // A nil value was successfully initialized from the DocumentSnapshot,
+                            // A nil value was successfully initialized from the QuerySnapshot,
                             // or the DocumentSnapshot was nil.
                             print("Document does not exist")
                         }
                     case .failure(let error):
-                        // A Bet value could not be initialized from the DocumentSnapshot.
+                        // A Bet value could not be initialized from the QuerySnapshot.
                         print("Error decoding bet: \(error)")
                     }
+                }
+            }
+    }
+    
+    func addPendingBetsListener(completion: @escaping (_ bets: [Bet]) -> ()) {
+        guard let uid = currentUser?.uid,
+              let firstName = currentUser?.firstName else { return }
+
+        // Query for all bets user where user is invited and has not yet taken a side
+        // Use listener to alert user to new bets in realtime
+        let listener = db.collection(K.Firestore.bets).whereField(K.Firestore.invitedUsers, arrayContains: [uid: firstName])
+            .addSnapshotListener { (querySnapshot, error) in
+                if let error = error {
+                    // TODO: better error handling to display to user
+                    print("Error getting documents: \(error)")
+                } else {
+                    var bets = [Bet]()
+                    for document in querySnapshot!.documents {
+                        let result = Result {
+                            try document.data(as: Bet.self)
+                        }
+                        switch result {
+                        case .success(let bet):
+                            if let unwrappedBet = bet {
+                                // Successfully initialized a Bet value from QuerySnapshot
+                                // Add bet to bets array.
+                                bets.append(unwrappedBet)
+                            } else {
+                                // A nil value was successfully initialized from the QuerySnapshot,
+                                // or the DocumentSnapshot was nil.
+                                print("Document does not exist")
+                            }
+                        case .failure(let error):
+                            // A Bet value could not be initialized from the QuerySnapshot.
+                            print("Error decoding bet: \(error)")
+                        }
+                    }
+                    completion(bets)
+                }
+            }
+        snapshotListeners.append(listener)
+    }
+    
+    
+    func fetchUserInvolvedBets(completion: @escaping (_ bets: [Bet]) -> ()) {
+        guard let uid = currentUser?.uid else { return }
+
+        // Query for all bets user has taken a side on
+        db.collection(K.Firestore.bets).whereField(K.Firestore.acceptedUsers, arrayContains: uid)
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    // TODO: better error handling to display to user
+                    print("Error getting documents: \(error)")
+                } else {
+                    var bets = [Bet]()
+                    for document in querySnapshot!.documents {
+                        let result = Result {
+                            try document.data(as: Bet.self)
+                        }
+                        switch result {
+                        case .success(let bet):
+                            if let unwrappedBet = bet {
+                                // Successfully initialized a Bet value from QuerySnapshot
+                                // Add bet to bets array.
+                                bets.append(unwrappedBet)
+                            } else {
+                                // A nil value was successfully initialized from the QuerySnapshot,
+                                // or the DocumentSnapshot was nil.
+                                print("Document does not exist")
+                            }
+                        case .failure(let error):
+                            // A Bet value could not be initialized from the QuerySnapshot.
+                            print("Error decoding bet: \(error)")
+                        }
+                    }
+                    completion(bets)
+                }
+            }
+    }
+    
+    func fetchOtherBets(completion: @escaping (_ bets: [Bet]) -> ()) {
+        guard let uid = currentUser?.uid else { return }
+
+        // Query for all other bets
+        // TODO: As app grows, need to limit query to FRIENDS ONLY
+        db.collection(K.Firestore.bets).whereField(K.Firestore.allUsers, notIn: [uid])
+            .limit(to: 15) // TODO: will need to provide more bets as user scrolls (likely pagination with snapshot?)
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    // TODO: better error handling to display to user
+                    print("Error getting documents: \(error)")
+                } else {
+                    var bets = [Bet]()
+                    for document in querySnapshot!.documents {
+                        let result = Result {
+                            try document.data(as: Bet.self)
+                        }
+                        switch result {
+                        case .success(let bet):
+                            if let unwrappedBet = bet {
+                                // Successfully initialized a Bet value from QuerySnapshot
+                                // Add bet to bets array.
+                                bets.append(unwrappedBet)
+                            } else {
+                                // A nil value was successfully initialized from the QuerySnapshot,
+                                // or the DocumentSnapshot was nil.
+                                print("Document does not exist")
+                            }
+                        case .failure(let error):
+                            // A Bet value could not be initialized from the QuerySnapshot.
+                            print("Error decoding bet: \(error)")
+                        }
+                    }
+                    completion(bets)
                 }
             }
     }
@@ -219,8 +333,8 @@ class FirestoreHelper {
         // Remember to include snapshot unsubs here as you add them elsewhere!
         for listener in snapshotListeners {
             listener.remove()
-            snapshotListeners.removeFirst()
         }
+        snapshotListeners = []
     }
     
 }
