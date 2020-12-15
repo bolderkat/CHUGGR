@@ -10,9 +10,8 @@ import UIKit
 class BetsViewController: UIViewController {
 
     weak var coordinator: BetsCoordinator?
-    private var dataSource: UITableViewDiffableDataSource<Section, BetCellViewModel>!
+    private var dataSource: BetsTableDataSource!
     private let viewModel: BetsViewModel
-    private let refreshControl = UIRefreshControl() // for table view refresh
     
     @IBOutlet weak var betsTable: UITableView!
     @IBOutlet weak var pendingBetsView: UIView!
@@ -68,12 +67,6 @@ class BetsViewController: UIViewController {
             }
         }
         
-        viewModel.endRefreshControl = { [weak self] in
-            DispatchQueue.main.async {
-                self?.endRefreshControl()
-            }
-        }
-        
     }
     
     func updateTableView(animated: Bool = false) {
@@ -83,44 +76,49 @@ class BetsViewController: UIViewController {
         
         // Load up snapshot with relevant data
         var snapshot = NSDiffableDataSourceSnapshot<Section, BetCellViewModel>()
-        snapshot.appendSections(Section.allCases)
+        snapshot.appendSections([.myBets, .otherBets])
         snapshot.appendItems(involvedBets, toSection: .myBets)
         snapshot.appendItems(otherBets, toSection: .otherBets)
+ 
         
         dataSource.apply(snapshot, animatingDifferences: animated) // apply to tableView data source
     }
     
     func updateBetsPendingLabel() {
 //        if viewModel.pendingBets.isEmpty {
-//            pendingBetsView.removeFromSuperview()
+//            pendingBetsView.isHidden = true
 //        } else {
-//            view.addSubview(pendingBetsView)
+//            pendingBetsView.isHidden = false
             pendingBetsLabel.text = "\(viewModel.pendingBets.count) New Bets Pending!"
             pendingStakeLabel.text = viewModel.getPendingBetsLabel()
 //        }
     }
     
-    @objc func refreshBets() {
-        viewModel.refreshBets()
-    }
-    
-    func endRefreshControl() {
-        refreshControl.endRefreshing()
-    }
+
     
     
 }
 
 
 // MARK:- Table view data source
-private extension BetsViewController {
-    enum Section: CaseIterable {
+extension BetsViewController {
+    enum Section: Int {
         case myBets
         case otherBets
+        
+        var header: String {
+            switch self {
+            case .myBets:
+                return "My Bets"
+            case .otherBets:
+                return "Other Bets"
+            }
+        }
     }
     
+    
     func configureDataSource() {
-        dataSource = UITableViewDiffableDataSource<Section, BetCellViewModel>(
+        dataSource = BetsTableDataSource(
             tableView: betsTable, cellProvider: { (tableView, indexPath, rowVM) -> UITableViewCell? in
                 // Set up cells for each bet
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.betCell, for: indexPath) as? BetCell else {
@@ -145,11 +143,10 @@ extension BetsViewController: UITableViewDelegate {
         betsTable.register(UINib(nibName: K.cells.betCell, bundle: nil),
                            forCellReuseIdentifier: K.cells.betCell)
         betsTable.rowHeight = 55.0
-        refreshControl.addTarget(self, action: #selector(refreshBets), for: .valueChanged)
-        betsTable.refreshControl = refreshControl
+
     }
     
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        coordinator?.openBetDetail(for: tableSections[indexPath.section].cells[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
