@@ -12,7 +12,8 @@ import FirebaseFirestoreSwift
 class FirestoreHelper {
     private let db = Firestore.firestore()
     private(set) var currentUser: CurrentUser?
-    private var snapshotListeners = [ListenerRegistration]()
+    private var userListeners: [ListenerRegistration] = []
+    private var betDashboardListeners: [ListenerRegistration] = []
     
     // MARK:- User CRUD
     func createNewUser(
@@ -149,7 +150,7 @@ class FirestoreHelper {
                     print("Error decoding user: \(error)")
                 }
             }
-        snapshotListeners.append(listener)
+        userListeners.append(listener)
     }
     
     
@@ -207,7 +208,9 @@ class FirestoreHelper {
 
         // Query for all bets user where user is invited and has not yet taken a side
         // Use listener to alert user to new bets in realtime
-        let listener = db.collection(K.Firestore.bets).whereField(K.Firestore.invitedUsers, arrayContains: [uid: firstName])
+        let listener = db.collection(K.Firestore.bets)
+            .whereField(K.Firestore.invitedUsers, arrayContains: [uid: firstName])
+            .order(by: K.Firestore.dateOpened, descending: true)
             .addSnapshotListener { (querySnapshot, error) in
                 if let error = error {
                     // TODO: better error handling to display to user
@@ -237,16 +240,18 @@ class FirestoreHelper {
                     completion(bets)
                 }
             }
-        snapshotListeners.append(listener)
+        betDashboardListeners.append(listener)
     }
     
     
-    func fetchUserInvolvedBets(completion: @escaping (_ bets: [Bet]) -> ()) {
+    func addUserInvolvedBetsListener(completion: @escaping (_ bets: [Bet]) -> ()) {
         guard let uid = currentUser?.uid else { return }
 
         // Query for all bets user has taken a side on
-        db.collection(K.Firestore.bets).whereField(K.Firestore.acceptedUsers, arrayContains: uid)
-            .getDocuments { (querySnapshot, error) in
+        let listener = db.collection(K.Firestore.bets)
+            .whereField(K.Firestore.acceptedUsers, arrayContains: uid)
+            .order(by: K.Firestore.dateOpened, descending: true)
+            .addSnapshotListener { (querySnapshot, error) in
                 if let error = error {
                     // TODO: better error handling to display to user
                     print("Error getting documents: \(error)")
@@ -275,15 +280,18 @@ class FirestoreHelper {
                     completion(bets)
                 }
             }
+        betDashboardListeners.append(listener)
     }
     
     func fetchOtherBets(completion: @escaping (_ bets: [Bet]) -> ()) {
         guard let uid = currentUser?.uid else { return }
 
-        // Query for all other bets
+        // Query for other bets around the platform where user is not involved.
         // TODO: As app grows, need to limit query to FRIENDS ONLY
-        db.collection(K.Firestore.bets).whereField(K.Firestore.allUsers, notIn: [uid])
-            .limit(to: 15) // TODO: will need to provide more bets as user scrolls (likely pagination with snapshot?)
+        db.collection(K.Firestore.bets)
+            // Can't query for fields NOT containing current UID, so have to just pull a bunch of bets and filter client side :(
+            .order(by: K.Firestore.dateOpened, descending: true)
+            .limit(to: 20) // TODO: will need to provide more bets as user scrolls (likely pagination with snapshot?)
             .getDocuments { (querySnapshot, error) in
                 if let error = error {
                     // TODO: better error handling to display to user
@@ -298,8 +306,10 @@ class FirestoreHelper {
                         case .success(let bet):
                             if let unwrappedBet = bet {
                                 // Successfully initialized a Bet value from QuerySnapshot
-                                // Add bet to bets array.
-                                bets.append(unwrappedBet)
+                                // Add bet to bets array if current user not involved.
+                                if !unwrappedBet.allUsers.contains(uid) {
+                                    bets.append(unwrappedBet)
+                                }
                             } else {
                                 // A nil value was successfully initialized from the QuerySnapshot,
                                 // or the DocumentSnapshot was nil.
@@ -331,10 +341,10 @@ class FirestoreHelper {
     func unsubscribeAllSnapshotListeners() {
         // To be called at logout
         // Remember to include snapshot unsubs here as you add them elsewhere!
-        for listener in snapshotListeners {
-            listener.remove()
-        }
-        snapshotListeners = []
+        userListeners.forEach { $0.remove() }
+        userListeners = []
+        betDashboardListeners.forEach { $0.remove() }
+        betDashboardListeners = []
     }
     
 }

@@ -68,7 +68,7 @@ class BetDetailViewModel {
         case 2:
             return "(\(names[0]), \(names[1])"
         default:
-            return "\(names.count) users"
+            return "\(names.count) people"
         }
     }
     
@@ -88,7 +88,55 @@ class BetDetailViewModel {
     
     func getBetStatus() -> String? {
         guard let bet = bet else { return nil }
-        return bet.isFinished ? "FINISHED" : "IN PLAY"
+        
+        // Check if bet is finished/has winner. If not, display "IN PLAY"
+        guard let winner = bet.winner else { return "IN PLAY" }
+        
+        // Check if user is involved and which side they are on
+        var currentUserSide: Side?
+        guard let currentUID = firestoreHelper.currentUser?.uid else { return nil }
+        if let _ = bet.side1Users[currentUID] {
+            currentUserSide = .one
+        }
+        
+        
+        if let _ = bet.side2Users[currentUID] {
+            currentUserSide = .two
+        }
+        
+        // If user is on winning side
+        if let side = currentUserSide,
+           side == winner {
+            return "WON"
+        }
+        
+        // If user is on losing side
+        if let side = currentUserSide,
+           side != winner {
+            return "LOST"
+        }
+        
+        // If user uninvolved, need to switch on possible outcomes to display
+        switch winner {
+        case .one:
+            switch bet.type {
+            case .spread:
+                return "OVER"
+            case .moneyline:
+                return String(bet.team1 ?? "").capitalized
+            case .event:
+                return "FOR WINS"
+            }
+        case .two:
+            switch bet.type {
+            case .spread:
+                return "UNDER"
+            case .moneyline:
+                return String(bet.team2 ?? "").capitalized
+            case .event:
+                return "AGAINST WINS"
+            }
+        }
     }
 }
 

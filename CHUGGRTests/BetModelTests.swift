@@ -58,7 +58,7 @@ class BetModelTests: XCTestCase {
         bet.perform(action: .removeFromSide, withID: "uid", firstName: "daniel")
     }
 
-    func testExample() throws {
+    func testUserActions() throws {
         inviteUser()
         XCTAssertTrue(bet.allUsers.contains("uid"))
         XCTAssertEqual(bet.invitedUsers, ["uid": "daniel"])
@@ -108,6 +108,15 @@ class BetModelTests: XCTestCase {
         XCTAssertFalse(bet.acceptedUsers.contains("uid"))
     }
     
+    func testFinish() throws {
+        bet.perform(action: .invite, withID: "uid", firstName: "daniel")
+        bet.perform(action: .addToSide1, withID: "uid", firstName: "daniel")
+        bet.closeBetWith(winningSide: .one)
+        XCTAssertGreaterThan(bet.dateFinished!, bet.dateOpened)
+        XCTAssertGreaterThanOrEqual(Date().timeIntervalSince1970, bet.dateFinished!)
+        XCTAssertTrue(bet.isFinished)
+        XCTAssertEqual(bet.winner, Side.one)
+    }
     
 
     func testPerformanceExample() throws {

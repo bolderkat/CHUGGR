@@ -88,24 +88,3 @@ struct Bet: Codable {
         }
     }
 }
-
-
-struct CodableBet: Codable {
-    let type: BetType
-    let title: String
-    var line: Double?
-    let team1: String?
-    let team2: String?
-    private(set) var invitedUsers = Set<String>() // UUIDs
-    private(set) var side1Users = Set<String>() // UUIDs
-    private(set) var side2Users = Set<String>() // UUIDs
-    var allUsers: Set<String> {
-        invitedUsers.union(side1Users).union(side2Users)
-    }
-//    var stake: Drinks
-    let dateOpened: TimeInterval
-    var dueDate: TimeInterval
-    private(set) var isFinished = false
-    private(set) var winner: Side?
-    private(set) var dateFinished: TimeInterval? = nil
-}

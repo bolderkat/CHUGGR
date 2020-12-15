@@ -67,6 +67,7 @@
 		65D18DAD258053EC00E562C1 /* Drinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D18DAC258053EC00E562C1 /* Drinks.swift */; };
 		65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D34C1F252CF494005C6F98 /* BetsViewController.swift */; };
 		65E6F787256C5A2400252974 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6F786256C5A2400252974 /* ProfileCoordinator.swift */; };
+		65EBC1132586FD58009FE754 /* BetCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EBC1122586FD58009FE754 /* BetCellViewModel.swift */; };
 		65F4029B252EA103007892F8 /* Bet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F4029A252EA103007892F8 /* Bet.swift */; };
 		65F563722585C21B00033E3E /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65F563712585C21B00033E3E /* ProfileView.xib */; };
 		65F69D8E257B2D5000CE7371 /* UITextField+InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F69D8D257B2D5000CE7371 /* UITextField+InputView.swift */; };
@@ -169,6 +170,7 @@
 		65D18DAC258053EC00E562C1 /* Drinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drinks.swift; sourceTree = "<group>"; };
 		65D34C1F252CF494005C6F98 /* BetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsViewController.swift; sourceTree = "<group>"; };
 		65E6F786256C5A2400252974 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		65EBC1122586FD58009FE754 /* BetCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetCellViewModel.swift; sourceTree = "<group>"; };
 		65F4029A252EA103007892F8 /* Bet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bet.swift; sourceTree = "<group>"; };
 		65F563712585C21B00033E3E /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
 		65F69D8D257B2D5000CE7371 /* UITextField+InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+InputView.swift"; sourceTree = "<group>"; };
@@ -252,11 +254,10 @@
 		6545C042257AEEEB0092C02A /* Bet Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				65EBC1112586FD43009FE754 /* Custom Cells */,
 				65D34C1F252CF494005C6F98 /* BetsViewController.swift */,
 				65C681F92585E022003160F0 /* BetsViewModel.swift */,
 				65C681F42585DF8F003160F0 /* BetsView.xib */,
-				659DCB6B252E9A57009D330E /* BetCell.swift */,
-				659DCB6C252E9A57009D330E /* BetCell.xib */,
 			);
 			path = "Bet Dashboard";
 			sourceTree = "<group>";
@@ -287,11 +288,11 @@
 		6545C05C257AEF670092C02A /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
-				650371F7257AD2B700F59D95 /* BetEntryCellViewModel.swift */,
 				6535F501256F479F00C5FC72 /* BetEntryCell.swift */,
+				650371F7257AD2B700F59D95 /* BetEntryCellViewModel.swift */,
+				6535F502256F479F00C5FC72 /* BetEntryCell.xib */,
 				65543D0825772B7100B8C549 /* StakeEntryCell.swift */,
 				65F69D96257B2EFF00CE7371 /* DateEntryCell.swift */,
-				6535F502256F479F00C5FC72 /* BetEntryCell.xib */,
 				65543D0925772B7100B8C549 /* StakeEntryCell.xib */,
 				65F69D97257B2EFF00CE7371 /* DateEntryCell.xib */,
 				65C23804256EFAA3001EA95D /* HairlineView.swift */,
@@ -469,6 +470,16 @@
 				658F112E25327B2C003B6303 /* Message.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		65EBC1112586FD43009FE754 /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				659DCB6B252E9A57009D330E /* BetCell.swift */,
+				65EBC1122586FD58009FE754 /* BetCellViewModel.swift */,
+				659DCB6C252E9A57009D330E /* BetCell.xib */,
+			);
+			path = "Custom Cells";
 			sourceTree = "<group>";
 		};
 		65F69D8C257B2D1000CE7371 /* Extensions */ = {
@@ -824,6 +835,7 @@
 				65C682202585E356003160F0 /* VideosViewModel.swift in Sources */,
 				656D944C252BF5FE00EDEB7F /* AppDelegate.swift in Sources */,
 				6533F266256859C5002524B3 /* ParentCoordinating.swift in Sources */,
+				65EBC1132586FD58009FE754 /* BetCellViewModel.swift in Sources */,
 				6563F92B25843FCF00DE69EC /* ProfileViewModel.swift in Sources */,
 				65650A402568709900812395 /* ChildCoordinating.swift in Sources */,
 				65D18DAD258053EC00E562C1 /* Drinks.swift in Sources */,
