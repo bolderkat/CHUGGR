@@ -11,7 +11,7 @@ struct Friend: User, Codable {
     let uid: UID
     let firstName: String
     let lastName: String
-    let screenName: String
+    let userName: String
     let bio: String
     private(set) var numBets: Int
     private(set) var numFriends: Int

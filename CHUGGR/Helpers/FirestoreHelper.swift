@@ -24,9 +24,9 @@ class FirestoreHelper {
     func createNewUser(
         firstName: String,
         lastName: String,
-        screenName: String,
+        userName: String,
         bio: String,
-        ifScreenNameTaken: @escaping (() -> ()),
+        ifUserNameTaken: @escaping (() -> ()),
         completion: (() -> ())?
     ) {
         // Get userID and email and instantiate current user
@@ -41,7 +41,7 @@ class FirestoreHelper {
             email: email,
             firstName: firstName,
             lastName: lastName,
-            screenName: screenName,
+            userName: userName,
             bio: bio,
             numBets: 0,
             numFriends: 0,
@@ -53,19 +53,19 @@ class FirestoreHelper {
         )
         
         
-        // Check if screen name is already in use
-        let docRef = db.collection(K.Firestore.users).whereField(K.Firestore.screenName, isEqualTo: screenName)
+        // Check if user name is already in use
+        let docRef = db.collection(K.Firestore.users).whereField(K.Firestore.userName, isEqualTo: userName)
         docRef.getDocuments { [weak self] (document, error) in
             if let error = error {
                 print("Error completing query for existing username: \(error)")
             } else {
                 if document?.count == 0 {
-                    // No existing user found with that screen name. Proceed with user write.
+                    // No existing user found with that usernamename. Proceed with user write.
                     self?.writeNewUser(user, completion: completion)
                 } else {
-                    // Existing user found with specified screen name
+                    // Existing user found with specified username
                     // TODO: Verify if this is where to call main thread??
-                        ifScreenNameTaken()
+                        ifUserNameTaken()
                 }
             }
         }
@@ -398,7 +398,7 @@ class FirestoreHelper {
                                 print("Document does not exist")
                             }
                         case .failure(let error):
-                            print("Error decoding user for friend search: \(error)")
+                            print("Error decoding user \(document.documentID) for friend search: \(error)")
                         }
                     }
                     completion(potentialFriends)

@@ -14,9 +14,9 @@ struct FriendCellViewModel: Hashable {
     var fullName: String {
         "\(firstName) \(lastName)"
     }
+    let userName: String
     var searchName: String {
         // All names combined to facilitate faster, case-insensitive search
-        (firstName + lastName + screenName).lowercased()
+        (firstName + lastName + userName).lowercased()
     }
-    let screenName: String
 }

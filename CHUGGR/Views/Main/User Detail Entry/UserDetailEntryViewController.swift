@@ -56,7 +56,7 @@ class UserDetailEntryViewController: UIViewController {
             }
         }
         
-        viewModel.ifScreenNameTaken = { [weak self] in
+        viewModel.ifUserNameTaken = { [weak self] in
             DispatchQueue.main.async {
                 self?.showUsernameTakenLabel()
             }

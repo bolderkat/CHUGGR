@@ -12,7 +12,7 @@ class CurrentUser: User, Codable {
     private(set) var email: String
     private(set) var firstName: String
     private(set) var lastName: String
-    private(set) var screenName: String
+    private(set) var userName: String
     private(set) var bio: String
     private(set) var numBets: Int
     private(set) var numFriends: Int
@@ -28,7 +28,7 @@ class CurrentUser: User, Codable {
         email: String,
         firstName: String,
         lastName: String,
-        screenName: String,
+        userName: String,
         bio: String,
         numBets: Int,
         numFriends: Int,
@@ -43,7 +43,7 @@ class CurrentUser: User, Codable {
         self.email = email
         self.firstName = firstName
         self.lastName = lastName
-        self.screenName = screenName
+        self.userName = userName
         self.bio = bio
         self.numBets = numBets
         self.numFriends = numFriends
@@ -58,12 +58,12 @@ class CurrentUser: User, Codable {
     func updateProfileFields(
         firstName: String,
         lastName: String,
-        screenName: String,
+        userName: String,
         bio: String
     ) {
         self.firstName = firstName
         self.lastName = lastName
-        self.screenName = screenName
+        self.userName = userName
         self.bio = bio
     }
     

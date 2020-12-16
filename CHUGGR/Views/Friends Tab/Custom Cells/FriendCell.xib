@@ -17,8 +17,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="293" height="60"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="screenname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e62-WT-Et5">
-                        <rect key="frame" x="40" y="30" width="94" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="userName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e62-WT-Et5">
+                        <rect key="frame" x="40" y="30" width="78.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" name="Gray 3"/>
                         <nil key="highlightedColor"/>
@@ -40,7 +40,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="nameLabel" destination="iwX-VQ-7Oz" id="Vsi-yT-BPv"/>
-                <outlet property="screenNameLabel" destination="e62-WT-Et5" id="DVM-vc-ZKu"/>
+                <outlet property="userNameLabel" destination="e62-WT-Et5" id="DVM-vc-ZKu"/>
             </connections>
             <point key="canvasLocation" x="-113.04347826086958" y="113.83928571428571"/>
         </tableViewCell>

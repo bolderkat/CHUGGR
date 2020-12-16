@@ -23,12 +23,12 @@ class UserDetailEntryViewModel {
     
     var firstNameInput = ""
     var lastNameInput = ""
-    var screenNameInput = ""
+    var userNameInput = ""
     var bioInput = ""
     
     var reloadTableViewClosure: (() -> ())?
     var updateButtonStatus: (() -> ())?
-    var ifScreenNameTaken: (() -> ())?
+    var ifUserNameTaken: (() -> ())?
     var onUserLoad: (() -> ())?
     
     init(firestoreHelper: FirestoreHelper) {
@@ -39,7 +39,7 @@ class UserDetailEntryViewModel {
         let rowTypes = [
             UserEntryRowType.firstName,
             UserEntryRowType.lastName,
-            UserEntryRowType.screenName,
+            UserEntryRowType.userName,
             UserEntryRowType.bio
         ]
         
@@ -64,8 +64,8 @@ class UserDetailEntryViewModel {
             firstNameInput = text
         case .lastName:
             lastNameInput = text
-        case .screenName:
-            screenNameInput = text
+        case .userName:
+            userNameInput = text
         case .bio:
             bioInput = text
         }
@@ -76,7 +76,7 @@ class UserDetailEntryViewModel {
         // Make sure all fields have input before marking input complete
         if !firstNameInput.isEmpty,
            !lastNameInput.isEmpty,
-           !screenNameInput.isEmpty,
+           !userNameInput.isEmpty,
            !bioInput.isEmpty {
             isInputComplete = true
         } else {
@@ -85,13 +85,13 @@ class UserDetailEntryViewModel {
     }
     
     func submitInput() {
-        guard let ifScreenNameTaken = ifScreenNameTaken else { return }
+        guard let ifUserNameTaken = ifUserNameTaken else { return }
         firestoreHelper.createNewUser(
             firstName: firstNameInput,
             lastName: lastNameInput,
-            screenName: screenNameInput,
+            userName: userNameInput,
             bio: bioInput,
-            ifScreenNameTaken: ifScreenNameTaken,
+            ifUserNameTaken: ifUserNameTaken,
             completion: onUserLoad
         )
     }

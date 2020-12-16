@@ -27,7 +27,7 @@ class UserDetailEntryCell: UITableViewCell {
 extension UserDetailEntryCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         switch rowType {
-        case .screenName:
+        case .userName:
             textField.autocapitalizationType = .none
         default:
             textField.autocapitalizationType = .words

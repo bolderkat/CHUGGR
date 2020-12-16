@@ -97,7 +97,7 @@ extension AddFriendViewController {
                 fatalError("Friend cell nib does not exist.")
             }
             cell.nameLabel.text = rowVM.fullName
-            cell.screenNameLabel.text = rowVM.screenName
+            cell.userNameLabel.text = rowVM.userName
             return cell
         }
     }

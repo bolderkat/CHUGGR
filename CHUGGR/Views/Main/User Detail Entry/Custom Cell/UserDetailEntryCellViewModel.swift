@@ -10,7 +10,7 @@ import Foundation
 enum UserEntryRowType: String, Hashable {
     case firstName = "First Name"
     case lastName = "Last Name"
-    case screenName = "Username"
+    case userName = "Username"
     case bio = "Bio"
 }
 

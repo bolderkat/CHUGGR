@@ -39,7 +39,7 @@ class AddFriendViewModel {
                 uid: user.uid,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                screenName: user.screenName
+                userName: user.userName
             )
             vms.append(vm)
         }
