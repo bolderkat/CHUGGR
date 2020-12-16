@@ -146,7 +146,10 @@ extension BetsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        coordinator?.openBetDetail(for: tableSections[indexPath.section].cells[indexPath.row])
+        if let betID = viewModel.getCellVM(at: indexPath).bet.betID {
+            coordinator?.openBetDetail(withBetID: betID)
+        }
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

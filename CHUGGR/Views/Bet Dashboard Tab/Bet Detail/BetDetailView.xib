@@ -39,10 +39,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bPl-XX-ryF">
-                    <rect key="frame" x="0.0" y="44" width="414" height="381.5"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="424"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fsF-g0-dGm">
-                            <rect key="frame" x="16" y="16" width="382" height="277.5"/>
+                            <rect key="frame" x="16" y="16" width="382" height="320"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Alex Caruso points" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ph6-NF-Vfg">
                                     <rect key="frame" x="30" y="20" width="322" height="29"/>
@@ -57,7 +57,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pea-MC-JBa">
-                                    <rect key="frame" x="30" y="98.5" width="322" height="163"/>
+                                    <rect key="frame" x="30" y="141" width="322" height="163"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qwV-ci-fQV">
                                             <rect key="frame" x="0.0" y="0.0" width="322" height="20.5"/>
@@ -210,7 +210,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lel-vl-Ijp">
-                            <rect key="frame" x="16" y="311.5" width="382" height="50"/>
+                            <rect key="frame" x="16" y="354" width="382" height="50"/>
                             <color key="backgroundColor" name="CHUGGR Orange"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="A2g-IZ-2ae"/>
@@ -278,7 +278,7 @@
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gew-cY-aeG">
-                    <rect key="frame" x="0.0" y="425.5" width="414" height="381.5"/>
+                    <rect key="frame" x="0.0" y="468" width="414" height="339"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
             </subviews>
@@ -295,7 +295,7 @@
                 <constraint firstItem="h2r-GD-sr1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Vb3-dH-5PK"/>
                 <constraint firstItem="bPl-XX-ryF" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="VbM-dI-mhI"/>
                 <constraint firstItem="gew-cY-aeG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Wxa-Ob-lqF"/>
-                <constraint firstItem="gew-cY-aeG" firstAttribute="height" secondItem="bPl-XX-ryF" secondAttribute="height" id="Zvb-Vg-ZEh"/>
+                <constraint firstItem="gew-cY-aeG" firstAttribute="height" secondItem="bPl-XX-ryF" secondAttribute="height" multiplier="0.8" id="Zvb-Vg-ZEh"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="h2r-GD-sr1" secondAttribute="bottom" id="fQb-uS-ET3"/>
             </constraints>
             <point key="canvasLocation" x="86.956521739130437" y="125.89285714285714"/>

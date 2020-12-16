@@ -28,6 +28,11 @@ class BetsViewModel {
         }
     }
     
+    private var combinedVMs: [[BetCellViewModel]] {
+        // Combined 2D array of VMs for retrieval by tableView IndexPath
+        [userInvolvedBetCellVMs, otherBetCellVMs]
+    }
+    
     private(set) var isLoading = false {
         didSet {
             updateLoadingStatus?()
@@ -91,6 +96,10 @@ class BetsViewModel {
     
     func createCellViewModel(for bet: Bet) -> BetCellViewModel {
         return BetCellViewModel(bet: bet, firestoreHelper: self.firestoreHelper)
+    }
+    
+    func getCellVM(at indexPath: IndexPath) -> BetCellViewModel {
+        return combinedVMs[indexPath.section][indexPath.row]
     }
     
     func getPendingBetsLabel() -> String {

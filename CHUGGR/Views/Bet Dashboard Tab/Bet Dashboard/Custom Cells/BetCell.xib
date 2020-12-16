@@ -36,7 +36,7 @@
                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="29X-iF-ypV">
                         <rect key="frame" x="20" y="28.5" width="358" height="20.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Really really really long bet title that will mess things up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8L-Md-epc">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Really really really long name that will mess things up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8L-Md-epc">
                                 <rect key="frame" x="0.0" y="0.0" width="317.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -64,8 +64,8 @@
             <connections>
                 <outlet property="resultLabel" destination="UaU-By-A3V" id="ocw-iD-nJZ"/>
                 <outlet property="stakeLabel" destination="NO0-FY-R99" id="JWs-BE-vNp"/>
-                <outlet property="titleLabel" destination="x8L-Md-epc" id="pC4-pO-nkq"/>
-                <outlet property="userNamesLabel" destination="8Ey-ie-UST" id="lFO-B7-4kQ"/>
+                <outlet property="titleLabel" destination="8Ey-ie-UST" id="Ajg-Ib-fqP"/>
+                <outlet property="userNamesLabel" destination="x8L-Md-epc" id="tGr-1W-4zu"/>
             </connections>
             <point key="canvasLocation" x="210.86956521739131" y="147.65625"/>
         </tableViewCell>

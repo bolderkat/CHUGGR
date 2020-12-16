@@ -9,8 +9,8 @@ import UIKit
 
 class BetCell: UITableViewCell {
 
-    @IBOutlet weak var userNamesLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var userNamesLabel: UILabel!
     @IBOutlet weak var stakeLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
 
