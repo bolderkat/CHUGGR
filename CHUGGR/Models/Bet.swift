@@ -38,6 +38,7 @@ struct Bet: Codable {
     private(set) var invitedUsers = [UID: String]() // UID and firstName
     private(set) var side1Users = [UID: String]()
     private(set) var side2Users = [UID: String]()
+    private(set) var outstandingUsers = [UID: String]()
     private(set) var allUsers = Set<String>()
     private(set) var acceptedUsers = Set<String>()
     var stake: Drinks
@@ -56,11 +57,18 @@ struct Bet: Codable {
         winner = winningSide
         isFinished = true
         dateFinished = Date().timeIntervalSince1970
+        
+        // Place losing users into outstanding collection
+        switch winningSide {
+        case .one:
+            outstandingUsers = side2Users
+        case .two:
+            outstandingUsers = side1Users
+        }
     }
     
     mutating func perform(action: BetUserAction, withID uid: UID, firstName name: String) {
-        guard !isFinished else { return }
-        
+        guard !isFinished else { return } // only allow action if bet still open
         switch action {
         case .invite:
             invitedUsers[uid] = name
