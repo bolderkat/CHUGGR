@@ -48,5 +48,13 @@ class FriendsCoordinator: ChildCoordinating {
 
         navigationController.pushViewController(vc, animated: true)
     }
+    
+    func addFriend() {
+        let vm = AddFriendViewModel(firestoreHelper: firestoreHelper)
+        let vc = AddFriendViewController(viewModel: vm)
+        vc.coordinator = self
+        
+        navigationController.pushViewController(vc, animated: true)
+    }
 }
 

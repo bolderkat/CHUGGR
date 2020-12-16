@@ -12,9 +12,10 @@ struct K {
         static let betCell = "BetCell"
         static let betEntryCell = "BetEntryCell"
         static let betsPendingCell = "BetsPendingCell"
+        static let dateCell = "DateEntryCell"
+        static let friendCell = "FriendCell"
         static let messageCell = "MessageCell"
         static let stakeCell = "StakeEntryCell"
-        static let dateCell = "DateEntryCell"
         static let userEntryCell = "UserDetailEntryCell"
     }
     struct colors {

@@ -8,7 +8,7 @@
 import Foundation
 
 struct Friend: User, Codable {
-    let uid: String
+    let uid: UID
     let firstName: String
     let lastName: String
     let screenName: String

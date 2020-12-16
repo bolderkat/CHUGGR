@@ -68,6 +68,12 @@
 		65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D34C1F252CF494005C6F98 /* BetsViewController.swift */; };
 		65E6F787256C5A2400252974 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6F786256C5A2400252974 /* ProfileCoordinator.swift */; };
 		65E947F62589791200A71365 /* BetsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E947F52589791200A71365 /* BetsTableDataSource.swift */; };
+		65E948282589A4C800A71365 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E948262589A4C800A71365 /* AddFriendViewController.swift */; };
+		65E948292589A4C800A71365 /* AddFriendView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65E948272589A4C800A71365 /* AddFriendView.xib */; };
+		65E9482E2589A4E200A71365 /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E9482D2589A4E200A71365 /* AddFriendViewModel.swift */; };
+		65E948442589E43900A71365 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E948422589E43900A71365 /* FriendCell.swift */; };
+		65E948452589E43900A71365 /* FriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65E948432589E43900A71365 /* FriendCell.xib */; };
+		65E9484A2589E44900A71365 /* FriendCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E948492589E44900A71365 /* FriendCellViewModel.swift */; };
 		65EBC1132586FD58009FE754 /* BetCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EBC1122586FD58009FE754 /* BetCellViewModel.swift */; };
 		65F4029B252EA103007892F8 /* Bet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F4029A252EA103007892F8 /* Bet.swift */; };
 		65F563722585C21B00033E3E /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65F563712585C21B00033E3E /* ProfileView.xib */; };
@@ -172,6 +178,12 @@
 		65D34C1F252CF494005C6F98 /* BetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsViewController.swift; sourceTree = "<group>"; };
 		65E6F786256C5A2400252974 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		65E947F52589791200A71365 /* BetsTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsTableDataSource.swift; sourceTree = "<group>"; };
+		65E948262589A4C800A71365 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
+		65E948272589A4C800A71365 /* AddFriendView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddFriendView.xib; sourceTree = "<group>"; };
+		65E9482D2589A4E200A71365 /* AddFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
+		65E948422589E43900A71365 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
+		65E948432589E43900A71365 /* FriendCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendCell.xib; sourceTree = "<group>"; };
+		65E948492589E44900A71365 /* FriendCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCellViewModel.swift; sourceTree = "<group>"; };
 		65EBC1122586FD58009FE754 /* BetCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetCellViewModel.swift; sourceTree = "<group>"; };
 		65F4029A252EA103007892F8 /* Bet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bet.swift; sourceTree = "<group>"; };
 		65F563712585C21B00033E3E /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -306,9 +318,9 @@
 		6545C05D257AEF9B0092C02A /* Friends Tab */ = {
 			isa = PBXGroup;
 			children = (
-				65C682092585E29D003160F0 /* FriendsViewController.swift */,
-				65C682102585E2AE003160F0 /* FriendsViewModel.swift */,
-				65C6820A2585E29D003160F0 /* FriendsViewController.xib */,
+				65E9481E2589A42300A71365 /* Friends Main List */,
+				65E948222589A43A00A71365 /* Add Friends */,
+				65E948412589E41500A71365 /* Custom Cells */,
 			);
 			path = "Friends Tab";
 			sourceTree = "<group>";
@@ -475,6 +487,36 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		65E9481E2589A42300A71365 /* Friends Main List */ = {
+			isa = PBXGroup;
+			children = (
+				65C682092585E29D003160F0 /* FriendsViewController.swift */,
+				65C682102585E2AE003160F0 /* FriendsViewModel.swift */,
+				65C6820A2585E29D003160F0 /* FriendsViewController.xib */,
+			);
+			path = "Friends Main List";
+			sourceTree = "<group>";
+		};
+		65E948222589A43A00A71365 /* Add Friends */ = {
+			isa = PBXGroup;
+			children = (
+				65E948262589A4C800A71365 /* AddFriendViewController.swift */,
+				65E9482D2589A4E200A71365 /* AddFriendViewModel.swift */,
+				65E948272589A4C800A71365 /* AddFriendView.xib */,
+			);
+			path = "Add Friends";
+			sourceTree = "<group>";
+		};
+		65E948412589E41500A71365 /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				65E948422589E43900A71365 /* FriendCell.swift */,
+				65E948432589E43900A71365 /* FriendCell.xib */,
+				65E948492589E44900A71365 /* FriendCellViewModel.swift */,
+			);
+			path = "Custom Cells";
+			sourceTree = "<group>";
+		};
 		65EBC1112586FD43009FE754 /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -634,12 +676,14 @@
 				6535F504256F479F00C5FC72 /* BetEntryCell.xib in Resources */,
 				658F11272532747F003B6303 /* MessageCell.xib in Resources */,
 				65F69D99257B2EFF00CE7371 /* DateEntryCell.xib in Resources */,
+				65E948292589A4C800A71365 /* AddFriendView.xib in Resources */,
 				6537BC3E2583143700880C2B /* UserDetailEntryCell.xib in Resources */,
 				6563F92625843F3F00DE69EC /* BetDetailView.xib in Resources */,
 				659DCB6E252E9A57009D330E /* BetCell.xib in Resources */,
 				656D9482252BF6E200EDEB7F /* GoogleService-Info.plist in Resources */,
 				65C681F52585DF8F003160F0 /* BetsView.xib in Resources */,
 				65543D0B25772B7100B8C549 /* StakeEntryCell.xib in Resources */,
+				65E948452589E43900A71365 /* FriendCell.xib in Resources */,
 				65C6821B2585E334003160F0 /* VideosViewController.xib in Resources */,
 				656D9458252BF60100EDEB7F /* Assets.xcassets in Resources */,
 				65F563722585C21B00033E3E /* ProfileView.xib in Resources */,
@@ -822,6 +866,7 @@
 				65E947F62589791200A71365 /* BetsTableDataSource.swift in Sources */,
 				65C681FA2585E022003160F0 /* BetsViewModel.swift in Sources */,
 				65E6F787256C5A2400252974 /* ProfileCoordinator.swift in Sources */,
+				65E9484A2589E44900A71365 /* FriendCellViewModel.swift in Sources */,
 				65FBCBC1253257CE00227121 /* BetDetailViewController.swift in Sources */,
 				656D9450252BF5FE00EDEB7F /* WelcomeViewController.swift in Sources */,
 				6533F26B25685B13002524B3 /* Storyboarded.swift in Sources */,
@@ -841,6 +886,7 @@
 				6533F266256859C5002524B3 /* ParentCoordinating.swift in Sources */,
 				65EBC1132586FD58009FE754 /* BetCellViewModel.swift in Sources */,
 				6563F92B25843FCF00DE69EC /* ProfileViewModel.swift in Sources */,
+				65E948442589E43900A71365 /* FriendCell.swift in Sources */,
 				65650A402568709900812395 /* ChildCoordinating.swift in Sources */,
 				65D18DAD258053EC00E562C1 /* Drinks.swift in Sources */,
 				65543D0A25772B7100B8C549 /* StakeEntryCell.swift in Sources */,
@@ -848,6 +894,7 @@
 				65C6E400257EE5AC00EA7AA4 /* UIViewController+DismissKeyboard.swift in Sources */,
 				65650A3B25686C6E00812395 /* MainCoordinator.swift in Sources */,
 				659DCB6D252E9A57009D330E /* BetCell.swift in Sources */,
+				65E948282589A4C800A71365 /* AddFriendViewController.swift in Sources */,
 				65C97625256C4EF800AA46BA /* BetsCoordinator.swift in Sources */,
 				65D18D972580266F00E562C1 /* BetDetailViewModel.swift in Sources */,
 				658F112F25327B2C003B6303 /* Message.swift in Sources */,
@@ -857,6 +904,7 @@
 				65F4029B252EA103007892F8 /* Bet.swift in Sources */,
 				65FCE6DF2569BB930066BDC5 /* User.swift in Sources */,
 				65C6820B2585E29D003160F0 /* FriendsViewController.swift in Sources */,
+				65E9482E2589A4E200A71365 /* AddFriendViewModel.swift in Sources */,
 				6537BC3D2583143700880C2B /* UserDetailEntryCell.swift in Sources */,
 				65FCE6E4256B33F00066BDC5 /* SampleBet.swift in Sources */,
 			);

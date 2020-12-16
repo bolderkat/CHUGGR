@@ -14,7 +14,7 @@ class FirestoreHelper {
     private(set) var currentUser: CurrentUser?
     private var userListeners: [ListenerRegistration] = []
     private var betDashboardListeners: [ListenerRegistration] = []
-
+    private var allUserListener: ListenerRegistration?
     
     // Storing bet queries and last bet of each query for paginated population of infinitely scrolling table view
     private var otherBetQuery: Query?
@@ -65,9 +65,7 @@ class FirestoreHelper {
                 } else {
                     // Existing user found with specified screen name
                     // TODO: Verify if this is where to call main thread??
-                    DispatchQueue.main.async {
                         ifScreenNameTaken()
-                    }
                 }
             }
         }
@@ -94,7 +92,7 @@ class FirestoreHelper {
         onUserDocNotFound: (() -> ())?,
         failure: (() -> ())?
     ) {
-        self.db.collection(K.Firestore.users).whereField(K.Firestore.uid, isEqualTo: uid)
+        db.collection(K.Firestore.users).whereField(K.Firestore.uid, isEqualTo: uid)
             .getDocuments { [weak self] (querySnapshot, error) in
                 guard let document = querySnapshot?.documents.first else {
                     if let error = error {
@@ -372,28 +370,64 @@ class FirestoreHelper {
             }
         }
     }
+    
+    // MARK:- Friend CRUD
+    func addAllUserListener( completion: @escaping (_ friends: [Friend]) -> ()) {
+        guard let uid = currentUser?.uid,
+              allUserListener == nil else { return } // Check that there isn't already a listener for all users
         
-        
-        // MARK:- Clean-up
-        func logOut() {
-            let firebaseAuth = Auth.auth()
-            do {
-                try firebaseAuth.signOut()
-            } catch let signOutError as NSError {
-                print("Error signing out: %@", signOutError)
+        // Query to exclude current user.
+        allUserListener = db.collection(K.Firestore.users)
+            .whereField(K.Firestore.uid, notIn: [uid])
+            .addSnapshotListener { (querySnapshot, error) in
+                var potentialFriends = [Friend]()
+                if let error = error {
+                    print("Error fetching user documents for friend search: \(error)")
+                    // TODO: Better error handling
+                } else {
+                    for document in querySnapshot!.documents {
+                        let result = Result {
+                            try document.data(as: Friend.self)
+                        }
+                        switch result {
+                        case .success(let user):
+                            if let user = user {
+                                // If successful, add to array of users for search
+                                potentialFriends.append(user)
+                            } else {
+                                print("Document does not exist")
+                            }
+                        case .failure(let error):
+                            print("Error decoding user for friend search: \(error)")
+                        }
+                    }
+                    completion(potentialFriends)
+                }
             }
-            unsubscribeAllSnapshotListeners()
-            currentUser = nil
-        }
-        
-        func unsubscribeAllSnapshotListeners() {
-            // To be called at logout
-            // Remember to include snapshot unsubs here as you add them elsewhere!
-            userListeners.forEach { $0.remove() }
-            userListeners = []
-            betDashboardListeners.forEach { $0.remove() }
-            betDashboardListeners = []
-        }
-        
     }
+    
+        
+    // MARK:- Clean-up
+    func logOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+        unsubscribeAllSnapshotListeners()
+        currentUser = nil
+    }
+    
+    func unsubscribeAllSnapshotListeners() {
+        // To be called at logout
+        // Remember to include snapshot unsubs here as you add them elsewhere!
+        userListeners.forEach { $0.remove() }
+        userListeners = []
+        betDashboardListeners.forEach { $0.remove() }
+        betDashboardListeners = []
+        allUserListener = nil
+    }
+    
+}
 
