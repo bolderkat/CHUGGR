@@ -18,34 +18,47 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="userName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e62-WT-Et5">
-                        <rect key="frame" x="40" y="30" width="78.5" height="21"/>
+                        <rect key="frame" x="74" y="30" width="211" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" name="Gray 3"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friend's Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iwX-VQ-7Oz">
-                        <rect key="frame" x="40" y="9" width="115" height="21"/>
+                        <rect key="frame" x="74" y="9" width="211" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfPicPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Ruh-H7-4cr">
+                        <rect key="frame" x="16" y="5" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="E5v-zM-cmb"/>
+                            <constraint firstAttribute="height" constant="50" id="Wxl-4C-skX"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="e62-WT-Et5" secondAttribute="bottom" constant="9" id="4JZ-dj-Df3"/>
-                    <constraint firstItem="iwX-VQ-7Oz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="E64-sA-N2F"/>
+                    <constraint firstItem="Ruh-H7-4cr" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="5Lg-tW-FUx"/>
+                    <constraint firstAttribute="trailing" secondItem="e62-WT-Et5" secondAttribute="trailing" constant="8" id="9q4-qZ-JwC"/>
                     <constraint firstItem="iwX-VQ-7Oz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="QQh-2c-LDd"/>
-                    <constraint firstItem="e62-WT-Et5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="u7j-G3-ADR"/>
+                    <constraint firstItem="iwX-VQ-7Oz" firstAttribute="leading" secondItem="Ruh-H7-4cr" secondAttribute="trailing" constant="8" id="c22-vL-efq"/>
+                    <constraint firstItem="e62-WT-Et5" firstAttribute="leading" secondItem="Ruh-H7-4cr" secondAttribute="trailing" constant="8" id="cbv-qo-hdW"/>
+                    <constraint firstAttribute="trailing" secondItem="iwX-VQ-7Oz" secondAttribute="trailing" constant="8" id="rOp-wq-vlF"/>
+                    <constraint firstItem="Ruh-H7-4cr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="uL7-vQ-90W"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="nameLabel" destination="iwX-VQ-7Oz" id="Vsi-yT-BPv"/>
+                <outlet property="profPicView" destination="Ruh-H7-4cr" id="ccH-rk-4mX"/>
                 <outlet property="userNameLabel" destination="e62-WT-Et5" id="DVM-vc-ZKu"/>
             </connections>
             <point key="canvasLocation" x="-113.04347826086958" y="113.83928571428571"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="ProfPicPlaceholder" width="96" height="96"/>
         <namedColor name="Gray 3">
             <color red="0.61568627450980395" green="0.61568627450980395" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
