@@ -27,6 +27,7 @@ class VideosViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Videos"
 
         // Do any additional setup after loading the view.
     }
