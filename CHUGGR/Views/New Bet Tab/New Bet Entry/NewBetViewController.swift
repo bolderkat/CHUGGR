@@ -44,13 +44,6 @@ class NewBetViewController: UIViewController {
     
     func setUpViewController() {
         title = "New Bet" // TODO: update dynamically based on selected friend
-        navigationController?.navigationBar.barTintColor = UIColor(named: K.colors.orange)
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .semibold)
-        ]
-        
         updateButtonStatus()
         sendBetButton.layer.cornerRadius = 15
     }

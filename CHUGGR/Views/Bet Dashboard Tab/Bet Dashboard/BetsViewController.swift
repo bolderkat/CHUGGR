@@ -46,12 +46,12 @@ class BetsViewController: UIViewController {
     func setUpViewController() {
         title = "Bets"
         
-        navigationController?.navigationBar.barTintColor = UIColor(named: K.colors.orange)
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .semibold)
-        ]
+//        navigationController?.navigationBar.barTintColor = UIColor(named: K.colors.orange)
+//        navigationController?.navigationBar.isTranslucent = false
+//        navigationController?.navigationBar.titleTextAttributes = [
+//            NSAttributedString.Key.foregroundColor: UIColor.white,
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .semibold)
+//        ]
     }
     
     func initViewModel() {

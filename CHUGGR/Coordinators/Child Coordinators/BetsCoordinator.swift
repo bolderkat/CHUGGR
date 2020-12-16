@@ -18,6 +18,15 @@ class BetsCoordinator: ChildCoordinating {
          firestoreHelper: FirestoreHelper) {
         self.navigationController = navigationController
         self.firestoreHelper = firestoreHelper
+        
+        // Configure nav controller appearance
+        self.navigationController.navigationBar.barTintColor = UIColor(named: K.colors.orange)
+        self.navigationController.navigationBar.isTranslucent = false
+        self.navigationController.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .semibold)
+        ]
+        navigationController.navigationBar.tintColor = .white
     }
     
     func start() {
