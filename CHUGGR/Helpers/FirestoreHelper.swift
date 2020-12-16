@@ -14,6 +14,11 @@ class FirestoreHelper {
     private(set) var currentUser: CurrentUser?
     private var userListeners: [ListenerRegistration] = []
     private var betDashboardListeners: [ListenerRegistration] = []
+
+    
+    // Storing bet queries and last bet of each query for paginated population of infinitely scrolling table view
+    private var otherBetQuery: Query?
+    private var lastBet: QueryDocumentSnapshot?
     
     // MARK:- User CRUD
     func createNewUser(
@@ -205,7 +210,7 @@ class FirestoreHelper {
     func addPendingBetsListener(completion: @escaping (_ bets: [Bet]) -> ()) {
         guard let uid = currentUser?.uid,
               let firstName = currentUser?.firstName else { return }
-
+        
         // Query for all bets user where user is invited and has not yet taken a side
         // Use listener to alert user to new bets in realtime
         let listener = db.collection(K.Firestore.bets)
@@ -246,7 +251,7 @@ class FirestoreHelper {
     
     func addUserInvolvedBetsListener(completion: @escaping (_ bets: [Bet]) -> ()) {
         guard let uid = currentUser?.uid else { return }
-
+        
         // Query for all bets user has taken a side on
         let listener = db.collection(K.Firestore.bets)
             .whereField(K.Firestore.acceptedUsers, arrayContains: uid)
@@ -283,68 +288,112 @@ class FirestoreHelper {
         betDashboardListeners.append(listener)
     }
     
-    func fetchOtherBets(completion: @escaping (_ bets: [Bet]) -> ()) {
+    func initFetchOtherBets(completion: @escaping (_ bets: [Bet]) -> ()) {
         guard let uid = currentUser?.uid else { return }
-
+        
         // Query for other bets around the platform where user is not involved.
         // TODO: As app grows, need to limit query to FRIENDS ONLY
-        db.collection(K.Firestore.bets)
+        otherBetQuery = db.collection(K.Firestore.bets)
             // Can't query for fields NOT containing current UID, so have to just pull a bunch of bets and filter client side :(
             .order(by: K.Firestore.dateOpened, descending: true)
-            .limit(to: 20) // TODO: will need to provide more bets as user scrolls (likely pagination with snapshot?)
-            .getDocuments { (querySnapshot, error) in
-                if let error = error {
-                    // TODO: better error handling to display to user
-                    print("Error getting documents: \(error)")
-                } else {
-                    var bets = [Bet]()
-                    for document in querySnapshot!.documents {
-                        let result = Result {
-                            try document.data(as: Bet.self)
-                        }
-                        switch result {
-                        case .success(let bet):
-                            if let unwrappedBet = bet {
-                                // Successfully initialized a Bet value from QuerySnapshot
-                                // Add bet to bets array if current user not involved.
-                                if !unwrappedBet.allUsers.contains(uid) {
-                                    bets.append(unwrappedBet)
-                                }
-                            } else {
-                                // A nil value was successfully initialized from the QuerySnapshot,
-                                // or the DocumentSnapshot was nil.
-                                print("Document does not exist")
-                            }
-                        case .failure(let error):
-                            // A Bet value could not be initialized from the QuerySnapshot.
-                            print("Error decoding bet: \(error)")
-                        }
+            .limit(to: 15)
+        
+        otherBetQuery?.getDocuments { [weak self] (querySnapshot, error) in
+            if let error = error {
+                // TODO: better error handling to display to user
+                print("Error getting documents: \(error)")
+            } else {
+                var bets = [Bet]()
+                self?.lastBet = querySnapshot!.documents.last // store last bet for next paginated query
+                for document in querySnapshot!.documents {
+                    let result = Result {
+                        try document.data(as: Bet.self)
                     }
-                    completion(bets)
+                    switch result {
+                    case .success(let bet):
+                        if let unwrappedBet = bet {
+                            // Successfully initialized a Bet value from QuerySnapshot
+                            // Add bet to bets array if current user not involved.
+                            if !unwrappedBet.allUsers.contains(uid) {
+                                bets.append(unwrappedBet)
+                            }
+                        } else {
+                            // A nil value was successfully initialized from the QuerySnapshot,
+                            // or the DocumentSnapshot was nil.
+                            print("Document does not exist")
+                        }
+                    case .failure(let error):
+                        // A Bet value could not be initialized from the QuerySnapshot.
+                        print("Error decoding bet: \(error)")
+                    }
                 }
+                completion(bets)
             }
-    }
-    
-    
-    // MARK:- Clean-up
-    func logOut() {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
         }
-        unsubscribeAllSnapshotListeners()
-        currentUser = nil
     }
     
-    func unsubscribeAllSnapshotListeners() {
-        // To be called at logout
-        // Remember to include snapshot unsubs here as you add them elsewhere!
-        userListeners.forEach { $0.remove() }
-        userListeners = []
-        betDashboardListeners.forEach { $0.remove() }
-        betDashboardListeners = []
+    func fetchAdditionalBets(completion: @escaping (_ bets: [Bet]) -> ()) {
+        guard let uid = currentUser?.uid,
+              let query = otherBetQuery,
+              let bet = lastBet else { return }
+        
+        otherBetQuery = query.start(afterDocument: bet) // store new query in class property for next query
+        
+        otherBetQuery?.getDocuments { [weak self] (querySnapshot, error) in
+            if let error = error {
+                // TODO: better error handling to display to user
+                print("Error getting documents: \(error)")
+            } else {
+                var bets = [Bet]()
+                self?.lastBet = querySnapshot!.documents.last // store last bet for next paginated query
+                for document in querySnapshot!.documents {
+                    let result = Result {
+                        try document.data(as: Bet.self)
+                    }
+                    switch result {
+                    case .success(let bet):
+                        if let unwrappedBet = bet {
+                            // Successfully initialized a Bet value from QuerySnapshot
+                            // Add bet to bets array if current user not involved.
+                            if !unwrappedBet.allUsers.contains(uid) {
+                                bets.append(unwrappedBet)
+                            }
+                        } else {
+                            // A nil value was successfully initialized from the QuerySnapshot,
+                            // or the DocumentSnapshot was nil.
+                            print("Document does not exist")
+                        }
+                    case .failure(let error):
+                        // A Bet value could not be initialized from the QuerySnapshot.
+                        print("Error decoding bet: \(error)")
+                    }
+                }
+                completion(bets)
+            }
+        }
     }
-    
-}
+        
+        
+        // MARK:- Clean-up
+        func logOut() {
+            let firebaseAuth = Auth.auth()
+            do {
+                try firebaseAuth.signOut()
+            } catch let signOutError as NSError {
+                print("Error signing out: %@", signOutError)
+            }
+            unsubscribeAllSnapshotListeners()
+            currentUser = nil
+        }
+        
+        func unsubscribeAllSnapshotListeners() {
+            // To be called at logout
+            // Remember to include snapshot unsubs here as you add them elsewhere!
+            userListeners.forEach { $0.remove() }
+            userListeners = []
+            betDashboardListeners.forEach { $0.remove() }
+            betDashboardListeners = []
+        }
+        
+    }
+

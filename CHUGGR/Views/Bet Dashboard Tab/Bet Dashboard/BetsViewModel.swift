@@ -20,13 +20,11 @@ class BetsViewModel {
     private(set) var userInvolvedBetCellVMs = [BetCellViewModel]() {
         didSet {
             reloadTableViewClosure?()
-            endRefreshControl?()
         }
     }
     private(set) var otherBetCellVMs = [BetCellViewModel]() {
         didSet {
             reloadTableViewClosure?()
-            endRefreshControl?()
         }
     }
     
@@ -39,7 +37,6 @@ class BetsViewModel {
     var updatePendingBetsLabel: (() -> ())?
     var reloadTableViewClosure: (() -> ())?
     var updateLoadingStatus: (() -> ())?
-    var endRefreshControl: (() -> ())?
     
     init(firestoreHelper: FirestoreHelper) {
         self.firestoreHelper = firestoreHelper
@@ -50,16 +47,18 @@ class BetsViewModel {
         firestoreHelper.addPendingBetsListener { [weak self] bets in
             self?.pendingBets = bets
         }
-        refreshBets()
-    }
-    
-    func refreshBets() {
         firestoreHelper.addUserInvolvedBetsListener { [weak self] bets in
             self?.processInvolvedBets(bets: bets)
         }
-        
-        firestoreHelper.fetchOtherBets { [weak self] bets in
-            self?.processOtherBets(bets: bets)
+        firestoreHelper.initFetchOtherBets { [weak self] bets in
+            self?.processOtherBets(bets: bets, appending: false)
+        }
+    }
+    
+    func loadAdditionalBets() {
+        self.isLoading = true
+        firestoreHelper.fetchAdditionalBets { [weak self] bets in
+            self?.processOtherBets(bets: bets, appending: true)
         }
     }
     
@@ -70,15 +69,24 @@ class BetsViewModel {
         }
         userInvolvedBets = bets
         userInvolvedBetCellVMs = vms
+        self.isLoading = false
     }
     
-    func processOtherBets(bets: [Bet]) {
+    func processOtherBets(bets: [Bet], appending: Bool) {
         var vms = [BetCellViewModel]()
         for bet in bets {
             vms.append(createCellViewModel(for: bet))
         }
-        otherBets = bets
-        otherBetCellVMs = vms
+        
+        // Append if this is a subsequent fetch after scrolling to bottom of table view.
+        if appending {
+            otherBets.append(contentsOf: bets)
+            otherBetCellVMs.append(contentsOf: vms)
+        } else {
+            otherBets = bets
+            otherBetCellVMs = vms
+        }
+        self.isLoading = false
     }
     
     func createCellViewModel(for bet: Bet) -> BetCellViewModel {

@@ -98,7 +98,7 @@ class BetDetailViewController: UIViewController {
             leftLabel4.text = BetDetailViewModel.Labels.Spread.leftLabel4
             rightLabel4.text = viewModel.getDateString()
             leftLabel5.text = BetDetailViewModel.Labels.Spread.leftLabel5
-            rightLabel5.text = viewModel.getDateString()
+            rightLabel5.text = viewModel.getStakeString()
             leftLabel6.text = BetDetailViewModel.Labels.Spread.leftLabel6
             rightLabel6.text = viewModel.getBetStatus()
             

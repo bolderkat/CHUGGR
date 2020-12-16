@@ -12,6 +12,8 @@ class BetsViewController: UIViewController {
     weak var coordinator: BetsCoordinator?
     private var dataSource: BetsTableDataSource!
     private let viewModel: BetsViewModel
+    private let scrollViewThreshold: CGFloat = 100.0 // threshold at which fetching additional bets triggered
+    
     
     @IBOutlet weak var betsTable: UITableView!
     @IBOutlet weak var pendingBetsView: UIView!
@@ -94,13 +96,10 @@ class BetsViewController: UIViewController {
 //        }
     }
     
-
-    
-    
 }
 
 
-// MARK:- Table view data source
+// MARK:- TableView data source
 extension BetsViewController {
     enum Section: Int {
         case myBets
@@ -135,7 +134,7 @@ extension BetsViewController {
     
 }
 
-// MARK: - Table view delegate
+// MARK: - TableView delegate
 extension BetsViewController: UITableViewDelegate {
     
     func configureTableView() {
@@ -146,9 +145,22 @@ extension BetsViewController: UITableViewDelegate {
 
     }
     
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        coordinator?.openBetDetail(for: tableSections[indexPath.section].cells[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+// MARK:- ScrollView Delegate
+extension BetsViewController: UIScrollViewDelegate {
+    // From https://anasimtiaz.com/2015/03/16/update-uitableview-when-user-scrolls-to-end-swift/
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        
+        // Fetch once scrolled to bottom of tableView if the view model is not in the middle of another fetch.
+        if !viewModel.isLoading && (maximumOffset - contentOffset <= scrollViewThreshold) {
+            viewModel.loadAdditionalBets()
+        }
     }
 }
