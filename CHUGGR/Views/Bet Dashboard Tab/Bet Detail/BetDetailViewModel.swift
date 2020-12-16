@@ -18,9 +18,7 @@ class BetDetailViewModel {
             }
         }
     }
-    // First names for users involved in bets, read from db
-    private(set) var side1 = [String]()
-    private(set) var side2 = [String]()
+
     var updateBetCard: (() -> ())?
     
     init(firestoreHelper: FirestoreHelper) {
