@@ -371,6 +371,14 @@ class FirestoreHelper {
         }
     }
     
+    func deleteBet(withBetID betID: BetID) {
+        db.collection(K.Firestore.bets).document(betID).delete { error in
+            if let error = error {
+                print("Error deleting bet: \(error)")
+            }
+        }
+    }
+    
     // MARK:- Friend CRUD
     func addAllUserListener( completion: @escaping (_ friends: [Friend]) -> ()) {
         guard let uid = currentUser?.uid,

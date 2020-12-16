@@ -54,6 +54,7 @@ class BetDetailViewController: UIViewController {
         super.viewDidLoad()
         setUpViewController()
         initViewModel()
+        configureTableView()
         
 //        messageTableView.rowHeight = UITableView.automaticDimension
 //
@@ -68,17 +69,19 @@ class BetDetailViewController: UIViewController {
         title = "Bet Details"
         closeBetButton.layer.cornerRadius = 15
         betCard.layer.cornerRadius = 30
-        messageTableView.delegate = self
-        messageTableView.dataSource = self
-        messageTableView.register(UINib(nibName: K.cells.messageCell, bundle: nil),
-                                  forCellReuseIdentifier: K.cells.messageCell)
+       
         updateBetCard()
         titleLabel.text = nil
+
     }
 
     func initViewModel() {
         viewModel.updateBetCard = { [weak self] in
             self?.updateBetCard()
+        }
+        
+        viewModel.showDeleteButton = { [weak self] in
+            self?.showDeleteButton()
         }
         viewModel.fetchBet()
     }
@@ -153,12 +156,50 @@ class BetDetailViewController: UIViewController {
         }
     }
     
+    func showDeleteButton() {
+        // Only will show if user is involved in bet.
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteBet))
+    }
+    
+    @objc func deleteBet() {
+        // TODO: need to decrement bet counts etc. for all involved users when bet is deleted.
+        guard let betID = viewModel.bet?.betID else { return }
+        let alert = UIAlertController(
+            title: "Delete bet?",
+            message: "Careful. No amount of beer can bring it back.",
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "Cancel",
+                style: .cancel,
+                handler: nil)
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "Delete",
+                style: .destructive
+            ) { _ in
+                self.viewModel.deleteBet(withBetID: betID)
+                self.coordinator?.pop()
+        })
+        present(alert, animated: true)
+        
+    }
+    
     @IBAction func sendPressed(_ sender: UIButton) {
     }
     
 }
 
 extension BetDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    func configureTableView() {
+        messageTableView.delegate = self
+        messageTableView.dataSource = self
+        messageTableView.register(UINib(nibName: K.cells.messageCell, bundle: nil),
+                                  forCellReuseIdentifier: K.cells.messageCell)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }

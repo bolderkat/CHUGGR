@@ -18,8 +18,19 @@ class BetDetailViewModel {
             }
         }
     }
+    
+    private(set) var isUserInvolved = false {
+        didSet {
+            if isUserInvolved {
+                DispatchQueue.main.async {
+                    self.showDeleteButton?()
+                }
+            }
+        }
+    }
 
     var updateBetCard: (() -> ())?
+    var showDeleteButton: (() -> ())?
     
     init(firestoreHelper: FirestoreHelper) {
         self.firestoreHelper = firestoreHelper
@@ -30,11 +41,22 @@ class BetDetailViewModel {
     }
     
     func fetchBet() {
-        // Need to put on background queue here?
         firestoreHelper.readBet(withBetID: betDocID) { [weak self] (bet) in
             self?.bet = bet
+            
+            // Check if user is involved in bet and has accepted
+            guard let uid = self?.firestoreHelper.currentUser?.uid else { return }
+            if bet.acceptedUsers.contains(uid) {
+                self?.isUserInvolved = true
+            }
         }
     }
+    
+    func deleteBet(withBetID betID: BetID) {
+        firestoreHelper.deleteBet(withBetID: betID)
+    }
+    
+    // MARK:- Display string parsing
     
     func getBetLine() -> String? {
         guard let line = bet?.line else { return nil }
