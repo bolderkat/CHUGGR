@@ -14,6 +14,7 @@ class CurrentUser: User, Codable {
     private(set) var lastName: String
     private(set) var userName: String
     private(set) var bio: String
+    private(set) var profilePic: String = "" // TODO: implement actual profile pics
     private(set) var numBets: Int
     private(set) var numFriends: Int
     private(set) var betsWon: Int

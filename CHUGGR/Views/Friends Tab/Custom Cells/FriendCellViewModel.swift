@@ -19,4 +19,5 @@ struct FriendCellViewModel: Hashable {
         // All names combined to facilitate faster, case-insensitive search
         (firstName + lastName + userName).lowercased()
     }
+    let profilePic: String = "" // TODO: populate with actual url later
 }
