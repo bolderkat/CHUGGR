@@ -42,6 +42,10 @@ class ProfileCoordinator: ChildCoordinating {
         navigationController.pushViewController(vc, animated: false)
     }
     
+    func pop() {
+        navigationController.popViewController(animated: true)
+    }
+    
     func openBetDetail(withBetID id: BetID) {
         let vm = BetDetailViewModel(firestoreHelper: firestoreHelper)
         vm.setBetDocID(withBetID: id)
