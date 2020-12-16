@@ -45,19 +45,27 @@ class UserDetailEntryViewController: UIViewController {
     
     func initViewModel() {
         viewModel.reloadTableViewClosure = { [weak self] in
-            self?.updateUI()
+            DispatchQueue.main.async {
+                self?.updateUI()
+            }
         }
         
         viewModel.updateButtonStatus = { [weak self] in
-            self?.updateButtonStatus()
+            DispatchQueue.main.async {
+                self?.updateButtonStatus()
+            }
         }
         
         viewModel.ifScreenNameTaken = { [weak self] in
-            self?.showUsernameTakenLabel()
+            DispatchQueue.main.async {
+                self?.showUsernameTakenLabel()
+            }
         }
         
         viewModel.onUserLoad = { [weak self] in
-            self?.proceedToDashboard()
+            DispatchQueue.main.async {
+                self?.proceedToDashboard()
+            }
         }
         
         viewModel.createCellVMs()
@@ -66,7 +74,7 @@ class UserDetailEntryViewController: UIViewController {
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {
         viewModel.submitInput()
-        usernameTakenLabel.isHidden = false
+        usernameTakenLabel.isHidden = true
         // TODO: show loading indicator?
     }
     
