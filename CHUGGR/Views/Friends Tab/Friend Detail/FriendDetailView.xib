@@ -18,6 +18,7 @@
                 <outlet property="drinksReceivedLabel" destination="8V5-cK-EcZ" id="x5F-MO-w4T"/>
                 <outlet property="friendsCountLabel" destination="xUD-QZ-IBM" id="aOR-FU-NYj"/>
                 <outlet property="profPicView" destination="XAx-d1-t1H" id="Mad-gd-ahG"/>
+                <outlet property="realNameLabel" destination="H00-iH-Zfr" id="ej3-gE-zSd"/>
                 <outlet property="tableControl" destination="F1g-Y1-RvT" id="KjU-Lg-NLy"/>
                 <outlet property="tableView" destination="pJK-AS-V9V" id="gb4-hm-4fa"/>
                 <outlet property="userNameLabel" destination="3UW-cf-Opb" id="ywR-J5-Y6m"/>
@@ -120,19 +121,44 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3UW-cf-Opb">
-                    <rect key="frame" x="16" y="170" width="82" height="20.5"/>
+                    <rect key="frame" x="16" y="170" width="382" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bio text goes here. They can type whatever they want. Character limited to 120. Hopefully it isn't too long. Omy my my." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6o9-uP-zBJ">
-                    <rect key="frame" x="16" y="194.5" width="382" height="61"/>
+                    <rect key="frame" x="16" y="219" width="382" height="61"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="F1g-Y1-RvT">
+                    <rect key="frame" x="16" y="356" width="382" height="32"/>
+                    <segments>
+                        <segment title="All Bets"/>
+                        <segment title="Active"/>
+                        <segment title="Videos"/>
+                    </segments>
+                </segmentedControl>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pJK-AS-V9V">
+                    <rect key="frame" x="0.0" y="403" width="414" height="459"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lp5-Ux-Adj" customClass="HairlineView" customModule="CHUGGR" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="403" width="414" height="1"/>
+                    <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="999" constant="1" id="Ntf-gf-nrO"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firstname lastname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H00-iH-Zfr">
+                    <rect key="frame" x="16" y="190.5" width="382" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" name="Gray 3"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QeP-2J-ayN">
-                    <rect key="frame" x="0.0" y="271.5" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="296" width="414" height="44"/>
                     <color key="backgroundColor" name="CHUGGR Orange"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Cgv-gW-79l"/>
@@ -142,26 +168,10 @@
                     <state key="normal" title="Add Friend">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <connections>
+                        <action selector="addFriendPressed:" destination="-1" eventType="touchUpInside" id="v9G-y6-Xe9"/>
+                    </connections>
                 </button>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="F1g-Y1-RvT">
-                    <rect key="frame" x="16" y="331.5" width="382" height="32"/>
-                    <segments>
-                        <segment title="All Bets"/>
-                        <segment title="Active"/>
-                        <segment title="Videos"/>
-                    </segments>
-                </segmentedControl>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pJK-AS-V9V">
-                    <rect key="frame" x="0.0" y="378.5" width="414" height="483.5"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lp5-Ux-Adj" customClass="HairlineView" customModule="CHUGGR" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="378.5" width="414" height="1"/>
-                    <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" priority="999" constant="1" id="Ntf-gf-nrO"/>
-                    </constraints>
-                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -169,23 +179,27 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="F1g-Y1-RvT" secondAttribute="trailing" constant="16" id="0fw-7J-eSK"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZY6-XO-KAO" secondAttribute="trailing" constant="16" id="0rJ-UU-1Ng"/>
                 <constraint firstItem="QeP-2J-ayN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="3wk-al-Ad0"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="H00-iH-Zfr" secondAttribute="trailing" constant="16" id="5ML-cc-WOQ"/>
                 <constraint firstItem="3UW-cf-Opb" firstAttribute="top" secondItem="XAx-d1-t1H" secondAttribute="bottom" constant="10" id="7Bd-Bk-df5"/>
                 <constraint firstItem="F1g-Y1-RvT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="7Cd-SZ-Q64"/>
                 <constraint firstItem="XAx-d1-t1H" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="ASD-7T-wB8"/>
                 <constraint firstItem="3UW-cf-Opb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="ASF-WV-jSC"/>
                 <constraint firstItem="F1g-Y1-RvT" firstAttribute="top" secondItem="QeP-2J-ayN" secondAttribute="bottom" constant="16" id="Did-Cj-hEY"/>
                 <constraint firstItem="XAx-d1-t1H" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="Eot-ul-ALk"/>
+                <constraint firstItem="H00-iH-Zfr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Hdu-aO-QbE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="pJK-AS-V9V" secondAttribute="bottom" id="Kjh-iJ-W2d"/>
+                <constraint firstItem="6o9-uP-zBJ" firstAttribute="top" secondItem="H00-iH-Zfr" secondAttribute="bottom" constant="8" id="M7Q-ha-yTg"/>
                 <constraint firstItem="pJK-AS-V9V" firstAttribute="top" secondItem="F1g-Y1-RvT" secondAttribute="bottom" constant="16" id="NTz-Md-Ycu"/>
                 <constraint firstItem="6o9-uP-zBJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Oin-Ff-4II"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pJK-AS-V9V" secondAttribute="trailing" id="ULy-fs-iUO"/>
-                <constraint firstItem="QeP-2J-ayN" firstAttribute="top" secondItem="6o9-uP-zBJ" secondAttribute="bottom" constant="16" id="ebb-DU-aKY"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3UW-cf-Opb" secondAttribute="trailing" constant="16" id="VQ2-Om-bhp"/>
                 <constraint firstItem="lp5-Ux-Adj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="eiI-jf-ZQb"/>
+                <constraint firstItem="H00-iH-Zfr" firstAttribute="top" secondItem="3UW-cf-Opb" secondAttribute="bottom" id="g37-Aq-q8i"/>
                 <constraint firstAttribute="trailing" secondItem="lp5-Ux-Adj" secondAttribute="trailing" id="hiB-3K-PsN"/>
-                <constraint firstItem="6o9-uP-zBJ" firstAttribute="top" secondItem="3UW-cf-Opb" secondAttribute="bottom" constant="4" id="iPs-Uw-rFw"/>
                 <constraint firstItem="ZY6-XO-KAO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="jON-0y-A57"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6o9-uP-zBJ" secondAttribute="trailing" constant="16" id="nNm-DV-jsK"/>
                 <constraint firstItem="ZY6-XO-KAO" firstAttribute="leading" secondItem="XAx-d1-t1H" secondAttribute="trailing" constant="16" id="oTJ-I6-cmC"/>
+                <constraint firstItem="QeP-2J-ayN" firstAttribute="top" secondItem="6o9-uP-zBJ" secondAttribute="bottom" constant="16" id="q1s-wI-c6Z"/>
                 <constraint firstItem="F1g-Y1-RvT" firstAttribute="bottom" secondItem="lp5-Ux-Adj" secondAttribute="top" constant="-16" id="uaf-5s-LkA"/>
                 <constraint firstItem="pJK-AS-V9V" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="uoT-A3-Op6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QeP-2J-ayN" secondAttribute="trailing" id="zxm-xd-3gX"/>
@@ -196,6 +210,9 @@
     <resources>
         <namedColor name="CHUGGR Orange">
             <color red="1" green="0.60000002384185791" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Gray 3">
+            <color red="0.61568627450980395" green="0.61568627450980395" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

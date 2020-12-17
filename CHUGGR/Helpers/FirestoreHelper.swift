@@ -380,7 +380,7 @@ class FirestoreHelper {
     }
     
     // MARK:- Friend CRUD
-    func addAllUserListener( completion: @escaping (_ friends: [Friend]) -> ()) {
+    func addAllUserListener(completion: @escaping (_ friends: [Friend]) -> ()) {
         guard let uid = currentUser?.uid,
               allUserListener == nil else { return } // Check that there isn't already a listener for all users
         
@@ -412,6 +412,61 @@ class FirestoreHelper {
                     completion(potentialFriends)
                 }
             }
+    }
+    
+    func checkFriendStatus(
+        with friend: Friend,
+        completionIfFalse: (() -> ())?,
+        completionIfTrue: (() -> ())?
+    ) {
+        guard let user = currentUser else { return }
+        
+        // Check if friend already exists in current user's subcollection
+        let friendRef = db.collection(K.Firestore.users)
+            .document(user.uid) // access current user doc
+            .collection(K.Firestore.friends)
+            .document(friend.uid) // friend subcollection doc
+        friendRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                // Document found!
+                completionIfTrue?()
+            } else {
+                completionIfFalse?()
+            }
+        }
+    }
+    
+    func addFriend(_ friend: Friend, completion: (() -> ())?) {
+        guard let user = currentUser else { return }
+        let currentUserSnippet = FriendSnippet(fromCurrentUser: user)
+        let friendSnippet = FriendSnippet(fromFriend: friend)
+
+        // Add friend to current user's friend list
+        do {
+            try db.collection(K.Firestore.users)
+                .document(user.uid)
+                .collection(K.Firestore.friends)
+                .document(friend.uid)
+                .setData(from: friendSnippet)
+        } catch let error {
+            // TODO: better error handling
+            print("Error writing friend \(friend.uid) \n to user \(user.uid): \n \(error)")
+            return
+        }
+        
+        // Add current user to friend's friend list
+        do {
+            try db.collection(K.Firestore.users)
+                .document(friend.uid)
+                .collection(K.Firestore.friends)
+                .document(user.uid)
+                .setData(from: currentUserSnippet)
+        } catch let error {
+            // TODO: better error handling
+            print("Error writing friend \(user.uid) \n to user \(friend.uid): \n \(error)")
+            return
+        }
+        completion?()
     }
     
         

@@ -10,6 +10,14 @@ import Foundation
 class FriendDetailViewModel {
     private let firestoreHelper: FirestoreHelper
     let friend: Friend
+    private(set) var isAlreadyFriends = false {
+        didSet {
+            setVCForFriendStatus?()
+        }
+    }
+    
+    var setVCForFriendStatus: (() -> ())?
+
     
     init(firestoreHelper: FirestoreHelper, friend: Friend) {
         self.firestoreHelper = firestoreHelper
@@ -24,6 +32,34 @@ class FriendDetailViewModel {
             return "\(friend.drinksReceived.beers) 🍺 \(friend.drinksReceived.shots) 🥃"
         case .outstanding:
             return "\(friend.drinksOutstanding.beers) 🍺 \(friend.drinksOutstanding.shots) 🥃"
+        }
+    }
+    
+    func checkFriendStatus() {
+        firestoreHelper.checkFriendStatus(
+            with: friend,
+            completionIfFalse: { [weak self] in
+                self?.isAlreadyFriends = false
+            },
+            completionIfTrue: { [weak self] in
+                self?.isAlreadyFriends = true
+            }
+        )
+    }
+    
+    func addFriendIfSafe() {
+        // TODO: eventually we want to implement friend requests instead of just doing a unilateral mutual add right away. But for now... gotta push this MVP out!
+        firestoreHelper.checkFriendStatus(
+            with: friend,
+            completionIfFalse: { [weak self] in
+                self?.addFriend()
+            },
+            completionIfTrue: nil)
+    }
+    
+    func addFriend() {
+        firestoreHelper.addFriend(friend) { [weak self] in
+            self?.checkFriendStatus()
         }
     }
 }
