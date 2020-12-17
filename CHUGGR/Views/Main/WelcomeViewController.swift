@@ -11,7 +11,7 @@ import FirebaseUI
 
 class WelcomeViewController: UIViewController {
     
-    var mainCoordinator: MainCoordinator?
+    weak var mainCoordinator: MainCoordinator?
     private let viewModel: WelcomeViewModel
     
     @IBOutlet weak var getStartedButton: UIButton!
@@ -37,9 +37,15 @@ class WelcomeViewController: UIViewController {
     }
     
     func initViewModel() {
-        viewModel.onUserRead = proceedToDashboard
-        viewModel.onUserDocNotFound = onUserDocNotFound
-        viewModel.onUserReadFail = userReadDidFail
+        viewModel.onUserRead = { [weak self] in
+            self?.proceedToDashboard()
+        }
+        viewModel.onUserDocNotFound = { [weak self] in
+            self?.onUserDocNotFound()
+        }
+        viewModel.onUserReadFail = { [weak self] in
+            self?.userReadDidFail()
+        }
     }
     
     func continueIfLoggedIn() {
