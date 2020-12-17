@@ -110,6 +110,27 @@ class FriendDetailViewController: UIViewController {
     }
     
     @objc func showFriendOptions() {
+        let alert = UIAlertController(
+            title: "Delete Friend?",
+            message: nil,
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "Cancel",
+                style: .cancel,
+                handler: nil
+            )
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "Delete",
+                style: .destructive
+            ) { [weak self] _ in
+                self?.viewModel.removeFriend()
+            })
+        present(alert, animated: true)
+        
         
     }
     

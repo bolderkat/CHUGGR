@@ -546,6 +546,9 @@ class FirestoreHelper {
             if let error = error {
                 print("Error deleting \(user.uid) from \(friendUID)'s friend list: \(error)")
             } else {
+                friendRef.updateData([
+                    K.Firestore.numFriends: FieldValue.increment(Int64(-1))
+                ])
                 // Pass back updated friend object
                 self?.getFriend(withUID: friendUID, completion: completion)
             }

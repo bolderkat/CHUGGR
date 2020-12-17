@@ -173,15 +173,16 @@ class BetDetailViewController: UIViewController {
             UIAlertAction(
                 title: "Cancel",
                 style: .cancel,
-                handler: nil)
+                handler: nil
+            )
         )
         alert.addAction(
             UIAlertAction(
                 title: "Delete",
                 style: .destructive
-            ) { _ in
-                self.viewModel.deleteBet(withBetID: betID)
-                self.coordinator?.pop()
+            ) { [weak self] _ in
+                self?.viewModel.deleteBet(withBetID: betID)
+                self?.coordinator?.pop()
         })
         present(alert, animated: true)
         
