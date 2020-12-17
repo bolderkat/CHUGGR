@@ -13,6 +13,7 @@ class FirestoreHelper {
     private let db = Firestore.firestore()
     private(set) var currentUser: CurrentUser?
     private(set) var friends: [FriendSnippet] = []
+    private(set) var allUsers: [FullFriend] = []
     private var userListeners: [ListenerRegistration] = []
     private var betDashboardListeners: [ListenerRegistration] = []
     private var friendsListener: ListenerRegistration?
@@ -392,6 +393,7 @@ class FirestoreHelper {
         friendsListener = db.collection(K.Firestore.users)
             .document(uid)
             .collection(K.Firestore.friends)
+            .order(by: K.Firestore.firstName)
             .addSnapshotListener { [weak self] (querySnapshot, error) in
                 var snippets = [FriendSnippet]()
                 if let error = error {
@@ -429,8 +431,8 @@ class FirestoreHelper {
         // Query to exclude current user.
         allUserListener = db.collection(K.Firestore.users)
             .whereField(K.Firestore.uid, notIn: [uid])
-            .addSnapshotListener { (querySnapshot, error) in
-                var potentialFriends = [FullFriend]()
+            .addSnapshotListener { [weak self] (querySnapshot, error) in
+                var users = [FullFriend]()
                 if let error = error {
                     print("Error fetching user documents for friend search: \(error)")
                     // TODO: Better error handling
@@ -443,7 +445,7 @@ class FirestoreHelper {
                         case .success(let user):
                             if let user = user {
                                 // If successful, add to array of users for search
-                                potentialFriends.append(user)
+                                users.append(user)
                             } else {
                                 print("Document from user listener does not exist")
                             }
@@ -451,7 +453,9 @@ class FirestoreHelper {
                             print("Error decoding user \(document.documentID) for friend search: \(error)")
                         }
                     }
-                    completion(potentialFriends)
+                    let sortedUsers = users.sorted { $0.firstName < $1.firstName }
+                    self?.allUsers = sortedUsers
+                    completion(sortedUsers)
                 }
             }
     }

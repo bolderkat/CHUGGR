@@ -42,6 +42,7 @@ struct K {
         static let betID = "betID"
         static let chatRooms = "chatRooms"
         static let dateOpened = "dateOpened"
+        static let firstName = "firstName"
         static let friends = "friends"
         static let invitedUsers = "invitedUsers"
         static let numFriends = "numFriends"
