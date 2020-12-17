@@ -18,6 +18,13 @@ class BetCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    
+    func configure(withVM vm: BetCellViewModel) {
+        userNamesLabel.text = vm.getBothSideNames() // TODO: display proper side names
+        titleLabel.text = vm.bet.title
+        stakeLabel.text = vm.getStakeString()
+        resultLabel.text = vm.getBetStatus()
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

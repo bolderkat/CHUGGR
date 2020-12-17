@@ -45,13 +45,6 @@ class BetsViewController: UIViewController {
     
     func setUpViewController() {
         title = "Bets"
-        
-//        navigationController?.navigationBar.barTintColor = UIColor(named: K.colors.orange)
-//        navigationController?.navigationBar.isTranslucent = false
-//        navigationController?.navigationBar.titleTextAttributes = [
-//            NSAttributedString.Key.foregroundColor: UIColor.white,
-//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .semibold)
-//        ]
     }
     
     func initViewModel() {
@@ -123,10 +116,7 @@ extension BetsViewController {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.betCell, for: indexPath) as? BetCell else {
                     fatalError("Bet dashboard cell nib does not exist")
                 }
-                cell.userNamesLabel.text = rowVM.getBothSideNames() // TODO: display proper side names
-                cell.titleLabel.text = rowVM.bet.title
-                cell.stakeLabel.text = rowVM.getStakeString()
-                cell.resultLabel.text = rowVM.getBetStatus()
+                cell.configure(withVM: rowVM)
                 return cell
             })
     }

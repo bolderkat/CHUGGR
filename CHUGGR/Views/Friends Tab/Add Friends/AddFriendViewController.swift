@@ -96,8 +96,7 @@ extension AddFriendViewController {
             ) as? FriendCell else {
                 fatalError("Friend cell nib does not exist.")
             }
-            cell.nameLabel.text = rowVM.fullName
-            cell.userNameLabel.text = rowVM.userName
+            cell.configure(withVM: rowVM)
             return cell
         }
     }

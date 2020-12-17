@@ -16,6 +16,11 @@ class FriendCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    
+    func configure(withVM vm: FriendCellViewModel) {
+        nameLabel.text = vm.fullName
+        userNameLabel.text = vm.userName
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
