@@ -47,6 +47,9 @@
 		659DCB6E252E9A57009D330E /* BetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 659DCB6C252E9A57009D330E /* BetCell.xib */; };
 		659DCB76252E9AD3009D330E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659DCB75252E9AD3009D330E /* Constants.swift */; };
 		65AF9BE32585995800FA96F2 /* BetModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AF9BE22585995800FA96F2 /* BetModelTests.swift */; };
+		65B13FFA258AB41F0004FFCB /* FriendDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B13FF8258AB41F0004FFCB /* FriendDetailViewController.swift */; };
+		65B13FFB258AB41F0004FFCB /* FriendDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65B13FF9258AB41F0004FFCB /* FriendDetailView.xib */; };
+		65B14006258AB7760004FFCB /* FriendDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B14005258AB7760004FFCB /* FriendDetailViewModel.swift */; };
 		65C237FD256EF82B001EA95D /* NewBetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C237FC256EF82B001EA95D /* NewBetViewController.swift */; };
 		65C23805256EFAA3001EA95D /* HairlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C23804256EFAA3001EA95D /* HairlineView.swift */; };
 		65C681F52585DF8F003160F0 /* BetsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65C681F42585DF8F003160F0 /* BetsView.xib */; };
@@ -157,6 +160,9 @@
 		659DCB6C252E9A57009D330E /* BetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetCell.xib; sourceTree = "<group>"; };
 		659DCB75252E9AD3009D330E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		65AF9BE22585995800FA96F2 /* BetModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetModelTests.swift; sourceTree = "<group>"; };
+		65B13FF8258AB41F0004FFCB /* FriendDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailViewController.swift; sourceTree = "<group>"; };
+		65B13FF9258AB41F0004FFCB /* FriendDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendDetailView.xib; sourceTree = "<group>"; };
+		65B14005258AB7760004FFCB /* FriendDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailViewModel.swift; sourceTree = "<group>"; };
 		65C237FC256EF82B001EA95D /* NewBetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetViewController.swift; sourceTree = "<group>"; };
 		65C23804256EFAA3001EA95D /* HairlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HairlineView.swift; sourceTree = "<group>"; };
 		65C681F42585DF8F003160F0 /* BetsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetsView.xib; sourceTree = "<group>"; };
@@ -320,6 +326,7 @@
 			children = (
 				65E9481E2589A42300A71365 /* Friends Main List */,
 				65E948222589A43A00A71365 /* Add Friends */,
+				65B13FF7258AB3F60004FFCB /* Friend Detail */,
 				65E948412589E41500A71365 /* Custom Cells */,
 			);
 			path = "Friends Tab";
@@ -434,6 +441,16 @@
 			path = CHUGGRUITests;
 			sourceTree = "<group>";
 		};
+		65B13FF7258AB3F60004FFCB /* Friend Detail */ = {
+			isa = PBXGroup;
+			children = (
+				65B13FF8258AB41F0004FFCB /* FriendDetailViewController.swift */,
+				65B14005258AB7760004FFCB /* FriendDetailViewModel.swift */,
+				65B13FF9258AB41F0004FFCB /* FriendDetailView.xib */,
+			);
+			path = "Friend Detail";
+			sourceTree = "<group>";
+		};
 		65C6E407257F407500EA7AA4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -511,8 +528,8 @@
 			isa = PBXGroup;
 			children = (
 				65E948422589E43900A71365 /* FriendCell.swift */,
-				65E948432589E43900A71365 /* FriendCell.xib */,
 				65E948492589E44900A71365 /* FriendCellViewModel.swift */,
+				65E948432589E43900A71365 /* FriendCell.xib */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -681,6 +698,7 @@
 				6563F92625843F3F00DE69EC /* BetDetailView.xib in Resources */,
 				659DCB6E252E9A57009D330E /* BetCell.xib in Resources */,
 				656D9482252BF6E200EDEB7F /* GoogleService-Info.plist in Resources */,
+				65B13FFB258AB41F0004FFCB /* FriendDetailView.xib in Resources */,
 				65C681F52585DF8F003160F0 /* BetsView.xib in Resources */,
 				65543D0B25772B7100B8C549 /* StakeEntryCell.xib in Resources */,
 				65E948452589E43900A71365 /* FriendCell.xib in Resources */,
@@ -859,6 +877,7 @@
 				65F69D98257B2EFF00CE7371 /* DateEntryCell.swift in Sources */,
 				65C682112585E2AE003160F0 /* FriendsViewModel.swift in Sources */,
 				65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */,
+				65B13FFA258AB41F0004FFCB /* FriendDetailViewController.swift in Sources */,
 				6537BC372583138200880C2B /* UserDetailEntryViewModel.swift in Sources */,
 				6563F92525843F3F00DE69EC /* ProfileViewController.swift in Sources */,
 				65578765256DD33600FC23FC /* FriendsCoordinator.swift in Sources */,
@@ -870,6 +889,7 @@
 				65FBCBC1253257CE00227121 /* BetDetailViewController.swift in Sources */,
 				656D9450252BF5FE00EDEB7F /* WelcomeViewController.swift in Sources */,
 				6533F26B25685B13002524B3 /* Storyboarded.swift in Sources */,
+				65B14006258AB7760004FFCB /* FriendDetailViewModel.swift in Sources */,
 				65FCE6ED256B35530066BDC5 /* MainTabBarController.swift in Sources */,
 				65FD45222581EDE900481F50 /* Friend.swift in Sources */,
 				6537BC272583054200880C2B /* WelcomeViewModel.swift in Sources */,

@@ -8,7 +8,7 @@
 import UIKit
 
 class AddFriendViewController: UIViewController {
-    
+    // TODO: !!!Fix bug where backing out of this view and going back in breaks search!!!
     weak var coordinator: FriendsCoordinator?
     let viewModel: AddFriendViewModel
     private var dataSource: UITableViewDiffableDataSource<Section, FriendCellViewModel>!
@@ -117,6 +117,8 @@ extension AddFriendViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let friend = viewModel.getSelectedFriend(at: indexPath)
+        coordinator?.showFriendDetail(for: friend)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

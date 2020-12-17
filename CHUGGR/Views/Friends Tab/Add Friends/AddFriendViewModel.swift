@@ -11,6 +11,7 @@ class AddFriendViewModel {
     private let firestoreHelper: FirestoreHelper
     private(set) var potentialFriends: [Friend] = []
     private var friendCellVMs: [FriendCellViewModel] = []
+    private var searchResults: [FriendCellViewModel] = []
     private(set) var isLoading = false {
         didSet {
             updateLoadingStatus?()
@@ -35,12 +36,7 @@ class AddFriendViewModel {
     func createCellVMs() {
         var vms = [FriendCellViewModel]()
         for user in potentialFriends {
-            let vm = FriendCellViewModel(
-                uid: user.uid,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                userName: user.userName
-            )
+            let vm = FriendCellViewModel(friend: user)
             vms.append(vm)
         }
         friendCellVMs = vms
@@ -48,7 +44,12 @@ class AddFriendViewModel {
     
     func provideCellVMs(forString searchString: String) -> [FriendCellViewModel] {
         let string = searchString.lowercased() // case-insensitive search
-        return friendCellVMs.filter { $0.searchName.contains(string) }
+        searchResults = friendCellVMs.filter { $0.searchName.contains(string) }
+        return searchResults
+    }
+    
+    func getSelectedFriend(at indexPath: IndexPath) -> Friend {
+        searchResults[indexPath.row].friend
     }
     
 }

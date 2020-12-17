@@ -7,17 +7,28 @@
 
 import Foundation
 
-struct FriendCellViewModel: Hashable {
-    let uid: UID
-    let firstName: String
-    let lastName: String
-    var fullName: String {
-        "\(firstName) \(lastName)"
-    }
-    let userName: String
+struct FriendCellViewModel {
+    let friend: Friend
+    var uid: UID { friend.uid }
+    var firstName: String { friend.firstName }
+    var lastName: String { friend.lastName }
+    var fullName: String { "\(firstName) \(lastName)" }
+    var userName: String { friend.userName }
     var searchName: String {
         // All names combined to facilitate faster, case-insensitive search
         (firstName + lastName + userName).lowercased()
     }
     let profilePic: String = "" // TODO: populate with actual url later
+}
+
+
+extension FriendCellViewModel: Hashable {
+    static func == (lhs: FriendCellViewModel, rhs: FriendCellViewModel) -> Bool {
+        lhs.friend.uid == rhs.friend.uid
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(friend.uid)
+    }
+    
 }

@@ -48,4 +48,8 @@ struct K {
         static let users = "users"
         static let videos = "videos"
     }
+    
+    struct Images {
+        static let profPicPlaceholder = "ProfPicPlaceholder"
+    }
 }

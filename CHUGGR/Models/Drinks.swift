@@ -11,3 +11,9 @@ struct Drinks: Codable {
     var beers: Int
     var shots: Int
 }
+
+enum DrinkStatType {
+    case given
+    case received
+    case outstanding
+}
