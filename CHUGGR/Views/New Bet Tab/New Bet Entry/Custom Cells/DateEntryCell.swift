@@ -9,16 +9,18 @@ import UIKit
 
 class DateEntryCell: UITableViewCell {
 
-    var rowType: BetEntryRowType?
     var onDateInput: ((TimeInterval) -> ())?
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        datePicker.date = Date.init() // set picker date to now
     }
     
+    func configure(withVM vm: BetEntryCellViewModel) {
+        titleLabel.text = vm.title
+        datePicker.date = Date.init()
+    }
     
     @IBAction func dateSelected(_ sender: UIDatePicker) {
         let selectedDateInterval = datePicker.date.timeIntervalSince1970

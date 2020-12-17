@@ -105,20 +105,8 @@ extension UserDetailEntryViewController {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.userEntryCell) as? UserDetailEntryCell else {
                 fatalError("User detail entry cell nib does not exist")
             }
-            cell.rowType = rowVM.type
-            cell.titleLabel.text = rowVM.title
+            cell.configure(withVM: rowVM)
             cell.onTextInput = self.viewModel.handle(text:for:)
-            
-            // Show textView if bio field
-            switch rowVM.type {
-            case .bio:
-                cell.textView.isHidden = false
-                cell.textField.isHidden = true
-            default:
-                cell.textView.isHidden = true
-                cell.textField.isHidden = false
-            }
-            
             return cell
         }
     }

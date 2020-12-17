@@ -11,8 +11,8 @@ class StakeEntryCell: UITableViewCell {
 
     var onStakeInput: ((String?, String?) -> ())?
     
-    @IBOutlet weak var beerField: UITextField!
-    @IBOutlet weak var shotField: UITextField!
+    @IBOutlet private weak var beerField: UITextField!
+    @IBOutlet private weak var shotField: UITextField!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,6 +24,11 @@ class StakeEntryCell: UITableViewCell {
         shotField.delegate = self
         shotField.keyboardType = .numberPad
         shotField.addDoneButtonOnKeyboard()
+    }
+    
+    func configure() {
+        beerField.text = ""
+        shotField.text = ""
     }
     
 }

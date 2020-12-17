@@ -131,8 +131,7 @@ extension NewBetViewController {
                         fatalError("Bet stake entry cell nib does not exist")
                     }
                     // Make sure entry fields are blank when cell is reused
-                    cell.beerField.text = ""
-                    cell.shotField.text = ""
+                    cell.configure()
                     cell.onStakeInput = self.viewModel.handle(beerStake:shotStake:)
                     return cell
                     
@@ -145,15 +144,14 @@ extension NewBetViewController {
                             fatalError("Bet date entry cell nib does not exist")
                         }
 
-                        cell.titleLabel.text = rowVM.title
-                        cell.datePicker.date = Date.init()
+                        cell.configure(withVM: rowVM)
                         cell.onDateInput = self.viewModel.handle(date:)
                         return cell
                     } else {
                         fallthrough
                     }
                     
-                default:
+                case .event, .line, .stat, .team1, .team2:
                     // All other cell types
                     guard let cell = tableView.dequeueReusableCell(
                         withIdentifier: K.cells.betEntryCell,
@@ -161,12 +159,8 @@ extension NewBetViewController {
                     ) as? BetEntryCell else {
                         fatalError("Bet entry cell nib does not exist")
                     }
-                    cell.titleLabel.text = rowVM.title
                     
-                    // Make sure textfields are empty when cell reused
-                    cell.textField.placeholder = rowVM.placeholder ?? ""
-                    cell.textField.text = ""
-                    cell.rowType = rowVM.type
+                    cell.configure(withVM: rowVM)
                     cell.onTextInput = self.viewModel.handle(text:for:)
                     cell.onDateInput = self.viewModel.handle(date:) // for iOS 13 and earlier
                     return cell

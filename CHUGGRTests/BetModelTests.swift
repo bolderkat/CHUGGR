@@ -58,6 +58,7 @@ class BetModelTests: XCTestCase {
         bet.perform(action: .removeFromSide, withID: "uid", firstName: "daniel")
     }
 
+    // Notes from Ian call: Should break this up into indvidual tests so able to compartmentalize tests and see exactly what fails in an isolated environment. This is more of an integration test as is.
     func testUserActions() throws {
         inviteUser()
         XCTAssertTrue(bet.allUsers.contains("uid"))

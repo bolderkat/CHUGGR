@@ -9,7 +9,7 @@ import UIKit
 
 class UserDetailEntryCell: UITableViewCell {
     
-    var rowType: UserEntryRowType?
+    var rowType: UserEntryRowType = .firstName
     var onTextInput: ((String, UserEntryRowType) -> ())?
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -22,6 +22,21 @@ class UserDetailEntryCell: UITableViewCell {
         textView.delegate = self
     }
     
+    func configure(withVM vm: UserDetailEntryCellViewModel) {
+        rowType = vm.type
+        titleLabel.text = vm.title
+        
+        // Show textView if bio field
+        switch rowType {
+        case .bio:
+            textView.isHidden = false
+            textField.isHidden = true
+        case .firstName, .lastName, .userName:
+            textView.isHidden = true
+            textField.isHidden = false
+        }
+    }
+    
 }
 
 extension UserDetailEntryCell: UITextFieldDelegate {
@@ -29,7 +44,7 @@ extension UserDetailEntryCell: UITextFieldDelegate {
         switch rowType {
         case .userName:
             textField.autocapitalizationType = .none
-        default:
+        case .bio, .firstName, .lastName:
             textField.autocapitalizationType = .words
         }
     }
@@ -50,7 +65,7 @@ extension UserDetailEntryCell: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let input = textField.text, let rowType = rowType else { return }
+        guard let input = textField.text else { return }
         onTextInput?(input, rowType)
     }
 }
@@ -82,7 +97,7 @@ extension UserDetailEntryCell: UITextViewDelegate {
     
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        guard let input = textView.text, let rowType = rowType else { return }
+        guard let input = textView.text else { return }
         onTextInput?(input, rowType)
     }
 }

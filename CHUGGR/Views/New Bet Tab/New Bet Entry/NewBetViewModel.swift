@@ -160,7 +160,7 @@ class NewBetViewModel {
             team1Input = text
         case .team2:
             team2Input = text
-        default:
+        case .stake, .dueDate, .gameday:
             break
         }
         validateInput()

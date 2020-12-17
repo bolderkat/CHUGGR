@@ -9,7 +9,7 @@ import UIKit
 
 class BetEntryCell: UITableViewCell {
     
-    var rowType: BetEntryRowType?
+    var rowType: BetEntryRowType = .stat // providing default so not optional
     var onTextInput: ((String, BetEntryRowType) -> ())?
     var onDateInput: ((TimeInterval) -> ())?
     
@@ -22,6 +22,14 @@ class BetEntryCell: UITableViewCell {
 
     }
     // TODO: Use UITextView for title entry fields to allow for multi-line input
+    
+    func configure(withVM vm: BetEntryCellViewModel) {
+        // Make sure textfields are empty when cell reused
+        titleLabel.text = vm.title
+        textField.placeholder = vm.placeholder ?? ""
+        textField.text = ""
+        rowType = vm.type
+    }
 }
 
 // MARK:- Text field delegate
@@ -34,8 +42,10 @@ extension BetEntryCell: UITextFieldDelegate {
             textField.addDoneButtonOnKeyboard()
         case .gameday, .dueDate:
             textField.setInputViewDatePicker(target: self, selector: #selector(datePickerDoneTapped))
-        default:
+        case .event, .stat, .team1, .team2:
             textField.keyboardType = .default
+        case .stake:
+            return
         }
     }
     
@@ -71,7 +81,7 @@ extension BetEntryCell: UITextFieldDelegate {
             } else {
                 return string == numberFiltered
             }
-        default:
+        case .dueDate, .event, .gameday, .stake, .stat, .team1, .team2:
             return true
         }
     }
@@ -81,7 +91,7 @@ extension BetEntryCell: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let input = textField.text, let rowType = rowType else { return }
+        guard let input = textField.text else { return }
         onTextInput?(input, rowType)
     }
     
