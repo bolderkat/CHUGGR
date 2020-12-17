@@ -545,6 +545,33 @@ class FirestoreHelper {
             }
     }
     
+    func removeFriend(withUID friendUID: UID, completion: @escaping(_ friend: FullFriend) -> ()) {
+        // It's not you, it's me...
+        guard let user = currentUser else { return }
+        
+        // Delete friend from current user's friend list then decrement friend count
+        let userRef = db.collection(K.Firestore.users).document(user.uid)
+        userRef.collection(K.Firestore.friends).document(friendUID).delete { error in
+            if let error = error {
+                print("Error deleting \(friendUID) from \(user.uid)'s friend list: \(error)")
+            }
+        }
+        userRef.updateData([
+            K.Firestore.numFriends: FieldValue.increment(Int64(-1))
+        ])
+        
+        // Delete current user from (ex-)friend's friend list. So sad.
+        let friendRef = db.collection(K.Firestore.users).document(friendUID)
+        friendRef.collection(K.Firestore.friends).document(user.uid).delete { [weak self] error in
+            if let error = error {
+                print("Error deleting \(user.uid) from \(friendUID)'s friend list: \(error)")
+            } else {
+                // Pass back updated friend object
+                self?.getFriend(withUID: friendUID, completion: completion)
+            }
+            
+        }
+    }
     
     // MARK:- Clean-up
     func logOut() {
