@@ -131,8 +131,11 @@ extension NewBetViewController {
                         fatalError("Bet stake entry cell nib does not exist")
                     }
                     // Make sure entry fields are blank when cell is reused
+                    // TODO: pass these closures to cell via cell VM instead of directly from parent VM
                     cell.configure()
-                    cell.onStakeInput = self.viewModel.handle(beerStake:shotStake:)
+                    cell.onStakeInput = { [weak self] beers, shots in
+                        self?.viewModel.handle(beerStake: beers, shotStake: shots)
+                    }
                     return cell
                     
                 case .dueDate, .gameday:
@@ -145,7 +148,10 @@ extension NewBetViewController {
                         }
 
                         cell.configure(withVM: rowVM)
-                        cell.onDateInput = self.viewModel.handle(date:)
+                        
+                        cell.onDateInput = { [weak self] in
+                            self?.viewModel.handle(date: $0)
+                        }
                         return cell
                     } else {
                         fallthrough
@@ -161,8 +167,12 @@ extension NewBetViewController {
                     }
                     
                     cell.configure(withVM: rowVM)
-                    cell.onTextInput = self.viewModel.handle(text:for:)
-                    cell.onDateInput = self.viewModel.handle(date:) // for iOS 13 and earlier
+                    cell.onTextInput = { [weak self] (text, rowType) in
+                        self?.viewModel.handle(text: text, for: rowType)
+                    }
+                    cell.onDateInput = { [weak self]  in
+                        self?.viewModel.handle(date: $0) // for iOS 13 and earlier
+                    }
                     return cell
                 }
             }
