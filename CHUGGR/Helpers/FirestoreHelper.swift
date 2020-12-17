@@ -557,7 +557,9 @@ class FirestoreHelper {
         userListeners = []
         betDashboardListeners.forEach { $0.remove() }
         betDashboardListeners = []
+        friendsListener?.remove()
         friendsListener = nil
+        allUserListener?.remove()
         allUserListener = nil
     }
     
