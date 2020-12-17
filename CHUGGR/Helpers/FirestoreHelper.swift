@@ -12,6 +12,7 @@ import FirebaseFirestoreSwift
 class FirestoreHelper {
     private let db = Firestore.firestore()
     private(set) var currentUser: CurrentUser?
+    private(set) var friends: [FriendSnippet] = []
     private var userListeners: [ListenerRegistration] = []
     private var betDashboardListeners: [ListenerRegistration] = []
     private var friendsListener: ListenerRegistration?
@@ -391,7 +392,7 @@ class FirestoreHelper {
         friendsListener = db.collection(K.Firestore.users)
             .document(uid)
             .collection(K.Firestore.friends)
-            .addSnapshotListener { (querySnapshot, error) in
+            .addSnapshotListener { [weak self] (querySnapshot, error) in
                 var snippets = [FriendSnippet]()
                 if let error = error {
                     // TODO: better error handling
@@ -413,6 +414,7 @@ class FirestoreHelper {
                             print("Error decoding snippet \(document.documentID) for friends list: \(error)")
                         }
                     }
+                    self?.friends = snippets
                     completion(snippets)
                 }
             }
@@ -452,28 +454,6 @@ class FirestoreHelper {
                     completion(potentialFriends)
                 }
             }
-    }
-    
-    func checkFriendStatus(
-        with friend: FullFriend,
-        completionIfFalse: (() -> ())?,
-        completionIfTrue: (() -> ())?
-    ) {
-        guard let user = currentUser else { return }
-        
-        // Check if friend already exists in current user's subcollection
-        let friendRef = db.collection(K.Firestore.users)
-            .document(user.uid) // access current user doc
-            .collection(K.Firestore.friends)
-            .document(friend.uid) // friend subcollection doc
-        friendRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                // Document found!
-                completionIfTrue?()
-            } else {
-                completionIfFalse?()
-            }
-        }
     }
     
     func addFriend(_ friend: FullFriend, completion: (() -> ())?) {

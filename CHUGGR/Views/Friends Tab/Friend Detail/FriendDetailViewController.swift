@@ -52,9 +52,9 @@ class FriendDetailViewController: UIViewController {
         updateLabels()
         
         // Disable add friend button until status is verified
-        addFriendButton.isEnabled = false
-        addFriendButton.backgroundColor = UIColor(named: K.colors.gray5)
-        addFriendButton.setTitle("Loading...", for: .disabled)
+//        addFriendButton.isEnabled = false
+//        addFriendButton.backgroundColor = UIColor(named: K.colors.gray5)
+//        addFriendButton.setTitle("Loading...", for: .disabled)
     }
     
     func updateLabels() {
@@ -106,7 +106,7 @@ class FriendDetailViewController: UIViewController {
     }
 
     @IBAction func addFriendPressed(_ sender: UIButton) {
-        viewModel.addFriendIfSafe()
+        viewModel.addFriend()
     }
     
     @objc func showFriendOptions() {

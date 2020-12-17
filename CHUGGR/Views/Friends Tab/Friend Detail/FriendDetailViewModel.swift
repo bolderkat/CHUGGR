@@ -11,12 +11,14 @@ class FriendDetailViewModel {
     private let firestoreHelper: FirestoreHelper
     private(set) var friend: FullFriend {
         didSet {
+            checkFriendStatus()
             updateVCLabels?()
         }
     }
     
     private(set) var isAlreadyFriends = false {
         didSet {
+            // Disable/enable add friend button based on friend status
             setVCForFriendStatus?()
         }
     }
@@ -48,34 +50,23 @@ class FriendDetailViewModel {
     }
     
     func checkFriendStatus() {
-        firestoreHelper.checkFriendStatus(
-            with: friend,
-            completionIfFalse: { [weak self] in
-                self?.isAlreadyFriends = false
-            },
-            completionIfTrue: { [weak self] in
-                self?.isAlreadyFriends = true
-            }
-        )
-    }
-    
-    func addFriendIfSafe() {
-        // TODO: eventually we want to implement friend requests instead of just doing a unilateral mutual add right away. But for now... gotta push this MVP out!
-        
-        // Make sure friend docs do not already exist, indicating they are already friends
-        firestoreHelper.checkFriendStatus(
-            with: friend,
-            completionIfFalse: { [weak self] in
-                self?.addFriend()
-            },
-            completionIfTrue: nil)
+        // Check if other user is already friend of current user.
+        if firestoreHelper.friends.contains(where: { $0.uid == self.friend.uid }) {
+            isAlreadyFriends = true
+        } else {
+            isAlreadyFriends = false
+        }
     }
     
     func addFriend() {
-        // If verified to be a valid friend add, create friend documents and update client-side friend data
-        firestoreHelper.addFriend(friend) { [weak self] in
-            self?.checkFriendStatus()
-            self?.updateFriendData()
+        // TODO: eventually we want to implement friend requests instead of just doing a unilateral mutual add right away. But for now... gotta push this MVP out!
+        // Check if this is a valid friend add (i.e., not already friends)
+        if !isAlreadyFriends {
+            //create friend documents and update client-side friend detail data
+            firestoreHelper.addFriend(friend) { [weak self] in
+                self?.checkFriendStatus()
+                self?.updateFriendData()
+            }
         }
     }
 }
