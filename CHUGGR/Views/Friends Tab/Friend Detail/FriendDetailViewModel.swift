@@ -15,13 +15,14 @@ class FriendDetailViewModel {
             updateVCLabels?()
         }
     }
-    
     private(set) var isAlreadyFriends = false {
         didSet {
             // Disable/enable add friend button based on friend status
             setVCForFriendStatus?()
         }
     }
+    // Flag to prevent fast 2x button press triggering add method twice
+    private var isFirstAddPress = false
     
     var updateVCLabels: (() -> ())?
     var setVCForFriendStatus: (() -> ())?
@@ -60,13 +61,15 @@ class FriendDetailViewModel {
     
     func addFriend() {
         // TODO: eventually we want to implement friend requests instead of just doing a unilateral mutual add right away. But for now... gotta push this MVP out!
+        
         // Check if this is a valid friend add (i.e., not already friends)
-        if !isAlreadyFriends {
+        if !isAlreadyFriends, !isFirstAddPress {
             //create friend documents and update client-side friend detail data
             firestoreHelper.addFriend(friend) { [weak self] in
                 self?.checkFriendStatus()
                 self?.updateFriendData()
             }
         }
+        isFirstAddPress = true
     }
 }
