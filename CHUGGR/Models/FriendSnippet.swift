@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FriendSnippet: Codable {
+struct FriendSnippet: Friend, Codable {
     // For user friend list subcollections
     let uid: UID
     let firstName: String
@@ -15,7 +15,7 @@ struct FriendSnippet: Codable {
     let userName: String
     let profilePic: String
     
-    init(fromFriend friend: Friend) {
+    init(fromFriend friend: FullFriend) {
         self.uid = friend.uid
         self.firstName = friend.firstName
         self.lastName = friend.lastName

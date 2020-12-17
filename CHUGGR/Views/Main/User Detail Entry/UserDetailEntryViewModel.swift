@@ -29,7 +29,7 @@ class UserDetailEntryViewModel {
     var reloadTableViewClosure: (() -> ())?
     var updateButtonStatus: (() -> ())?
     var ifUserNameTaken: (() -> ())?
-    var onUserLoad: (() -> ())?
+    var onUserLoad: (() -> ())? // notes from ian call: pass result type or bool as closure parameter
     
     init(firestoreHelper: FirestoreHelper) {
         self.firestoreHelper = firestoreHelper

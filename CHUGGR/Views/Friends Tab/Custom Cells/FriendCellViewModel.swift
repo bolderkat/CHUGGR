@@ -9,16 +9,27 @@ import Foundation
 
 struct FriendCellViewModel {
     let friend: Friend
-    var uid: UID { friend.uid }
-    var firstName: String { friend.firstName }
-    var lastName: String { friend.lastName }
-    var fullName: String { "\(firstName) \(lastName)" }
-    var userName: String { friend.userName }
+    var uid: UID
+    var firstName: String
+    var lastName: String
+    var fullName: String
+    var userName: String
     var searchName: String {
         // All names combined to facilitate faster, case-insensitive search
         (firstName + lastName + userName).lowercased()
     }
-    let profilePic: String = "" // TODO: populate with actual url later
+    let profilePic: String
+    
+    init(friend: Friend) {
+        self.friend = friend
+        self.uid = friend.uid
+        self.firstName = friend.firstName
+        self.lastName = friend.lastName
+        self.fullName = "\(firstName) \(lastName)"
+        self.userName = friend.userName
+        self.profilePic = friend.profilePic
+    }
+    
 }
 
 

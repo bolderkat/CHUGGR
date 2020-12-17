@@ -64,6 +64,8 @@ class UserDetailEntryViewController: UIViewController {
         
         viewModel.onUserLoad = { [weak self] in
             DispatchQueue.main.async {
+                // notes from Ian call: switch on result to decide if see should go to dashboard or display username error
+                // Allows us to consolidate ifUserNameTaken into this one closure
                 self?.proceedToDashboard()
             }
         }

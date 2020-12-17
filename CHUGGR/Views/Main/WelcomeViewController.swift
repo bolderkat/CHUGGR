@@ -48,7 +48,7 @@ class WelcomeViewController: UIViewController {
         }
     }
     
-    func continueIfLoggedIn() {
+    private func continueIfLoggedIn() {
         // Check auth status.
         if let uid = Auth.auth().currentUser?.uid {
             viewModel.getCurrentUserDetails(with: uid)

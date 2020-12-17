@@ -9,7 +9,7 @@ import Foundation
 
 class FriendDetailViewModel {
     private let firestoreHelper: FirestoreHelper
-    let friend: Friend
+    let friend: FullFriend
     private(set) var isAlreadyFriends = false {
         didSet {
             setVCForFriendStatus?()
@@ -19,7 +19,7 @@ class FriendDetailViewModel {
     var setVCForFriendStatus: (() -> ())?
 
     
-    init(firestoreHelper: FirestoreHelper, friend: Friend) {
+    init(firestoreHelper: FirestoreHelper, friend: FullFriend) {
         self.firestoreHelper = firestoreHelper
         self.friend = friend
     }

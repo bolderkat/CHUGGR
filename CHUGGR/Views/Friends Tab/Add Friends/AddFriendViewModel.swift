@@ -9,7 +9,7 @@ import Foundation
 
 class AddFriendViewModel {
     private let firestoreHelper: FirestoreHelper
-    private(set) var potentialFriends: [Friend] = []
+    private(set) var potentialFriends: [FullFriend] = []
     private var friendCellVMs: [FriendCellViewModel] = []
     private var searchResults: [FriendCellViewModel] = []
     private(set) var isLoading = false {
@@ -48,8 +48,11 @@ class AddFriendViewModel {
         return searchResults
     }
     
-    func getSelectedFriend(at indexPath: IndexPath) -> Friend {
-        searchResults[indexPath.row].friend
+    func getSelectedFriend(at indexPath: IndexPath) -> FullFriend {
+        guard let friend = searchResults[indexPath.row].friend as? FullFriend else {
+            fatalError("Found FriendSnippet instead of FullFriend when retrieving friend from AddFriendViewModel search results")
+        }
+        return friend
     }
     
 }

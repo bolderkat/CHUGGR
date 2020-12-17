@@ -61,7 +61,7 @@ class FriendsCoordinator: ChildCoordinating {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    func showFriendDetail(for friend: Friend) {
+    func showFriendDetail(for friend: FullFriend) {
         let vm = FriendDetailViewModel(firestoreHelper: firestoreHelper, friend: friend)
         let vc = FriendDetailViewController(viewModel: vm)
         vc.coordinator = self

@@ -14,6 +14,7 @@ class FirestoreHelper {
     private(set) var currentUser: CurrentUser?
     private var userListeners: [ListenerRegistration] = []
     private var betDashboardListeners: [ListenerRegistration] = []
+    private var friendsListener: ListenerRegistration?
     private var allUserListener: ListenerRegistration?
     
     // Storing bet queries and last bet of each query for paginated population of infinitely scrolling table view
@@ -64,13 +65,13 @@ class FirestoreHelper {
                     self?.writeNewUser(user, completion: completion)
                 } else {
                     // Existing user found with specified username
-                    // TODO: Verify if this is where to call main thread??
-                        ifUserNameTaken()
+                    ifUserNameTaken()
                 }
             }
         }
     }
     
+    // Notes from Ian call: pass result type or bool in as completion block from createUser
     func writeNewUser(_ user: CurrentUser, completion: (() ->())?) {
         let ref = db.collection(K.Firestore.users).document(user.uid)
         do {
@@ -86,6 +87,7 @@ class FirestoreHelper {
         }
     }
     
+    // Notes from Ian call: can consolidate all these closures with custom Error enum
     func readUserOnLogin(
         with uid: String,
         completion: (() -> ())?,
@@ -380,22 +382,60 @@ class FirestoreHelper {
     }
     
     // MARK:- Friend CRUD
-    func addAllUserListener(completion: @escaping (_ friends: [Friend]) -> ()) {
+    func addFriendsListener(completion: @escaping (_ friends: [FriendSnippet]) -> ()) {
+        // Check that there isn't already a friends listener
         guard let uid = currentUser?.uid,
-              allUserListener == nil else { return } // Check that there isn't already a listener for all users
+              friendsListener == nil else { return }
+        
+        // Query for all documents in user's friend subcollection
+        friendsListener = db.collection(K.Firestore.users)
+            .document(uid)
+            .collection(K.Firestore.friends)
+            .addSnapshotListener { (querySnapshot, error) in
+                var snippets = [FriendSnippet]()
+                if let error = error {
+                    // TODO: better error handling
+                    print("Error fetching friends from current user's friend subcollection: \(error)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let result = Result {
+                            try document.data(as: FriendSnippet.self)
+                        }
+                        switch result {
+                        case .success(let snippet):
+                            if let snippet = snippet {
+                                // Successfully decoded a snippet. Append to array.
+                                snippets.append(snippet)
+                            } else {
+                                print("Document from friend listener does not exist")
+                            }
+                        case .failure(let error):
+                            print("Error decoding snippet \(document.documentID) for friends list: \(error)")
+                        }
+                    }
+                    completion(snippets)
+                }
+            }
+    }
+    
+    func addAllUserListener(completion: @escaping (_ friends: [FullFriend]) -> ()) {
+        // Listen to all users to provide up to date pool for user to search from.
+        // Check that there isn't already a listener for all users
+        guard let uid = currentUser?.uid,
+              allUserListener == nil else { return }
         
         // Query to exclude current user.
         allUserListener = db.collection(K.Firestore.users)
             .whereField(K.Firestore.uid, notIn: [uid])
             .addSnapshotListener { (querySnapshot, error) in
-                var potentialFriends = [Friend]()
+                var potentialFriends = [FullFriend]()
                 if let error = error {
                     print("Error fetching user documents for friend search: \(error)")
                     // TODO: Better error handling
                 } else {
                     for document in querySnapshot!.documents {
                         let result = Result {
-                            try document.data(as: Friend.self)
+                            try document.data(as: FullFriend.self)
                         }
                         switch result {
                         case .success(let user):
@@ -403,7 +443,7 @@ class FirestoreHelper {
                                 // If successful, add to array of users for search
                                 potentialFriends.append(user)
                             } else {
-                                print("Document does not exist")
+                                print("Document from user listener does not exist")
                             }
                         case .failure(let error):
                             print("Error decoding user \(document.documentID) for friend search: \(error)")
@@ -415,7 +455,7 @@ class FirestoreHelper {
     }
     
     func checkFriendStatus(
-        with friend: Friend,
+        with friend: FullFriend,
         completionIfFalse: (() -> ())?,
         completionIfTrue: (() -> ())?
     ) {
@@ -436,11 +476,11 @@ class FirestoreHelper {
         }
     }
     
-    func addFriend(_ friend: Friend, completion: (() -> ())?) {
+    func addFriend(_ friend: FullFriend, completion: (() -> ())?) {
         guard let user = currentUser else { return }
         let currentUserSnippet = FriendSnippet(fromCurrentUser: user)
         let friendSnippet = FriendSnippet(fromFriend: friend)
-
+        
         // Add friend to current user's friend list
         do {
             try db.collection(K.Firestore.users)
@@ -469,7 +509,35 @@ class FirestoreHelper {
         completion?()
     }
     
-        
+    func getFriend(withUID uid: UID, completion: @escaping (_ friend: FullFriend) -> ()) {
+        db.collection(K.Firestore.users)
+            .document(uid)
+            .getDocument { (document, error) in
+                if let error = error {
+                    print("Error retrieving friend \(uid): \(error)")
+                } else {
+                    let result = Result {
+                        try document?.data(as: FullFriend.self)
+                    }
+                    switch result {
+                    case .success(let friend):
+                        if let friend = friend {
+                            // Successfully initialized a Friend value from QuerySnapshot
+                            completion(friend)
+                        } else {
+                            // A nil value was successfully initialized from the QuerySnapshot,
+                            // or the DocumentSnapshot was nil.
+                            print("Document does not exist")
+                        }
+                    case .failure(let error):
+                        // A Friend value could not be initialized from the QuerySnapshot.
+                        print("Error decoding friend with uid \(uid): \(error)")
+                    }
+                }
+            }
+    }
+    
+    
     // MARK:- Clean-up
     func logOut() {
         let firebaseAuth = Auth.auth()
@@ -489,8 +557,10 @@ class FirestoreHelper {
         userListeners = []
         betDashboardListeners.forEach { $0.remove() }
         betDashboardListeners = []
+        friendsListener = nil
         allUserListener = nil
     }
     
 }
+
 
