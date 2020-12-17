@@ -44,6 +44,7 @@ struct K {
         static let dateOpened = "dateOpened"
         static let friends = "friends"
         static let invitedUsers = "invitedUsers"
+        static let numFriends = "numFriends"
         static let userName = "userName"
         static let uid = "uid"
         static let users = "users"

@@ -496,8 +496,8 @@
 			isa = PBXGroup;
 			children = (
 				65FCE6DE2569BB930066BDC5 /* User.swift */,
-				65FD45192581D94100481F50 /* CurrentUser.swift */,
 				65D6ECAD258B354A00E0A720 /* Friend.swift */,
+				65FD45192581D94100481F50 /* CurrentUser.swift */,
 				65FD45212581EDE900481F50 /* FullFriend.swift */,
 				6511DCAC258AE6350009A9F6 /* FriendSnippet.swift */,
 				65F4029A252EA103007892F8 /* Bet.swift */,

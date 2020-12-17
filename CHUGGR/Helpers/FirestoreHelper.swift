@@ -480,27 +480,35 @@ class FirestoreHelper {
         guard let user = currentUser else { return }
         let currentUserSnippet = FriendSnippet(fromCurrentUser: user)
         let friendSnippet = FriendSnippet(fromFriend: friend)
-        
-        // Add friend to current user's friend list
+            
+        let userRef = db.collection(K.Firestore.users).document(user.uid)
         do {
-            try db.collection(K.Firestore.users)
-                .document(user.uid)
-                .collection(K.Firestore.friends)
+            // Add friend to current user's friend list
+            try userRef.collection(K.Firestore.friends)
                 .document(friend.uid)
                 .setData(from: friendSnippet)
+            
+            // Increment friend counter
+            userRef.updateData([
+                K.Firestore.numFriends: FieldValue.increment(Int64(1))
+            ])
         } catch let error {
             // TODO: better error handling
             print("Error writing friend \(friend.uid) \n to user \(user.uid): \n \(error)")
             return
         }
         
-        // Add current user to friend's friend list
+        let friendRef = db.collection(K.Firestore.users).document(friend.uid)
         do {
-            try db.collection(K.Firestore.users)
-                .document(friend.uid)
-                .collection(K.Firestore.friends)
+            // Add current user to friend's friend list
+            try friendRef.collection(K.Firestore.friends)
                 .document(user.uid)
                 .setData(from: currentUserSnippet)
+            
+            // Increment friend counter
+            friendRef.updateData([
+                K.Firestore.numFriends: FieldValue.increment(Int64(1))
+                ])
         } catch let error {
             // TODO: better error handling
             print("Error writing friend \(user.uid) \n to user \(friend.uid): \n \(error)")

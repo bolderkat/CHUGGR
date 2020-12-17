@@ -49,6 +49,15 @@ class FriendDetailViewController: UIViewController {
 //    }
     
     func configureViewController() {
+        updateLabels()
+        
+        // Disable add friend button until status is verified
+        addFriendButton.isEnabled = false
+        addFriendButton.backgroundColor = UIColor(named: K.colors.gray5)
+        addFriendButton.setTitle("Loading...", for: .disabled)
+    }
+    
+    func updateLabels() {
         // TODO: add user profile pic
         profPicView.image = UIImage(named: K.Images.profPicPlaceholder)
         drinksGivenLabel.text = viewModel.getDrinksString(forStat: .given)
@@ -58,14 +67,16 @@ class FriendDetailViewController: UIViewController {
         userNameLabel.text = viewModel.friend.userName
         realNameLabel.text = "\(viewModel.friend.firstName) \(viewModel.friend.lastName)"
         bioLabel.text = viewModel.friend.bio
-        
-        // Disable add friend button until status is verified
-        addFriendButton.isEnabled = false
-        addFriendButton.backgroundColor = UIColor(named: K.colors.gray5)
-        addFriendButton.setTitle("Loading...", for: .disabled)
+
     }
     
     func initViewModel() {
+        viewModel.updateVCLabels = { [weak self] in
+            DispatchQueue.main.async {
+                self?.updateLabels()
+            }
+        }
+        
         viewModel.setVCForFriendStatus = { [weak self] in
             DispatchQueue.main.async {
                 self?.configureForFriendStatus()
