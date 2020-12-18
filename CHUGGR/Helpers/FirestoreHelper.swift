@@ -531,7 +531,7 @@ class FirestoreHelper {
             }
     }
     
-    func removeFriend(withUID friendUID: UID, completion: @escaping(_ friend: FullFriend) -> ()) {
+    func removeFriend(withUID friendUID: UID, completion: @escaping () -> ()) {
         // It's not you, it's me...
         guard let user = currentUser else { return }
         
@@ -540,11 +540,13 @@ class FirestoreHelper {
         userRef.collection(K.Firestore.friends).document(friendUID).delete { error in
             if let error = error {
                 print("Error deleting \(friendUID) from \(user.uid)'s friend list: \(error)")
+            } else {
+                userRef.updateData([
+                    K.Firestore.numFriends: FieldValue.increment(Int64(-1))
+                ])
+                completion()
             }
         }
-        userRef.updateData([
-            K.Firestore.numFriends: FieldValue.increment(Int64(-1))
-        ])
         
         // Currently only allowing one-way follow relationships
         

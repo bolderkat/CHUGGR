@@ -27,17 +27,20 @@
                     </constraints>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="e9Z-kJ-9ct">
-                    <rect key="frame" x="0.0" y="104" width="414" height="792"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="e9Z-kJ-9ct">
+                    <rect key="frame" x="0.0" y="104" width="414" height="758"/>
                 </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="e9Z-kJ-9ct" firstAttribute="top" secondItem="hju-OX-vav" secondAttribute="bottom" id="706-Vz-uZW"/>
+                <constraint firstItem="e9Z-kJ-9ct" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="MP9-go-iIg"/>
                 <constraint firstItem="hju-OX-vav" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="SAF-7Z-0hb"/>
                 <constraint firstItem="hju-OX-vav" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Yna-GJ-BNZ"/>
+                <constraint firstItem="e9Z-kJ-9ct" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="lxa-mj-Mxu"/>
                 <constraint firstItem="hju-OX-vav" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="pIB-N7-95A"/>
+                <constraint firstItem="e9Z-kJ-9ct" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="u0n-aM-YYo"/>
             </constraints>
             <point key="canvasLocation" x="-207.24637681159422" y="117.85714285714285"/>
         </view>

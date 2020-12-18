@@ -111,6 +111,7 @@ class FriendDetailViewController: UIViewController {
     }
     
     @objc func showFriendOptions() {
+        guard viewModel.isRemoveButtonActive else { return }
         let alert = UIAlertController(
             title: "Unfollow user?",
             message: nil,
