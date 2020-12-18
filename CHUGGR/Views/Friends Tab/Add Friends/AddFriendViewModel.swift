@@ -17,6 +17,7 @@ class AddFriendViewModel {
     }
     
     var updateLoadingStatus: (() -> ())?
+    var onFriendFetch: ((FullFriend) -> ())?
     
     init(firestoreHelper: FirestoreHelper) {
         self.firestoreHelper = firestoreHelper
@@ -53,6 +54,12 @@ class AddFriendViewModel {
             fatalError("Found FriendSnippet instead of FullFriend when retrieving friend from AddFriendViewModel search results")
         }
         return friend
+    }
+    
+    func getFreshData(for friend: FullFriend) {
+        firestoreHelper.getFriend(withUID: friend.uid) { [weak self] friend in
+            self?.onFriendFetch?(friend)
+        }
     }
     
 }

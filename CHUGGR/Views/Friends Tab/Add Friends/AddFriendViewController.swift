@@ -52,6 +52,9 @@ class AddFriendViewController: UIViewController {
                 self?.showLoadingStatus()
             }
         }
+        viewModel.onFriendFetch = { [weak self] friend in
+            self?.onFriendFetch(friend)
+        }
     }
     
     func showLoadingStatus() {
@@ -65,6 +68,12 @@ class AddFriendViewController: UIViewController {
             tableView.alpha = 1.0
         }
     }
+    
+    func onFriendFetch(_ friend: FullFriend) {
+        // Passed to getFriend completion handler to provide fresh data when pushing friend detail
+        coordinator?.showFriendDetail(for: friend)
+    }
+    
 }
 
 // MARK:- SearchBar delegate
@@ -116,7 +125,7 @@ extension AddFriendViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let friend = viewModel.provideSelectedFriend(at: indexPath)
-        coordinator?.showFriendDetail(for: friend)
+        viewModel.getFreshData(for: friend)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
