@@ -99,7 +99,15 @@ class BetsViewModel {
     }
     
     func getCellVM(at indexPath: IndexPath) -> BetCellViewModel {
-        return combinedVMs[indexPath.section][indexPath.row]
+        // Index path will vary based on table view config state
+        // Which in turn is based on presence of user involved/uninvolved bets
+        if userInvolvedBets.isEmpty {
+            return otherBetCellVMs[indexPath.row]
+        } else if otherBets.isEmpty {
+            return userInvolvedBetCellVMs[indexPath.row]
+        } else {
+            return combinedVMs[indexPath.section][indexPath.row]
+        }
     }
     
     func getPendingBetsLabel() -> String {

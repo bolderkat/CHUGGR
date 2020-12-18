@@ -71,10 +71,20 @@ class BetsViewController: UIViewController {
         
         // Load up snapshot with relevant data
         var snapshot = NSDiffableDataSourceSnapshot<Section, BetCellViewModel>()
-        snapshot.appendSections([.myBets, .otherBets])
-        snapshot.appendItems(involvedBets, toSection: .myBets)
-        snapshot.appendItems(otherBets, toSection: .otherBets)
- 
+        if involvedBets.isEmpty && otherBets.isEmpty {
+            return
+        }
+        if involvedBets.isEmpty {
+            snapshot.appendSections([.otherBets])
+            snapshot.appendItems(otherBets, toSection: .otherBets)
+        } else if otherBets.isEmpty {
+            snapshot.appendSections([.myBets])
+            snapshot.appendItems(involvedBets, toSection: .myBets)
+        } else {
+            snapshot.appendSections([.myBets, .otherBets])
+            snapshot.appendItems(involvedBets, toSection: .myBets)
+            snapshot.appendItems(otherBets, toSection: .otherBets)
+        }
         
         dataSource.apply(snapshot, animatingDifferences: animated) // apply to tableView data source
     }
