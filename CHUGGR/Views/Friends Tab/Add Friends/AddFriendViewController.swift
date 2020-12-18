@@ -46,8 +46,7 @@ class AddFriendViewController: UIViewController {
     }
     
     func initViewModel() {
-        viewModel.initFetchAllUsers()
-        
+        viewModel.initSetUpAllUserListener()
         viewModel.updateLoadingStatus = { [weak self] in
             DispatchQueue.main.async {
                 self?.showLoadingStatus()
@@ -116,7 +115,7 @@ extension AddFriendViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let friend = viewModel.getSelectedFriend(at: indexPath)
+        let friend = viewModel.provideSelectedFriend(at: indexPath)
         coordinator?.showFriendDetail(for: friend)
         tableView.deselectRow(at: indexPath, animated: true)
     }

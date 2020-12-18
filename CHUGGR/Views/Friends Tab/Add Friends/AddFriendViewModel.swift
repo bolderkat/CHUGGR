@@ -9,8 +9,6 @@ import Foundation
 
 class AddFriendViewModel {
     private let firestoreHelper: FirestoreHelper
-    private(set) var potentialFriends: [FullFriend] = []
-    private var friendCellVMs: [FriendCellViewModel] = []
     private var searchResults: [FriendCellViewModel] = []
     private(set) var isLoading = false {
         didSet {
@@ -24,31 +22,33 @@ class AddFriendViewModel {
         self.firestoreHelper = firestoreHelper
     }
     
-    func initFetchAllUsers() {
+    func initSetUpAllUserListener() {
         isLoading = true
-        firestoreHelper.addAllUserListener { [weak self] users in
-            self?.potentialFriends = users.sorted { $0.firstName < $1.firstName }
-            self?.createCellVMs()
+        firestoreHelper.addAllUserListener { [weak self] in
             self?.isLoading = false
         }
     }
     
-    func createCellVMs() {
+    func createCellVMs(from users: [FullFriend]) -> [FriendCellViewModel] {
         var vms = [FriendCellViewModel]()
-        for user in potentialFriends {
+        for user in users {
             let vm = FriendCellViewModel(friend: user)
             vms.append(vm)
         }
-        friendCellVMs = vms
+        return vms
     }
     
     func provideCellVMs(forString searchString: String) -> [FriendCellViewModel] {
         let string = searchString.lowercased() // case-insensitive search
-        searchResults = friendCellVMs.filter { $0.searchName.contains(string) }
-        return searchResults
+        let userSearchResults = firestoreHelper.allUsers.filter {
+            $0.firstName.contains(string) || $0.lastName.contains(string) || $0.userName.contains(string)
+        }
+        let vms = createCellVMs(from: userSearchResults)
+        searchResults = vms
+        return vms
     }
     
-    func getSelectedFriend(at indexPath: IndexPath) -> FullFriend {
+    func provideSelectedFriend(at indexPath: IndexPath) -> FullFriend {
         guard let friend = searchResults[indexPath.row].friend as? FullFriend else {
             fatalError("Found FriendSnippet instead of FullFriend when retrieving friend from AddFriendViewModel search results")
         }

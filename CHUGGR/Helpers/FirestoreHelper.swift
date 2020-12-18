@@ -422,7 +422,7 @@ class FirestoreHelper {
             }
     }
     
-    func addAllUserListener(completion: @escaping (_ friends: [FullFriend]) -> ()) {
+    func addAllUserListener(completion: @escaping () -> ()) {
         // Listen to all users to provide up to date pool for user to search from.
         // Check that there isn't already a listener for all users
         guard let uid = currentUser?.uid,
@@ -455,7 +455,7 @@ class FirestoreHelper {
                     }
                     let sortedUsers = users.sorted { $0.firstName < $1.firstName }
                     self?.allUsers = sortedUsers
-                    completion(sortedUsers)
+                    completion()
                 }
             }
     }
