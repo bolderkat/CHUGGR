@@ -39,6 +39,21 @@ class FriendsViewModel {
         cellVMs = vms
     }
     
+    func provideCellVMs(forString searchString: String) -> [FriendCellViewModel] {
+        // Show entire friend list when user clears search bar
+        if searchString == "" {
+            return cellVMs
+        }
+        
+        let string = searchString.lowercased() // case-insensitive search
+        
+        // Filter based on search string
+        return cellVMs.filter {
+            $0.firstName.lowercased().contains(string) || $0.lastName.lowercased().contains(string) ||
+                $0.userName.lowercased().contains(string)
+        }
+    }
+    
     func getFriendUID(at indexPath: IndexPath) -> String {
         return friendSnippets[indexPath.row].uid
     }

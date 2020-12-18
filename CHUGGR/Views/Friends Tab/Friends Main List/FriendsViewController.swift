@@ -38,8 +38,9 @@ class FriendsViewController: UIViewController {
     }
     
     func setUpViewController() {
-        title = "Friends"
+        title = "Following"
         
+        searchBar.delegate = self
         let addFriendButtonItem = UIBarButtonItem(
             barButtonSystemItem: .add,
             target: self,
@@ -117,5 +118,15 @@ extension FriendsViewController: UITableViewDelegate {
         let uid = viewModel.getFriendUID(at: indexPath)
         viewModel.getFriend(withUID: uid)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+// MARK:- SearchBar Delegate
+extension FriendsViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, FriendCellViewModel>()
+        snapshot.appendSections(Section.allCases)
+        snapshot.appendItems(viewModel.provideCellVMs(forString: searchText))
+        dataSource.apply(snapshot)
     }
 }
