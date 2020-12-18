@@ -14,10 +14,6 @@ struct FriendCellViewModel {
     var lastName: String
     var fullName: String
     var userName: String
-    var searchName: String {
-        // All names combined to facilitate faster, case-insensitive search
-        (firstName + lastName + userName).lowercased()
-    }
     let profilePic: String
     
     init(friend: Friend) {
