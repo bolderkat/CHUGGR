@@ -16,8 +16,8 @@ class FirestoreHelper {
     private(set) var allUsers: [FullFriend] = []
     private var userListeners: [ListenerRegistration] = []
     private var betDashboardListeners: [ListenerRegistration] = []
-    private var friendsListener: ListenerRegistration?
-    private var allUserListener: ListenerRegistration?
+    private(set) var friendsListener: ListenerRegistration?
+    private(set) var allUserListener: ListenerRegistration?
     
     // Storing bet queries and last bet of each query for paginated population of infinitely scrolling table view
     private var otherBetQuery: Query?
@@ -572,8 +572,14 @@ class FirestoreHelper {
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
+        cleanUp()
         unsubscribeAllSnapshotListeners()
+    }
+    
+    func cleanUp() {
         currentUser = nil
+        friends = []
+        allUsers = []
     }
     
     func unsubscribeAllSnapshotListeners() {

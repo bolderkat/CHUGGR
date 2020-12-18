@@ -34,7 +34,12 @@ class FriendsViewController: UIViewController {
         initViewModel()
         configureDataSource()
         configureTableView()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Update friends from stored array when view appears
+        viewModel.fetchFriends()
     }
     
     func setUpViewController() {
@@ -50,7 +55,7 @@ class FriendsViewController: UIViewController {
     }
     
     func initViewModel() {
-        viewModel.setUpFriendsListener()
+        viewModel.fetchFriends()
         viewModel.updateTableViewClosure = { [weak self] in
             self?.updateTableView()
         }
@@ -67,8 +72,6 @@ class FriendsViewController: UIViewController {
         snapshot.appendSections(Section.allCases)
         snapshot.appendItems(viewModel.cellVMs)
         dataSource.apply(snapshot,animatingDifferences: false)
-        
-        
     }
     
     func onFriendLoad(_ friend: FullFriend) {

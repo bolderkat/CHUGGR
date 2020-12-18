@@ -14,6 +14,7 @@ struct K {
         static let betsPendingCell = "BetsPendingCell"
         static let dateCell = "DateEntryCell"
         static let friendCell = "FriendCell"
+        static let inviteCell = "InviteCell"
         static let messageCell = "MessageCell"
         static let stakeCell = "StakeEntryCell"
         static let userEntryCell = "UserDetailEntryCell"

@@ -25,10 +25,17 @@ class FriendsViewModel {
         self.firestoreHelper = firestoreHelper
     }
     
-    func setUpFriendsListener() {
-        firestoreHelper.addFriendsListener { [weak self] (snippets) in
-            self?.friendSnippets = snippets
-            self?.createCellVMs()
+    func fetchFriends() {
+        // Set up listener if there is not yet one
+        if firestoreHelper.friendsListener == nil {
+            firestoreHelper.addFriendsListener { [weak self] (snippets) in
+                self?.friendSnippets = snippets
+                self?.createCellVMs()
+            }
+        } else {
+            // Otherwise we can just read from the array which is already being updated in real-time
+            friendSnippets = firestoreHelper.friends
+            createCellVMs()
         }
     }
     

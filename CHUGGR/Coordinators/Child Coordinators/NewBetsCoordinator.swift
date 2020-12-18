@@ -30,7 +30,11 @@ class NewBetsCoordinator: ChildCoordinating {
     }
     
     func start() {
-        let vc = NewBetViewController(viewModel: NewBetViewModel(firestoreHelper: firestoreHelper))
+        let vc = FriendInviteViewController(
+            viewModel: FriendInviteViewModel(
+                firestoreHelper: firestoreHelper
+            )
+        )
         vc.coordinator = self
         vc.tabBarItem = UITabBarItem(
             title: "New Bet",
