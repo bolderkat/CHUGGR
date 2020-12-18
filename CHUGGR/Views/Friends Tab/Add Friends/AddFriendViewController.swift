@@ -40,7 +40,7 @@ class AddFriendViewController: UIViewController {
     }
     
     func setUpViewController() {
-        title = "Add Friend"
+        title = "Follow New User"
         searchBar.delegate = self
         activityIndicator.isHidden = true
     }

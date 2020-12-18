@@ -33,7 +33,7 @@ class FriendsCoordinator: ChildCoordinating {
         let vc = FriendsViewController(viewModel: FriendsViewModel(firestoreHelper: firestoreHelper))
         vc.coordinator = self
         vc.tabBarItem = UITabBarItem(
-            title: "Friends",
+            title: "Following",
             image: UIImage(systemName: "person.3.fill"),
             tag: 1
         )

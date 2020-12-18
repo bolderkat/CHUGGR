@@ -462,7 +462,7 @@ class FirestoreHelper {
     
     func addFriend(_ friend: FullFriend, completion: (() -> ())?) {
         guard let user = currentUser else { return }
-        let currentUserSnippet = FriendSnippet(fromCurrentUser: user)
+//        let currentUserSnippet = FriendSnippet(fromCurrentUser: user)
         let friendSnippet = FriendSnippet(fromFriend: friend)
             
         let userRef = db.collection(K.Firestore.users).document(user.uid)
@@ -482,22 +482,24 @@ class FirestoreHelper {
             return
         }
         
-        let friendRef = db.collection(K.Firestore.users).document(friend.uid)
-        do {
-            // Add current user to friend's friend list
-            try friendRef.collection(K.Firestore.friends)
-                .document(user.uid)
-                .setData(from: currentUserSnippet)
-            
-            // Increment friend counter
-            friendRef.updateData([
-                K.Firestore.numFriends: FieldValue.increment(Int64(1))
-                ])
-        } catch let error {
-            // TODO: better error handling
-            print("Error writing friend \(user.uid) \n to user \(friend.uid): \n \(error)")
-            return
-        }
+        // Creating one-way follow relationships instead of two-way friendships for now.
+        
+//        let friendRef = db.collection(K.Firestore.users).document(friend.uid)
+//        do {
+//            // Add current user to friend's friend list
+//            try friendRef.collection(K.Firestore.friends)
+//                .document(user.uid)
+//                .setData(from: currentUserSnippet)
+//
+//            // Increment friend counter
+//            friendRef.updateData([
+//                K.Firestore.numFriends: FieldValue.increment(Int64(1))
+//                ])
+//        } catch let error {
+//            // TODO: better error handling
+//            print("Error writing friend \(user.uid) \n to user \(friend.uid): \n \(error)")
+//            return
+//        }
         completion?()
     }
     
@@ -544,20 +546,22 @@ class FirestoreHelper {
             K.Firestore.numFriends: FieldValue.increment(Int64(-1))
         ])
         
-        // Delete current user from (ex-)friend's friend list. So sad.
-        let friendRef = db.collection(K.Firestore.users).document(friendUID)
-        friendRef.collection(K.Firestore.friends).document(user.uid).delete { [weak self] error in
-            if let error = error {
-                print("Error deleting \(user.uid) from \(friendUID)'s friend list: \(error)")
-            } else {
-                friendRef.updateData([
-                    K.Firestore.numFriends: FieldValue.increment(Int64(-1))
-                ])
-                // Pass back updated friend object
-                self?.getFriend(withUID: friendUID, completion: completion)
-            }
-            
-        }
+        // Currently only allowing one-way follow relationships
+        
+//        // Delete current user from (ex-)friend's friend list. So sad.
+//        let friendRef = db.collection(K.Firestore.users).document(friendUID)
+//        friendRef.collection(K.Firestore.friends).document(user.uid).delete { [weak self] error in
+//            if let error = error {
+//                print("Error deleting \(user.uid) from \(friendUID)'s friend list: \(error)")
+//            } else {
+//                friendRef.updateData([
+//                    K.Firestore.numFriends: FieldValue.increment(Int64(-1))
+//                ])
+//                // Pass back updated friend object
+//                self?.getFriend(withUID: friendUID, completion: completion)
+//            }
+//
+//        }
     }
     
     // MARK:- Clean-up

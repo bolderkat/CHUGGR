@@ -15,7 +15,7 @@ struct FullFriend: Friend, Codable {
     let bio: String
     let profilePic: String // TODO: implement actual profile pics
     private(set) var numBets: Int
-    private(set) var numFriends: Int
+    private(set) var numFriends: Int // aka number of people user is following
     private(set) var betsWon: Int
     private(set) var betsLost: Int
     private(set) var drinksGiven: Drinks

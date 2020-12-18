@@ -59,6 +59,7 @@ class FriendDetailViewController: UIViewController {
     
     func updateLabels() {
         // TODO: add user profile pic
+        title = viewModel.friend.userName
         profPicView.image = UIImage(named: K.Images.profPicPlaceholder)
         drinksGivenLabel.text = viewModel.getDrinksString(forStat: .given)
         drinksReceivedLabel.text = viewModel.getDrinksString(forStat: .received)
@@ -90,7 +91,7 @@ class FriendDetailViewController: UIViewController {
             // TODO: button goes to DMs when already friends
             addFriendButton.isEnabled = false
             addFriendButton.backgroundColor = UIColor(named: K.colors.gray5)
-            addFriendButton.setTitle("Friend added!", for: .disabled)
+            addFriendButton.setTitle("Already following", for: .disabled)
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 image: UIImage(systemName: "ellipsis.circle.fill"),
                 style: .plain,
@@ -99,7 +100,7 @@ class FriendDetailViewController: UIViewController {
             )
         } else {
             addFriendButton.isEnabled = true
-            addFriendButton.setTitle("Add Friend", for: .normal)
+            addFriendButton.setTitle("Follow", for: .normal)
             addFriendButton.backgroundColor = UIColor(named: K.colors.orange)
             navigationItem.rightBarButtonItem = nil
         }
@@ -111,7 +112,7 @@ class FriendDetailViewController: UIViewController {
     
     @objc func showFriendOptions() {
         let alert = UIAlertController(
-            title: "Delete Friend?",
+            title: "Unfollow user?",
             message: nil,
             preferredStyle: .alert
         )
@@ -124,7 +125,7 @@ class FriendDetailViewController: UIViewController {
         )
         alert.addAction(
             UIAlertAction(
-                title: "Delete",
+                title: "Unfollow",
                 style: .destructive
             ) { [weak self] _ in
                 self?.viewModel.removeFriend()
