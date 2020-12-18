@@ -42,7 +42,8 @@ class AddFriendViewModel {
     func provideCellVMs(forString searchString: String) -> [FriendCellViewModel] {
         let string = searchString.lowercased() // case-insensitive search
         let userSearchResults = firestoreHelper.allUsers.filter {
-            $0.firstName.contains(string) || $0.lastName.contains(string) || $0.userName.contains(string)
+            $0.firstName.lowercased().contains(string) || $0.lastName.lowercased().contains(string) ||
+                $0.userName.lowercased().contains(string)
         }
         let vms = createCellVMs(from: userSearchResults)
         searchResults = vms
