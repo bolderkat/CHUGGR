@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="XC9-T4-mAa">
+                <searchBar contentMode="redraw" placeholder="Find a friend" translatesAutoresizingMaskIntoConstraints="NO" id="XC9-T4-mAa">
                     <rect key="frame" x="0.0" y="44" width="414" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="hwd-Vg-dt5"/>
