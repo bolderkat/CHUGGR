@@ -29,6 +29,7 @@ class FriendInviteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dismissKeyboard() // set up keyboard dismissal on tap
         configureViewController()
         initViewModel()
         configureDataSource()
@@ -103,7 +104,18 @@ extension FriendInviteViewController: UITableViewDelegate {
     }
 }
 
+// MARK:- ScrollView Delegate
+extension FriendInviteViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
+}
+
 
 // MARK:- SearchBar Delegate
 extension FriendInviteViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
 }

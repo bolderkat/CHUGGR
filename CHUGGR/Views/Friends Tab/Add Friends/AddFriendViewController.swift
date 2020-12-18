@@ -20,6 +20,7 @@ class AddFriendViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dismissKeyboard() // set up keyboard dismissal on tap
         setUpViewController()
         initViewModel()
         configureDataSource()
@@ -86,6 +87,10 @@ extension AddFriendViewController: UISearchBarDelegate {
         snapshot.appendItems(viewModel.provideCellVMs(forString: searchText))
         dataSource.apply(snapshot, animatingDifferences: true)
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
 }
 
 
@@ -127,5 +132,12 @@ extension AddFriendViewController: UITableViewDelegate {
         let friend = viewModel.provideSelectedFriend(at: indexPath)
         viewModel.getFreshData(for: friend)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+// MARK:- ScrollView Delegate
+extension AddFriendViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
     }
 }
