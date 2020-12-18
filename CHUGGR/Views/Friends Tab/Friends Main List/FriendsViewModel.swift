@@ -15,6 +15,8 @@ class FriendsViewModel {
             updateTableViewClosure?()
         }
     }
+    private var searchResults: [FriendCellViewModel] = []
+    private var isSearchBarEmpty = true
     
     var updateTableViewClosure: (() -> ())?
     var onFriendLoad: ((_ friend: FullFriend) -> ())?
@@ -42,20 +44,24 @@ class FriendsViewModel {
     func provideCellVMs(forString searchString: String) -> [FriendCellViewModel] {
         // Show entire friend list when user clears search bar
         if searchString == "" {
+            isSearchBarEmpty = true
             return cellVMs
-        }
-        
-        let string = searchString.lowercased() // case-insensitive search
-        
-        // Filter based on search string
-        return cellVMs.filter {
-            $0.firstName.lowercased().contains(string) || $0.lastName.lowercased().contains(string) ||
-                $0.userName.lowercased().contains(string)
+        } else {
+            isSearchBarEmpty = false
+            let string = searchString.lowercased() // case-insensitive search
+            
+            // Filter based on search string
+            let results = cellVMs.filter {
+                $0.firstName.lowercased().contains(string) || $0.lastName.lowercased().contains(string) ||
+                    $0.userName.lowercased().contains(string)
+            }
+            searchResults = results
+            return results
         }
     }
     
     func getFriendUID(at indexPath: IndexPath) -> String {
-        return friendSnippets[indexPath.row].uid
+        return isSearchBarEmpty ? friendSnippets[indexPath.row].uid : searchResults[indexPath.row].uid
     }
     
     func getFriend(withUID uid: UID) {
