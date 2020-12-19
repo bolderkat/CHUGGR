@@ -31,3 +31,9 @@ struct FriendSnippet: Friend, Codable {
         self.profilePic = user.profilePic
     }
 }
+
+extension FriendSnippet: Equatable {
+    static func == (lhs: FriendSnippet, rhs: FriendSnippet) -> Bool {
+        lhs.uid == rhs.uid
+    }
+}

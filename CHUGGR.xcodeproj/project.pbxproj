@@ -99,6 +99,7 @@
 		65FCE6ED256B35530066BDC5 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */; };
 		65FD451A2581D94100481F50 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FD45192581D94100481F50 /* CurrentUser.swift */; };
 		65FD45222581EDE900481F50 /* FullFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FD45212581EDE900481F50 /* FullFriend.swift */; };
+		65FF28DC258D629100F0BB66 /* FriendInviteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FF28DB258D629100F0BB66 /* FriendInviteDataSource.swift */; };
 		C8D113C094F567575BDCF233 /* Pods_CHUGGR_CHUGGRUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C485606B2FBFA81584C54A66 /* Pods_CHUGGR_CHUGGRUITests.framework */; };
 		E95618B520BB3301EB30C468 /* Pods_CHUGGR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */; };
 /* End PBXBuildFile section */
@@ -220,6 +221,7 @@
 		65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		65FD45192581D94100481F50 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		65FD45212581EDE900481F50 /* FullFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullFriend.swift; sourceTree = "<group>"; };
+		65FF28DB258D629100F0BB66 /* FriendInviteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendInviteDataSource.swift; sourceTree = "<group>"; };
 		8FDFF6DA5BA3C750B95B493E /* Pods-CHUGGRTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHUGGRTests.debug.xcconfig"; path = "Target Support Files/Pods-CHUGGRTests/Pods-CHUGGRTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ADAA051009240AC810ABE037 /* Pods-CHUGGRTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHUGGRTests.release.xcconfig"; path = "Target Support Files/Pods-CHUGGRTests/Pods-CHUGGRTests.release.xcconfig"; sourceTree = "<group>"; };
 		B1F648C6629D8F16889A4446 /* Pods_CHUGGR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CHUGGR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -474,6 +476,7 @@
 				65B3D7A9258C6C6C008F274A /* FriendInviteViewController.swift */,
 				65B3D7B0258C6C9A008F274A /* FriendInviteViewModel.swift */,
 				65B3D7AA258C6C6C008F274A /* FriendInviteView.xib */,
+				65FF28DB258D629100F0BB66 /* FriendInviteDataSource.swift */,
 				65B3D7BB258C7655008F274A /* Custom Cells */,
 			);
 			path = "Friend Invite";
@@ -973,6 +976,7 @@
 				65E9482E2589A4E200A71365 /* AddFriendViewModel.swift in Sources */,
 				6537BC3D2583143700880C2B /* UserDetailEntryCell.swift in Sources */,
 				65FCE6E4256B33F00066BDC5 /* SampleBet.swift in Sources */,
+				65FF28DC258D629100F0BB66 /* FriendInviteDataSource.swift in Sources */,
 				65B3D7B1258C6C9A008F274A /* FriendInviteViewModel.swift in Sources */,
 				65B3D7C4258C7677008F274A /* InviteCellViewModel.swift in Sources */,
 			);

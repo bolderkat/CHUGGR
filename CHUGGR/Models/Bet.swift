@@ -71,8 +71,10 @@ struct Bet: Codable {
         guard !isFinished else { return } // only allow action if bet still open
         switch action {
         case .invite:
-            invitedUsers[uid] = name
-            allUsers.insert(uid)
+            if !allUsers.contains(uid) {
+                invitedUsers[uid] = name
+                allUsers.insert(uid)
+            }
         case .uninvite:
             invitedUsers[uid] = nil
             allUsers.remove(uid)

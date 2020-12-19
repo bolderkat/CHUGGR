@@ -10,7 +10,7 @@ import UIKit
 class FriendInviteViewController: UIViewController {
     weak var coordinator: ChildCoordinating?
     private let viewModel: FriendInviteViewModel
-    private var dataSource: UITableViewDiffableDataSource<Section, InviteCellViewModel>!
+    private var dataSource: FriendInviteDataSource!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
@@ -57,7 +57,7 @@ class FriendInviteViewController: UIViewController {
     
     func updateTableView() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, InviteCellViewModel>()
-        snapshot.appendSections(Section.allCases)
+        snapshot.appendSections([.friends]) // TODO: Add recents once implemented
         snapshot.appendItems(viewModel.cellVMs, toSection: .friends)
         dataSource.apply(snapshot,animatingDifferences: false)
     }
@@ -65,12 +65,21 @@ class FriendInviteViewController: UIViewController {
 
 // MARK:- TableView Data Source
 extension FriendInviteViewController {
-    enum Section: CaseIterable {
+    enum Section: Int {
         case recents
         case friends
+        
+        var header: String {
+            switch self {
+            case .recents:
+                return "Recents"
+            case .friends:
+                return "Friends"
+            }
+        }
     }
     func configureDataSource() {
-        dataSource = UITableViewDiffableDataSource<Section, InviteCellViewModel>(tableView: tableView)
+        dataSource = FriendInviteDataSource(tableView: tableView)
         { (tableView, indexPath, rowVM) -> UITableViewCell? in
             guard let cell = tableView.dequeueReusableCell(
                     withIdentifier: K.cells.inviteCell,
@@ -100,6 +109,7 @@ extension FriendInviteViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.selectUser(at: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
