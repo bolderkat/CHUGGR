@@ -8,7 +8,7 @@
 import UIKit
 
 class FriendInviteViewController: UIViewController {
-    weak var coordinator: ChildCoordinating?
+    weak var coordinator: NewBetsCoordinator?
     private let viewModel: FriendInviteViewModel
     private var dataSource: FriendInviteDataSource!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -121,6 +121,11 @@ class FriendInviteViewController: UIViewController {
         }
         recipientLabel.text = viewModel.getRecipientNames()
     }
+    
+    @IBAction func sendButtonPressed(_ sender: UIButton) {
+        coordinator?.goToBetEntry(inviting: viewModel.selectedFriends)
+    }
+    
 }
 
 // MARK:- TableView Data Source

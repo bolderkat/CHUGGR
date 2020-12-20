@@ -69,6 +69,9 @@
                             <state key="normal">
                                 <imageReference key="image" image="arrowtriangle.right.fill" catalog="system" symbolScale="large"/>
                             </state>
+                            <connections>
+                                <action selector="sendButtonPressed:" destination="-1" eventType="touchUpInside" id="kUP-vq-ufR"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" name="CHUGGR Orange"/>

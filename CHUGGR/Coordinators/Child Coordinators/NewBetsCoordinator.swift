@@ -48,6 +48,14 @@ class NewBetsCoordinator: ChildCoordinating {
         navigationController.popViewController(animated: true)
     }
     
+    func goToBetEntry(inviting friends: [FriendSnippet]) {
+        let vm = NewBetViewModel(firestoreHelper: firestoreHelper, invitedFriends: friends)
+        let vc = NewBetViewController(viewModel: vm)
+        vc.coordinator = self
+        
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
     func openBetDetail(withBetID id: BetID) {
         let vm = BetDetailViewModel(firestoreHelper: firestoreHelper)
         vm.setBetDocID(withBetID: id)

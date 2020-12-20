@@ -43,7 +43,7 @@ class NewBetViewController: UIViewController {
     }
     
     func setUpViewController() {
-        title = "New Bet" // TODO: update dynamically based on selected friend
+        title = viewModel.getVCTitle()
         updateButtonStatus()
         sendBetButton.layer.cornerRadius = 15
     }

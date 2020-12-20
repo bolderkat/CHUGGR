@@ -10,6 +10,7 @@ import Firebase
 
 class NewBetViewModel {
     private let firestoreHelper: FirestoreHelper
+    private let invitedFriends: [FriendSnippet]
     
     private(set) var selectedBetType: BetType = .spread {
         didSet {
@@ -42,8 +43,23 @@ class NewBetViewModel {
     var updateButtonStatus: (() -> ())?
     var setSendButtonState: (() -> ())?
     
-    init(firestoreHelper: FirestoreHelper) {
+    init(firestoreHelper: FirestoreHelper, invitedFriends: [FriendSnippet]) {
         self.firestoreHelper = firestoreHelper
+        self.invitedFriends = invitedFriends
+    }
+    
+    func getVCTitle() -> String {
+        switch invitedFriends.count {
+        case 0:
+            return "House Bet"
+        case 1:
+            return "\(invitedFriends[0].firstName) \(invitedFriends[0].lastName)"
+        case _ where invitedFriends.count > 1:
+            return "Bet with \(invitedFriends.count) people"
+        default:
+            // Case impossible
+            return ""
+        }
     }
     
     func createCellVMs() {
