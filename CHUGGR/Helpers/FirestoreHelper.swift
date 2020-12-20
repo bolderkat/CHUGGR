@@ -14,6 +14,8 @@ class FirestoreHelper {
     private(set) var currentUser: CurrentUser?
     private(set) var friends: [FriendSnippet] = []
     private(set) var allUsers: [FullFriend] = []
+    private(set) var involvedBets: [Bet] = []
+    
     private var userListeners: [ListenerRegistration] = []
     private(set) var betDashboardListener: ListenerRegistration?
     private(set) var friendsListener: ListenerRegistration?
@@ -216,7 +218,7 @@ class FirestoreHelper {
         let listener = db.collection(K.Firestore.bets)
             .whereField(K.Firestore.allUsers, arrayContains: uid)
             .order(by: K.Firestore.dateOpened, descending: true)
-            .addSnapshotListener { (querySnapshot, error) in
+            .addSnapshotListener { [weak self] (querySnapshot, error) in
                 if let error = error {
                     // TODO: better error handling to display to user
                     print("Error getting documents: \(error)")
@@ -242,6 +244,7 @@ class FirestoreHelper {
                             print("Error decoding bet: \(error)")
                         }
                     }
+                    self?.involvedBets = bets
                     completion(bets)
                 }
             }
@@ -540,6 +543,7 @@ class FirestoreHelper {
         currentUser = nil
         friends = []
         allUsers = []
+        involvedBets = []
     }
     
     func unsubscribeAllSnapshotListeners() {

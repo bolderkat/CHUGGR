@@ -57,6 +57,9 @@
 		65B3D7BE258C766F008F274A /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B3D7BC258C766F008F274A /* InviteCell.swift */; };
 		65B3D7BF258C766F008F274A /* InviteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65B3D7BD258C766F008F274A /* InviteCell.xib */; };
 		65B3D7C4258C7677008F274A /* InviteCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B3D7C3258C7677008F274A /* InviteCellViewModel.swift */; };
+		65BBCD0B258F3D66004BBB40 /* PendingBetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BBCD09258F3D66004BBB40 /* PendingBetsViewController.swift */; };
+		65BBCD0C258F3D66004BBB40 /* PendingBetsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65BBCD0A258F3D66004BBB40 /* PendingBetsView.xib */; };
+		65BBCD14258F3D7A004BBB40 /* PendingBetsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BBCD13258F3D7A004BBB40 /* PendingBetsViewModel.swift */; };
 		65C237FD256EF82B001EA95D /* NewBetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C237FC256EF82B001EA95D /* NewBetViewController.swift */; };
 		65C23805256EFAA3001EA95D /* HairlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C23804256EFAA3001EA95D /* HairlineView.swift */; };
 		65C681F52585DF8F003160F0 /* BetsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65C681F42585DF8F003160F0 /* BetsView.xib */; };
@@ -91,11 +94,8 @@
 		65F69D8E257B2D5000CE7371 /* UITextField+InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F69D8D257B2D5000CE7371 /* UITextField+InputView.swift */; };
 		65F69D98257B2EFF00CE7371 /* DateEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F69D96257B2EFF00CE7371 /* DateEntryCell.swift */; };
 		65F69D99257B2EFF00CE7371 /* DateEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65F69D97257B2EFF00CE7371 /* DateEntryCell.xib */; };
-		65FBCBA3252F9B6200227121 /* BetsTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FBCBA2252F9B6200227121 /* BetsTableSection.swift */; };
-		65FBCBBB2532542A00227121 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FBCBBA2532542A00227121 /* SampleData.swift */; };
 		65FBCBC1253257CE00227121 /* BetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FBCBC0253257CE00227121 /* BetDetailViewController.swift */; };
 		65FCE6DF2569BB930066BDC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCE6DE2569BB930066BDC5 /* User.swift */; };
-		65FCE6E4256B33F00066BDC5 /* SampleBet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCE6E3256B33F00066BDC5 /* SampleBet.swift */; };
 		65FCE6ED256B35530066BDC5 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */; };
 		65FD451A2581D94100481F50 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FD45192581D94100481F50 /* CurrentUser.swift */; };
 		65FD45222581EDE900481F50 /* FullFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FD45212581EDE900481F50 /* FullFriend.swift */; };
@@ -179,6 +179,9 @@
 		65B3D7BC258C766F008F274A /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
 		65B3D7BD258C766F008F274A /* InviteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InviteCell.xib; sourceTree = "<group>"; };
 		65B3D7C3258C7677008F274A /* InviteCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCellViewModel.swift; sourceTree = "<group>"; };
+		65BBCD09258F3D66004BBB40 /* PendingBetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingBetsViewController.swift; sourceTree = "<group>"; };
+		65BBCD0A258F3D66004BBB40 /* PendingBetsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingBetsView.xib; sourceTree = "<group>"; };
+		65BBCD13258F3D7A004BBB40 /* PendingBetsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingBetsViewModel.swift; sourceTree = "<group>"; };
 		65C237FC256EF82B001EA95D /* NewBetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetViewController.swift; sourceTree = "<group>"; };
 		65C23804256EFAA3001EA95D /* HairlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HairlineView.swift; sourceTree = "<group>"; };
 		65C681F42585DF8F003160F0 /* BetsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetsView.xib; sourceTree = "<group>"; };
@@ -213,11 +216,8 @@
 		65F69D8D257B2D5000CE7371 /* UITextField+InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+InputView.swift"; sourceTree = "<group>"; };
 		65F69D96257B2EFF00CE7371 /* DateEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateEntryCell.swift; sourceTree = "<group>"; };
 		65F69D97257B2EFF00CE7371 /* DateEntryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateEntryCell.xib; sourceTree = "<group>"; };
-		65FBCBA2252F9B6200227121 /* BetsTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsTableSection.swift; sourceTree = "<group>"; };
-		65FBCBBA2532542A00227121 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		65FBCBC0253257CE00227121 /* BetDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetDetailViewController.swift; sourceTree = "<group>"; };
 		65FCE6DE2569BB930066BDC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		65FCE6E3256B33F00066BDC5 /* SampleBet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBet.swift; sourceTree = "<group>"; };
 		65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		65FD45192581D94100481F50 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		65FD45212581EDE900481F50 /* FullFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullFriend.swift; sourceTree = "<group>"; };
@@ -297,6 +297,7 @@
 				65C681F92585E022003160F0 /* BetsViewModel.swift */,
 				65C681F42585DF8F003160F0 /* BetsView.xib */,
 				65E947F52589791200A71365 /* BetsTableDataSource.swift */,
+				65BBCD08258F3D4C004BBB40 /* Pending Bets */,
 			);
 			path = "Bet Dashboard";
 			sourceTree = "<group>";
@@ -492,6 +493,16 @@
 			path = "Custom Cells";
 			sourceTree = "<group>";
 		};
+		65BBCD08258F3D4C004BBB40 /* Pending Bets */ = {
+			isa = PBXGroup;
+			children = (
+				65BBCD09258F3D66004BBB40 /* PendingBetsViewController.swift */,
+				65BBCD13258F3D7A004BBB40 /* PendingBetsViewModel.swift */,
+				65BBCD0A258F3D66004BBB40 /* PendingBetsView.xib */,
+			);
+			path = "Pending Bets";
+			sourceTree = "<group>";
+		};
 		65C6E407257F407500EA7AA4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,9 +550,6 @@
 				6511DCAC258AE6350009A9F6 /* FriendSnippet.swift */,
 				65F4029A252EA103007892F8 /* Bet.swift */,
 				65D18DAC258053EC00E562C1 /* Drinks.swift */,
-				65FBCBA2252F9B6200227121 /* BetsTableSection.swift */,
-				65FCE6E3256B33F00066BDC5 /* SampleBet.swift */,
-				65FBCBBA2532542A00227121 /* SampleData.swift */,
 				658F112E25327B2C003B6303 /* Message.swift */,
 			);
 			path = Models;
@@ -745,6 +753,7 @@
 				65C681F52585DF8F003160F0 /* BetsView.xib in Resources */,
 				65543D0B25772B7100B8C549 /* StakeEntryCell.xib in Resources */,
 				65E948452589E43900A71365 /* FriendCell.xib in Resources */,
+				65BBCD0C258F3D66004BBB40 /* PendingBetsView.xib in Resources */,
 				65C6821B2585E334003160F0 /* VideosViewController.xib in Resources */,
 				65B3D7BF258C766F008F274A /* InviteCell.xib in Resources */,
 				65B3D7AC258C6C6C008F274A /* FriendInviteView.xib in Resources */,
@@ -914,7 +923,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				65C6821A2585E334003160F0 /* VideosViewController.swift in Sources */,
-				65FBCBA3252F9B6200227121 /* BetsTableSection.swift in Sources */,
 				650371F8257AD2B700F59D95 /* BetEntryCellViewModel.swift in Sources */,
 				654AC028257740A900AEBADF /* NewBetViewModel.swift in Sources */,
 				65C237FD256EF82B001EA95D /* NewBetViewController.swift in Sources */,
@@ -946,9 +954,9 @@
 				6511DCAD258AE6350009A9F6 /* FriendSnippet.swift in Sources */,
 				65F69D8E257B2D5000CE7371 /* UITextField+InputView.swift in Sources */,
 				659DCB76252E9AD3009D330E /* Constants.swift in Sources */,
-				65FBCBBB2532542A00227121 /* SampleData.swift in Sources */,
 				6537BC312583135200880C2B /* UserDetailEntryViewController.swift in Sources */,
 				65C682202585E356003160F0 /* VideosViewModel.swift in Sources */,
+				65BBCD14258F3D7A004BBB40 /* PendingBetsViewModel.swift in Sources */,
 				656D944C252BF5FE00EDEB7F /* AppDelegate.swift in Sources */,
 				6533F266256859C5002524B3 /* ParentCoordinating.swift in Sources */,
 				65D6ECAE258B354A00E0A720 /* Friend.swift in Sources */,
@@ -975,7 +983,7 @@
 				65B3D7AB258C6C6C008F274A /* FriendInviteViewController.swift in Sources */,
 				65E9482E2589A4E200A71365 /* AddFriendViewModel.swift in Sources */,
 				6537BC3D2583143700880C2B /* UserDetailEntryCell.swift in Sources */,
-				65FCE6E4256B33F00066BDC5 /* SampleBet.swift in Sources */,
+				65BBCD0B258F3D66004BBB40 /* PendingBetsViewController.swift in Sources */,
 				65FF28DC258D629100F0BB66 /* FriendInviteDataSource.swift in Sources */,
 				65B3D7B1258C6C9A008F274A /* FriendInviteViewModel.swift in Sources */,
 				65B3D7C4258C7677008F274A /* InviteCellViewModel.swift in Sources */,

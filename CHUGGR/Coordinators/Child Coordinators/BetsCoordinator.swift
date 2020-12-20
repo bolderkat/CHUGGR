@@ -52,4 +52,11 @@ class BetsCoordinator: ChildCoordinating {
 
         navigationController.pushViewController(vc, animated: true)
     }
+    
+    func openPendingBets() {
+        let vc = PendingBetsViewController(viewModel: PendingBetsViewModel(firestoreHelper: firestoreHelper))
+        vc.coordinator = self
+        
+        navigationController.pushViewController(vc, animated: true)
+    }
 }

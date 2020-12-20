@@ -19,9 +19,9 @@ class BetsViewController: UIViewController {
     @IBOutlet weak var pendingBetsView: UIView!
     @IBOutlet weak var pendingBetsLabel: UILabel!
     @IBOutlet weak var pendingStakeLabel: UILabel!
+    @IBOutlet weak var pendingBetsButton: UIButton!
     @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     
-   let sampleData = SampleData()
     
     init(
         viewModel: BetsViewModel,
@@ -93,9 +93,11 @@ class BetsViewController: UIViewController {
     func updateBetsPendingLabel() {
         if viewModel.pendingBets.isEmpty {
 //            pendingBetsView.isHidden = true
+            pendingBetsButton.isEnabled = false
             tableViewTopConstraint.constant = -pendingBetsView.frame.height // extend table view to safe area to hide pending header
         } else {
             pendingBetsView.isHidden = false
+            pendingBetsButton.isEnabled = true
             pendingBetsLabel.text = viewModel.getPendingBetsLabel()
             pendingStakeLabel.text = viewModel.getPendingBetsStake()
             tableViewTopConstraint.constant = 0
@@ -103,6 +105,10 @@ class BetsViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
+    }
+    
+    @IBAction func pendingBetsViewPressed(_ sender: UIButton) {
+        coordinator?.openPendingBets()
     }
     
 }
@@ -127,14 +133,14 @@ extension BetsViewController {
     
     func configureDataSource() {
         dataSource = BetsTableDataSource(
-            tableView: betsTable, cellProvider: { (tableView, indexPath, rowVM) -> UITableViewCell? in
+            tableView: betsTable) { (tableView, indexPath, rowVM) -> UITableViewCell? in
                 // Set up cells for each bet
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.betCell, for: indexPath) as? BetCell else {
                     fatalError("Bet dashboard cell nib does not exist")
                 }
                 cell.configure(withVM: rowVM)
                 return cell
-            })
+            }
     }
     
     
