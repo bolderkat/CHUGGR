@@ -320,6 +320,11 @@ class NewBetViewModel {
             enteredBet.perform(action: .addToSide2, withID: currentUserID, firstName: currentUserFirstName)
         }
         
+        // Invite any selected friends
+        for friend in invitedFriends {
+            enteredBet.perform(action: .invite, withID: friend.uid, firstName: friend.firstName)
+        }
+        
         let docID = firestoreHelper.writeNewBet(bet: &enteredBet)
         return docID
     }
