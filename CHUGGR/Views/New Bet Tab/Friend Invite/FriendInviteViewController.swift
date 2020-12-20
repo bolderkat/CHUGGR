@@ -112,17 +112,42 @@ class FriendInviteViewController: UIViewController {
     }
     
     func updateRecipientView() {
-        if viewModel.selectedFriends.isEmpty {
-            sendButton.tintColor = UIColor(named: K.colors.gray3)
-            sendButton.isEnabled = false
-        } else {
-            sendButton.tintColor = .white
-            sendButton.isEnabled = true
-        }
         recipientLabel.text = viewModel.getRecipientNames()
     }
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
+        // If no selected friends, have user confirm that they want to create a house bet
+        if viewModel.selectedFriends.isEmpty {
+            let alert = UIAlertController(
+                title: "House Bet",
+                message: "Create a house bet with yourself as the only involved user?",
+                preferredStyle: .actionSheet)
+            
+            alert.addAction(
+                UIAlertAction(
+                    title: "Continue",
+                    style: .default,
+                    handler: { action in
+                        self.goToBetEntry()
+                    }
+                )
+            )
+            
+            alert.addAction(
+                UIAlertAction(
+                    title: "Cancel",
+                    style: .cancel,
+                    handler: nil
+                )
+            )
+            
+            present(alert, animated: true, completion: nil)
+        } else {
+            goToBetEntry()
+        }
+    }
+    
+    func goToBetEntry() {
         coordinator?.goToBetEntry(inviting: viewModel.selectedFriends)
     }
     
