@@ -13,6 +13,9 @@ class FriendInviteViewController: UIViewController {
     private var dataSource: FriendInviteDataSource!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var recipientLabel: UILabel!
+    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var recipientViewBottomConstraint: NSLayoutConstraint!
     
     init(
         viewModel: FriendInviteViewModel,
@@ -34,12 +37,18 @@ class FriendInviteViewController: UIViewController {
         initViewModel()
         configureDataSource()
         configureTableView()
+        setUpKeyboardNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Update friends from stored array when view appears
         viewModel.fetchFriends()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+        super.viewWillDisappear(animated)
     }
     
     func configureViewController() {
@@ -52,7 +61,47 @@ class FriendInviteViewController: UIViewController {
         viewModel.updateTableViewClosure = { [weak self] in
             self?.updateTableView()
         }
+        viewModel.updateRecipientView = { [weak self] in
+            self?.updateRecipientView()
+        }
 
+    }
+    
+    func setUpKeyboardNotifications() {
+        // Adapted from https://stackoverflow.com/a/50325088
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleKeyboardNotification),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleKeyboardNotification),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc func handleKeyboardNotification(_ notification: Notification) {
+        // Adapted from https://stackoverflow.com/a/50325088
+        if let userInfo = notification.userInfo {
+            let key = UIResponder.keyboardFrameEndUserInfoKey
+            guard let keyboardFrame = (userInfo[key] as AnyObject).cgRectValue else { return }
+            let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
+            
+            // Set recipient view bottom constraint based on keyboard presence
+            if isKeyboardShowing {
+                recipientViewBottomConstraint.constant = -keyboardFrame.height + (tabBarController?.tabBar.frame.size.height ?? 0)
+                
+            } else {
+                recipientViewBottomConstraint.constant = 0
+            }
+            
+            UIView.animate(withDuration: 0.35) {
+                self.view.layoutIfNeeded()
+            }
+        }
     }
     
     func updateTableView() {
@@ -60,6 +109,10 @@ class FriendInviteViewController: UIViewController {
         snapshot.appendSections([.friends]) // TODO: Add recents once implemented
         snapshot.appendItems(viewModel.cellVMs, toSection: .friends)
         dataSource.apply(snapshot,animatingDifferences: false)
+    }
+    
+    func updateRecipientView() {
+        recipientLabel.text = viewModel.getRecipientNames()
     }
 }
 

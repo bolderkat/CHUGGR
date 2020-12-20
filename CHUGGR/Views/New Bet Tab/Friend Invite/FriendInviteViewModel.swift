@@ -15,10 +15,15 @@ class FriendInviteViewModel {
             updateTableViewClosure?()
         }
     }
-    private(set) var selectedFriends: [FriendSnippet] = []
+    private(set) var selectedFriends: [FriendSnippet] = [] {
+        didSet {
+            updateRecipientView?()
+        }
+    }
     private var isSearchBarEmpty = true
     
     var updateTableViewClosure: (() -> ())?
+    var updateRecipientView: (() -> ())?
     
     init(firestoreHelper: FirestoreHelper) {
         self.firestoreHelper = firestoreHelper
@@ -65,8 +70,26 @@ class FriendInviteViewModel {
                 selectedFriends.remove(at: index)
             }
         }
-        
         updateTableViewClosure?()
+    }
+    
+    func getRecipientNames() -> String {
+        switch selectedFriends.count {
+        case 0:
+            return ""
+        case 1:
+            return "\(selectedFriends[0].firstName) \(selectedFriends[0].lastName)"
+        case _ where selectedFriends.count > 1:
+            var namesArray = [String]()
+            for friend in selectedFriends {
+                let fullName = "\(friend.firstName) \(friend.lastName)"
+                namesArray.append(fullName)
+            }
+            return namesArray.joined(separator: ", ")
+        default:
+            // This case should be impossible
+            return ""
+        }
     }
     
 }
