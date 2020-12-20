@@ -32,16 +32,16 @@ class FriendInviteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dismissKeyboard() // set up keyboard dismissal on tap
         configureViewController()
         initViewModel()
         configureDataSource()
         configureTableView()
-        setUpKeyboardNotifications()
+        updateRecipientView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setUpKeyboardNotifications()
         // Update friends from stored array when view appears
         viewModel.fetchFriends()
     }
@@ -58,8 +58,8 @@ class FriendInviteViewController: UIViewController {
 
     func initViewModel() {
         viewModel.fetchFriends()
-        viewModel.updateTableViewClosure = { [weak self] in
-            self?.updateTableView()
+        viewModel.updateTableViewClosure = { [weak self] string in
+            self?.updateTableView(withString: string)
         }
         viewModel.updateRecipientView = { [weak self] in
             self?.updateRecipientView()
@@ -104,14 +104,21 @@ class FriendInviteViewController: UIViewController {
         }
     }
     
-    func updateTableView() {
+    func updateTableView(withString searchString: String) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, InviteCellViewModel>()
         snapshot.appendSections([.friends]) // TODO: Add recents once implemented
-        snapshot.appendItems(viewModel.cellVMs, toSection: .friends)
+        snapshot.appendItems(viewModel.provideCellVMs(forString: searchString), toSection: .friends)
         dataSource.apply(snapshot,animatingDifferences: false)
     }
     
     func updateRecipientView() {
+        if viewModel.selectedFriends.isEmpty {
+            sendButton.tintColor = UIColor(named: K.colors.gray3)
+            sendButton.isEnabled = false
+        } else {
+            sendButton.tintColor = .white
+            sendButton.isEnabled = true
+        }
         recipientLabel.text = viewModel.getRecipientNames()
     }
 }
@@ -177,6 +184,9 @@ extension FriendInviteViewController: UIScrollViewDelegate {
 
 // MARK:- SearchBar Delegate
 extension FriendInviteViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        updateTableView(withString: searchText)
+    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()

@@ -12,7 +12,7 @@ class FriendInviteViewModel {
     private var friendSnippets: [FriendSnippet] = []
     private(set) var cellVMs: [InviteCellViewModel] = [] {
         didSet {
-            updateTableViewClosure?()
+            updateTableViewClosure?(searchString)
         }
     }
     private(set) var selectedFriends: [FriendSnippet] = [] {
@@ -20,9 +20,11 @@ class FriendInviteViewModel {
             updateRecipientView?()
         }
     }
+    private var searchResults: [InviteCellViewModel] = []
     private var isSearchBarEmpty = true
+    private var searchString: String = ""
     
-    var updateTableViewClosure: (() -> ())?
+    var updateTableViewClosure: ((String) -> ())?
     var updateRecipientView: (() -> ())?
     
     init(firestoreHelper: FirestoreHelper) {
@@ -56,11 +58,45 @@ class FriendInviteViewModel {
         cellVMs = vms
     }
     
+    func provideCellVMs(forString searchString: String) -> [InviteCellViewModel] {
+        self.searchString = searchString
+        // Show entire friend list when user clears search bar
+        if searchString == "" {
+            isSearchBarEmpty = true
+            return cellVMs
+        } else {
+            isSearchBarEmpty = false
+            let string = searchString.lowercased() // case-insensitive search. Can force unwrap as nil case is handled
+            
+            // Filter based on search string
+            let results = cellVMs.filter {
+                $0.firstName.lowercased().contains(string) ||
+                    $0.lastName.lowercased().contains(string) ||
+                    $0.userName.lowercased().contains(string) ||
+                    "\($0.firstName) \($0.lastName)".lowercased().contains(string)
+            }
+            searchResults = results
+            return results
+        }
+    }
+    
     func selectUser(at indexPath: IndexPath) {
         // TODO:  Will need logic to handle sections once Recents are implemented
-        cellVMs[indexPath.row].isChecked.toggle()
         
-        let selectedCellVM = cellVMs[indexPath.row]
+        var selectedIndex = indexPath.row
+        
+        // If user has searched, indexPath won't match full cellVM array. Get the correct index for full array
+        if !isSearchBarEmpty {
+            let selectedFriend = searchResults[indexPath.row]
+            if let index = cellVMs.firstIndex(of: selectedFriend) {
+                selectedIndex = index
+            }
+        }
+        
+        cellVMs[selectedIndex].isChecked.toggle()
+        
+        let selectedCellVM = cellVMs[selectedIndex]
+        
         // Handle selection of user
         if selectedCellVM.isChecked {
             selectedFriends.append(selectedCellVM.friend)
@@ -70,8 +106,9 @@ class FriendInviteViewModel {
                 selectedFriends.remove(at: index)
             }
         }
-        updateTableViewClosure?()
+        updateTableViewClosure?(searchString)
     }
+    
     
     func getRecipientNames() -> String {
         switch selectedFriends.count {

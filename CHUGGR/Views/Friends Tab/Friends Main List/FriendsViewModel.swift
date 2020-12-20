@@ -59,8 +59,10 @@ class FriendsViewModel {
             
             // Filter based on search string
             let results = cellVMs.filter {
-                $0.firstName.lowercased().contains(string) || $0.lastName.lowercased().contains(string) ||
-                    $0.userName.lowercased().contains(string)
+                $0.firstName.lowercased().contains(string) ||
+                    $0.lastName.lowercased().contains(string) ||
+                    $0.userName.lowercased().contains(string) ||
+                    "\($0.firstName) \($0.lastName)".lowercased().contains(string)
             }
             searchResults = results
             return results
