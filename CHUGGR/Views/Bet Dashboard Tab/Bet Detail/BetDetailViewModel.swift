@@ -13,27 +13,23 @@ class BetDetailViewModel {
     private var betDocID: BetID?
     private(set) var bet: Bet? {
         didSet {
-            DispatchQueue.main.async {
-                self.updateBetCard?()
-            }
+            updateBetCard?()
         }
     }
     
-    private(set) var isUserInvolved = false {
+    private(set) var userInvolvement: BetInvolvementType {
         didSet {
-            if isUserInvolved {
-                DispatchQueue.main.async {
-                    self.showDeleteButton?()
-                }
-            }
+            setUpForInvolvementState?()
         }
     }
 
     var updateBetCard: (() -> ())?
-    var showDeleteButton: (() -> ())?
+    var setUpForInvolvementState: (() -> ())?
     
-    init(firestoreHelper: FirestoreHelper) {
+    init(firestoreHelper: FirestoreHelper,
+         userInvolvement: BetInvolvementType) {
         self.firestoreHelper = firestoreHelper
+        self.userInvolvement = userInvolvement
     }
     
     func setBetDocID(withBetID id: BetID) {
@@ -44,10 +40,14 @@ class BetDetailViewModel {
         firestoreHelper.readBet(withBetID: betDocID) { [weak self] (bet) in
             self?.bet = bet
             
-            // Check if user is involved in bet and has accepted
+            // Check if user involvement status
             guard let uid = self?.firestoreHelper.currentUser?.uid else { return }
-            if bet.acceptedUsers.contains(uid) {
-                self?.isUserInvolved = true
+            if bet.invitedUsers[uid] != nil {
+                self?.userInvolvement = .invited
+            } else if bet.acceptedUsers.contains(uid) {
+                self?.userInvolvement = .accepted
+            } else if !bet.isFinished {
+                self?.userInvolvement = .uninvolved
             }
         }
     }
@@ -156,6 +156,18 @@ class BetDetailViewModel {
             case .event:
                 return "AGAINST WINS"
             }
+        }
+    }
+    
+    func getButtonStrings() -> (side1: String?, side2: String?) {
+        guard let bet = bet else { return (nil, nil) }
+        switch bet.type {
+        case .spread:
+            return ("TAKE THE OVER", "TAKE THE UNDER")
+        case .moneyline:
+            return (bet.team1, bet.team2)
+        case .event:
+            return ("FOR", "AGAINST")
         }
     }
 }

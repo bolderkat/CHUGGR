@@ -8,7 +8,12 @@
 import Foundation
 
 typealias BetID = String
-
+enum BetInvolvementType {
+    case accepted
+    case invited
+    case uninvolved
+    case closed
+}
 enum BetType: String, Codable {
     case spread
     case moneyline

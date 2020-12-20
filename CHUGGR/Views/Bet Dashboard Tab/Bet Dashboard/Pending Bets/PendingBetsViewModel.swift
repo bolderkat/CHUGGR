@@ -44,4 +44,8 @@ class PendingBetsViewModel {
         return BetCellViewModel(bet: bet, firestoreHelper: self.firestoreHelper)
     }
     
+    func getCellVM(at indexPath: IndexPath) -> BetCellViewModel {
+        return betCellVMs[indexPath.row]
+    }
+    
 }

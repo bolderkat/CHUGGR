@@ -74,10 +74,19 @@ extension PendingBetsViewController {
     }
 }
 
+
+// MARK:- TableView delegate
 extension PendingBetsViewController: UITableViewDelegate {
     func configureTableView() {
         tableView.delegate = self
         tableView.register(UINib(nibName: K.cells.betCell, bundle: nil), forCellReuseIdentifier: K.cells.betCell)
         tableView.rowHeight = 55.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let betID = viewModel.getCellVM(at: indexPath).bet.betID {
+            coordinator?.openBetDetail(withBetID: betID, userInvolvement: .invited)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

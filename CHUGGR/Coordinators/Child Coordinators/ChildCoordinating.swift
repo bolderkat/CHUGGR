@@ -16,6 +16,6 @@ protocol ChildCoordinating: AnyObject {
     
     func start()
     func pop()
-    func openBetDetail(withBetID id: BetID)
+    func openBetDetail(withBetID id: BetID, userInvolvement: BetInvolvementType)
 }
 

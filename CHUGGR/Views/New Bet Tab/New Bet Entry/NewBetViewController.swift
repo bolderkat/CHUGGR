@@ -72,7 +72,7 @@ class NewBetViewController: UIViewController {
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
         guard let id = viewModel.createNewBet() else { return }
-        coordinator?.openBetDetail(withBetID: id)
+        coordinator?.openBetDetail(withBetID: id, userInvolvement: .accepted)
     }
     
     func updateUI(animated: Bool = false) {

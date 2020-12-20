@@ -28,10 +28,18 @@ class BetDetailViewController: UIViewController {
     @IBOutlet weak var rightLabel5: UILabel!
     @IBOutlet weak var leftLabel6: UILabel!
     @IBOutlet weak var rightLabel6: UILabel!
-    @IBOutlet weak var messageTableView: UITableView!
-    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var betCard: UIView!
-    @IBOutlet weak var closeBetButton: UIButton!
+
+    @IBOutlet weak var firstButton: UIButton!
+    @IBOutlet weak var secondButton: UIButton!
+    @IBOutlet weak var thirdButton: UIButton!
+    @IBOutlet weak var fourthButton: UIButton!
+
+    @IBOutlet weak var bottomSendView: UIView!
+    @IBOutlet weak var messageTableView: UITableView!
+    @IBOutlet weak var bottomTableViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var sendButton: UIButton!
     
     init(
         viewModel: BetDetailViewModel,
@@ -67,21 +75,28 @@ class BetDetailViewController: UIViewController {
     
     func setUpViewController() {
         title = "Bet Details"
-        closeBetButton.layer.cornerRadius = 15
+        firstButton.layer.cornerRadius = 15
+        secondButton.layer.cornerRadius = 15
+        thirdButton.layer.cornerRadius = 15
+        fourthButton.layer.cornerRadius = 15
         betCard.layer.cornerRadius = 30
-       
+        setUpForInvolvementState()
         updateBetCard()
         titleLabel.text = nil
-
     }
+    
 
     func initViewModel() {
         viewModel.updateBetCard = { [weak self] in
-            self?.updateBetCard()
+            DispatchQueue.main.async {
+                self?.updateBetCard()
+            }
         }
         
-        viewModel.showDeleteButton = { [weak self] in
-            self?.showDeleteButton()
+        viewModel.setUpForInvolvementState = { [weak self] in
+            DispatchQueue.main.async {
+                self?.setUpForInvolvementState()
+            }
         }
         viewModel.fetchBet()
     }
@@ -156,9 +171,55 @@ class BetDetailViewController: UIViewController {
         }
     }
     
-    func showDeleteButton() {
-        // Only will show if user is involved in bet.
+    func setUpForInvolvementState() {
+        switch viewModel.userInvolvement {
+        case .invited:
+            setUpForInvitedState()
+        case .accepted:
+            setUpForAcceptedState()
+        case .uninvolved:
+            setUpForUninvolvedState()
+        case .closed:
+            return // TODO: handle this case
+        }
+    }
+    
+    func setUpForInvitedState() {
+        messageTableView.isHidden = true
+        bottomSendView.isHidden = true
+        firstButton.backgroundColor = UIColor(named: K.colors.forestGreen)
+        firstButton.setTitle(viewModel.getButtonStrings().side1, for: .normal)
+        secondButton.isHidden = false
+        secondButton.setTitle(viewModel.getButtonStrings().side2, for: .normal)
+        secondButton.backgroundColor = UIColor(named: K.colors.forestGreen)
+        thirdButton.isHidden = false
+        fourthButton.isHidden = false
+        // TODO: Get these labels to update as the segue occurs instead of after
+    }
+    
+    func setUpForAcceptedState() {
+        // Show delete button.
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteBet))
+        
+        messageTableView.isHidden = false
+        bottomSendView.isHidden = false
+        firstButton.isEnabled = true
+        firstButton.backgroundColor = UIColor(named: K.colors.orange)
+        firstButton.setTitle("CLOSE BET", for: .normal)
+        secondButton.isHidden = true
+        thirdButton.isHidden = true
+        fourthButton.isHidden = true
+        bottomTableViewConstraint.constant = 0
+    }
+    
+    func setUpForUninvolvedState() {
+        // Remove delete button if present
+        navigationItem.rightBarButtonItem = nil
+
+        firstButton.isEnabled = false
+        firstButton.backgroundColor = UIColor(named: K.colors.gray3)
+        bottomSendView.isHidden = true
+        bottomTableViewConstraint.constant = -bottomSendView.frame.height
     }
     
     @objc func deleteBet() {
