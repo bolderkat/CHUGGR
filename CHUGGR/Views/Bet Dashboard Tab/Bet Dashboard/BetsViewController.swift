@@ -19,7 +19,8 @@ class BetsViewController: UIViewController {
     @IBOutlet weak var pendingBetsView: UIView!
     @IBOutlet weak var pendingBetsLabel: UILabel!
     @IBOutlet weak var pendingStakeLabel: UILabel!
-
+    @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
+    
    let sampleData = SampleData()
     
     init(
@@ -90,13 +91,18 @@ class BetsViewController: UIViewController {
     }
     
     func updateBetsPendingLabel() {
-//        if viewModel.pendingBets.isEmpty {
+        if viewModel.pendingBets.isEmpty {
 //            pendingBetsView.isHidden = true
-//        } else {
-//            pendingBetsView.isHidden = false
-            pendingBetsLabel.text = "\(viewModel.pendingBets.count) New Bets Pending!"
-            pendingStakeLabel.text = viewModel.getPendingBetsLabel()
-//        }
+            tableViewTopConstraint.constant = -pendingBetsView.frame.height // extend table view to safe area to hide pending header
+        } else {
+            pendingBetsView.isHidden = false
+            pendingBetsLabel.text = viewModel.getPendingBetsLabel()
+            pendingStakeLabel.text = viewModel.getPendingBetsStake()
+            tableViewTopConstraint.constant = 0
+        }
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
     
 }

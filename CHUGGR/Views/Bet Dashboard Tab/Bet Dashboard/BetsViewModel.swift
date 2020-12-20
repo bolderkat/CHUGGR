@@ -49,11 +49,19 @@ class BetsViewModel {
     
     func initFetchBets() {
         self.isLoading = true
-        firestoreHelper.addPendingBetsListener { [weak self] bets in
-            self?.pendingBets = bets
-        }
         firestoreHelper.addUserInvolvedBetsListener { [weak self] bets in
-            self?.processInvolvedBets(bets: bets)
+            guard let uid = self?.firestoreHelper.currentUser?.uid else { return }
+            var pendingBets = [Bet]()
+            var involvedBets = [Bet]()
+            for bet in bets {
+                if bet.invitedUsers[uid] != nil {
+                    pendingBets.append(bet)
+                } else {
+                    involvedBets.append(bet)
+                }
+            }
+            self?.pendingBets = pendingBets
+            self?.processInvolvedBets(bets: involvedBets)
         }
         firestoreHelper.initFetchOtherBets { [weak self] bets in
             self?.processOtherBets(bets: bets, appending: false)
@@ -111,6 +119,19 @@ class BetsViewModel {
     }
     
     func getPendingBetsLabel() -> String {
+        switch pendingBets.count {
+        case 0:
+            return "No bets pending"
+        case 1:
+            return "1 new bet pending!"
+        case _ where pendingBets.count > 1:
+            return "\(pendingBets.count) new bets pending!"
+        default:
+            return ""
+        }
+    }
+    
+    func getPendingBetsStake() -> String {
         var beers = 0
         var shots = 0
         pendingBets.forEach {

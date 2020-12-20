@@ -15,7 +15,7 @@ class FirestoreHelper {
     private(set) var friends: [FriendSnippet] = []
     private(set) var allUsers: [FullFriend] = []
     private var userListeners: [ListenerRegistration] = []
-    private var betDashboardListeners: [ListenerRegistration] = []
+    private(set) var betDashboardListener: ListenerRegistration?
     private(set) var friendsListener: ListenerRegistration?
     private(set) var allUserListener: ListenerRegistration?
     
@@ -209,54 +209,12 @@ class FirestoreHelper {
             }
     }
     
-    func addPendingBetsListener(completion: @escaping (_ bets: [Bet]) -> ()) {
-        guard let uid = currentUser?.uid,
-              let firstName = currentUser?.firstName else { return }
-        
-        // Query for all bets user where user is invited and has not yet taken a side
-        // Use listener to alert user to new bets in realtime
-        let listener = db.collection(K.Firestore.bets)
-            .whereField(K.Firestore.invitedUsers, arrayContains: [uid: firstName])
-            .order(by: K.Firestore.dateOpened, descending: true)
-            .addSnapshotListener { (querySnapshot, error) in
-                if let error = error {
-                    // TODO: better error handling to display to user
-                    print("Error getting documents: \(error)")
-                } else {
-                    var bets = [Bet]()
-                    for document in querySnapshot!.documents {
-                        let result = Result {
-                            try document.data(as: Bet.self)
-                        }
-                        switch result {
-                        case .success(let bet):
-                            if let unwrappedBet = bet {
-                                // Successfully initialized a Bet value from QuerySnapshot
-                                // Add bet to bets array.
-                                bets.append(unwrappedBet)
-                            } else {
-                                // A nil value was successfully initialized from the QuerySnapshot,
-                                // or the DocumentSnapshot was nil.
-                                print("Document does not exist")
-                            }
-                        case .failure(let error):
-                            // A Bet value could not be initialized from the QuerySnapshot.
-                            print("Error decoding bet: \(error)")
-                        }
-                    }
-                    completion(bets)
-                }
-            }
-        betDashboardListeners.append(listener)
-    }
-    
-    
     func addUserInvolvedBetsListener(completion: @escaping (_ bets: [Bet]) -> ()) {
         guard let uid = currentUser?.uid else { return }
         
-        // Query for all bets user has taken a side on
+        // Query for all bets user is involved in. Filter in the view models based on invited/accepted
         let listener = db.collection(K.Firestore.bets)
-            .whereField(K.Firestore.acceptedUsers, arrayContains: uid)
+            .whereField(K.Firestore.allUsers, arrayContains: uid)
             .order(by: K.Firestore.dateOpened, descending: true)
             .addSnapshotListener { (querySnapshot, error) in
                 if let error = error {
@@ -287,7 +245,7 @@ class FirestoreHelper {
                     completion(bets)
                 }
             }
-        betDashboardListeners.append(listener)
+        betDashboardListener = listener
     }
     
     func initFetchOtherBets(completion: @escaping (_ bets: [Bet]) -> ()) {
@@ -589,8 +547,8 @@ class FirestoreHelper {
         // Remember to include snapshot unsubs here as you add them elsewhere!
         userListeners.forEach { $0.remove() }
         userListeners = []
-        betDashboardListeners.forEach { $0.remove() }
-        betDashboardListeners = []
+        betDashboardListener?.remove()
+        betDashboardListener = nil
         friendsListener?.remove()
         friendsListener = nil
         allUserListener?.remove()

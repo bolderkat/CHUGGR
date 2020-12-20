@@ -15,6 +15,7 @@
                 <outlet property="pendingBetsLabel" destination="FaO-3v-gL3" id="AUy-Ut-37q"/>
                 <outlet property="pendingBetsView" destination="410-lY-gmJ" id="Ccy-VL-vDx"/>
                 <outlet property="pendingStakeLabel" destination="BXA-0w-5q3" id="ngy-fU-EcQ"/>
+                <outlet property="tableViewTopConstraint" destination="pAF-CN-CXH" id="Lwf-sR-FD2"/>
                 <outlet property="view" destination="fgE-LF-MOd" id="mZA-05-2YY"/>
             </connections>
         </placeholder>
