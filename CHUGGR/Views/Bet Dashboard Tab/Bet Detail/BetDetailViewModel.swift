@@ -46,10 +46,10 @@ class BetDetailViewModel {
             userInvolvement = .accepted
         } else if !bet.isFinished {
             userInvolvement = .uninvolved
-        } else if bet.outstandingUsers[uid] != nil {
+        } else if bet.outstandingUsers.contains(uid) {
             // User has lost bet and still has to prove that they fulfilled stake
             userInvolvement = .outstanding
-        } else if bet.isFinished && bet.outstandingUsers[uid] == nil {
+        } else if bet.isFinished && !bet.outstandingUsers.contains(uid) {
             // User won bet or fulfilled stake
             userInvolvement = .closed
         }
@@ -219,7 +219,7 @@ class BetDetailViewModel {
         }
         
         // If user has stake outstanding
-        if bet.outstandingUsers[currentUID] != nil {
+        if bet.outstandingUsers.contains(currentUID) {
             return "OUTSTANDING"
         }
         

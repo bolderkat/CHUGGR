@@ -45,9 +45,9 @@ struct Bet: Codable {
     private(set) var invitedUsers = [UID: String]() // UID and firstName
     private(set) var side1Users = [UID: String]()
     private(set) var side2Users = [UID: String]()
-    private(set) var outstandingUsers = [UID: String]()
-    private(set) var allUsers = Set<String>()
-    private(set) var acceptedUsers = Set<String>()
+    private(set) var outstandingUsers = Set<UID>()
+    private(set) var allUsers = Set<UID>()
+    private(set) var acceptedUsers = Set<UID>()
     var stake: Drinks
     let dateOpened: TimeInterval
     var dueDate: TimeInterval
@@ -55,7 +55,7 @@ struct Bet: Codable {
     private(set) var winner: Side?
     private(set) var dateFinished: TimeInterval? = nil
     
-    mutating func setBetID(withID id: String) {
+    mutating func setBetID(withID id: BetID) {
         self.betID = id
     }
     
@@ -68,9 +68,9 @@ struct Bet: Codable {
         // Place losing users into outstanding collection
         switch winningSide {
         case .one:
-            outstandingUsers = side2Users
+            side2Users.forEach { outstandingUsers.insert($0.key)}
         case .two:
-            outstandingUsers = side1Users
+            side1Users.forEach { outstandingUsers.insert($0.key)}
         }
         
         // Clean invited users off of bet
@@ -82,7 +82,7 @@ struct Bet: Codable {
     }
     
     mutating func fulfill(forUser uid: UID) {
-        outstandingUsers[uid] = nil
+        outstandingUsers.remove(uid)
     }
     
     mutating func perform(action: BetUserAction, withID uid: UID, firstName name: String) {

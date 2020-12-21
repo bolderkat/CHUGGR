@@ -233,8 +233,7 @@ class FirestoreHelper {
         
         // This function is called by one user but affects all users involved in bet.
         // Increment counts for bet losers
-        for user in bet.outstandingUsers {
-            let uid = user.key
+        for uid in bet.outstandingUsers {
             db.collection(K.Firestore.users).document(uid).updateData([
                 K.Firestore.betsLost: FieldValue.increment(Int64(1)),
                 K.Firestore.beersOutstanding: FieldValue.increment(beers),

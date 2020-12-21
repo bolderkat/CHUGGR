@@ -107,7 +107,7 @@ struct BetCellViewModel {
         }
         
         // If user has stake outstanding
-        if bet.outstandingUsers[currentUID] != nil {
+        if bet.outstandingUsers.contains(currentUID) {
             return ("OUTSTANDING", K.colors.orange)
         }
         

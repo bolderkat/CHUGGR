@@ -51,10 +51,12 @@ struct K {
         static let isFinished = "isFinished"
         static let numBets = "numBets"
         static let numFriends = "numFriends"
+        static let outstandingUsers = "outstandingUsers"
         static let userName = "userName"
         static let uid = "uid"
         static let users = "users"
         static let videos = "videos"
+        
         static let beersGiven = "drinksGiven.beers"
         static let shotsGiven = "drinksGiven.shots"
         static let beersOutstanding = "drinksOutstanding.beers"
