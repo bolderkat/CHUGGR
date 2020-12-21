@@ -55,8 +55,10 @@ class BetsViewModel {
             var involvedBets = [Bet]()
             for bet in bets {
                 if bet.invitedUsers[uid] != nil {
+                    // Get pending bets user still has to accept/reject
                     pendingBets.append(bet)
-                } else {
+                } else if !bet.isFinished || bet.outstandingUsers[uid] != nil {
+                    // Show active bets: open bets or bets user has lost and still has to fulfill
                     involvedBets.append(bet)
                 }
             }

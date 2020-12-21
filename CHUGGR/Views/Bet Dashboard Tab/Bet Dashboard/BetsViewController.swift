@@ -79,11 +79,11 @@ class BetsViewController: UIViewController {
             snapshot.appendSections([.otherBets])
             snapshot.appendItems(otherBets, toSection: .otherBets)
         } else if otherBets.isEmpty {
-            snapshot.appendSections([.myBets])
-            snapshot.appendItems(involvedBets, toSection: .myBets)
+            snapshot.appendSections([.myActiveBets])
+            snapshot.appendItems(involvedBets, toSection: .myActiveBets)
         } else {
-            snapshot.appendSections([.myBets, .otherBets])
-            snapshot.appendItems(involvedBets, toSection: .myBets)
+            snapshot.appendSections([.myActiveBets, .otherBets])
+            snapshot.appendItems(involvedBets, toSection: .myActiveBets)
             snapshot.appendItems(otherBets, toSection: .otherBets)
         }
         
@@ -117,13 +117,13 @@ class BetsViewController: UIViewController {
 // MARK:- TableView data source
 extension BetsViewController {
     enum Section: Int {
-        case myBets
+        case myActiveBets
         case otherBets
         
         var header: String {
             switch self {
-            case .myBets:
-                return "My Bets"
+            case .myActiveBets:
+                return "My Active Bets"
             case .otherBets:
                 return "Other Bets"
             }

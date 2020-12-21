@@ -97,6 +97,11 @@ struct BetCellViewModel {
             return "WON"
         }
         
+        // If user has stake outstanding
+        if bet.outstandingUsers[currentUID] != nil {
+            return "OUTSTANDING"
+        }
+        
         // If user is on losing side
         if let side = currentUserSide,
            side != winner {

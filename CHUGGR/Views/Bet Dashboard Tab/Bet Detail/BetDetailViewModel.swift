@@ -218,7 +218,12 @@ class BetDetailViewModel {
             return "WON"
         }
         
-        // If user is on losing side
+        // If user has stake outstanding
+        if bet.outstandingUsers[currentUID] != nil {
+            return "OUTSTANDING"
+        }
+        
+        // If user is on losing side and has completed stake
         if let side = currentUserSide,
            side != winner {
             return "LOST"
