@@ -12,6 +12,7 @@ enum BetInvolvementType {
     case accepted
     case invited
     case uninvolved
+    case outstanding
     case closed
 }
 enum BetType: String, Codable {
@@ -20,8 +21,8 @@ enum BetType: String, Codable {
     case event
 }
 
-enum Side: Int, Codable {
-    case one = 0
+enum Side: String, Codable {
+    case one
     case two
 }
 
@@ -31,6 +32,7 @@ enum BetUserAction {
     case addToSide1
     case addToSide2
     case removeFromSide
+    case fulfill
 }
 
 struct Bet: Codable {
@@ -70,6 +72,17 @@ struct Bet: Codable {
         case .two:
             outstandingUsers = side1Users
         }
+        
+        // Clean invited users off of bet
+        for user in invitedUsers {
+            let uid = user.key
+            allUsers.remove(uid)
+            invitedUsers[uid] = nil
+        }
+    }
+    
+    mutating func fulfill(forUser uid: UID) {
+        outstandingUsers[uid] = nil
     }
     
     mutating func perform(action: BetUserAction, withID uid: UID, firstName name: String) {
@@ -100,6 +113,9 @@ struct Bet: Codable {
             side2Users[uid] = nil
             allUsers.remove(uid)
             acceptedUsers.remove(uid)
+        case .fulfill:
+            return
         }
+        
     }
 }

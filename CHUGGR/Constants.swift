@@ -39,18 +39,27 @@ struct K {
     struct Firestore {
         static let acceptedUsers = "acceptedUsers"
         static let allUsers = "allUsers"
-        static let bets = "bets"
         static let betID = "betID"
+        static let bets = "bets"
+        static let betsLost = "betsLost"
+        static let betsWon = "betsWon"
         static let chatRooms = "chatRooms"
         static let dateOpened = "dateOpened"
         static let firstName = "firstName"
         static let friends = "friends"
         static let invitedUsers = "invitedUsers"
+        static let numBets = "numBets"
         static let numFriends = "numFriends"
         static let userName = "userName"
         static let uid = "uid"
         static let users = "users"
         static let videos = "videos"
+        static let beersGiven = "drinksGiven.beers"
+        static let shotsGiven = "drinksGiven.shots"
+        static let beersOutstanding = "drinksOutstanding.beers"
+        static let shotsOutstanding = "drinksOutstanding.shots"
+        static let beersReceived = "drinksReceived.beers"
+        static let shotsReceived = "drinksReceived.shots"
     }
     
     struct Images {

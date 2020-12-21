@@ -18,6 +18,7 @@ class FirestoreHelper {
     
     private var userListeners: [ListenerRegistration] = []
     private(set) var betDashboardListener: ListenerRegistration?
+    private(set) var betDetailListener: ListenerRegistration?
     private(set) var friendsListener: ListenerRegistration?
     private(set) var allUserListener: ListenerRegistration?
     
@@ -171,8 +172,10 @@ class FirestoreHelper {
         let ref = db.collection(K.Firestore.bets).document()
         bet.setBetID(withID: ref.documentID) // add auto-gen betID to bet for reads
         do {
-            
             try ref.setData(from: bet)
+            
+            // Increment user's numBets field by 1
+            updateBetCounter(increasing: true)
         } catch {
             print("Error writing bet to db")
             return nil
@@ -181,7 +184,96 @@ class FirestoreHelper {
         return ref.documentID
     }
     
+    func updateBet(_ bet: Bet, completion: ((Bet?) -> ())?) {
+        guard let id = bet.betID else { return }
+        do {
+            try db.collection(K.Firestore.bets).document(id).setData(from: bet)
+            completion?(bet)
+        } catch {
+            print("Error updating bet \(id)")
+        }
+    }
+    
+    func closeBet(_ bet: Bet, betAlreadyClosed: @escaping ((Bet?) -> ()), completion: (() -> ())?) {
+        guard let id = bet.betID else { return }
+        // Get fresh bet data to double check that another user didn't close the bet first
+        // TODO: if both users try to close at the exact same time, looks like they both win and lose... and one person gets stuck with the outstanding drinks and can't resolve it. Moving off increments and using an actual method to count drinks will be the move later.
+        readBet(withBetID: id) { [weak self] (freshBet) in
+            if freshBet.isFinished {
+                // Another user did close the bet, so pass the fresh bet back
+                betAlreadyClosed(bet)
+                return
+            } else {
+                // Bet not yet closed, so this is a valid action.
+                self?.updateBet(bet, completion: { bet in
+                    self?.updateCountersOnBetClose(with: bet)
+                    completion?()
+                })
+            }
+        }
+    }
+    
+    func updateBetCounter(increasing: Bool) {
+        // Increases or decreases user's numBets field by 1
+        guard let uid = currentUser?.uid else { return }
+        var increment: Int64 = 1
+        if !increasing {
+            increment = -1
+        }
+        
+        db.collection(K.Firestore.users).document(uid).updateData([
+            K.Firestore.numBets: FieldValue.increment(increment)
+        ])
+    }
+    
+    func updateCountersOnBetClose(with bet: Bet?) {
+        // Passed as completion handler to closeBet when bet is marked as closed
+        guard let bet = bet,
+              let winningSide = bet.winner else { return }
+        let beers = Int64(bet.stake.beers)
+        let shots = Int64(bet.stake.shots)
+        
+        // This function is called by one user but affects all users involved in bet.
+        // Increment counts for bet losers
+        for user in bet.outstandingUsers {
+            let uid = user.key
+            db.collection(K.Firestore.users).document(uid).updateData([
+                K.Firestore.betsLost: FieldValue.increment(Int64(1)),
+                K.Firestore.beersOutstanding: FieldValue.increment(beers),
+                K.Firestore.shotsOutstanding: FieldValue.increment(shots),
+                K.Firestore.beersReceived: FieldValue.increment(beers),
+                K.Firestore.shotsReceived: FieldValue.increment(shots)
+            ])
+        }
+        
+        // Get winning users
+        let winners = winningSide == .one ? bet.side1Users : bet.side2Users
+        for user in winners {
+            let uid = user.key
+            db.collection(K.Firestore.users).document(uid).updateData([
+                K.Firestore.betsWon: FieldValue.increment(Int64(1)),
+                K.Firestore.beersGiven: FieldValue.increment(beers),
+                K.Firestore.shotsGiven: FieldValue.increment(shots)
+            ])
+        }
+    }
+    
+    func updateCountersOnBetFulfillment(with bet: Bet?) {
+        // Passed as completion handler to updateBet when bet is marked as fulfilled by user
+        guard let bet = bet,
+              let uid = currentUser?.uid else { return }
+        let beers = Int64(bet.stake.beers)
+        let shots = Int64(bet.stake.shots)
+        
+        // Remove outstanding drinks from user count
+        db.collection(K.Firestore.users).document(uid).updateData([
+            K.Firestore.beersOutstanding: FieldValue.increment(-beers),
+            K.Firestore.shotsOutstanding: FieldValue.increment(-shots)
+        ])
+    }
+    
     func readBet(withBetID id: BetID?, completion: @escaping (_ bet: Bet) -> ()) {
+        // One time bet reads
         guard let id = id else { return }
         self.db.collection(K.Firestore.bets).whereField(K.Firestore.betID, isEqualTo: id)
             .getDocuments { (querySnapshot, error) in
@@ -211,11 +303,40 @@ class FirestoreHelper {
             }
     }
     
+    func addBetDetailListener(with id: BetID, completion: @escaping (_ bet: Bet) -> ()) {
+        guard betDetailListener == nil else {
+            print("ERROR: attempted to create a new bet detail listener, but a previous one was not cleaned up.")
+            return
+        }
+        betDetailListener = db.collection(K.Firestore.bets)
+            .document(id)
+            .addSnapshotListener { (documentSnapshot, error) in
+                if let error = error {
+                    print("Error adding listener for bet \(id): \(error)")
+                } else {
+                    let result = Result {
+                        try documentSnapshot?.data(as: Bet.self)
+                    }
+                    switch result {
+                    case .success(let bet):
+                        if let unwrappedBet = bet {
+                            // Successfully unwrapped a bet
+                            completion(unwrappedBet)
+                        } else {
+                            print("Attempted to add listener but failed as document bet \(id) does not exist.")
+                        }
+                    case .failure(let error):
+                        print("Error decoding bet \(id): \(error)")
+                    }
+                }
+            }
+    }
+    
     func addUserInvolvedBetsListener(completion: @escaping (_ bets: [Bet]) -> ()) {
         guard let uid = currentUser?.uid else { return }
         
         // Query for all bets user is involved in. Filter in the view models based on invited/accepted
-        let listener = db.collection(K.Firestore.bets)
+        betDashboardListener = db.collection(K.Firestore.bets)
             .whereField(K.Firestore.allUsers, arrayContains: uid)
             .order(by: K.Firestore.dateOpened, descending: true)
             .addSnapshotListener { [weak self] (querySnapshot, error) in
@@ -248,7 +369,6 @@ class FirestoreHelper {
                     completion(bets)
                 }
             }
-        betDashboardListener = listener
     }
     
     func initFetchOtherBets(completion: @escaping (_ bets: [Bet]) -> ()) {
@@ -336,10 +456,18 @@ class FirestoreHelper {
         }
     }
     
-    func deleteBet(withBetID betID: BetID) {
-        db.collection(K.Firestore.bets).document(betID).delete { error in
+    func deleteBet(_ bet: Bet) {
+        guard let id = bet.betID else { return }
+        db.collection(K.Firestore.bets).document(id).delete { [weak self] error in
             if let error = error {
                 print("Error deleting bet: \(error)")
+            } else {
+                // Decrement every involved user's bet counts
+                for uid in bet.acceptedUsers {
+                    self?.db.collection(K.Firestore.users).document(uid).updateData([
+                        K.Firestore.numBets: FieldValue.increment(Int64(-1))
+                    ])
+                }
             }
         }
     }
@@ -546,6 +674,11 @@ class FirestoreHelper {
         involvedBets = []
     }
     
+    func removeBetDetailListener() {
+        betDetailListener?.remove()
+        betDetailListener = nil
+    }
+    
     func unsubscribeAllSnapshotListeners() {
         // To be called at logout
         // Remember to include snapshot unsubs here as you add them elsewhere!
@@ -553,6 +686,8 @@ class FirestoreHelper {
         userListeners = []
         betDashboardListener?.remove()
         betDashboardListener = nil
+        betDetailListener?.remove()
+        betDetailListener = nil
         friendsListener?.remove()
         friendsListener = nil
         allUserListener?.remove()

@@ -50,9 +50,11 @@ class ProfileCoordinator: ChildCoordinating {
         withBetID id: BetID,
         userInvolvement: BetInvolvementType = .uninvolved
     ) {
-        let vm = BetDetailViewModel(firestoreHelper: firestoreHelper,
-                                    userInvolvement: userInvolvement)
-        vm.setBetDocID(withBetID: id)
+        let vm = BetDetailViewModel(
+            firestoreHelper: firestoreHelper,
+            betID: id,
+            userInvolvement: userInvolvement
+        )
         let vc = BetDetailViewController(viewModel: vm)
         vc.coordinator = self
 

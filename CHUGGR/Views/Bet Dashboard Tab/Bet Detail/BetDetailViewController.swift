@@ -37,6 +37,7 @@ class BetDetailViewController: UIViewController {
 
     @IBOutlet weak var bottomSendView: UIView!
     @IBOutlet weak var messageTableView: UITableView!
+    @IBOutlet weak var topTableViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomTableViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var sendButton: UIButton!
@@ -63,14 +64,17 @@ class BetDetailViewController: UIViewController {
         setUpViewController()
         initViewModel()
         configureTableView()
-        
-//        messageTableView.rowHeight = UITableView.automaticDimension
-//
-//        messageTableView.estimatedRowHeight = 200
-
-        // scroll to bottom of table, to put in message load/sort function later
-//        let indexPath = IndexPath(row: messages.count - 1, section: 0)
-//        messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.checkInvolvementStatus()
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // Clean up listener when no longer needed
+        viewModel.clearBetListener()
+        super.viewWillDisappear(animated)
     }
     
     func setUpViewController() {
@@ -98,7 +102,13 @@ class BetDetailViewController: UIViewController {
                 self?.setUpForInvolvementState()
             }
         }
-        viewModel.fetchBet()
+        
+        viewModel.showAlreadyClosedAlert = { [weak self] in
+            DispatchQueue.main.async {
+                self?.showAlreadyClosedAlert()
+            }
+        }
+        viewModel.setBetListener()
     }
     
     func updateBetCard() {
@@ -167,7 +177,6 @@ class BetDetailViewController: UIViewController {
             rightLabel5.text = nil
             leftLabel6.text = nil
             rightLabel6.text = nil
-            
         }
     }
     
@@ -179,8 +188,10 @@ class BetDetailViewController: UIViewController {
             setUpForAcceptedState()
         case .uninvolved:
             setUpForUninvolvedState()
+        case .outstanding:
+            setUpForOutstandingState()
         case .closed:
-            return // TODO: handle this case
+            setUpForClosedState()
         }
     }
     
@@ -204,27 +215,60 @@ class BetDetailViewController: UIViewController {
         messageTableView.isHidden = false
         bottomSendView.isHidden = false
         firstButton.isEnabled = true
+        firstButton.isHidden = false
         firstButton.backgroundColor = UIColor(named: K.colors.orange)
         firstButton.setTitle("CLOSE BET", for: .normal)
         secondButton.isHidden = true
         thirdButton.isHidden = true
         fourthButton.isHidden = true
+        topTableViewConstraint.constant = 10
         bottomTableViewConstraint.constant = 0
     }
     
     func setUpForUninvolvedState() {
-        // Remove delete button if present
+        // Leaving the option open to do separate config for uninvolved
+        // Most likely will keep uninvolved/closed the same
+       setUpForClosedState()
+    }
+    
+    func setUpForOutstandingState() {
+        // Remove delete button. You can't escape if you've lost the bet!
         navigationItem.rightBarButtonItem = nil
-
-        firstButton.isEnabled = false
-        firstButton.backgroundColor = UIColor(named: K.colors.gray3)
+        
+        firstButton.isEnabled = true
+        firstButton.isHidden = false
+        secondButton.isHidden = true
+        thirdButton.isHidden = true
+        fourthButton.isHidden = true
+        firstButton.backgroundColor = UIColor(named: K.colors.orange)
+        firstButton.setTitle("MARK COMPLETE", for: .normal)
+        bottomSendView.isHidden = true
+        messageTableView.isHidden = false
+        topTableViewConstraint.constant = 10
+        bottomTableViewConstraint.constant = -bottomSendView.frame.height
+    }
+    
+    func setUpForClosedState() {
+        navigationItem.rightBarButtonItem = nil
+        
+        firstButton.isHidden = true
+        secondButton.isHidden = true
+        thirdButton.isHidden = true
+        fourthButton.isHidden = true
+        // Extend table view closer to bet card
+        topTableViewConstraint.constant = -firstButton.frame.height
         bottomSendView.isHidden = true
         bottomTableViewConstraint.constant = -bottomSendView.frame.height
     }
     
+    func showAlreadyClosedAlert() {
+        let alert = UIAlertController(title: "Bet already closed", message: "It looks like this bet has recently been closed by another user.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
+    
+    // MARK:- Button Methods
     @objc func deleteBet() {
-        // TODO: need to decrement bet counts etc. for all involved users when bet is deleted.
-        guard let betID = viewModel.bet?.betID else { return }
         let alert = UIAlertController(
             title: "Delete bet?",
             message: "Careful. No amount of beer can bring it back.",
@@ -242,16 +286,120 @@ class BetDetailViewController: UIViewController {
                 title: "Delete",
                 style: .destructive
             ) { [weak self] _ in
-                self?.viewModel.deleteBet(withBetID: betID)
+                self?.viewModel.deleteBet()
                 self?.coordinator?.pop()
         })
         present(alert, animated: true)
         
     }
     
+    @IBAction func firstButtonPressed(_ sender: UIButton) {
+        switch viewModel.userInvolvement {
+        case .invited:
+            viewModel.acceptBet(side: .one)
+        case .accepted:
+            showWinnerActionSheet()
+        case .outstanding:
+            showFulfillActionSheet()
+        case .closed, .uninvolved:
+            return
+        }
+    }
+    
+    @IBAction func secondButtonPressed(_ sender: UIButton) {
+        if viewModel.userInvolvement == .invited {
+            viewModel.acceptBet(side: .two)
+        }
+    }
+    
+    @IBAction func thirdButtonPressed(_ sender: UIButton) {
+        if viewModel.userInvolvement == .invited {
+            // TODO: go to bet entry page to modify.
+        }
+    }
+    
+    @IBAction func fourthButtonPressed(_ sender: UIButton) {
+        if viewModel.userInvolvement == .invited {
+            let alert = UIAlertController(
+                title: "Reject bet?",
+                message: "You cannot be added back to the bet!",
+                preferredStyle: .alert
+            )
+            alert.addAction(
+                UIAlertAction(
+                    title: "Cancel",
+                    style: .cancel,
+                    handler: nil
+                )
+            )
+            alert.addAction(
+                UIAlertAction(
+                    title: "Reject",
+                    style: .destructive
+                ) { [weak self] _ in
+                    self?.viewModel.rejectBet()
+                    self?.coordinator?.pop()
+            })
+            present(alert, animated: true)
+        }
+    }
+    
     @IBAction func sendPressed(_ sender: UIButton) {
     }
     
+    func showWinnerActionSheet() {
+        // Give user options to choose the winner of the bet.
+        let alert = UIAlertController(
+            title: "Who won?",
+            message: "Choose a winner",
+            preferredStyle: .actionSheet
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: viewModel.getActionSheetStrings().side1,
+                style: .default
+            ) { [weak self] action in
+                self?.viewModel.closeBet(withWinner: .one)
+            })
+        alert.addAction(
+            UIAlertAction(
+                title: viewModel.getActionSheetStrings().side2,
+                style: .default
+            ) { [weak self] action in
+                self?.viewModel.closeBet(withWinner: .two)
+            })
+        alert.addAction(
+            UIAlertAction(
+                title: "Cancel",
+                style: .cancel,
+                handler: nil
+            )
+        )
+        present(alert, animated: true)
+    }
+    
+    func showFulfillActionSheet() {
+        let alert = UIAlertController(
+            title: "CONFIRM",
+            message: "Have you fulfilled the bet stake, providing satisfactory proof to the winners of this bet?",
+            preferredStyle: .actionSheet
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "I promise!",
+                style: .default
+            ) { [weak self] action in
+                self?.viewModel.fulfillBet()
+            })
+        alert.addAction(
+            UIAlertAction(
+                title: "Not yet...",
+                style: .cancel,
+                handler: nil
+            )
+        )
+        present(alert, animated: true)
+    }
 }
 
 extension BetDetailViewController: UITableViewDelegate, UITableViewDataSource {

@@ -140,8 +140,10 @@ class NewBetViewModel {
     func changeSide(_ side: Int) {
         // Handle user toggling side selection control
         switch side {
-        case 0...1:
-            selectedSide = Side(rawValue: side) ?? .one
+        case 0:
+            selectedSide = .one
+        case 1:
+            selectedSide = .two
         default:
             return
         }
