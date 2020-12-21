@@ -151,8 +151,6 @@ class FirestoreHelper {
                 case .success(let user):
                     if let user = user {
                         self?.currentUser = user
-                        // TODO: is this where we call the main thread?
-                        
                     } else {
                         print("Document does not exist")
                     }
@@ -374,12 +372,13 @@ class FirestoreHelper {
     func initFetchOtherBets(completion: @escaping (_ bets: [Bet]) -> ()) {
         guard let uid = currentUser?.uid else { return }
         
-        // Query for other bets around the platform where user is not involved.
+        // Query for other ACTIVE bets around the platform where user is not involved.
         // TODO: As app grows, need to limit query to FRIENDS ONLY
         otherBetQuery = db.collection(K.Firestore.bets)
+            .whereField(K.Firestore.isFinished, isEqualTo: false)
             // Can't query for fields NOT containing current UID, so have to just pull a bunch of bets and filter client side :(
             .order(by: K.Firestore.dateOpened, descending: true)
-            .limit(to: 15)
+            .limit(to: 10)
         
         otherBetQuery?.getDocuments { [weak self] (querySnapshot, error) in
             if let error = error {

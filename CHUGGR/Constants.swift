@@ -48,6 +48,7 @@ struct K {
         static let firstName = "firstName"
         static let friends = "friends"
         static let invitedUsers = "invitedUsers"
+        static let isFinished = "isFinished"
         static let numBets = "numBets"
         static let numFriends = "numFriends"
         static let userName = "userName"
