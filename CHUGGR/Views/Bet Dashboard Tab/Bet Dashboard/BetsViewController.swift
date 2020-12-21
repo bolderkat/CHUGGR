@@ -153,7 +153,7 @@ extension BetsViewController: UITableViewDelegate {
         betsTable.delegate = self
         betsTable.register(UINib(nibName: K.cells.betCell, bundle: nil),
                            forCellReuseIdentifier: K.cells.betCell)
-        betsTable.rowHeight = 55.0
+        betsTable.rowHeight = 110.0
 
     }
     

@@ -85,7 +85,7 @@ extension PendingBetsViewController: UITableViewDelegate {
     func configureTableView() {
         tableView.delegate = self
         tableView.register(UINib(nibName: K.cells.betCell, bundle: nil), forCellReuseIdentifier: K.cells.betCell)
-        tableView.rowHeight = 55.0
+        tableView.rowHeight = 110.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
