@@ -338,7 +338,6 @@ class BetDetailViewController: UIViewController {
                     style: .destructive
                 ) { [weak self] _ in
                     self?.viewModel.rejectBet()
-                    self?.coordinator?.pop()
             })
             present(alert, animated: true)
         }

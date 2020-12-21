@@ -35,6 +35,11 @@ class PendingBetsViewController: UIViewController {
         configureTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetchPendingBets()
+    }
+    
     func setUpViewController() {
         title = "Pending Bets"
     }
