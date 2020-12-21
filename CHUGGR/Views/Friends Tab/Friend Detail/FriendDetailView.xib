@@ -135,9 +135,8 @@
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="F1g-Y1-RvT">
                     <rect key="frame" x="16" y="356" width="382" height="32"/>
                     <segments>
-                        <segment title="All Bets"/>
                         <segment title="Active"/>
-                        <segment title="Videos"/>
+                        <segment title="All Bets"/>
                     </segments>
                 </segmentedControl>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pJK-AS-V9V">

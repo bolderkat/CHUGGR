@@ -83,6 +83,7 @@ class FriendDetailViewController: UIViewController {
                 self?.configureForFriendStatus()
             }
         }
+        viewModel.updateFriendData()
         viewModel.checkFriendStatus()
     }
     
