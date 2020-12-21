@@ -11,6 +11,7 @@ class MainCoordinator: ParentCoordinating {
     var window: UIWindow
     var childCoordinators = [ChildCoordinating]()
     let firestoreHelper: FirestoreHelper
+    let tabController = MainTabBarController()
     
     init?(window: UIWindow?, firestoreHelper: FirestoreHelper) {
         guard let window = window else { return nil } // fail init if no window
@@ -36,7 +37,6 @@ class MainCoordinator: ParentCoordinating {
     }
     
     func goToTabBar() {
-        let tabController = MainTabBarController()
         tabController.coordinator = self
         startTabBarCoordinators()
         tabController.viewControllers = childCoordinators.map { $0.navigationController }
@@ -66,6 +66,18 @@ class MainCoordinator: ParentCoordinating {
             $0.parentCoordinator = self
             $0.start()
         }
+    }
+    
+    func openNewBetDetail(with id: BetID) {
+        UIView.transition(
+            with: window,
+            duration: 0.3,
+            options: .transitionCrossDissolve,
+            animations: nil,
+            completion: nil
+        )
+        tabController.selectedIndex = 0
+        childCoordinators[0].openBetDetail(withBetID: id, userInvolvement: .accepted)
     }
     
     func logOut() {

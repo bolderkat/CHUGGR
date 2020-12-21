@@ -58,17 +58,14 @@ class NewBetsCoordinator: ChildCoordinating {
     
     func openBetDetail(
         withBetID id: BetID,
-        userInvolvement: BetInvolvementType = .uninvolved
+        userInvolvement: BetInvolvementType = .accepted
     ) {
-        let vm = BetDetailViewModel(
-            firestoreHelper: firestoreHelper,
-            betID: id,
-            userInvolvement: userInvolvement
-        )
-        let vc = BetDetailViewController(viewModel: vm)
-        vc.coordinator = self
+        // Open new bet in Bets tab
+        parentCoordinator?.openNewBetDetail(with: id)
 
-        navigationController.pushViewController(vc, animated: true)
+        
+        // Restart coordinator to provide fresh New Bet view when returining to this coordinator
+        start()
     }
 
 }

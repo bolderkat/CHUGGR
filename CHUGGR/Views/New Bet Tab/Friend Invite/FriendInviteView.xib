@@ -59,9 +59,9 @@
                             <viewLayoutGuide key="frameLayoutGuide" id="Ght-eJ-f7H"/>
                         </scrollView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9f1-gg-IvL">
-                            <rect key="frame" x="373" y="18" width="25" height="24"/>
+                            <rect key="frame" x="373" y="10" width="25" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="24" id="57i-0n-6NV"/>
+                                <constraint firstAttribute="height" constant="40" id="57i-0n-6NV"/>
                                 <constraint firstAttribute="width" constant="25" id="zLC-t1-Pik"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
