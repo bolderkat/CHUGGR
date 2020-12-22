@@ -33,6 +33,12 @@ class MainCoordinator: ParentCoordinating {
             viewModel: UserDetailEntryViewModel(firestoreHelper: firestoreHelper)
         )
         vc.mainCoordinator = self
+        UIView.transition(
+            with: window,
+            duration: 0.5,
+            options: .transitionFlipFromRight,
+            animations: nil,
+            completion: nil)
         window.rootViewController = vc
     }
     
@@ -44,7 +50,7 @@ class MainCoordinator: ParentCoordinating {
         UIView.transition(
             with: window,
             duration: 0.8,
-            options: .transitionCurlUp, // TODO: get a better animation... or don't 😇
+            options: .transitionCurlUp,
             animations: nil,
             completion: nil)
         window.rootViewController = tabController

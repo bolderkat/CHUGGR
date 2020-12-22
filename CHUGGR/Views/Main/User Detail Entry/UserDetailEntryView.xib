@@ -18,7 +18,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="UserDetailsEntryViewController">
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -55,16 +55,22 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gby-92-F16">
-                    <rect key="frame" x="0.0" y="140" width="414" height="400"/>
+                    <rect key="frame" x="0.0" y="140" width="414" height="290"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="400" id="xBK-WX-dEe"/>
+                        <constraint firstAttribute="height" constant="290" id="xBK-WX-dEe"/>
                     </constraints>
                 </tableView>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username already taken. Please try another." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Co-20-inF">
                     <rect key="frame" x="39" y="768" width="336" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" name="Burnt Umber"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile edits are coming in a later release, so double check that everything looks good before you hit SUBMIT 😇" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFD-63-dRV">
+                    <rect key="frame" x="40" y="667" width="334" height="61"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" name="Gray 3"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
@@ -76,11 +82,14 @@
                 <constraint firstItem="7SR-Ns-yAk" firstAttribute="top" secondItem="8Co-20-inF" secondAttribute="bottom" constant="10" id="Bip-Rz-Q1z"/>
                 <constraint firstItem="4M6-bA-NpF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="DPM-bd-bbp"/>
                 <constraint firstItem="gby-92-F16" firstAttribute="top" secondItem="4M6-bA-NpF" secondAttribute="bottom" id="KIe-zN-nQ5"/>
+                <constraint firstItem="PFD-63-dRV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="LIv-Xz-5Fc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="7SR-Ns-yAk" secondAttribute="bottom" constant="13" id="WNz-ED-RMR"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PFD-63-dRV" secondAttribute="trailing" constant="40" id="XC3-yo-ZmW"/>
                 <constraint firstItem="gby-92-F16" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Yu0-sc-RfW"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7SR-Ns-yAk" secondAttribute="trailing" constant="16" id="alk-A5-jbr"/>
                 <constraint firstItem="4M6-bA-NpF" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="dT3-Ap-SnG"/>
                 <constraint firstItem="7SR-Ns-yAk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="gQ4-Jz-YuO"/>
+                <constraint firstItem="8Co-20-inF" firstAttribute="top" secondItem="PFD-63-dRV" secondAttribute="bottom" constant="40" id="wfR-9S-WYN"/>
                 <constraint firstItem="gby-92-F16" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="xAk-y1-z7A"/>
             </constraints>
             <point key="canvasLocation" x="131.8840579710145" y="131.91964285714286"/>
@@ -92,6 +101,9 @@
         </namedColor>
         <namedColor name="CHUGGR Orange">
             <color red="1" green="0.60000002384185791" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Gray 3">
+            <color red="0.61568627450980395" green="0.61568627450980395" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
