@@ -42,6 +42,8 @@
 		656D9471252BF60100EDEB7F /* CHUGGRUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D9470252BF60100EDEB7F /* CHUGGRUITests.swift */; };
 		656D9482252BF6E200EDEB7F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 656D9481252BF6E100EDEB7F /* GoogleService-Info.plist */; };
 		657D95AD25929AC20065187A /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D95AC25929AC20065187A /* Tab.swift */; };
+		657D95B22592AC990065187A /* Tondu_Beta.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 657D95B12592AC990065187A /* Tondu_Beta.ttf */; };
+		657D95B72592AE950065187A /* Superstar M54.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 657D95B62592AE940065187A /* Superstar M54.ttf */; };
 		658F11262532747F003B6303 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F11242532747F003B6303 /* MessageCell.swift */; };
 		658F11272532747F003B6303 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658F11252532747F003B6303 /* MessageCell.xib */; };
 		658F112F25327B2C003B6303 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F112E25327B2C003B6303 /* Message.swift */; };
@@ -165,6 +167,8 @@
 		656D9472252BF60100EDEB7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		656D9481252BF6E100EDEB7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		657D95AC25929AC20065187A /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		657D95B12592AC990065187A /* Tondu_Beta.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Tondu_Beta.ttf; path = ../../../../Library/Fonts/Tondu_Beta.ttf; sourceTree = "<group>"; };
+		657D95B62592AE940065187A /* Superstar M54.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Superstar M54.ttf"; path = "../../../../Library/Fonts/Superstar M54.ttf"; sourceTree = "<group>"; };
 		658F11242532747F003B6303 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		658F11252532747F003B6303 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		658F112E25327B2C003B6303 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -467,6 +471,8 @@
 		657D959D25927E8C0065187A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				657D95B12592AC990065187A /* Tondu_Beta.ttf */,
+				657D95B62592AE940065187A /* Superstar M54.ttf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -764,6 +770,7 @@
 				65C681F52585DF8F003160F0 /* BetsView.xib in Resources */,
 				65543D0B25772B7100B8C549 /* StakeEntryCell.xib in Resources */,
 				65E948452589E43900A71365 /* FriendCell.xib in Resources */,
+				657D95B22592AC990065187A /* Tondu_Beta.ttf in Resources */,
 				65BBCD0C258F3D66004BBB40 /* PendingBetsView.xib in Resources */,
 				65C6821B2585E334003160F0 /* VideosViewController.xib in Resources */,
 				65B3D7BF258C766F008F274A /* InviteCell.xib in Resources */,
@@ -771,6 +778,7 @@
 				656D9458252BF60100EDEB7F /* Assets.xcassets in Resources */,
 				65F563722585C21B00033E3E /* ProfileView.xib in Resources */,
 				6563F93025844DC800DE69EC /* WelcomeView.xib in Resources */,
+				657D95B72592AE950065187A /* Superstar M54.ttf in Resources */,
 				65C682022585E111003160F0 /* NewBetView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
