@@ -176,11 +176,11 @@ class BetDetailViewModel {
         
         switch names.count {
         case 0:
-            return "No one yet"
+            return ""
         case 1:
             return names.first
-        case 2:
-            return "\(names[0]), \(names[1])"
+        case 2...3:
+            return names.joined(separator: ", ")
         default:
             return "\(names.count) people"
         }
@@ -200,39 +200,45 @@ class BetDetailViewModel {
         return "\(bet.stake.beers) 🍺 \(bet.stake.shots) 🥃"
     }
     
-    func getBetStatus() -> String? {
-        guard let bet = bet else { return nil }
+    func getBetStatusAndColor() -> (label: String, color: String) {
+        guard let bet = bet else { return ("IN PLAY", K.colors.orange) }
         
         // Check if bet is finished/has winner. If not, display "IN PLAY"
-        guard let winner = bet.winner else { return "IN PLAY" }
+        guard let winner = bet.winner else { return ("IN PLAY", K.colors.orange) }
         
         // Check if user is involved and which side they are on
-        var currentUserSide: Side?
-        guard let currentUID = firestoreHelper.currentUser?.uid else { return nil }
-        if let _ = bet.side1Users[currentUID] {
-            currentUserSide = .one
+        var userSide: Side? = nil
+        guard let uid = firestoreHelper.currentUser?.uid else {
+            return ("", K.colors.orange)
+        }
+        
+        let nameString = "YOU"
+        
+
+        if let _ = bet.side1Users[uid] {
+            userSide = .one
         }
         
         
-        if let _ = bet.side2Users[currentUID] {
-            currentUserSide = .two
+        if let _ = bet.side2Users[uid] {
+            userSide = .two
         }
         
         // If user is on winning side
-        if let side = currentUserSide,
+        if let side = userSide,
            side == winner {
-            return "WON"
+            return ("\(nameString) WON", K.colors.forestGreen)
         }
         
         // If user has stake outstanding
-        if bet.outstandingUsers.contains(currentUID) {
-            return "OUTSTANDING"
+        if bet.outstandingUsers.contains(uid) {
+            return ("OUTSTANDING", K.colors.burntUmber)
         }
         
-        // If user is on losing side and has completed stake
-        if let side = currentUserSide,
+        // If user is on losing side
+        if let side = userSide,
            side != winner {
-            return "LOST"
+            return ("\(nameString) LOST", K.colors.burntUmber)
         }
         
         // If user uninvolved, need to switch on possible outcomes to display
@@ -240,20 +246,20 @@ class BetDetailViewModel {
         case .one:
             switch bet.type {
             case .spread:
-                return "OVER"
+                return ("OVER", K.colors.midBlue)
             case .moneyline:
-                return String(bet.team1 ?? "").capitalized
+                return (String(bet.team1 ?? "").capitalized, K.colors.midBlue)
             case .event:
-                return "FOR WINS"
+                return ("FOR WINS", K.colors.midBlue)
             }
         case .two:
             switch bet.type {
             case .spread:
-                return "UNDER"
+                return ("UNDER", K.colors.midBlue)
             case .moneyline:
-                return String(bet.team2 ?? "").capitalized
+                return (String(bet.team2 ?? "").capitalized, K.colors.midBlue)
             case .event:
-                return "AGAINST WINS"
+                return ("AGAINST WINS", K.colors.midBlue)
             }
         }
     }

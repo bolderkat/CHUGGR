@@ -24,7 +24,7 @@ class BetCell: UITableViewCell {
     }
     
     func configure(withVM vm: BetCellViewModel) {
-        titleLabel.text = vm.bet.title
+        titleLabel.text = vm.getTitle()
         side1Label.text = vm.getSideLabels(for: .one)
         side1NamesLabel.text = vm.getSideNames(for: .one)
         side2Label.text = vm.getSideLabels(for: .two)

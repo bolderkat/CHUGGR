@@ -36,6 +36,18 @@ struct BetCellViewModel {
         }
     }
     
+    func getTitle() -> String {
+        if bet.type == .spread {
+            guard let line = bet.line else { return bet.title }
+            // Truncate decimal if round number, otherwise keep one decimal.
+            let format = line.truncatingRemainder(dividingBy: 1) == 0 ? "%.0f" : "%.1f"
+            let lineString = String(format: format, line)
+            return "\(bet.title): \(lineString)"
+        } else {
+            return bet.title
+        }
+    }
+    
     func getSideNames(for side: Side) -> String {
         // Provide names of involved users to bet cell
         var names = [String]()
@@ -116,7 +128,7 @@ struct BetCellViewModel {
         
         // If user has stake outstanding
         if bet.outstandingUsers.contains(uid) {
-            return ("OUTSTANDING", K.colors.orange)
+            return ("OUTSTANDING", K.colors.burntUmber)
         }
         
         // If user is on losing side

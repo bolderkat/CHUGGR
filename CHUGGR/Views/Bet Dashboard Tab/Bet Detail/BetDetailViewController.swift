@@ -129,7 +129,8 @@ class BetDetailViewController: UIViewController {
             leftLabel5.text = BetDetailViewModel.Labels.Spread.leftLabel5
             rightLabel5.text = viewModel.getStakeString()
             leftLabel6.text = BetDetailViewModel.Labels.Spread.leftLabel6
-            rightLabel6.text = viewModel.getBetStatus()
+            rightLabel6.text = viewModel.getBetStatusAndColor().label
+            rightLabel6.textColor = UIColor(named: viewModel.getBetStatusAndColor().color)
             
         case .moneyline:
             titleLabel.text = bet?.title
@@ -145,7 +146,8 @@ class BetDetailViewController: UIViewController {
             leftLabel5.text = BetDetailViewModel.Labels.Moneyline.leftLabel5
             rightLabel5.text = viewModel.getStakeString()
             leftLabel6.text = BetDetailViewModel.Labels.Moneyline.leftLabel6
-            rightLabel6.text = viewModel.getBetStatus()
+            rightLabel6.text = viewModel.getBetStatusAndColor().label
+            rightLabel6.textColor = UIColor(named: viewModel.getBetStatusAndColor().color)
             
         case .event:
             titleLabel.text = bet?.title
@@ -161,7 +163,8 @@ class BetDetailViewController: UIViewController {
             leftLabel5.text = BetDetailViewModel.Labels.Event.leftLabel5
             rightLabel5.text = viewModel.getStakeString()
             leftLabel6.text = BetDetailViewModel.Labels.Event.leftLabel6
-            rightLabel6.text = viewModel.getBetStatus()
+            rightLabel6.text = viewModel.getBetStatusAndColor().label
+            rightLabel6.textColor = UIColor(named: viewModel.getBetStatusAndColor().color)
             
         case .none:
             titleLabel.text = "Bet not found."
