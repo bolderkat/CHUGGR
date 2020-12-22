@@ -68,6 +68,10 @@ extension BetEntryCell: UITextFieldDelegate {
         replacementString string: String
     ) -> Bool {
         switch rowType {
+        case .event, .stat:
+            return limitCharacters(to: 60, range: range, string: string)
+        case .team1, .team2:
+            return limitCharacters(to: 24, range: range, string: string)
         case .line:
             // Filter out any non-numeric/non-decimal point entries if line entry cell
             let aSet = NSCharacterSet(charactersIn:"0123456789.").inverted
@@ -81,9 +85,22 @@ extension BetEntryCell: UITextFieldDelegate {
             } else {
                 return string == numberFiltered
             }
-        case .dueDate, .event, .gameday, .stake, .stat, .team1, .team2:
+        case .dueDate, .gameday, .stake:
             return true
         }
+    }
+    
+    func limitCharacters(to limit: Int, range: NSRange, string: String) -> Bool {
+        let characterLimit = limit
+        
+        // Determine length of new entry
+        let startingLength = textField.text?.count ?? 0
+        let lengthToAdd = string.count
+        let lengthToReplace = range.length
+        let newLength = startingLength + lengthToAdd - lengthToReplace
+        
+        // Only allow text field change if less than 60 chars.
+        return newLength <= characterLimit
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
