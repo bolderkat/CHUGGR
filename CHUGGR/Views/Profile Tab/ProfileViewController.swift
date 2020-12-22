@@ -46,7 +46,9 @@ class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // Refresh bets and update user data
         viewModel.initFetchPastBets()
+        viewModel.bindUserToListener()
     }
     
     func configureViewController() {
@@ -85,7 +87,7 @@ class ProfileViewController: UIViewController {
                 self?.updateTableView()
             }
         }
-        viewModel.attachUserToListener()
+        viewModel.bindUserToListener()
         viewModel.initFetchPastBets()
     }
     

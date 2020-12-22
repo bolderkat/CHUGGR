@@ -38,8 +38,13 @@ class ProfileViewModel {
     }
     
     // MARK:- Firestore handlers and bet processing
-    func attachUserToListener() {
-        // Called when user changes in FirestoreHelper
+    func bindUserToListener() {
+        // Update user to latest data
+        if firestoreHelper.currentUser != nil {
+            user = firestoreHelper.currentUser!
+        }
+        
+        // Binding to catch changes from user listener
         firestoreHelper.currentUserDidChange = { [weak self] user in
             self?.user = user
         }
