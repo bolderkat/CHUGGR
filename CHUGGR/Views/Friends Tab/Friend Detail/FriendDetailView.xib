@@ -136,14 +136,17 @@
                     <rect key="frame" x="16" y="356" width="382" height="32"/>
                     <segments>
                         <segment title="Active"/>
-                        <segment title="All Bets"/>
+                        <segment title="Past Bets"/>
                     </segments>
+                    <connections>
+                        <action selector="segmentedControlChanged:" destination="-1" eventType="valueChanged" id="pYa-ZV-9Bb"/>
+                    </connections>
                 </segmentedControl>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pJK-AS-V9V">
                     <rect key="frame" x="0.0" y="403" width="414" height="459"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lp5-Ux-Adj" customClass="HairlineView" customModule="CHUGGR" customModuleProvider="target">
+                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lp5-Ux-Adj" customClass="HairlineView" customModule="CHUGGR" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="403" width="414" height="1"/>
                     <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                     <constraints>
@@ -199,7 +202,6 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6o9-uP-zBJ" secondAttribute="trailing" constant="16" id="nNm-DV-jsK"/>
                 <constraint firstItem="ZY6-XO-KAO" firstAttribute="leading" secondItem="XAx-d1-t1H" secondAttribute="trailing" constant="16" id="oTJ-I6-cmC"/>
                 <constraint firstItem="QeP-2J-ayN" firstAttribute="top" secondItem="6o9-uP-zBJ" secondAttribute="bottom" constant="16" id="q1s-wI-c6Z"/>
-                <constraint firstItem="F1g-Y1-RvT" firstAttribute="bottom" secondItem="lp5-Ux-Adj" secondAttribute="top" constant="-16" id="uaf-5s-LkA"/>
                 <constraint firstItem="pJK-AS-V9V" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="uoT-A3-Op6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QeP-2J-ayN" secondAttribute="trailing" id="zxm-xd-3gX"/>
             </constraints>

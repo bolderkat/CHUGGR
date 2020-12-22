@@ -9,6 +9,7 @@ import UIKit
 
 class BetCell: UITableViewCell {
 
+    static let height: CGFloat = 110.0
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var side1Label: UILabel!
     @IBOutlet weak var side1NamesLabel: UILabel!

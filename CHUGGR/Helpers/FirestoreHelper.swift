@@ -11,13 +11,20 @@ import FirebaseFirestoreSwift
 
 class FirestoreHelper {
     private let db = Firestore.firestore()
-    private(set) var currentUser: CurrentUser?
+    private(set) var currentUser: CurrentUser? {
+        didSet {
+            currentUserDidChange?()
+        }
+    }
     private(set) var friends: [FriendSnippet] = []
     private(set) var allUsers: [FullFriend] = []
     private(set) var involvedBets: [Bet] = []
     
     private var userListeners: [ListenerRegistration] = []
     private(set) var betDashboardListener: ListenerRegistration?
+    private(set) var friendActiveBetListener: ListenerRegistration?
+    private(set) var friendOutstandingBetListener: ListenerRegistration?
+    private(set) var friendDetailListener: ListenerRegistration?
     private(set) var betDetailListener: ListenerRegistration?
     private(set) var friendsListener: ListenerRegistration?
     private(set) var allUserListener: ListenerRegistration?
@@ -25,6 +32,15 @@ class FirestoreHelper {
     // Storing bet queries and last bet of each query for paginated population of infinitely scrolling table view
     private var otherBetQuery: Query?
     private var lastBet: QueryDocumentSnapshot?
+    
+    // Past bet query for Friend Detail and Profile Views
+    private var friendPastBetQuery: Query?
+    private var friendLastBet: QueryDocumentSnapshot?
+    
+    private var profilePastBetQuery: Query?
+    private var profileLastBet: QueryDocumentSnapshot?
+    
+    var currentUserDidChange: (() -> ())? // for use by profile view ONLY
     
     // MARK:- User CRUD
     func createNewUser(
@@ -182,6 +198,38 @@ class FirestoreHelper {
         return ref.documentID
     }
     
+    func readBet(withBetID id: BetID?, completion: @escaping (_ bet: Bet) -> ()) {
+        // One time bet reads
+        guard let id = id else { return }
+        self.db.collection(K.Firestore.bets).whereField(K.Firestore.betID, isEqualTo: id)
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    let document = querySnapshot!.documents.first
+                    let result = Result {
+                        try document?.data(as: Bet.self)
+                    }
+                    switch result {
+                    case .success(let betFromDoc):
+                        if let unwrappedBet = betFromDoc {
+                            // Successfully initialized a Bet value from QuerySnapshot
+                            // call and pass completion to getBetFirstNames
+                            completion(unwrappedBet)
+                        } else {
+                            // A nil value was successfully initialized from the QuerySnapshot,
+                            // or the DocumentSnapshot was nil.
+                            print("Document does not exist")
+                        }
+                    case .failure(let error):
+                        // A Bet value could not be initialized from the QuerySnapshot.
+                        print("Error decoding bet: \(error)")
+                    }
+                }
+            }
+    }
+    
+    
     func updateBet(_ bet: Bet, completion: ((Bet?) -> ())?) {
         guard let id = bet.betID else { return }
         do {
@@ -189,6 +237,22 @@ class FirestoreHelper {
             completion?(bet)
         } catch {
             print("Error updating bet \(id)")
+        }
+    }
+    
+    func deleteBet(_ bet: Bet) {
+        guard let id = bet.betID else { return }
+        db.collection(K.Firestore.bets).document(id).delete { [weak self] error in
+            if let error = error {
+                print("Error deleting bet: \(error)")
+            } else {
+                // Decrement every involved user's bet counts
+                for uid in bet.acceptedUsers {
+                    self?.db.collection(K.Firestore.users).document(uid).updateData([
+                        K.Firestore.numBets: FieldValue.increment(Int64(-1))
+                    ])
+                }
+            }
         }
     }
     
@@ -211,6 +275,8 @@ class FirestoreHelper {
         }
     }
     
+    // MARK:- Bet counter increments
+    
     func updateBetCounter(increasing: Bool) {
         // Increases or decreases user's numBets field by 1
         guard let uid = currentUser?.uid else { return }
@@ -224,6 +290,7 @@ class FirestoreHelper {
         ])
     }
     
+
     func updateCountersOnBetClose(with bet: Bet?) {
         // Passed as completion handler to closeBet when bet is marked as closed
         guard let bet = bet,
@@ -269,36 +336,7 @@ class FirestoreHelper {
         ])
     }
     
-    func readBet(withBetID id: BetID?, completion: @escaping (_ bet: Bet) -> ()) {
-        // One time bet reads
-        guard let id = id else { return }
-        self.db.collection(K.Firestore.bets).whereField(K.Firestore.betID, isEqualTo: id)
-            .getDocuments { (querySnapshot, error) in
-                if let error = error {
-                    print("Error getting documents: \(error)")
-                } else {
-                    let document = querySnapshot!.documents.first
-                    let result = Result {
-                        try document?.data(as: Bet.self)
-                    }
-                    switch result {
-                    case .success(let betFromDoc):
-                        if let unwrappedBet = betFromDoc {
-                            // Successfully initialized a Bet value from QuerySnapshot
-                            // call and pass completion to getBetFirstNames
-                            completion(unwrappedBet)
-                        } else {
-                            // A nil value was successfully initialized from the QuerySnapshot,
-                            // or the DocumentSnapshot was nil.
-                            print("Document does not exist")
-                        }
-                    case .failure(let error):
-                        // A Bet value could not be initialized from the QuerySnapshot.
-                        print("Error decoding bet: \(error)")
-                    }
-                }
-            }
-    }
+// MARK:- Bet Detail methods
     
     func addBetDetailListener(with id: BetID, completion: @escaping (_ bet: Bet) -> ()) {
         guard betDetailListener == nil else {
@@ -328,6 +366,8 @@ class FirestoreHelper {
                 }
             }
     }
+    
+    // MARK:- Bet dashboard methods
     
     func addUserInvolvedBetsListener(completion: @escaping (_ bets: [Bet]) -> ()) {
         guard let uid = currentUser?.uid else { return }
@@ -367,6 +407,9 @@ class FirestoreHelper {
                 }
             }
     }
+    
+    
+    
     
     func initFetchOtherBets(completion: @escaping (_ bets: [Bet]) -> ()) {
         guard let uid = currentUser?.uid else { return }
@@ -454,21 +497,199 @@ class FirestoreHelper {
         }
     }
     
-    func deleteBet(_ bet: Bet) {
-        guard let id = bet.betID else { return }
-        db.collection(K.Firestore.bets).document(id).delete { [weak self] error in
-            if let error = error {
-                print("Error deleting bet: \(error)")
-            } else {
-                // Decrement every involved user's bet counts
-                for uid in bet.acceptedUsers {
-                    self?.db.collection(K.Firestore.users).document(uid).updateData([
-                        K.Firestore.numBets: FieldValue.increment(Int64(-1))
-                    ])
+    
+    // MARK:- Friend/Profile bet methods
+    
+    func addFriendActiveBetListener(
+        for user: UID,
+        completion: @escaping (_ bets: [Bet]) -> ()
+    ) {
+        // Check that there isn't already a listener
+        guard friendActiveBetListener == nil else { return }
+        // Query for all active bets user is involved in
+        friendActiveBetListener = db.collection(K.Firestore.bets)
+            .whereField(K.Firestore.acceptedUsers, arrayContains: user)
+            .whereField(K.Firestore.isFinished, isEqualTo: false)
+            .order(by: K.Firestore.dateOpened, descending: true)
+            .addSnapshotListener { (querySnapshot, error) in
+                if let error = error {
+                    // TODO: better error handling to display to user
+                    print("Error getting documents: \(error)")
+                } else {
+                    var bets = [Bet]()
+                    for document in querySnapshot!.documents {
+                        let result = Result {
+                            try document.data(as: Bet.self)
+                        }
+                        switch result {
+                        case .success(let bet):
+                            if let unwrappedBet = bet {
+                                // Successfully initialized a Bet value from QuerySnapshot
+                                // Add bet to bets array.
+                                bets.append(unwrappedBet)
+                            } else {
+                                // A nil value was successfully initialized from the QuerySnapshot,
+                                // or the DocumentSnapshot was nil.
+                                print("Document does not exist")
+                            }
+                        case .failure(let error):
+                            // A Bet value could not be initialized from the QuerySnapshot.
+                            print("Error decoding bet: \(error)")
+                        }
+                    }
+                    completion(bets)
                 }
+            }
+    }
+    
+    func addFriendOutstandingBetListener(
+        for user: UID,
+        completion: @escaping (_ bets: [Bet]) -> ()
+    ) {
+        // Check that there isn't already a listener
+        guard friendOutstandingBetListener == nil else { return }
+        // Query for all active bets user is involved in
+        friendOutstandingBetListener = db.collection(K.Firestore.bets)
+            .whereField(K.Firestore.outstandingUsers, arrayContains: user)
+            .order(by: K.Firestore.dateOpened, descending: true)
+            .addSnapshotListener { (querySnapshot, error) in
+                if let error = error {
+                    // TODO: better error handling to display to user
+                    print("Error getting documents: \(error)")
+                } else {
+                    var bets = [Bet]()
+                    for document in querySnapshot!.documents {
+                        let result = Result {
+                            try document.data(as: Bet.self)
+                        }
+                        switch result {
+                        case .success(let bet):
+                            if let unwrappedBet = bet {
+                                // Successfully initialized a Bet value from QuerySnapshot
+                                // Add bet to bets array.
+                                bets.append(unwrappedBet)
+                            } else {
+                                // A nil value was successfully initialized from the QuerySnapshot,
+                                // or the DocumentSnapshot was nil.
+                                print("Document does not exist")
+                            }
+                        case .failure(let error):
+                            // A Bet value could not be initialized from the QuerySnapshot.
+                            print("Error decoding bet: \(error)")
+                        }
+                    }
+                    completion(bets)
+                }
+            }
+    }
+    
+    func initFetchPastBets(for user: UID, completion: @escaping (_ bets: [Bet]) -> ()) {
+        // To populate profile and friend detail bet tables
+        // NOTE: Must filter out outstanding bets in VM due to Firestore query limitations (no not-in query for arrays)
+        guard let uid = currentUser?.uid else { return }
+        let query = db.collection(K.Firestore.bets)
+            .whereField(K.Firestore.acceptedUsers, arrayContains: user)
+            .whereField(K.Firestore.isFinished, isEqualTo: true)
+            .order(by: K.Firestore.dateOpened, descending: true)
+            .limit(to: 8)
+        // If fetching bets for current user, it's a Profile view query. Otherwise it's for friend detail.
+        let isForProfileView: Bool = user == uid
+        if isForProfileView {
+            profilePastBetQuery = query
+        } else {
+            friendPastBetQuery = query
+        }
+        
+        // Get the bet documents
+        query.getDocuments { [weak self] (querySnapshot, error) in
+            if let error = error {
+                // TODO: error message to user
+                print("Error retrieving past bets for user \(user): \(error)")
+            } else {
+                var bets = [Bet]()
+                // Store last bet for next paginated query
+                if isForProfileView {
+                    self?.profileLastBet = querySnapshot!.documents.last
+                } else {
+                    self?.friendLastBet = querySnapshot!.documents.last
+                }
+                for document in querySnapshot!.documents {
+                    let result = Result {
+                        try document.data(as: Bet.self)
+                    }
+                    switch result {
+                    case .success(let bet):
+                        if let unwrappedBet = bet {
+                            // Successfully initialized a Bet value from QuerySnapshot
+                            bets.append(unwrappedBet)
+                        } else {
+                            // A nil value was successfully initialized from the QuerySnapshot,
+                            // or the DocumentSnapshot was nil.
+                            print("Document does not exist")
+                        }
+                    case .failure(let error):
+                        // A Bet value could not be initialized from the QuerySnapshot.
+                        print("Error decoding bet: \(error)")
+                    }
+                }
+                completion(bets)
             }
         }
     }
+    
+    func fetchAdditionalPastBets(for user: UID, completion: @escaping (_ bets: [Bet]) -> ()) {
+        guard let uid = currentUser?.uid else { return }
+        var newQuery: Query?
+        
+        // Determine which query to perform based on whether it is for user or friend
+        let isForProfileView: Bool = user == uid
+        if isForProfileView {
+            guard let oldQuery = profilePastBetQuery,
+                  let lastBet = profileLastBet else { return }
+            newQuery = oldQuery.start(afterDocument: lastBet)
+        } else {
+            guard let oldQuery = friendPastBetQuery,
+                  let lastBet = friendLastBet else { return }
+            newQuery = oldQuery.start(afterDocument: lastBet)
+        }
+        
+        newQuery?.getDocuments { [weak self] (querySnapshot, error) in
+            if let error = error {
+                // TODO: error message to user
+                print("Error retrieving past bets for user \(user): \(error)")
+            } else {
+                var bets = [Bet]()
+                // Store last bet for next paginated query
+                if isForProfileView {
+                    self?.profileLastBet = querySnapshot!.documents.last
+                } else {
+                    self?.friendLastBet = querySnapshot!.documents.last
+                }
+                for document in querySnapshot!.documents {
+                    let result = Result {
+                        try document.data(as: Bet.self)
+                    }
+                    switch result {
+                    case .success(let bet):
+                        if let unwrappedBet = bet {
+                            // Successfully initialized a Bet value from QuerySnapshot
+                            bets.append(unwrappedBet)
+                        } else {
+                            // A nil value was successfully initialized from the QuerySnapshot,
+                            // or the DocumentSnapshot was nil.
+                            print("Document does not exist")
+                        }
+                    case .failure(let error):
+                        // A Bet value could not be initialized from the QuerySnapshot.
+                        print("Error decoding bet: \(error)")
+                    }
+                }
+                completion(bets)
+            }
+        }
+    }
+    
+
     
     // MARK:- Friend CRUD
     func addFriendsListener(completion: @escaping (_ friends: [FriendSnippet]) -> ()) {
@@ -557,7 +778,9 @@ class FirestoreHelper {
             // Add friend to current user's friend list
             try userRef.collection(K.Firestore.friends)
                 .document(friend.uid)
-                .setData(from: friendSnippet)
+                .setData(from: friendSnippet) { _ in
+                    completion?()
+                }
             
             // Increment friend counter
             userRef.updateData([
@@ -587,7 +810,6 @@ class FirestoreHelper {
 //            print("Error writing friend \(user.uid) \n to user \(friend.uid): \n \(error)")
 //            return
 //        }
-        completion?()
     }
     
     func getFriend(withUID uid: UID, completion: @escaping (_ friend: FullFriend) -> ()) {
@@ -596,6 +818,35 @@ class FirestoreHelper {
             .getDocument { (document, error) in
                 if let error = error {
                     print("Error retrieving friend \(uid): \(error)")
+                } else {
+                    let result = Result {
+                        try document?.data(as: FullFriend.self)
+                    }
+                    switch result {
+                    case .success(let friend):
+                        if let friend = friend {
+                            // Successfully initialized a Friend value from QuerySnapshot
+                            completion(friend)
+                        } else {
+                            // A nil value was successfully initialized from the QuerySnapshot,
+                            // or the DocumentSnapshot was nil.
+                            print("Document does not exist")
+                        }
+                    case .failure(let error):
+                        // A Friend value could not be initialized from the QuerySnapshot.
+                        print("Error decoding friend with uid \(uid): \(error)")
+                    }
+                }
+            }
+    }
+    
+    func setFriendDetailListener(with uid: UID, completion: @escaping (_ friend: FullFriend) -> ()) {
+        guard friendDetailListener == nil else { return } // check if listener already exists
+        friendDetailListener = db.collection(K.Firestore.users)
+            .document(uid)
+            .addSnapshotListener { (document, error) in
+                if let error = error {
+                    print("Error adding listener for friend \(uid): \(error)")
                 } else {
                     let result = Result {
                         try document?.data(as: FullFriend.self)
@@ -677,6 +928,17 @@ class FirestoreHelper {
         betDetailListener = nil
     }
     
+    func clearFriendDetail() {
+        friendOutstandingBetListener?.remove()
+        friendOutstandingBetListener = nil
+        friendActiveBetListener?.remove()
+        friendActiveBetListener = nil
+        friendPastBetQuery = nil
+        friendLastBet = nil
+        friendDetailListener?.remove()
+        friendDetailListener = nil
+    }
+    
     func unsubscribeAllSnapshotListeners() {
         // To be called at logout
         // Remember to include snapshot unsubs here as you add them elsewhere!
@@ -684,12 +946,12 @@ class FirestoreHelper {
         userListeners = []
         betDashboardListener?.remove()
         betDashboardListener = nil
-        betDetailListener?.remove()
-        betDetailListener = nil
+        removeBetDetailListener()
         friendsListener?.remove()
         friendsListener = nil
         allUserListener?.remove()
         allUserListener = nil
+        clearFriendDetail()
     }
     
 }

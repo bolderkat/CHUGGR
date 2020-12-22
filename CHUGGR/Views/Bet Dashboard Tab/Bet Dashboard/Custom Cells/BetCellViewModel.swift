@@ -11,6 +11,7 @@ struct BetCellViewModel {
     
     let bet: Bet
     let firestoreHelper: FirestoreHelper
+    let friend: Friend? // if this holds a value, then this bet cell is being displayed in a friend detail view should be configured to show the status of the bet from the friend's perspective.
         
     func getSideLabels(for side: Side) -> String {
         switch side {
@@ -85,36 +86,43 @@ struct BetCellViewModel {
         guard let winner = bet.winner else { return ("IN PLAY", K.colors.orange) }
         
         // Check if user is involved and which side they are on
-        var currentUserSide: Side? = nil
-        guard let currentUID = firestoreHelper.currentUser?.uid else {
+        var userSide: Side? = nil
+        guard var uid = firestoreHelper.currentUser?.uid else {
             return ("", K.colors.orange)
-            
         }
         
-        if let _ = bet.side1Users[currentUID] {
-            currentUserSide = .one
+        var nameString = "YOU"
+        
+        if friend != nil {
+            // Perform bet status logic on friend uid instead if this friend cell is being presented in a Friend Detail view
+            uid = friend!.uid
+            nameString = friend!.firstName.uppercased()
+        }
+        
+        if let _ = bet.side1Users[uid] {
+            userSide = .one
         }
         
         
-        if let _ = bet.side2Users[currentUID] {
-            currentUserSide = .two
+        if let _ = bet.side2Users[uid] {
+            userSide = .two
         }
         
         // If user is on winning side
-        if let side = currentUserSide,
+        if let side = userSide,
            side == winner {
-            return ("WON", K.colors.forestGreen)
+            return ("\(nameString) WON", K.colors.forestGreen)
         }
         
         // If user has stake outstanding
-        if bet.outstandingUsers.contains(currentUID) {
+        if bet.outstandingUsers.contains(uid) {
             return ("OUTSTANDING", K.colors.orange)
         }
         
         // If user is on losing side
-        if let side = currentUserSide,
+        if let side = userSide,
            side != winner {
-            return ("LOST", K.colors.burntUmber)
+            return ("\(nameString) LOST", K.colors.burntUmber)
         }
         
         // If user uninvolved, need to switch on possible outcomes to display

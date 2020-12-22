@@ -105,7 +105,7 @@ class BetsViewModel {
     }
     
     func createCellViewModel(for bet: Bet) -> BetCellViewModel {
-        return BetCellViewModel(bet: bet, firestoreHelper: self.firestoreHelper)
+        return BetCellViewModel(bet: bet, firestoreHelper: self.firestoreHelper, friend: nil)
     }
     
     func getCellVM(at indexPath: IndexPath) -> BetCellViewModel {

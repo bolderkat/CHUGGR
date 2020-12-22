@@ -58,9 +58,15 @@ class BetDetailViewModel {
     
     
     // MARK:- Firestore bet handling methods
+    func fetchBet() {
+        // Using listener, but need to make sure to fetch right away
+        firestoreHelper.readBet(withBetID: betDocID) { [weak self] bet in
+            self?.bet = bet
+        }
+    }
     
     func setBetListener() {
-        firestoreHelper.addBetDetailListener(with: betDocID) { [weak self] (bet) in
+        firestoreHelper.addBetDetailListener(with: betDocID) { [weak self] bet in
             self?.bet = bet
         }
     }

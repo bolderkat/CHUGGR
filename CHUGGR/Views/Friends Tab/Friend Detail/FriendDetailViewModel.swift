@@ -21,6 +21,9 @@ class FriendDetailViewModel {
             doesAddButtonTriggerAdd = !isAlreadyFriends
         }
     }
+    // Flag to prevent 2x scrollview loads
+    private(set) var isLoading = false
+    
     // Flag to prevent fast 2x button press triggering add method twice
     private var doesAddButtonTriggerAdd = true {
         didSet {
@@ -30,8 +33,53 @@ class FriendDetailViewModel {
     // Flag to prevent extra unfollow actions if network is slow to update
     private(set) var isRemoveButtonActive = false
     
+    enum SegmentedControlChoice {
+        case active
+        case pastBets
+    }
+    var selectedTable: SegmentedControlChoice = .active {
+        didSet {
+            updateTableView?()
+        }
+    }
+    
+    var outstandingBets: [Bet] = [] { // array to be updated by outstanding bet listener
+        didSet {
+            // Listener changes to array will update cell VMs as well
+            processActiveBets(outstandingBets, outstanding: true)
+        }
+    }
+    var outstandingBetCellVMs: [BetCellViewModel] = [] {
+        didSet {
+            if selectedTable == .active {
+                updateTableView?()
+            }
+        }
+    }
+    var activeBets: [Bet] = [] {// array to be updated by active bet listener
+        didSet {
+            // Listener changes to array will update cell VMs as well
+            processActiveBets(activeBets, outstanding: false)
+        }
+    }
+    var activeBetCellVMs: [BetCellViewModel] = [] {
+        didSet {
+            if selectedTable == .active {
+                updateTableView?()
+            }
+        }
+    }
+    var pastBetCellVMs: [BetCellViewModel] = [] {
+        didSet {
+            if selectedTable == .pastBets {
+                updateTableView?()
+            }
+        }
+    }
+    
     var updateVCLabels: (() -> ())?
     var setVCForFriendStatus: (() -> ())?
+    var updateTableView: (() -> ())?
 
     
     init(firestoreHelper: FirestoreHelper, friend: FullFriend) {
@@ -39,9 +87,99 @@ class FriendDetailViewModel {
         self.friend = friend
     }
     
-    func updateFriendData() {
-        firestoreHelper.getFriend(withUID: friend.uid) { [weak self] friend in
+    // MARK:- Firestore handlers and bet processing
+    func setFriendListener() {
+        firestoreHelper.setFriendDetailListener(with: friend.uid) { [weak self] friend in
             self?.friend = friend
+        }
+    }
+    
+    func addActiveBetListeners() {
+        firestoreHelper.addFriendOutstandingBetListener(for: friend.uid) { [weak self] bets in
+            self?.outstandingBets = bets
+        }
+        
+        firestoreHelper.addFriendActiveBetListener(for: friend.uid) { [weak self] bets in
+            self?.activeBets = bets
+        }
+    }
+    
+    func initFetchPastBets() {
+        // Check if there are no past bet cell VMs, indicating need for first fetch
+        isLoading = true
+        if pastBetCellVMs.isEmpty {
+            firestoreHelper.initFetchPastBets(for: friend.uid) { [weak self] bets in
+                self?.processPastBets(bets, appending: false)
+                self?.isLoading = false
+            }
+        }
+    }
+    
+    func loadAdditionalPastBets() {
+        isLoading = true
+        firestoreHelper.fetchAdditionalPastBets(for: friend.uid) { [weak self] bets in
+            self?.processPastBets(bets, appending: true)
+            self?.isLoading = false
+        }
+    }
+    
+    func processActiveBets(_ bets: [Bet], outstanding: Bool) {
+        var vms = [BetCellViewModel]()
+        for bet in bets {
+            vms.append(createCellViewModel(for: bet))
+        }
+        
+        if outstanding {
+            outstandingBetCellVMs = vms
+        } else {
+            activeBetCellVMs = vms
+        }
+    }
+    
+    func processPastBets(_ bets: [Bet], appending: Bool) {
+        var vms = [BetCellViewModel]()
+        // Filter out outstanding bets because they are already displayed under active
+        let filteredBets = bets.filter { !$0.outstandingUsers.contains(friend.uid) }
+        for bet in filteredBets {
+            vms.append(createCellViewModel(for: bet))
+        }
+        
+        if appending {
+            // Append VMs if user has scrolled to bottom of table
+            pastBetCellVMs.append(contentsOf: vms)
+        } else {
+            // Otherwise overwrite the array
+            pastBetCellVMs = vms
+        }
+    }
+    
+    
+    func createCellViewModel(for bet: Bet) -> BetCellViewModel {
+        BetCellViewModel(bet: bet, firestoreHelper: self.firestoreHelper, friend: friend)
+    }
+    
+    func cleanUpFirestore() {
+        firestoreHelper.clearFriendDetail()
+    }
+    
+    // MARK:- Data parsing for UI
+    
+    func getCellVMsForTable() -> [BetCellViewModel] {
+        switch selectedTable {
+        case .active:
+            return outstandingBetCellVMs + activeBetCellVMs
+        case .pastBets:
+            return pastBetCellVMs
+        }
+    }
+    
+    func getCellVM(at indexPath: IndexPath) -> BetCellViewModel {
+        switch selectedTable {
+        case .active:
+            let array = outstandingBetCellVMs + activeBetCellVMs
+            return array[indexPath.row]
+        case .pastBets:
+            return pastBetCellVMs[indexPath.row]
         }
     }
     
@@ -56,6 +194,10 @@ class FriendDetailViewModel {
         }
     }
     
+    
+    
+    // MARK:- Friend actions
+    
     func checkFriendStatus() {
         // Check if other user is already friend of current user.
         if firestoreHelper.friends.contains(where: { $0.uid == self.friend.uid }) {
@@ -66,6 +208,7 @@ class FriendDetailViewModel {
         }
     }
     
+    
     func addFriend() {
         // TODO: eventually we want to implement friend requests instead of just doing a unilateral mutual add right away. But for now... gotta push this MVP out!
         
@@ -74,7 +217,6 @@ class FriendDetailViewModel {
             //create friend documents and update client-side friend detail data
             firestoreHelper.addFriend(friend) { [weak self] in
                 self?.checkFriendStatus()
-                self?.updateFriendData()
             }
         }
         doesAddButtonTriggerAdd = false

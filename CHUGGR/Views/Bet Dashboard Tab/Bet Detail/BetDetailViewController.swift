@@ -108,6 +108,7 @@ class BetDetailViewController: UIViewController {
                 self?.showAlreadyClosedAlert()
             }
         }
+        viewModel.fetchBet()
         viewModel.setBetListener()
     }
     
