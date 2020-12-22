@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FriendInviteViewController" customModule="CHUGGR" customModuleProvider="target">
             <connections>
+                <outlet property="placeholderLabel" destination="e9Z-kJ-9ct" id="XCH-CV-cUe"/>
                 <outlet property="recipientLabel" destination="yY6-qF-idB" id="QKE-wr-d1b"/>
                 <outlet property="recipientViewBottomConstraint" destination="Bax-4X-RLJ" id="QK6-bT-Wta"/>
                 <outlet property="searchBar" destination="hju-OX-vav" id="Zjo-7e-pec"/>
@@ -32,6 +33,15 @@
                     </constraints>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You haven't added any friends to send bets to yet. Check out the Following tab then come back!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZII-GB-RRJ">
+                    <rect key="frame" x="82" y="382.5" width="250" height="61"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="250" id="RDt-wG-x4w"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" name="Gray 3"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="e9Z-kJ-9ct">
                     <rect key="frame" x="0.0" y="104" width="414" height="758"/>
                 </tableView>
@@ -91,7 +101,9 @@
             <constraints>
                 <constraint firstItem="e9Z-kJ-9ct" firstAttribute="top" secondItem="hju-OX-vav" secondAttribute="bottom" id="706-Vz-uZW"/>
                 <constraint firstItem="dEo-WC-uTD" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Bax-4X-RLJ"/>
+                <constraint firstItem="ZII-GB-RRJ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-35" id="Lfs-wo-5di"/>
                 <constraint firstItem="e9Z-kJ-9ct" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="MP9-go-iIg"/>
+                <constraint firstItem="ZII-GB-RRJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Ql4-Xw-vyE"/>
                 <constraint firstItem="hju-OX-vav" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="SAF-7Z-0hb"/>
                 <constraint firstItem="dEo-WC-uTD" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="UsF-Z8-MpK"/>
                 <constraint firstItem="hju-OX-vav" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Yna-GJ-BNZ"/>
@@ -107,6 +119,9 @@
         <image name="arrowtriangle.right.fill" catalog="system" width="128" height="113"/>
         <namedColor name="CHUGGR Orange">
             <color red="1" green="0.60000002384185791" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Gray 3">
+            <color red="0.61568627450980395" green="0.61568627450980395" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

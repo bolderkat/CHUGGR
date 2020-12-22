@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -10,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FriendsViewController" customModule="CHUGGR" customModuleProvider="target">
             <connections>
+                <outlet property="placeholderLabel" destination="v5V-h5-J2S" id="4Oc-DD-Zd7"/>
                 <outlet property="searchBar" destination="XC9-T4-mAa" id="bww-A2-nMi"/>
                 <outlet property="tableView" destination="v5V-h5-J2S" id="T5N-ro-umH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -27,6 +29,15 @@
                     </constraints>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You haven't followed anyone yet. Press the add button to search for friends to send bets to." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bb-TG-QtD">
+                    <rect key="frame" x="82" y="382.5" width="250" height="61"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="250" id="AAh-QI-eWQ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" name="Gray 3"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="v5V-h5-J2S">
                     <rect key="frame" x="0.0" y="104" width="414" height="758"/>
                 </tableView>
@@ -35,17 +46,22 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="v5V-h5-J2S" firstAttribute="top" secondItem="XC9-T4-mAa" secondAttribute="bottom" id="2xE-hp-Wyr"/>
+                <constraint firstItem="0bb-TG-QtD" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-35" id="5HL-I7-JWY"/>
                 <constraint firstItem="v5V-h5-J2S" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="7gB-bf-mdJ"/>
                 <constraint firstItem="XC9-T4-mAa" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="9xJ-WN-utM"/>
                 <constraint firstItem="XC9-T4-mAa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="O8n-R9-hd8"/>
                 <constraint firstItem="v5V-h5-J2S" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Rot-rw-9ni"/>
                 <constraint firstItem="XC9-T4-mAa" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="avD-aS-tdC"/>
                 <constraint firstItem="v5V-h5-J2S" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="dhM-TM-UJc"/>
+                <constraint firstItem="0bb-TG-QtD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="p9v-nZ-bcT"/>
             </constraints>
             <point key="canvasLocation" x="-262.31884057971018" y="108.48214285714285"/>
         </view>
     </objects>
     <resources>
+        <namedColor name="Gray 3">
+            <color red="0.61568627450980395" green="0.61568627450980395" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

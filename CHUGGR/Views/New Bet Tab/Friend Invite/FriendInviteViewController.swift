@@ -12,6 +12,7 @@ class FriendInviteViewController: UIViewController {
     private let viewModel: FriendInviteViewModel
     private var dataSource: FriendInviteDataSource!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var placeholderLabel: UITableView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var recipientLabel: UILabel!
     @IBOutlet weak var sendButton: UIButton!
@@ -37,6 +38,7 @@ class FriendInviteViewController: UIViewController {
         configureDataSource()
         configureTableView()
         updateRecipientView()
+        showPlaceholderIfEmpty()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,7 +106,18 @@ class FriendInviteViewController: UIViewController {
         }
     }
     
+    func showPlaceholderIfEmpty() {
+        if viewModel.cellVMs.isEmpty {
+            placeholderLabel.isHidden = false
+            tableView.isHidden = true
+        } else {
+            placeholderLabel.isHidden = true
+            tableView.isHidden = false
+        }
+    }
+    
     func updateTableView(withString searchString: String) {
+        showPlaceholderIfEmpty()
         var snapshot = NSDiffableDataSourceSnapshot<Section, InviteCellViewModel>()
         snapshot.appendSections([.friends]) // TODO: Add recents once implemented
         snapshot.appendItems(viewModel.provideCellVMs(forString: searchString), toSection: .friends)

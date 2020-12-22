@@ -12,6 +12,7 @@ class FriendsViewController: UIViewController {
     weak var coordinator: FriendsCoordinator?
     private let viewModel: FriendsViewModel
     private var dataSource: UITableViewDiffableDataSource<Section, FriendCellViewModel>!
+    @IBOutlet weak var placeholderLabel: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
@@ -35,6 +36,7 @@ class FriendsViewController: UIViewController {
         initViewModel()
         configureDataSource()
         configureTableView()
+        showPlaceholderIfEmpty()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,7 +70,20 @@ class FriendsViewController: UIViewController {
         }
     }
     
+    func showPlaceholderIfEmpty() {
+        if viewModel.cellVMs.isEmpty {
+            placeholderLabel.isHidden = false
+            tableView.isHidden = true
+            return
+        } else {
+            placeholderLabel.isHidden = true
+            tableView.isHidden = false
+        }
+    }
+    
     func updateTableView() {
+        showPlaceholderIfEmpty()
+        
         var snapshot = NSDiffableDataSourceSnapshot<Section, FriendCellViewModel>()
         snapshot.appendSections(Section.allCases)
         snapshot.appendItems(viewModel.cellVMs)

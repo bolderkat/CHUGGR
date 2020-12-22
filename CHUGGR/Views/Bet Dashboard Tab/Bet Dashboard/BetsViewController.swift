@@ -15,6 +15,7 @@ class BetsViewController: UIViewController {
     private let scrollViewThreshold: CGFloat = 100.0 // threshold at which fetching additional bets triggered
     
     
+    @IBOutlet weak var placeholderLabel: UILabel!
     @IBOutlet weak var betsTable: UITableView!
     @IBOutlet weak var pendingBetsView: UIView!
     @IBOutlet weak var pendingBetsLabel: UILabel!
@@ -42,6 +43,7 @@ class BetsViewController: UIViewController {
         configureDataSource()
         initViewModel()
         configureTableView()
+        showPlaceholderIfEmpty()
     }
     
     func setUpViewController() {
@@ -64,12 +66,24 @@ class BetsViewController: UIViewController {
         }
         
     }
+    func showPlaceholderIfEmpty() {
+        if viewModel.userInvolvedBetCellVMs.isEmpty, viewModel.otherBetCellVMs.isEmpty {
+            placeholderLabel.isHidden = false
+            betsTable.isHidden = true
+            return
+        } else {
+            placeholderLabel.isHidden = true
+            betsTable.isHidden = false
+        }
+    }
     
     func updateTableView(animated: Bool = false) {
         // Set up table rows
         let involvedBets = viewModel.userInvolvedBetCellVMs
         let otherBets = viewModel.otherBetCellVMs
         
+        showPlaceholderIfEmpty()
+
         // Load up snapshot with relevant data
         var snapshot = NSDiffableDataSourceSnapshot<Section, BetCellViewModel>()
         if involvedBets.isEmpty && otherBets.isEmpty {
@@ -86,7 +100,7 @@ class BetsViewController: UIViewController {
             snapshot.appendItems(involvedBets, toSection: .myActiveBets)
             snapshot.appendItems(otherBets, toSection: .otherBets)
         }
-        
+
         dataSource.apply(snapshot, animatingDifferences: animated) // apply to tableView data source
     }
     
