@@ -22,14 +22,14 @@ class FirestoreHelper {
     private(set) var allUsers: [FullFriend] = []
     private(set) var involvedBets: [Bet] = []
     
-    private var userListeners: [ListenerRegistration] = []
-    private(set) var betDashboardListener: ListenerRegistration?
-    private(set) var friendActiveBetListener: ListenerRegistration?
-    private(set) var friendOutstandingBetListener: ListenerRegistration?
-    private(set) var friendDetailListener: ListenerRegistration?
-    private(set) var betDetailListener: ListenerRegistration?
-    private(set) var friendsListener: ListenerRegistration?
-    private(set) var allUserListener: ListenerRegistration?
+    private var userListener: ListenerRegistration?
+    private var betDashboardListener: ListenerRegistration?
+    private var friendActiveBetListener: ListenerRegistration?
+    private var friendOutstandingBetListener: ListenerRegistration?
+    private var friendDetailListener: ListenerRegistration?
+    private var betDetailListener: ListenerRegistration?
+    private var friendsListener: ListenerRegistration?
+    private var allUserListener: ListenerRegistration?
     
     // Storing bet queries and last bet of each query for paginated population of infinitely scrolling table view
     private var otherBetQuery: Query?
@@ -153,7 +153,7 @@ class FirestoreHelper {
     }
     
     func addCurrentUserListener(with uid: String) {
-        let listener = self.db.collection(K.Firestore.users).whereField(K.Firestore.uid, isEqualTo: uid)
+        userListener = self.db.collection(K.Firestore.users).whereField(K.Firestore.uid, isEqualTo: uid)
             .addSnapshotListener { [weak self] (querySnapshot, error) in
                 guard let document = querySnapshot?.documents.first else {
                     if let error = error {
@@ -176,7 +176,6 @@ class FirestoreHelper {
                     print("Error decoding user: \(error)")
                 }
             }
-        userListeners.append(listener)
     }
     
     
@@ -944,8 +943,8 @@ class FirestoreHelper {
     func unsubscribeAllSnapshotListeners() {
         // To be called at logout
         // Remember to include snapshot unsubs here as you add them elsewhere!
-        userListeners.forEach { $0.remove() }
-        userListeners = []
+        userListener?.remove()
+        userListener = nil
         betDashboardListener?.remove()
         betDashboardListener = nil
         removeBetDetailListener()
