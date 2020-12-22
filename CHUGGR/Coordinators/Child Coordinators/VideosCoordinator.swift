@@ -51,6 +51,7 @@ class VideosCoordinator: ChildCoordinating {
         let vm = BetDetailViewModel(
             firestoreHelper: firestoreHelper,
             betID: id,
+            parentTab: .videos,
             userInvolvement: userInvolvement
         )
         let vc = BetDetailViewController(viewModel: vm)

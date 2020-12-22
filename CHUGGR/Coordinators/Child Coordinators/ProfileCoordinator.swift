@@ -49,11 +49,12 @@ class ProfileCoordinator: ChildCoordinating {
     
     func openBetDetail(
         withBetID id: BetID,
-        userInvolvement: BetInvolvementType = .uninvolved
+        userInvolvement: BetInvolvementType = .closed
     ) {
         let vm = BetDetailViewModel(
             firestoreHelper: firestoreHelper,
             betID: id,
+            parentTab: .profile,
             userInvolvement: userInvolvement
         )
         let vc = BetDetailViewController(viewModel: vm)

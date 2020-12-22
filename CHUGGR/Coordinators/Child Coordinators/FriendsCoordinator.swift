@@ -51,6 +51,7 @@ class FriendsCoordinator: ChildCoordinating {
         let vm = BetDetailViewModel(
             firestoreHelper: firestoreHelper,
             betID: id,
+            parentTab: .friends,
             userInvolvement: userInvolvement
         )
         let vc = BetDetailViewController(viewModel: vm)

@@ -51,6 +51,7 @@ class BetsCoordinator: ChildCoordinating {
         let vm = BetDetailViewModel(
             firestoreHelper: firestoreHelper,
             betID: id,
+            parentTab: .bets,
             userInvolvement: userInvolvement
         )
         let vc = BetDetailViewController(viewModel: vm)

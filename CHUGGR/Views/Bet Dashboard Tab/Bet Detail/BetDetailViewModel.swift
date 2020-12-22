@@ -11,6 +11,7 @@ import Firebase
 class BetDetailViewModel {
     private let firestoreHelper: FirestoreHelper
     private var betDocID: BetID
+    private let parentTab: Tab
     private(set) var bet: Bet? {
         didSet {
             updateBetCard?()
@@ -30,9 +31,11 @@ class BetDetailViewModel {
     
     init(firestoreHelper: FirestoreHelper,
          betID: BetID,
+         parentTab: Tab,
          userInvolvement: BetInvolvementType) {
         self.firestoreHelper = firestoreHelper
         self.betDocID = betID
+        self.parentTab = parentTab
         self.userInvolvement = userInvolvement
     }
     
@@ -66,13 +69,13 @@ class BetDetailViewModel {
     }
     
     func setBetListener() {
-        firestoreHelper.addBetDetailListener(with: betDocID) { [weak self] bet in
+        firestoreHelper.addBetDetailListener(with: betDocID, in: parentTab) { [weak self] bet in
             self?.bet = bet
         }
     }
     
     func clearBetListener() {
-        firestoreHelper.removeBetDetailListener()
+        firestoreHelper.removeBetDetailListener(for: parentTab)
     }
     
 

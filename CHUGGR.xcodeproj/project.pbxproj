@@ -41,6 +41,7 @@
 		656D9466252BF60100EDEB7F /* CHUGGRTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D9465252BF60100EDEB7F /* CHUGGRTests.swift */; };
 		656D9471252BF60100EDEB7F /* CHUGGRUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D9470252BF60100EDEB7F /* CHUGGRUITests.swift */; };
 		656D9482252BF6E200EDEB7F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 656D9481252BF6E100EDEB7F /* GoogleService-Info.plist */; };
+		657D95AD25929AC20065187A /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D95AC25929AC20065187A /* Tab.swift */; };
 		658F11262532747F003B6303 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F11242532747F003B6303 /* MessageCell.swift */; };
 		658F11272532747F003B6303 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658F11252532747F003B6303 /* MessageCell.xib */; };
 		658F112F25327B2C003B6303 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F112E25327B2C003B6303 /* Message.swift */; };
@@ -163,6 +164,7 @@
 		656D9470252BF60100EDEB7F /* CHUGGRUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHUGGRUITests.swift; sourceTree = "<group>"; };
 		656D9472252BF60100EDEB7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		656D9481252BF6E100EDEB7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		657D95AC25929AC20065187A /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		658F11242532747F003B6303 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		658F11252532747F003B6303 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		658F112E25327B2C003B6303 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -559,6 +561,7 @@
 				65F4029A252EA103007892F8 /* Bet.swift */,
 				65D18DAC258053EC00E562C1 /* Drinks.swift */,
 				658F112E25327B2C003B6303 /* Message.swift */,
+				657D95AC25929AC20065187A /* Tab.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -957,6 +960,7 @@
 				65B3D7BE258C766F008F274A /* InviteCell.swift in Sources */,
 				65C6E3FB257EE30F00EA7AA4 /* UITextField+DoneToolbar.swift in Sources */,
 				6557876D256DD45200FC23FC /* NewBetsCoordinator.swift in Sources */,
+				657D95AD25929AC20065187A /* Tab.swift in Sources */,
 				65578772256DD4BC00FC23FC /* VideosCoordinator.swift in Sources */,
 				6511DCAD258AE6350009A9F6 /* FriendSnippet.swift in Sources */,
 				65F69D8E257B2D5000CE7371 /* UITextField+InputView.swift in Sources */,

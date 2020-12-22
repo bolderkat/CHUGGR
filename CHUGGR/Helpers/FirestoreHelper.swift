@@ -27,9 +27,16 @@ class FirestoreHelper {
     private var friendActiveBetListener: ListenerRegistration?
     private var friendOutstandingBetListener: ListenerRegistration?
     private var friendDetailListener: ListenerRegistration?
-    private var betDetailListener: ListenerRegistration?
     private var friendsListener: ListenerRegistration?
     private var allUserListener: ListenerRegistration?
+    
+    // Bet Detail listeners for each tab, as user can have bets open in multiple tabs
+    private var BetTabBetDetailListener: ListenerRegistration?
+    private var FriendsTabBetDetailListener: ListenerRegistration?
+    private var VideosTabBetDetailListener: ListenerRegistration?
+    private var ProfileBetDetailListener: ListenerRegistration?
+    
+    
     
     // Storing bet queries and last bet of each query for paginated population of infinitely scrolling table view
     private var otherBetQuery: Query?
@@ -339,12 +346,29 @@ class FirestoreHelper {
     
 // MARK:- Bet Detail methods
     
-    func addBetDetailListener(with id: BetID, completion: @escaping (_ bet: Bet) -> ()) {
-        guard betDetailListener == nil else {
-            print("ERROR: attempted to create a new bet detail listener, but a previous one was not cleaned up.")
+    func addBetDetailListener(with id: BetID, in tab: Tab, completion: @escaping (_ bet: Bet) -> ()) {
+        
+        var listenerToCheck: ListenerRegistration?
+        
+        // Each tab can hold its own listener, so check to make sure the corresponding listener is nil before adding a new one.
+        switch tab {
+        case .bets:
+            listenerToCheck = BetTabBetDetailListener
+        case .friends:
+            listenerToCheck = FriendsTabBetDetailListener
+        case .videos:
+            listenerToCheck = VideosTabBetDetailListener
+        case .profile:
+            listenerToCheck = ProfileBetDetailListener
+        case .newBet:
             return
         }
-        betDetailListener = db.collection(K.Firestore.bets)
+        
+        guard listenerToCheck == nil else {
+            print("ERROR: attempted to create a new bet detail listener in tab number \(tab.rawValue), but a previous one was not cleaned up.")
+            return
+        }
+        let listener = db.collection(K.Firestore.bets)
             .document(id)
             .addSnapshotListener { (documentSnapshot, error) in
                 if let error = error {
@@ -366,6 +390,20 @@ class FirestoreHelper {
                     }
                 }
             }
+        
+        // Assign listener to corresponding property
+        switch tab {
+        case .bets:
+            BetTabBetDetailListener = listener
+        case .friends:
+            FriendsTabBetDetailListener = listener
+        case .videos:
+            VideosTabBetDetailListener = listener
+        case .profile:
+            ProfileBetDetailListener = listener
+        case .newBet:
+            return
+        }
     }
     
     // MARK:- Bet dashboard methods
@@ -924,9 +962,34 @@ class FirestoreHelper {
         involvedBets = []
     }
     
-    func removeBetDetailListener() {
-        betDetailListener?.remove()
-        betDetailListener = nil
+    func removeBetDetailListener(for tab: Tab) {
+        switch tab {
+        case .bets:
+            BetTabBetDetailListener?.remove()
+            BetTabBetDetailListener = nil
+        case .friends:
+            FriendsTabBetDetailListener?.remove()
+            FriendsTabBetDetailListener = nil
+        case .videos:
+            VideosTabBetDetailListener?.remove()
+            VideosTabBetDetailListener = nil
+        case .profile:
+            ProfileBetDetailListener?.remove()
+            ProfileBetDetailListener = nil
+        case .newBet:
+            return
+        }
+    }
+    
+    func removeAllBetDetailListeners() {
+        BetTabBetDetailListener?.remove()
+        BetTabBetDetailListener = nil
+        FriendsTabBetDetailListener?.remove()
+        FriendsTabBetDetailListener = nil
+        VideosTabBetDetailListener?.remove()
+        VideosTabBetDetailListener = nil
+        ProfileBetDetailListener?.remove()
+        ProfileBetDetailListener = nil
     }
     
     func clearFriendDetail() {
@@ -941,18 +1004,18 @@ class FirestoreHelper {
     }
     
     func unsubscribeAllSnapshotListeners() {
-        // To be called at logout
+        // To be called at logout/disconnect
         // Remember to include snapshot unsubs here as you add them elsewhere!
         userListener?.remove()
         userListener = nil
         betDashboardListener?.remove()
         betDashboardListener = nil
-        removeBetDetailListener()
         friendsListener?.remove()
         friendsListener = nil
         allUserListener?.remove()
         allUserListener = nil
         clearFriendDetail()
+        removeAllBetDetailListeners()
     }
     
 }
