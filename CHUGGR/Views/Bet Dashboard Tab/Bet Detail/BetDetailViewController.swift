@@ -230,7 +230,10 @@ class BetDetailViewController: UIViewController {
         secondButton.isHidden = false
         secondButton.setTitle(viewModel.getButtonStrings().side2, for: .normal)
         secondButton.backgroundColor = UIColor(named: K.colors.forestGreen)
+        // TODO: re-enable this button if bet editing is implemented
         thirdButton.isHidden = false
+        thirdButton.isEnabled = false
+        thirdButton.backgroundColor = UIColor(named: K.colors.gray3)
         fourthButton.isHidden = false
         // TODO: Get these labels to update as the segue occurs instead of after
     }
