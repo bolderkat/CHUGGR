@@ -257,7 +257,7 @@ class BetDetailViewModel {
             case .spread:
                 return ("OVER", K.colors.midBlue)
             case .moneyline:
-                return (String(bet.team1 ?? "").capitalized, K.colors.midBlue)
+                return (String(bet.team1 ?? "").uppercased(), K.colors.midBlue)
             case .event:
                 return ("FOR WINS", K.colors.midBlue)
             }
@@ -266,7 +266,7 @@ class BetDetailViewModel {
             case .spread:
                 return ("UNDER", K.colors.midBlue)
             case .moneyline:
-                return (String(bet.team2 ?? "").capitalized, K.colors.midBlue)
+                return (String(bet.team2 ?? "").uppercased(), K.colors.midBlue)
             case .event:
                 return ("AGAINST WINS", K.colors.midBlue)
             }
