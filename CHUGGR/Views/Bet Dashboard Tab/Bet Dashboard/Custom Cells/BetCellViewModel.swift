@@ -94,8 +94,14 @@ struct BetCellViewModel {
     }
     
     func getBetStatusAndColor() -> (label: String, color: String) {
-        // Check if bet is finished/has winner. If not, display "IN PLAY"
-        guard let winner = bet.winner else { return ("IN PLAY", K.colors.orange) }
+        // Check if bet is finished/has winner. If not, display "IN PLAY" or "OVERDUE"
+        guard let winner = bet.winner else {
+            if Date.init().timeIntervalSince1970 > bet.dueDate {
+                return("OVERDUE", K.colors.burntUmber)
+            } else {
+                return ("IN PLAY", K.colors.orange)
+            }
+        }
         
         // Check if user is involved and which side they are on
         var userSide: Side? = nil
