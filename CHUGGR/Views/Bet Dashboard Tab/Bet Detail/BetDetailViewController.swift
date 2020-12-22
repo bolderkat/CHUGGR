@@ -288,10 +288,9 @@ class BetDetailViewController: UIViewController {
         secondButton.isHidden = true
         thirdButton.isHidden = true
         fourthButton.isHidden = true
-        // Extend table view closer to bet card
-        topTableViewConstraint.constant = -firstButton.frame.height
+        // Hide chat when bet is closed
+        messageTableView.isHidden = true
         bottomSendView.isHidden = true
-        bottomTableViewConstraint.constant = -bottomSendView.frame.height
     }
     
     func showAlreadyClosedAlert() {
