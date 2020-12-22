@@ -13,6 +13,7 @@ class BetDetailViewController: UIViewController {
     weak var coordinator: ChildCoordinating?
     private let viewModel: BetDetailViewModel
     var messages: [Message] = []
+    private var yOrigin: CGFloat = 0
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var betTypeLabel: UILabel!
@@ -61,6 +62,7 @@ class BetDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dismissKeyboard()
         setUpViewController()
         initViewModel()
         configureTableView()
@@ -68,12 +70,14 @@ class BetDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.checkInvolvementStatus()
+        yOrigin = self.view.frame.origin.y // for sliding view with keyboard
         super.viewWillAppear(animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         // Clean up listener when no longer needed
         viewModel.clearBetListener()
+        NotificationCenter.default.removeObserver(self)
         super.viewWillDisappear(animated)
     }
     
@@ -87,6 +91,25 @@ class BetDetailViewController: UIViewController {
         setUpForInvolvementState()
         updateBetCard()
         titleLabel.text = nil
+        textField.delegate = self
+        setUpKeyboardNotifications()
+    }
+    
+    func setUpKeyboardNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+        
+        // Keyboard selector methods are in textfield delegate extension
     }
     
 
@@ -437,5 +460,26 @@ extension BetDetailViewController: UITableViewDelegate, UITableViewDataSource {
 //            message.sender = nil
 //        }
         return cell
+    }
+}
+
+extension BetDetailViewController: UITextFieldDelegate {
+    @objc func keyboardWillShow(notification: NSNotification) {
+        let key = UIResponder.keyboardFrameEndUserInfoKey
+        if let keyboardSize = (notification.userInfo?[key] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == yOrigin {
+                self.view.frame.origin.y -= keyboardSize.height - (tabBarController?.tabBar.frame.size.height ?? 0)
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != yOrigin {
+            self.view.frame.origin.y = yOrigin
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
     }
 }
