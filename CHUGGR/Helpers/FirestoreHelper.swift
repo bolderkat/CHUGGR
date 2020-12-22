@@ -13,7 +13,9 @@ class FirestoreHelper {
     private let db = Firestore.firestore()
     private(set) var currentUser: CurrentUser? {
         didSet {
-            currentUserDidChange?()
+            if currentUser != nil {
+                currentUserDidChange?(currentUser!)
+            }
         }
     }
     private(set) var friends: [FriendSnippet] = []
@@ -40,7 +42,7 @@ class FirestoreHelper {
     private var profilePastBetQuery: Query?
     private var profileLastBet: QueryDocumentSnapshot?
     
-    var currentUserDidChange: (() -> ())? // for use by profile view ONLY
+    var currentUserDidChange: ((CurrentUser) -> ())? // for use by profile view ONLY
     
     // MARK:- User CRUD
     func createNewUser(

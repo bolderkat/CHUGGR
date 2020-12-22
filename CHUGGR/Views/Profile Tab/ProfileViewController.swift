@@ -80,6 +80,7 @@ class ProfileViewController: UIViewController {
                 self?.updateTableView()
             }
         }
+        viewModel.attachUserToListener()
         viewModel.initFetchPastBets()
     }
     

@@ -38,6 +38,12 @@ class ProfileViewModel {
     }
     
     // MARK:- Firestore handlers and bet processing
+    func attachUserToListener() {
+        // Called when user changes in FirestoreHelper
+        firestoreHelper.currentUserDidChange = { [weak self] user in
+            self?.user = user
+        }
+    }
     
     func initFetchPastBets() {
         // Check if there are no past bet cell VMs, indicating need for first fetch
