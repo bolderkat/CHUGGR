@@ -435,6 +435,7 @@
 				65D34C1C252CF428005C6F98 /* Views */,
 				65F69D8C257B2D1000CE7371 /* Extensions */,
 				656D9457252BF60100EDEB7F /* Assets.xcassets */,
+				657D959D25927E8C0065187A /* Resources */,
 				656D9481252BF6E100EDEB7F /* GoogleService-Info.plist */,
 				656D945C252BF60100EDEB7F /* Info.plist */,
 			);
@@ -459,6 +460,13 @@
 				656D9472252BF60100EDEB7F /* Info.plist */,
 			);
 			path = CHUGGRUITests;
+			sourceTree = "<group>";
+		};
+		657D959D25927E8C0065187A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		65B13FF7258AB3F60004FFCB /* Friend Detail */ = {

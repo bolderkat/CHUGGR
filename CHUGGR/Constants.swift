@@ -67,5 +67,7 @@ struct K {
     
     struct Images {
         static let profPicPlaceholder = "ProfPicPlaceholder"
+        static let chuggrLogoWhite = "CHUGGRLogoWhite"
+        static let chuggrLogoBlack = "CHUGGRLogoBlack"
     }
 }

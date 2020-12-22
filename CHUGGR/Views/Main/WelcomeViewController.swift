@@ -19,8 +19,9 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViewModel()
-        continueIfLoggedIn()
+        getStartedButton.isHidden = true
         getStartedButton.layer.cornerRadius = 15
+        continueIfLoggedIn()
     }
     
     init(
@@ -54,6 +55,9 @@ class WelcomeViewController: UIViewController {
             viewModel.getCurrentUserDetails(with: uid)
             // if doc not found, go to user details
             // TODO: display loading indicator if needed?
+        } else {
+            // Show login button if no user logged in
+            getStartedButton.isHidden = false
         }
     }
 
