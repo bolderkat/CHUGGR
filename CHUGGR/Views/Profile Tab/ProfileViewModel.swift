@@ -46,13 +46,10 @@ class ProfileViewModel {
     }
     
     func initFetchPastBets() {
-        // Check if there are no past bet cell VMs, indicating need for first fetch
         isLoading = true
-        if pastBetCellVMs.isEmpty {
-            firestoreHelper.initFetchPastBets(for: user.uid) { [weak self] bets in
-                self?.processPastBets(bets, appending: false)
-                self?.isLoading = false
-            }
+        firestoreHelper.initFetchPastBets(for: user.uid) { [weak self] bets in
+            self?.processPastBets(bets, appending: false)
+            self?.isLoading = false
         }
     }
     

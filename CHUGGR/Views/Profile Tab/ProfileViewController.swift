@@ -44,6 +44,11 @@ class ProfileViewController: UIViewController {
         configureTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.initFetchPastBets()
+    }
+    
     func configureViewController() {
         title = viewModel.user.userName
         tabBarItem.title = "Profile"
