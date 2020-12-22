@@ -49,6 +49,7 @@ class FriendDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.initFetchPastBets()
         viewModel.addActiveBetListeners()
     }
     
@@ -94,7 +95,7 @@ class FriendDetailViewController: UIViewController {
         }
         viewModel.setFriendListener()
         viewModel.checkFriendStatus()
-        viewModel.initFetchPastBets()
+        
     }
     
     

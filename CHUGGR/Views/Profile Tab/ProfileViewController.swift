@@ -88,7 +88,6 @@ class ProfileViewController: UIViewController {
             }
         }
         viewModel.bindUserToListener()
-        viewModel.initFetchPastBets()
     }
     
 
