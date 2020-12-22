@@ -9,6 +9,10 @@ import Foundation
 
 class AddFriendViewModel {
     private let firestoreHelper: FirestoreHelper
+    private var friendUIDs: Set<UID> {
+        // Used so already added users do not appear in search
+        Set(firestoreHelper.friends.map { $0.uid })
+    }
     private var searchResults: [FriendCellViewModel] = []
     private(set) var isLoading = false {
         didSet {
@@ -47,7 +51,9 @@ class AddFriendViewModel {
                 $0.userName.lowercased().contains(string) ||
                 "\($0.firstName) \($0.lastName)".lowercased().contains(string)
         }
-        let vms = createCellVMs(from: userSearchResults)
+        // Remove results that user has already followed
+        let filteredResults = userSearchResults.filter { !friendUIDs.contains($0.uid) }
+        let vms = createCellVMs(from: filteredResults)
         searchResults = vms
         return vms
     }

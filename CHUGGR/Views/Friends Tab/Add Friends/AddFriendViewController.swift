@@ -8,7 +8,6 @@
 import UIKit
 
 class AddFriendViewController: UIViewController {
-    // TODO: !!!Fix bug where backing out of this view and going back in breaks search!!!
     weak var coordinator: FriendsCoordinator?
     let viewModel: AddFriendViewModel
     private var dataSource: UITableViewDiffableDataSource<Section, FriendCellViewModel>!
