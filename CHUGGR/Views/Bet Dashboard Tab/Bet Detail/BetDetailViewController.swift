@@ -70,6 +70,7 @@ class BetDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.checkInvolvementStatus()
+        viewModel.setBetListener() // need to reset listener if user navigates away
         yOrigin = self.view.frame.origin.y // for sliding view with keyboard
         super.viewWillAppear(animated)
     }
