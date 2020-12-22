@@ -88,13 +88,22 @@ class BetDetailViewModel {
             bet?.perform(action: .addToSide2, withID: user.uid, firstName: user.firstName)
         }
         
-        
         guard let bet = bet else { return }
         
         // Write the bet then increment user's numBets
         firestoreHelper.updateBet(bet) { [weak self] _ in
             self?.firestoreHelper.updateBetCounter(increasing: true)
         }
+    }
+    
+    func uninvitedJoinBet(side: Side) {
+        // Allow user to join a bet they weren't originally invited to
+        guard let user = firestoreHelper.currentUser,
+              userInvolvement == .uninvolved else { return }
+        
+        bet?.perform(action: .invite, withID: user.uid, firstName: user.firstName)
+        
+        acceptBet(side: side)
     }
     
     func rejectBet() {

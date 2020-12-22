@@ -230,9 +230,15 @@ class BetDetailViewController: UIViewController {
     }
     
     func setUpForUninvolvedState() {
-        // Leaving the option open to do separate config for uninvolved
-        // Most likely will keep uninvolved/closed the same
-       setUpForClosedState()
+        firstButton.backgroundColor = UIColor(named: K.colors.forestGreen)
+        firstButton.setTitle(viewModel.getButtonStrings().side1, for: .normal)
+        secondButton.isHidden = false
+        secondButton.setTitle(viewModel.getButtonStrings().side2, for: .normal)
+        secondButton.backgroundColor = UIColor(named: K.colors.forestGreen)
+        messageTableView.isHidden = true
+        bottomSendView.isHidden = true
+        thirdButton.isHidden = true
+        fourthButton.isHidden = true
     }
     
     func setUpForOutstandingState() {
@@ -305,7 +311,9 @@ class BetDetailViewController: UIViewController {
             showWinnerActionSheet()
         case .outstanding:
             showFulfillActionSheet()
-        case .closed, .uninvolved:
+        case .uninvolved:
+            viewModel.uninvitedJoinBet(side: .two)
+        case .closed:
             return
         }
     }
@@ -313,6 +321,8 @@ class BetDetailViewController: UIViewController {
     @IBAction func secondButtonPressed(_ sender: UIButton) {
         if viewModel.userInvolvement == .invited {
             viewModel.acceptBet(side: .two)
+        } else if viewModel.userInvolvement == .uninvolved {
+            viewModel.uninvitedJoinBet(side: .two)
         }
     }
     
