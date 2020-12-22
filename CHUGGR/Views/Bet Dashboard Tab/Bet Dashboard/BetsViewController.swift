@@ -61,6 +61,7 @@ class BetsViewController: UIViewController {
         
         viewModel.updatePendingBetsLabel = { [weak self] in
             DispatchQueue.main.async {
+                self?.showPlaceholderIfEmpty()
                 self?.updateBetsPendingLabel()
             }
         }
@@ -73,10 +74,10 @@ class BetsViewController: UIViewController {
         
     }
     func showPlaceholderIfEmpty() {
-        if viewModel.userInvolvedBetCellVMs.isEmpty, viewModel.otherBetCellVMs.isEmpty {
+        if viewModel.userInvolvedBetCellVMs.isEmpty, viewModel.otherBetCellVMs.isEmpty, viewModel.pendingBets.isEmpty {
             placeholderLabel.isHidden = false
+            pendingBetsView.isHidden = true
             betsTable.isHidden = true
-            return
         } else {
             placeholderLabel.isHidden = true
             betsTable.isHidden = false
@@ -112,10 +113,11 @@ class BetsViewController: UIViewController {
     
     func updateBetsPendingLabel() {
         if viewModel.pendingBets.isEmpty {
-//            pendingBetsView.isHidden = true
+            pendingBetsView.isHidden = true
             pendingBetsButton.isEnabled = false
             tableViewTopConstraint.constant = -pendingBetsView.frame.height // extend table view to safe area to hide pending header
         } else {
+            betsTable.isHidden = false
             pendingBetsView.isHidden = false
             pendingBetsButton.isEnabled = true
             pendingBetsLabel.text = viewModel.getPendingBetsLabel()
