@@ -32,17 +32,14 @@ class FriendInviteViewModel {
     }
     
     func fetchFriends() {
-        // Set up listener if there is not yet one
-        if firestoreHelper.friendsListener == nil {
-            firestoreHelper.addFriendsListener { [weak self] (snippets) in
-                self?.friendSnippets = snippets
-                self?.createCellVMs()
-            }
-        } else {
-            // Otherwise we can just read from the array which is already being updated in real-time
-            friendSnippets = firestoreHelper.friends
-            createCellVMs()
+        // Add listener if not yet present
+        firestoreHelper.addFriendsListener { [weak self] (snippets) in
+            self?.friendSnippets = snippets
+            self?.createCellVMs()
         }
+        // Update from array attached to listener
+        friendSnippets = firestoreHelper.friends
+        createCellVMs()
     }
     
     func createCellVMs() {
