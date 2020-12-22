@@ -70,7 +70,7 @@ class BetDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.checkInvolvementStatus()
-        viewModel.setBetListener() // need to reset listener if user navigates away
+        viewModel.setBetListener() // set listener at view appear as it is removed on disappear
         yOrigin = self.view.frame.origin.y // for sliding view with keyboard
         super.viewWillAppear(animated)
     }
@@ -133,7 +133,6 @@ class BetDetailViewController: UIViewController {
             }
         }
         viewModel.fetchBet()
-        viewModel.setBetListener()
     }
     
     func updateBetCard() {
