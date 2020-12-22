@@ -65,10 +65,15 @@ class BetsViewModel {
             self?.pendingBets = pendingBets
             self?.processInvolvedBets(bets: involvedBets)
         }
+        initFetchOtherBets()
+    }
+    
+    func initFetchOtherBets() {
         firestoreHelper.initFetchOtherBets { [weak self] bets in
             self?.processOtherBets(bets: bets, appending: false)
         }
     }
+    
     
     func loadAdditionalBets() {
         self.isLoading = true

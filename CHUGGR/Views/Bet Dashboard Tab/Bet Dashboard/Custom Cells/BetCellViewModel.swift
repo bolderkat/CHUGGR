@@ -168,10 +168,12 @@ extension BetCellViewModel: Hashable {
     
     // Identify view models based on contained bet IDs
     static func == (lhs: BetCellViewModel, rhs: BetCellViewModel) -> Bool {
-        lhs.bet.betID == rhs.bet.betID
+        lhs.bet.betID == rhs.bet.betID &&
+        lhs.bet.acceptedUsers == rhs.bet.acceptedUsers // to handle collisions where user is moving into acceptedUsers
     }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(bet.betID)
+        hasher.combine(bet.acceptedUsers)
     }
 }

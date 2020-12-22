@@ -312,7 +312,7 @@ class BetDetailViewController: UIViewController {
         case .outstanding:
             showFulfillActionSheet()
         case .uninvolved:
-            viewModel.uninvitedJoinBet(side: .two)
+            viewModel.uninvitedJoinBet(side: .one)
         case .closed:
             return
         }

@@ -46,6 +46,12 @@ class BetsViewController: UIViewController {
         showPlaceholderIfEmpty()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Refresh first set of other bets
+        viewModel.initFetchOtherBets()
+    }
+    
     func setUpViewController() {
         title = "Bets"
     }
