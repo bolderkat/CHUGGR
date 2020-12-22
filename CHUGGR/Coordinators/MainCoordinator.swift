@@ -38,6 +38,7 @@ class MainCoordinator: ParentCoordinating {
     
     func goToTabBar() {
         tabController.coordinator = self
+        tabController.selectedIndex = 0
         startTabBarCoordinators()
         tabController.viewControllers = childCoordinators.map { $0.navigationController }
         UIView.transition(
