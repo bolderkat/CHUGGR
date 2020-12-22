@@ -45,7 +45,8 @@ class ProfileViewController: UIViewController {
     }
     
     func configureViewController() {
-        title = "Profile"
+        title = viewModel.user.userName
+        tabBarItem.title = "Profile"
         self.navigationItem.rightBarButtonItem = .init(
             title: "Log Out",
             style: .plain,
@@ -57,7 +58,6 @@ class ProfileViewController: UIViewController {
     
     func updateLabels() {
         // TODO: add user profile pic
-        title = viewModel.user.userName
         profPicView.image = UIImage(named: K.Images.profPicPlaceholder)
         drinksGivenLabel.text = viewModel.getDrinksString(forStat: .given)
         drinksReceivedLabel.text = viewModel.getDrinksString(forStat: .received)
