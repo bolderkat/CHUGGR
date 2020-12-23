@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct Message {
-    let sender: String // uuid
+struct Message: Codable {
+    let uid: UID
+    let firstName: String
     let body: String
-//    let date: TimeInterval
+    let timestamp: TimeInterval
 }

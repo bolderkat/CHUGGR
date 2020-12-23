@@ -104,7 +104,7 @@
                 <outlet property="stakeLabel" destination="NO0-FY-R99" id="JWs-BE-vNp"/>
                 <outlet property="titleLabel" destination="8Ey-ie-UST" id="Ajg-Ib-fqP"/>
             </connections>
-            <point key="canvasLocation" x="210.86956521739131" y="165.40178571428569"/>
+            <point key="canvasLocation" x="210.86956521739131" y="164.73214285714286"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -47,6 +47,7 @@
 		658F11262532747F003B6303 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F11242532747F003B6303 /* MessageCell.swift */; };
 		658F11272532747F003B6303 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658F11252532747F003B6303 /* MessageCell.xib */; };
 		658F112F25327B2C003B6303 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F112E25327B2C003B6303 /* Message.swift */; };
+		65989AE92592B660007FFBBA /* MessageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65989AE82592B660007FFBBA /* MessageCellViewModel.swift */; };
 		659DCB6D252E9A57009D330E /* BetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659DCB6B252E9A57009D330E /* BetCell.swift */; };
 		659DCB6E252E9A57009D330E /* BetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 659DCB6C252E9A57009D330E /* BetCell.xib */; };
 		659DCB76252E9AD3009D330E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659DCB75252E9AD3009D330E /* Constants.swift */; };
@@ -172,6 +173,7 @@
 		658F11242532747F003B6303 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		658F11252532747F003B6303 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		658F112E25327B2C003B6303 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		65989AE82592B660007FFBBA /* MessageCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellViewModel.swift; sourceTree = "<group>"; };
 		659DCB6B252E9A57009D330E /* BetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetCell.swift; sourceTree = "<group>"; };
 		659DCB6C252E9A57009D330E /* BetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetCell.xib; sourceTree = "<group>"; };
 		659DCB75252E9AD3009D330E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -314,8 +316,7 @@
 				65FBCBC0253257CE00227121 /* BetDetailViewController.swift */,
 				65D18D962580266F00E562C1 /* BetDetailViewModel.swift */,
 				6563F92425843F3F00DE69EC /* BetDetailView.xib */,
-				658F11242532747F003B6303 /* MessageCell.swift */,
-				658F11252532747F003B6303 /* MessageCell.xib */,
+				657D95BB2592B5DE0065187A /* Message Cell */,
 			);
 			path = "Bet Detail";
 			sourceTree = "<group>";
@@ -475,6 +476,16 @@
 				657D95B62592AE940065187A /* Superstar M54.ttf */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		657D95BB2592B5DE0065187A /* Message Cell */ = {
+			isa = PBXGroup;
+			children = (
+				658F11242532747F003B6303 /* MessageCell.swift */,
+				65989AE82592B660007FFBBA /* MessageCellViewModel.swift */,
+				658F11252532747F003B6303 /* MessageCell.xib */,
+			);
+			path = "Message Cell";
 			sourceTree = "<group>";
 		};
 		65B13FF7258AB3F60004FFCB /* Friend Detail */ = {
@@ -954,6 +965,7 @@
 				6563F92525843F3F00DE69EC /* ProfileViewController.swift in Sources */,
 				65578765256DD33600FC23FC /* FriendsCoordinator.swift in Sources */,
 				65FD451A2581D94100481F50 /* CurrentUser.swift in Sources */,
+				65989AE92592B660007FFBBA /* MessageCellViewModel.swift in Sources */,
 				65E947F62589791200A71365 /* BetsTableDataSource.swift in Sources */,
 				65C681FA2585E022003160F0 /* BetsViewModel.swift in Sources */,
 				65E6F787256C5A2400252974 /* ProfileCoordinator.swift in Sources */,

@@ -16,6 +16,7 @@ class BetDetailViewModel {
         didSet {
             updateBetCard?()
             checkInvolvementStatus()
+            setMessageListener()
         }
     }
     
@@ -24,10 +25,17 @@ class BetDetailViewModel {
             setUpForInvolvementState?()
         }
     }
+    
+    private(set) var messageCellVMs: [MessageCellViewModel] = [] {
+        didSet {
+            updateMessageTable?()
+        }
+    }
 
     var updateBetCard: (() -> ())?
     var setUpForInvolvementState: (() -> ())?
     var showAlreadyClosedAlert: (() -> ())?
+    var updateMessageTable: (() -> ())?
     
     init(firestoreHelper: FirestoreHelper,
          betID: BetID,
@@ -74,7 +82,7 @@ class BetDetailViewModel {
         }
     }
     
-    func clearBetListener() {
+    func clearBetDetailListeners() {
         firestoreHelper.removeBetDetailListener(for: parentTab)
     }
     
@@ -161,6 +169,67 @@ class BetDetailViewModel {
             self?.firestoreHelper.updateCountersOnBetFulfillment(with: bet)
         }
     }
+    
+    
+    
+    // MARK:- Message Handling
+    
+    func setMessageListener() {
+        switch userInvolvement {
+        case .accepted, .outstanding:
+            firestoreHelper.addBetMessageListener(with: betDocID, in: parentTab) { [weak self] messages in
+                self?.createCellVMs(for: messages)
+            }
+        case .invited, .uninvolved, .closed:
+            return
+        }
+    }
+    
+    func sendMessage(with body: String) {
+        guard let id = bet?.betID else { return }
+        firestoreHelper.sendMessage(for: id, with: body)
+    }
+    
+    func createCellVMs(for messages: [Message]) {
+        guard let uid = firestoreHelper.currentUser?.uid else { return }
+        var vms = [MessageCellViewModel]()
+        
+        // Check if previous message is from same sender so we can hide name label
+        for i in 0..<messages.count {
+            if i == 0 {
+                vms.append(MessageCellViewModel(
+                    message: messages[i],
+                    isPreviousMessageFromSameSender: false,
+                    currentUID: uid
+                ))
+            } else {
+                // Current message sender matches previous sender
+                if messages[i].uid == messages[i - 1].uid {
+                    vms.append(MessageCellViewModel(
+                        message: messages[i],
+                        isPreviousMessageFromSameSender: true,
+                        currentUID: uid
+                    ))
+                } else {
+                    vms.append(MessageCellViewModel(
+                        message: messages[i],
+                        isPreviousMessageFromSameSender: false,
+                        currentUID: uid
+                    ))
+                }
+            }
+        }
+        
+        messageCellVMs = vms
+    }
+    
+
+    
+    
+    
+    
+    
+    
     
     // MARK:- Display string parsing
     

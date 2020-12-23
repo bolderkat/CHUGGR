@@ -12,7 +12,7 @@ class BetDetailViewController: UIViewController {
 
     weak var coordinator: ChildCoordinating?
     private let viewModel: BetDetailViewModel
-    var messages: [Message] = []
+    private var dataSource: UITableViewDiffableDataSource<Section, MessageCellViewModel>!
     private var yOrigin: CGFloat = 0
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -60,24 +60,27 @@ class BetDetailViewController: UIViewController {
     // TODO: Show loading indicator while waiting for bet from DB!
     
     
+    
+    // MARK:- VC Setup
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        dismissKeyboard()
         setUpViewController()
         initViewModel()
+        configureDataSource()
         configureTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.checkInvolvementStatus()
-        viewModel.setBetListener() // set listener at view appear as it is removed on disappear
+        viewModel.setBetListener() // set listeners at view appear as it is removed on disappear
         yOrigin = self.view.frame.origin.y // for sliding view with keyboard
         super.viewWillAppear(animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         // Clean up listener when no longer needed
-        viewModel.clearBetListener()
+        viewModel.clearBetDetailListeners()
         NotificationCenter.default.removeObserver(self)
         super.viewWillDisappear(animated)
     }
@@ -118,6 +121,12 @@ class BetDetailViewController: UIViewController {
         viewModel.updateBetCard = { [weak self] in
             DispatchQueue.main.async {
                 self?.updateBetCard()
+            }
+        }
+        
+        viewModel.updateMessageTable = { [weak self] in
+            DispatchQueue.main.async {
+                self?.updateMessageTable()
             }
         }
         
@@ -302,6 +311,8 @@ class BetDetailViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    
+    
     // MARK:- Button Methods
     @objc func deleteBet() {
         let alert = UIAlertController(
@@ -383,12 +394,16 @@ class BetDetailViewController: UIViewController {
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
+        guard let text = textField.text,
+              textField.text != "" else { return }
+        viewModel.sendMessage(with: text)
+        textField.text = ""
     }
     
     func showWinnerActionSheet() {
         // Give user options to choose the winner of the bet.
         let alert = UIAlertController(
-            title: "Who won?",
+            title: "Close bet",
             message: "Choose a winner",
             preferredStyle: .actionSheet
         )
@@ -440,31 +455,62 @@ class BetDetailViewController: UIViewController {
     }
 }
 
-extension BetDetailViewController: UITableViewDelegate, UITableViewDataSource {
+// MARK:- TableView Data Source
+extension BetDetailViewController {
+    enum Section {
+        case main
+    }
+    
+    func configureDataSource() {
+        dataSource = UITableViewDiffableDataSource<Section, MessageCellViewModel>(tableView: messageTableView) { (tableView, indexPath, rowVM) -> UITableViewCell? in
+            guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: K.cells.messageCell,
+                    for: indexPath
+            ) as? MessageCell else {
+                fatalError("Message cell xib not found.")
+            }
+            cell.configure(with: rowVM)
+            return cell
+        }
+    }
+    
+    func updateMessageTable() {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, MessageCellViewModel>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(viewModel.messageCellVMs)
+        dataSource.apply(snapshot)
+    
+        // Scroll to bottom of table when new messages are loaded.
+        // TODO: May want to change this behavior depending on user feedback
+        scrollToBottomOfTable()
+    }
+    
+    func scrollToBottomOfTable() {
+        let indexPath = IndexPath(
+            row: viewModel.messageCellVMs.count - 1,
+            section: 0
+        )
+        
+        // Don't do this if there are no rows
+        if indexPath.row > 0 {
+            messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
+    }
+    
+}
+
+// MARK:- TableView Delegate
+extension BetDetailViewController: UITableViewDelegate {
     func configureTableView() {
         messageTableView.delegate = self
-        messageTableView.dataSource = self
+        messageTableView.rowHeight = UITableView.automaticDimension
+        messageTableView.estimatedRowHeight = 400
         messageTableView.register(UINib(nibName: K.cells.messageCell, bundle: nil),
                                   forCellReuseIdentifier: K.cells.messageCell)
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = messageTableView.dequeueReusableCell(withIdentifier: K.cells.messageCell) as! MessageCell
-        cell.message = messages[indexPath.row]
-
-//      will hide sender field if single recipient. also will hide if consecutive msgs from same sender in group chat
-//        var message = messages[indexPath.row]
-//        if message.sender == "dm@dm.com" {
-//            message.sender = nil
-//        }
-        return cell
-    }
 }
 
+// MARK:- TextField Delegate
 extension BetDetailViewController: UITextFieldDelegate {
     @objc func keyboardWillShow(notification: NSNotification) {
         let key = UIResponder.keyboardFrameEndUserInfoKey
@@ -483,5 +529,12 @@ extension BetDetailViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
+    }
+}
+
+// MARK:- ScrollView Delegate
+extension BetDetailViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        textField.resignFirstResponder()
     }
 }

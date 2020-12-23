@@ -30,11 +30,18 @@ class FirestoreHelper {
     private var friendsListener: ListenerRegistration?
     private var allUserListener: ListenerRegistration?
     
-    // Bet Detail listeners for each tab, as user can have bets open in multiple tabs
+    // Bet Detail listeners for each tab, as user can have bets open in multiple tabs.
+    // Listeners are cleaned as tab views disappear, but there can be overlap as they are cleaned
     private var BetTabBetDetailListener: ListenerRegistration?
     private var FriendsTabBetDetailListener: ListenerRegistration?
     private var VideosTabBetDetailListener: ListenerRegistration?
     private var ProfileBetDetailListener: ListenerRegistration?
+    
+    // Bet Detail message listeners for each tab
+    private var BetTabBetMessageListener: ListenerRegistration?
+    private var FriendsTabBetMessageListener: ListenerRegistration?
+    private var VideosTabBetMessageListener: ListenerRegistration?
+    private var ProfileBetMessageListener: ListenerRegistration?
     
     
     
@@ -196,6 +203,13 @@ class FirestoreHelper {
         do {
             try ref.setData(from: bet)
             
+            // Create chat room for bet holding field with betID for querying
+            db.collection(K.Firestore.chatRooms)
+                .document(ref.documentID)
+                .setData([
+                    K.Firestore.betID: ref.documentID
+                ])
+            
             // Increment user's numBets field by 1
             updateBetCounter(increasing: true)
         } catch {
@@ -254,6 +268,7 @@ class FirestoreHelper {
             if let error = error {
                 print("Error deleting bet: \(error)")
             } else {
+                // I would like to delete the associated chat room, but it's not recommended to delete the message subcollection from the client...
                 // Decrement every involved user's bet counts
                 for uid in bet.acceptedUsers {
                     self?.db.collection(K.Firestore.users).document(uid).updateData([
@@ -405,6 +420,105 @@ class FirestoreHelper {
             return
         }
     }
+    
+    
+    
+    
+    // MARK:- Bet chat message methods
+    func sendMessage(for bet: BetID, with body: String) {
+        guard let uid = currentUser?.uid,
+              let firstName = currentUser?.firstName else { return }
+        let timestamp = Date.init().timeIntervalSince1970
+        
+        let message = Message(
+            uid: uid,
+            firstName: firstName,
+            body: body,
+            timestamp: timestamp
+        )
+        do {
+            try db.collection(K.Firestore.chatRooms)
+                .document(bet)
+                .collection(K.Firestore.actualMessages)
+                .document()
+                .setData(from: message)
+        } catch let error {
+            print("Error writing message to bet \(bet): \(error)")
+        }
+        
+    }
+    
+    
+    func addBetMessageListener(with id: BetID, in tab: Tab, completion: @escaping (_ messages: [Message]) -> ()) {
+        
+        var listenerToCheck: ListenerRegistration?
+        
+        // Each tab can hold its own listener, so check to make sure the corresponding listener is nil before adding a new one.
+        switch tab {
+        case .bets:
+            listenerToCheck = BetTabBetMessageListener
+        case .friends:
+            listenerToCheck = FriendsTabBetMessageListener
+        case .videos:
+            listenerToCheck = VideosTabBetMessageListener
+        case .profile:
+            listenerToCheck = ProfileBetMessageListener
+        case .newBet:
+            return
+        }
+        
+        guard listenerToCheck == nil else {
+            print("ERROR: attempted to create a new bet message listener in tab number \(tab.rawValue), but a previous one was not cleaned up.")
+            return
+        }
+        let listener = db.collection(K.Firestore.chatRooms)
+            .document(id)
+            .collection(K.Firestore.actualMessages)
+            .order(by: K.Firestore.timestamp)
+            .addSnapshotListener { (querySnapshot, error) in
+                if let error = error {
+                    print("Error adding messages listener for bet \(id): \(error)")
+                } else {
+                    var messages = [Message]()
+                    for document in querySnapshot!.documents {
+                        let result = Result {
+                            try document.data(as: Message.self)
+                        }
+                        switch result {
+                        case .success(let message):
+                            if let message = message {
+                                // Successfully unwrapped a bet
+                                messages.append(message)
+                            } else {
+                                print("Attempted to add message listener but failed as document bet \(id) does not exist.")
+                            }
+                        case .failure(let error):
+                            print("Error decoding message in bet \(id): \(error)")
+                        }
+                    }
+                    completion(messages)
+                }
+            }
+        
+        // Assign listener to corresponding property
+        switch tab {
+        case .bets:
+            BetTabBetMessageListener = listener
+        case .friends:
+            FriendsTabBetMessageListener = listener
+        case .videos:
+            VideosTabBetMessageListener = listener
+        case .profile:
+            ProfileBetMessageListener = listener
+        case .newBet:
+            return
+        }
+    }
+    
+    
+    
+    
+    
     
     // MARK:- Bet dashboard methods
     
@@ -967,15 +1081,23 @@ class FirestoreHelper {
         case .bets:
             BetTabBetDetailListener?.remove()
             BetTabBetDetailListener = nil
+            BetTabBetMessageListener?.remove()
+            BetTabBetMessageListener = nil
         case .friends:
             FriendsTabBetDetailListener?.remove()
             FriendsTabBetDetailListener = nil
+            FriendsTabBetMessageListener?.remove()
+            FriendsTabBetMessageListener = nil
         case .videos:
             VideosTabBetDetailListener?.remove()
             VideosTabBetDetailListener = nil
+            VideosTabBetMessageListener?.remove()
+            VideosTabBetMessageListener = nil
         case .profile:
             ProfileBetDetailListener?.remove()
             ProfileBetDetailListener = nil
+            ProfileBetMessageListener?.remove()
+            ProfileBetMessageListener = nil
         case .newBet:
             return
         }
@@ -990,7 +1112,21 @@ class FirestoreHelper {
         VideosTabBetDetailListener = nil
         ProfileBetDetailListener?.remove()
         ProfileBetDetailListener = nil
+        
+        BetTabBetMessageListener?.remove()
+        BetTabBetMessageListener = nil
+        FriendsTabBetMessageListener?.remove()
+        FriendsTabBetMessageListener = nil
+        VideosTabBetMessageListener?.remove()
+        VideosTabBetMessageListener = nil
+        ProfileBetMessageListener?.remove()
+        ProfileBetMessageListener = nil
+        
     }
+   
+    
+    
+   
     
     func clearFriendDetail() {
         friendOutstandingBetListener?.remove()

@@ -304,6 +304,9 @@
                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <imageReference key="image" image="paperplane.fill" catalog="system" symbolScale="large"/>
                                             </state>
+                                            <connections>
+                                                <action selector="sendPressed:" destination="-1" eventType="touchUpInside" id="mwX-nc-Fzp"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>

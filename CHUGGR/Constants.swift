@@ -38,6 +38,7 @@ struct K {
     }
     struct Firestore {
         static let acceptedUsers = "acceptedUsers"
+        static let actualMessages = "actualMessages"
         static let allUsers = "allUsers"
         static let betID = "betID"
         static let bets = "bets"
@@ -52,6 +53,7 @@ struct K {
         static let numBets = "numBets"
         static let numFriends = "numFriends"
         static let outstandingUsers = "outstandingUsers"
+        static let timestamp = "timestamp"
         static let userName = "userName"
         static let uid = "uid"
         static let users = "users"
