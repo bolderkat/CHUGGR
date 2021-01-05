@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 
-class FirestoreHelper {
+class FirestoreHelper: FirestoreHelping {
     private let db = Firestore.firestore()
     private(set) var currentUser: CurrentUser? {
         didSet {
@@ -98,7 +98,7 @@ class FirestoreHelper {
                 print("Error completing query for existing username: \(error)")
             } else {
                 if document?.count == 0 {
-                    // No existing user found with that usernamename. Proceed with user write.
+                    // No existing user found with that username. Proceed with user write.
                     self?.writeNewUser(user, completion: completion)
                 } else {
                     // Existing user found with specified username
