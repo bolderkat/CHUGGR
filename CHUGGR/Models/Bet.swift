@@ -94,8 +94,11 @@ struct Bet: Codable {
                 allUsers.insert(uid)
             }
         case .uninvite:
-            invitedUsers[uid] = nil
-            allUsers.remove(uid)
+            // Check to make sure user has not already accepted
+            if !acceptedUsers.contains(uid) && invitedUsers[uid] != nil {
+                invitedUsers[uid] = nil
+                allUsers.remove(uid)
+            }
         case .addToSide1:
             if invitedUsers[uid] != nil && side2Users[uid] == nil {
                 invitedUsers[uid] = nil
