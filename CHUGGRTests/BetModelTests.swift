@@ -9,122 +9,155 @@
 import XCTest
 
 class BetModelTests: XCTestCase {
-    var bet = Bet(
-        type: .spread,
-        betID: "betID",
-        title: "Bet Title",
-        line: 6.5,
-        team1: nil,
-        team2: nil,
-        invitedUsers: [:],
-        side1Users: [:],
-        side2Users: [:],
-        allUsers: Set<String>(),
-        acceptedUsers: Set<String>(),
-        stake: Drinks(beers: 1, shots: 1),
-        dateOpened: Date.init().timeIntervalSince1970,
-        dueDate: Date.init().timeIntervalSince1970 + 10000,
-        isFinished: false,
-        winner: nil,
-        dateFinished: nil
-    )
+    
+    var sut: Bet!
+    let fname = "daniel"
+    let uid = "uid"
 
     
     override func setUpWithError() throws {
+        super.setUp()
+        sut = Bet(
+            type: .spread,
+            betID: "betID",
+            title: "bet Title",
+            line: 6.5,
+            team1: nil,
+            team2: nil,
+            invitedUsers: [:],
+            side1Users: [:],
+            side2Users: [:],
+            allUsers: Set<String>(),
+            acceptedUsers: Set<String>(),
+            stake: Drinks(beers: 1, shots: 1),
+            dateOpened: Date.init().timeIntervalSince1970,
+            dueDate: Date.init().timeIntervalSince1970 + 10000,
+            isFinished: false,
+            winner: nil,
+            dateFinished: nil
+        )
     }
     
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        sut = nil
+        super.tearDown()
     }
     
+
+
+    func testInviteUser() {
+        inviteUser()
+        XCTAssert(sut.allUsers.contains(uid))
+        XCTAssertEqual(sut.invitedUsers, [uid: fname])
+    }
+    
+    func testUninviteUser() {
+        inviteUser()
+        uninviteUser()
+        XCTAssertEqual(sut.invitedUsers, [:])
+        XCTAssertEqual(sut.side2Users, [:])
+        XCTAssertFalse(sut.acceptedUsers.contains(uid))
+        XCTAssertFalse(sut.allUsers.contains(uid))
+    }
+    
+    func testAddToSide1() {
+        inviteUser()
+        addToSide1()
+        XCTAssertEqual(sut.side1Users, [uid: fname])
+        XCTAssert(sut.acceptedUsers.contains(uid))
+        XCTAssert(sut.allUsers.contains(uid))
+    }
+    
+    func testAddToSide2() {
+        inviteUser()
+        addToSide2()
+        XCTAssertEqual(sut.side2Users, [uid: fname])
+        XCTAssert(sut.acceptedUsers.contains(uid))
+        XCTAssert(sut.allUsers.contains(uid))
+    }
+    
+    func testRemoveFromSide1() {
+        inviteUser()
+        addToSide1()
+        remove()
+        XCTAssertEqual(sut.side1Users, [:])
+        XCTAssertFalse(sut.allUsers.contains(uid))
+        XCTAssertFalse(sut.acceptedUsers.contains(uid))
+    }
+    
+    func testRemoveFromSide2() {
+        inviteUser()
+        addToSide2()
+        remove()
+        XCTAssertEqual(sut.side2Users, [:])
+        XCTAssertFalse(sut.allUsers.contains(uid))
+        XCTAssertFalse(sut.acceptedUsers.contains(uid))
+    }
+    
+    func test_addUninvitedUserToSideFails() {
+        addToSide2()
+        XCTAssertNil(sut.side2Users[uid]) // shouldn't work because user wasn't invited
+        XCTAssertEqual(sut.side2Users, [:]) // should be the same as above, just playing around
+        XCTAssertEqual(sut.invitedUsers, [:])
+        XCTAssertFalse(sut.acceptedUsers.contains(uid))
+        XCTAssertFalse(sut.allUsers.contains(uid))
+    }
+    
+    func test_reinviteUserAfterRemoved() {
+        inviteUser()
+        addToSide1()
+        remove()
+        inviteUser()
+        XCTAssert(sut.allUsers.contains(uid))
+        XCTAssertEqual(sut.invitedUsers, [uid: fname])
+        XCTAssertEqual(sut.side1Users, [:])
+    }
+    
+    func test_uninviteAcceptedUser() {
+        inviteUser()
+        addToSide2()
+        uninviteUser()
+        
+        // This should not do anything, as the user has moved from invited to accepted
+        XCTAssertEqual(sut.invitedUsers, [:])
+        XCTAssertEqual(sut.side2Users, [uid: fname])
+        XCTAssert(sut.allUsers.contains(uid))
+    }
+    
+    
+    func testFinish() throws {
+        // Given winning side is one
+        let winner = Side.one
+        
+        inviteUser()
+        addToSide1()
+        sut.closeBetWith(winningSide: winner)
+        XCTAssertGreaterThan(sut.dateFinished!, sut.dateOpened)
+        XCTAssertGreaterThanOrEqual(Date().timeIntervalSince1970, sut.dateFinished!)
+        XCTAssertTrue(sut.isFinished)
+        XCTAssertEqual(sut.winner, winner)
+    }
+    
+    
     func inviteUser() {
-        bet.perform(action: .invite, withID: "uid", firstName: "daniel")
+        sut.perform(action: .invite, withID: uid, firstName: fname)
     }
     
     func uninviteUser() {
-        bet.perform(action: .uninvite, withID: "uid", firstName: "daniel")
+        sut.perform(action: .uninvite, withID: uid, firstName: fname)
     }
     
     func addToSide1() {
-        bet.perform(action: .addToSide1, withID: "uid", firstName: "daniel")
+        sut.perform(action: .addToSide1, withID: uid, firstName: fname)
     }
     
     func addToSide2() {
-        bet.perform(action: .addToSide2, withID: "uid", firstName: "daniel")
+        sut.perform(action: .addToSide2, withID: uid, firstName: fname)
     }
     
     func remove() {
-        bet.perform(action: .removeFromSide, withID: "uid", firstName: "daniel")
-    }
-
-    // Notes from Ian call: Should break this up into indvidual tests so able to compartmentalize tests and see exactly what fails in an isolated environment. This is more of an integration test as is.
-    func testUserActions() throws {
-        inviteUser()
-        XCTAssertTrue(bet.allUsers.contains("uid"))
-        XCTAssertEqual(bet.invitedUsers, ["uid": "daniel"])
-        
-        addToSide1()
-        XCTAssertEqual(bet.side1Users, ["uid": "daniel"])
-        XCTAssertTrue(bet.acceptedUsers.contains("uid"))
-        XCTAssertTrue(bet.allUsers.contains("uid"))
-        
-        remove()
-        XCTAssertEqual(bet.side1Users, [:])
-        XCTAssertFalse(bet.allUsers.contains("uid"))
-        XCTAssertFalse(bet.acceptedUsers.contains("uid"))
-        
-        addToSide2()
-        XCTAssertNil(bet.side2Users["uid"]) // shouldn't work because user wasn't invited
-        XCTAssertEqual(bet.side2Users, [:]) // should be the same as above, just playing around
-        XCTAssertEqual(bet.invitedUsers, [:])
-        XCTAssertFalse(bet.acceptedUsers.contains("uid"))
-        XCTAssertFalse(bet.allUsers.contains("uid"))
-        
-        
-        inviteUser()
-        addToSide2()
-        XCTAssertEqual(bet.side2Users, ["uid": "daniel"])
-        XCTAssertTrue(bet.acceptedUsers.contains("uid"))
-        XCTAssertTrue(bet.allUsers.contains("uid"))
-        
-        remove()
-        inviteUser()
-        XCTAssertTrue(bet.allUsers.contains("uid"))
-        XCTAssertEqual(bet.invitedUsers, ["uid": "daniel"])
-        
-        uninviteUser()
-        XCTAssertEqual(bet.invitedUsers, [:])
-        XCTAssertEqual(bet.side2Users, [:])
-        XCTAssertFalse(bet.acceptedUsers.contains("uid"))
-        XCTAssertFalse(bet.allUsers.contains("uid"))
-        
-        // see if removing a nonexistent user breaks anything
-        uninviteUser()
-        remove()
-        XCTAssertEqual(bet.invitedUsers, [:])
-        XCTAssertEqual(bet.side1Users, [:])
-        XCTAssertEqual(bet.side2Users, [:])
-        XCTAssertFalse(bet.allUsers.contains("uid"))
-        XCTAssertFalse(bet.acceptedUsers.contains("uid"))
-    }
-    
-    func testFinish() throws {
-        bet.perform(action: .invite, withID: "uid", firstName: "daniel")
-        bet.perform(action: .addToSide1, withID: "uid", firstName: "daniel")
-        bet.closeBetWith(winningSide: .one)
-        XCTAssertGreaterThan(bet.dateFinished!, bet.dateOpened)
-        XCTAssertGreaterThanOrEqual(Date().timeIntervalSince1970, bet.dateFinished!)
-        XCTAssertTrue(bet.isFinished)
-        XCTAssertEqual(bet.winner, Side.one)
-    }
-    
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+        sut.perform(action: .removeFromSide, withID: uid, firstName: fname)
     }
 
 }
