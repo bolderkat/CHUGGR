@@ -80,7 +80,6 @@
 		65C6E409257F408600EA7AA4 /* FirestoreHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6E408257F408600EA7AA4 /* FirestoreHelper.swift */; };
 		65C97625256C4EF800AA46BA /* BetsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C97624256C4EF800AA46BA /* BetsCoordinator.swift */; };
 		65D18D972580266F00E562C1 /* BetDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D18D962580266F00E562C1 /* BetDetailViewModel.swift */; };
-		65D18D9C2580520200E562C1 /* FirestoreHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D18D9B2580520200E562C1 /* FirestoreHelperTests.swift */; };
 		65D18DAD258053EC00E562C1 /* Drinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D18DAC258053EC00E562C1 /* Drinks.swift */; };
 		65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D34C1F252CF494005C6F98 /* BetsViewController.swift */; };
 		65D6ECAE258B354A00E0A720 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6ECAD258B354A00E0A720 /* Friend.swift */; };
@@ -206,7 +205,6 @@
 		65C6E408257F408600EA7AA4 /* FirestoreHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreHelper.swift; sourceTree = "<group>"; };
 		65C97624256C4EF800AA46BA /* BetsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsCoordinator.swift; sourceTree = "<group>"; };
 		65D18D962580266F00E562C1 /* BetDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetDetailViewModel.swift; sourceTree = "<group>"; };
-		65D18D9B2580520200E562C1 /* FirestoreHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreHelperTests.swift; sourceTree = "<group>"; };
 		65D18DAC258053EC00E562C1 /* Drinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drinks.swift; sourceTree = "<group>"; };
 		65D34C1F252CF494005C6F98 /* BetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsViewController.swift; sourceTree = "<group>"; };
 		65D6ECAD258B354A00E0A720 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
@@ -454,7 +452,6 @@
 			children = (
 				656D9465252BF60100EDEB7F /* CHUGGRTests.swift */,
 				65AF9BE22585995800FA96F2 /* BetModelTests.swift */,
-				65D18D9B2580520200E562C1 /* FirestoreHelperTests.swift */,
 				656D9467252BF60100EDEB7F /* Info.plist */,
 			);
 			path = CHUGGRTests;
@@ -1028,7 +1025,6 @@
 			files = (
 				656D9466252BF60100EDEB7F /* CHUGGRTests.swift in Sources */,
 				65AF9BE32585995800FA96F2 /* BetModelTests.swift in Sources */,
-				65D18D9C2580520200E562C1 /* FirestoreHelperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
