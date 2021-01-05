@@ -8,7 +8,7 @@
 import Foundation
 
 class FriendDetailViewModel {
-    private let firestoreHelper: FirestoreHelper
+    private let firestoreHelper: FirestoreHelping
     private(set) var friend: FullFriend {
         didSet {
             checkFriendStatus()
@@ -86,7 +86,7 @@ class FriendDetailViewModel {
     var updateTableView: (() -> ())?
 
     
-    init(firestoreHelper: FirestoreHelper, friend: FullFriend) {
+    init(firestoreHelper: FirestoreHelping, friend: FullFriend) {
         self.firestoreHelper = firestoreHelper
         self.friend = friend
     }

@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 class BetDetailViewModel {
-    private let firestoreHelper: FirestoreHelper
+    private let firestoreHelper: FirestoreHelping
     private var betDocID: BetID
     private let parentTab: Tab
     private(set) var bet: Bet? {
@@ -37,7 +37,7 @@ class BetDetailViewModel {
     var showAlreadyClosedAlert: (() -> ())?
     var updateMessageTable: (() -> ())?
     
-    init(firestoreHelper: FirestoreHelper,
+    init(firestoreHelper: FirestoreHelping,
          betID: BetID,
          parentTab: Tab,
          userInvolvement: BetInvolvementType) {

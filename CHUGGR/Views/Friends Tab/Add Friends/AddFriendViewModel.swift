@@ -8,7 +8,7 @@
 import Foundation
 
 class AddFriendViewModel {
-    private let firestoreHelper: FirestoreHelper
+    private let firestoreHelper: FirestoreHelping
     private var friendUIDs: Set<UID> {
         // Used so already added users do not appear in search
         Set(firestoreHelper.friends.map { $0.uid })
@@ -23,7 +23,7 @@ class AddFriendViewModel {
     var updateLoadingStatus: (() -> ())?
     var onFriendFetch: ((FullFriend) -> ())?
     
-    init(firestoreHelper: FirestoreHelper) {
+    init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
     }
     

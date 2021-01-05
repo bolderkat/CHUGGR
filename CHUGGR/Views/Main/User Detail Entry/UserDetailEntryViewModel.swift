@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 class UserDetailEntryViewModel {
-    private let firestoreHelper: FirestoreHelper
+    private let firestoreHelper: FirestoreHelping
     private(set) var cellViewModels = [UserDetailEntryCellViewModel]() {
         didSet {
             reloadTableViewClosure?()
@@ -31,7 +31,7 @@ class UserDetailEntryViewModel {
     var ifUserNameTaken: (() -> ())?
     var onUserLoad: (() -> ())? // notes from ian call: pass result type or bool as closure parameter
     
-    init(firestoreHelper: FirestoreHelper) {
+    init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
     }
     

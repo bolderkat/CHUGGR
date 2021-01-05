@@ -8,6 +8,12 @@
 import Foundation
 
 class MockFirestoreHelper: FirestoreHelping {
+    private(set) var currentUser: CurrentUser?
+    private(set) var friends: [FriendSnippet] = []
+    private(set) var allUsers: [FullFriend] = []
+    private(set) var involvedBets: [Bet] = []
+    var currentUserDidChange: ((CurrentUser) -> ())? // for use by profile view ONLY
+    
     private(set) var isUserCreated = false
     private(set) var isUserWrittenToDB = false
     private(set) var isUserStoredFromDB = false
@@ -97,6 +103,23 @@ class MockFirestoreHelper: FirestoreHelping {
     ) {
         isUserStoredFromDB = true
         addCurrentUserListener(with: uid)
+        let emptyDrinks = Drinks(beers: 0, shots: 0)
+        currentUser = CurrentUser(
+            uid: "uid",
+            email: "email",
+            firstName: "firstName",
+            lastName: "lastName",
+            userName: "userName",
+            bio: "bio",
+            numBets: 0,
+            numFriends: 0,
+            betsWon: 0, betsLost: 0,
+            drinksGiven: emptyDrinks,
+            drinksReceived: emptyDrinks,
+            drinksOutstanding: emptyDrinks,
+            recentFriends: [String]()
+        )
+        
         if completion != nil {
             voidCompletion = completion // store completion handler in MockFirestoreHandler property
         }

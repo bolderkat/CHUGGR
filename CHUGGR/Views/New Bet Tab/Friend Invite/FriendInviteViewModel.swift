@@ -8,7 +8,7 @@
 import Foundation
 
 class FriendInviteViewModel {
-    private let firestoreHelper: FirestoreHelper
+    private let firestoreHelper: FirestoreHelping
     private var friendSnippets: [FriendSnippet] = []
     private(set) var cellVMs: [InviteCellViewModel] = [] {
         didSet {
@@ -27,7 +27,7 @@ class FriendInviteViewModel {
     var updateTableViewClosure: ((String) -> ())?
     var updateRecipientView: (() -> ())?
     
-    init(firestoreHelper: FirestoreHelper) {
+    init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
     }
     

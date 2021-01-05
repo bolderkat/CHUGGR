@@ -11,7 +11,7 @@ import Firebase
 import Foundation
 
 class ProfileViewModel {
-    private let firestoreHelper: FirestoreHelper
+    private var firestoreHelper: FirestoreHelping
     private(set) var user: CurrentUser {
         didSet {
             updateVCLabels?()
@@ -32,7 +32,7 @@ class ProfileViewModel {
     var updateTableView: (() -> ())?
 
     
-    init(firestoreHelper: FirestoreHelper, user: CurrentUser) {
+    init(firestoreHelper: FirestoreHelping, user: CurrentUser) {
         self.firestoreHelper = firestoreHelper
         self.user = user
     }

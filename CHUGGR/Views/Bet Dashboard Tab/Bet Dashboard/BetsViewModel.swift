@@ -8,7 +8,7 @@
 import Foundation
 
 class BetsViewModel {
-    private var firestoreHelper: FirestoreHelper
+    private var firestoreHelper: FirestoreHelping
     private(set) var pendingBets = [Bet]() {
         didSet {
             updatePendingBetsLabel?()
@@ -43,7 +43,7 @@ class BetsViewModel {
     var reloadTableViewClosure: (() -> ())?
     var updateLoadingStatus: (() -> ())?
     
-    init(firestoreHelper: FirestoreHelper) {
+    init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
     }
     

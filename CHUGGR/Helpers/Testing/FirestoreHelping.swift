@@ -9,6 +9,12 @@ import Foundation
 
 protocol FirestoreHelping {
     
+    var currentUser: CurrentUser? { get }
+    var friends: [FriendSnippet] { get }
+    var allUsers: [FullFriend] { get }
+    var involvedBets: [Bet] { get }
+    var currentUserDidChange: ((CurrentUser) -> ())? { get set }
+    
     // MARK:- User CRUD
     func createNewUser(
         firstName: String,

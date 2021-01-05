@@ -8,7 +8,7 @@
 import Foundation
 
 class PendingBetsViewModel {
-    private let firestoreHelper: FirestoreHelper
+    private let firestoreHelper: FirestoreHelping
     private var pendingBets: [Bet] = [] {
         didSet {
             processBets()
@@ -22,7 +22,7 @@ class PendingBetsViewModel {
     
     var reloadTableView: (() -> ())?
     
-    init(firestoreHelper: FirestoreHelper) {
+    init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
     }
     

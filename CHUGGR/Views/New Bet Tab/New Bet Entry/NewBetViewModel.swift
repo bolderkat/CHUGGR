@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 class NewBetViewModel {
-    private let firestoreHelper: FirestoreHelper
+    private let firestoreHelper: FirestoreHelping
     private let invitedFriends: [FriendSnippet]
     
     private(set) var selectedBetType: BetType = .spread {
@@ -43,7 +43,7 @@ class NewBetViewModel {
     var updateButtonStatus: (() -> ())?
     var setSendButtonState: (() -> ())?
     
-    init(firestoreHelper: FirestoreHelper, invitedFriends: [FriendSnippet]) {
+    init(firestoreHelper: FirestoreHelping, invitedFriends: [FriendSnippet]) {
         self.firestoreHelper = firestoreHelper
         self.invitedFriends = invitedFriends
     }

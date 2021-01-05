@@ -10,7 +10,7 @@ import Foundation
 struct BetCellViewModel {
     
     let bet: Bet
-    let firestoreHelper: FirestoreHelper
+    let firestoreHelper: FirestoreHelping
     let friend: Friend? // if this holds a value, then this bet cell is being displayed in a friend detail view should be configured to show the status of the bet from the friend's perspective.
         
     func getSideLabels(for side: Side) -> String {
