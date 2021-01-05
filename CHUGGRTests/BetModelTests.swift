@@ -13,9 +13,8 @@ class BetModelTests: XCTestCase {
     var sut: Bet!
     let fname = "daniel"
     let uid = "uid"
-
     
-    override func setUpWithError() throws {
+    override func setUp() {
         super.setUp()
         sut = Bet(
             type: .spread,
@@ -37,22 +36,23 @@ class BetModelTests: XCTestCase {
             dateFinished: nil
         )
     }
+
     
 
-    override func tearDownWithError() throws {
+    override func tearDown() {
         sut = nil
         super.tearDown()
     }
     
 
 
-    func testInviteUser() {
+    func test_InviteUser() {
         inviteUser()
         XCTAssert(sut.allUsers.contains(uid))
         XCTAssertEqual(sut.invitedUsers, [uid: fname])
     }
     
-    func testUninviteUser() {
+    func test_UninviteUser() {
         inviteUser()
         uninviteUser()
         XCTAssertEqual(sut.invitedUsers, [:])
@@ -61,7 +61,7 @@ class BetModelTests: XCTestCase {
         XCTAssertFalse(sut.allUsers.contains(uid))
     }
     
-    func testAddToSide1() {
+    func test_AddToSide1() {
         inviteUser()
         addToSide1()
         XCTAssertEqual(sut.side1Users, [uid: fname])
@@ -69,7 +69,7 @@ class BetModelTests: XCTestCase {
         XCTAssert(sut.allUsers.contains(uid))
     }
     
-    func testAddToSide2() {
+    func test_AddToSide2() {
         inviteUser()
         addToSide2()
         XCTAssertEqual(sut.side2Users, [uid: fname])
@@ -77,7 +77,7 @@ class BetModelTests: XCTestCase {
         XCTAssert(sut.allUsers.contains(uid))
     }
     
-    func testRemoveFromSide1() {
+    func test_RemoveFromSide1() {
         inviteUser()
         addToSide1()
         remove()
@@ -86,7 +86,7 @@ class BetModelTests: XCTestCase {
         XCTAssertFalse(sut.acceptedUsers.contains(uid))
     }
     
-    func testRemoveFromSide2() {
+    func test_RemoveFromSide2() {
         inviteUser()
         addToSide2()
         remove()
@@ -126,7 +126,7 @@ class BetModelTests: XCTestCase {
     }
     
     
-    func testFinish() throws {
+    func test_Finish()  {
         // Given winning side is one
         let winner = Side.one
         
@@ -138,7 +138,12 @@ class BetModelTests: XCTestCase {
         XCTAssertTrue(sut.isFinished)
         XCTAssertEqual(sut.winner, winner)
     }
-    
+}
+
+
+// MARK:- Helper functions for tests
+
+private extension BetModelTests {
     
     func inviteUser() {
         sut.perform(action: .invite, withID: uid, firstName: fname)
@@ -159,5 +164,5 @@ class BetModelTests: XCTestCase {
     func remove() {
         sut.perform(action: .removeFromSide, withID: uid, firstName: fname)
     }
-
+    
 }
