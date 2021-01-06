@@ -37,7 +37,6 @@ class UserDetailEntryViewModel {
             UserEntryRowType.bio
         ]
         
-        // Create array of cell VMs based on row types above
         var vms = [UserDetailEntryCellViewModel]()
         for type in rowTypes {
             vms.append(UserDetailEntryCellViewModel(type: type))
@@ -52,7 +51,6 @@ class UserDetailEntryViewModel {
     // MARK:- Input processing from cells
     
     func handle(text: String, for rowType: UserEntryRowType) {
-        // Store textfield input into variables based on row type
         switch rowType {
         case .firstName:
             firstNameInput = text
@@ -68,12 +66,10 @@ class UserDetailEntryViewModel {
     
     func validateInput() {
         guard let didValidateInput = didValidateInput else { return }
-        // Make sure all fields have input before marking input complete
         if !firstNameInput.isEmpty,
            !lastNameInput.isEmpty,
            !userNameInput.isEmpty,
            !bioInput.isEmpty {
-            // Return a bool via closure reflecting validity of user's input
             didValidateInput(true)
         } else {
             didValidateInput(false)

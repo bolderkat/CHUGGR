@@ -81,7 +81,6 @@ class UserDetailEntryViewController: UIViewController {
     }
     
     private func proceedToDashboard() {
-        // Call coordinator to go to tab bar controller
         if let coordinator = mainCoordinator {
             coordinator.goToTabBar()
         }
@@ -103,7 +102,6 @@ extension UserDetailEntryViewController {
         dataSource = UITableViewDiffableDataSource<Section, UserDetailEntryCellViewModel>(
             tableView: tableView) { (tableView, indexPath, rowVM) -> UITableViewCell? in
             
-            // Set up each row type and return cell
             guard let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.userEntryCell) as? UserDetailEntryCell else {
                 fatalError("User detail entry cell nib does not exist")
             }
@@ -114,7 +112,6 @@ extension UserDetailEntryViewController {
     }
     
     func updateUI(animated: Bool = false) {
-        // Set up table rows
         var snapshot = NSDiffableDataSourceSnapshot<Section, UserDetailEntryCellViewModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(viewModel.cellViewModels)
@@ -141,7 +138,6 @@ extension UserDetailEntryViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // Provide taller cell for bio field
         let cell = viewModel.getCellViewModel(at: indexPath)
         if cell.type == .bio {
             return 140
