@@ -15,21 +15,15 @@ class UserDetailEntryViewModel {
         }
     }
     
-    private(set) var isInputComplete = false {
-        didSet {
-            updateButtonStatus?() // enable/disable button based on user input
-        }
-    }
-    
     private(set) var firstNameInput = ""
     private(set) var lastNameInput = ""
     private(set) var userNameInput = ""
     private(set) var bioInput = ""
     
-    var reloadTableViewClosure: (() -> ())?
-    var updateButtonStatus: (() -> ())?
-    var ifUserNameTaken: (() -> ())?
-    var onUserLoad: (() -> ())? // notes from ian call: pass result type or bool as closure parameter
+    var reloadTableViewClosure: (() -> Void)?
+    var updateButtonStatus: ((Bool) -> ())?
+    var ifUserNameTaken: (() -> Void)?
+    var onUserLoad: (() -> Void)? // notes from ian call: pass result type or bool as closure parameter
     
     init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
@@ -73,14 +67,16 @@ class UserDetailEntryViewModel {
     }
     
     func validateInput() {
+        guard let updateButtonStatus = updateButtonStatus else { return }
         // Make sure all fields have input before marking input complete
         if !firstNameInput.isEmpty,
            !lastNameInput.isEmpty,
            !userNameInput.isEmpty,
            !bioInput.isEmpty {
-            isInputComplete = true
+            // Return a bool via closure reflecting validity of user's input
+            updateButtonStatus(true)
         } else {
-            isInputComplete = false
+            updateButtonStatus(false)
         }
     }
     

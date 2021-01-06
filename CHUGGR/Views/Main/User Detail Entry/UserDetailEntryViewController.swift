@@ -40,7 +40,7 @@ class UserDetailEntryViewController: UIViewController {
     
     func setUpViewController() {
         submitButton.layer.cornerRadius = 15
-        updateButtonStatus()
+        updateButtonStatus(false)
     }
     
     func initViewModel() {
@@ -50,9 +50,9 @@ class UserDetailEntryViewController: UIViewController {
             }
         }
         
-        viewModel.updateButtonStatus = { [weak self] in
+        viewModel.updateButtonStatus = { [weak self] isInputValid in
             DispatchQueue.main.async {
-                self?.updateButtonStatus()
+                self?.updateButtonStatus(isInputValid)
             }
         }
         
@@ -121,8 +121,8 @@ extension UserDetailEntryViewController {
         dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
     }
     
-    func updateButtonStatus() {
-        submitButton.isEnabled = viewModel.isInputComplete
+    func updateButtonStatus(_ isInputValid: Bool) {
+        submitButton.isEnabled = isInputValid
         submitButton.backgroundColor = submitButton.isEnabled ?
             UIColor(named: K.colors.orange) : UIColor(named: K.colors.gray3)
     }

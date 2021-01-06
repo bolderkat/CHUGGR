@@ -86,8 +86,13 @@ class MockFirestoreHelper: FirestoreHelping {
             drinksOutstanding: emptyDrinks,
             recentFriends: [String]()
         )
-        isUserCreated = true
-        writeNewUser(user, completion: completion)
+        if userName == "takenUserName" {
+            ifUserNameTaken()
+            return
+        } else {
+            isUserCreated = true
+            writeNewUser(user, completion: completion)
+        }
     }
     
     func writeNewUser(_ user: CurrentUser, completion: (() -> ())?) {

@@ -19,7 +19,7 @@ class UserDetailEntryViewModelTests: XCTestCase {
         sut = UserDetailEntryViewModel(firestoreHelper: mock)
     }
     
-    override func tearDownWithError() throws {
+    override func tearDown() {
         sut = nil
         mock = nil
         super.tearDown()
@@ -79,67 +79,70 @@ class UserDetailEntryViewModelTests: XCTestCase {
         XCTAssertEqual(sut.bioInput, UserEntryRowType.bio.rawValue)
     }
     
-    func test_inputValidation() {
-        for row in UserEntryRowType.allCases {
-            // Before all fields are filled
-            XCTAssertFalse(sut.isInputComplete)
-            sut.handle(text: row.rawValue, for: row)
-        }
-        
-        // After all fields are filled
-        XCTAssert(sut.isInputComplete)
-        
-    }
-    
-    func test_inputValidationAfterUserClearsAField() {
-        for row in UserEntryRowType.allCases {
-            sut.handle(text: row.rawValue, for: row)
-        }
-        
-        XCTAssert(sut.isInputComplete)
-        
-        // Test clearing and then re-filling each field
-        for row in UserEntryRowType.allCases {
-            sut.handle(text: "", for: row)
-            XCTAssertFalse(sut.isInputComplete)
-            sut.handle(text: "asdf", for: row)
-            XCTAssert(sut.isInputComplete)
-        }
-        
-    }
-    
-    func test_ButtonUpdateClosureCalledWithUserInput() {
+    func test_userInputValidation() {
         // Action counter should increment every time user clears/populates an input field.
         // The button update closure should be called during the same event.
-        var actionCounter = 0
-        var closureCalls = 0
-        sut.updateButtonStatus = { closureCalls += 1 }
-        
-        for row in UserEntryRowType.allCases {
-            sut.handle(text: row.rawValue, for: row)
-            actionCounter += 1
+        var trueActionCounter = 0
+        var falseActionCounter = 0
+        var trueClosureCalls = 0
+        var falseClosureCalls = 0
+        sut.updateButtonStatus = { isInputValid in
+            if isInputValid {
+                trueClosureCalls += 1
+            } else {
+                falseClosureCalls += 1
+            }
         }
+        
+        let rowTypes = UserEntryRowType.allCases
+        for i in 0..<UserEntryRowType.allCases.count {
+            
+            if i < UserEntryRowType.allCases.count - 1 {
+                // Every row up to but not including the last case triggers a false closure call
+                falseActionCounter += 1
+            }
+            
+            sut.handle(text: rowTypes[i].rawValue, for: rowTypes[i])
+        }
+        
+        // All rows are now full, so we should have a true closure call
+        trueActionCounter += 1
         
         for row in UserEntryRowType.allCases {
             sut.handle(text: "", for: row)
-            actionCounter += 1
+            falseActionCounter += 1
             sut.handle(text: "asdf", for: row)
-            actionCounter += 1
+            trueActionCounter += 1
         }
         
-        XCTAssertEqual(actionCounter, closureCalls)
-        
+        XCTAssertEqual(falseActionCounter, falseClosureCalls)
+        XCTAssertEqual(trueActionCounter, trueClosureCalls)
     }
     
     
-    func test_submitUser() {
-        sut.ifUserNameTaken = {}
+    func test_submitUserSuccess() {
+        var isUserNameTaken = false
+        sut.ifUserNameTaken = { isUserNameTaken = true }
         sut.submitInput()
         
-        XCTAssert(mock.isUserCreated)
-        XCTAssert(mock.isUserWrittenToDB)
-        XCTAssert(mock.isUserStoredFromDB)
+        XCTAssertFalse(isUserNameTaken)
+        XCTAssertTrue(mock.isUserCreated)
+        XCTAssertTrue(mock.isUserWrittenToDB)
+        XCTAssertTrue(mock.isUserStoredFromDB)
         XCTAssertEqual(mock.currentUserListeners, 1)
+    }
+    
+    func test_submitUserFailWithUserNameTaken() {
+        var isUserNameTaken = false
+        sut.ifUserNameTaken = { isUserNameTaken = true }
+        sut.handle(text: "takenUserName", for: .userName)
+        sut.submitInput()
+        
+        XCTAssertTrue(isUserNameTaken)
+        XCTAssertFalse(mock.isUserCreated)
+        XCTAssertFalse(mock.isUserWrittenToDB)
+        XCTAssertFalse(mock.isUserStoredFromDB)
+        XCTAssertEqual(mock.currentUserListeners, 0)
     }
     
     
