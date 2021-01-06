@@ -46,6 +46,7 @@
 		657D95AD25929AC20065187A /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D95AC25929AC20065187A /* Tab.swift */; };
 		657D95B22592AC990065187A /* Tondu_Beta.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 657D95B12592AC990065187A /* Tondu_Beta.ttf */; };
 		657D95B72592AE950065187A /* Superstar M54.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 657D95B62592AE940065187A /* Superstar M54.ttf */; };
+		6589D59725A53D5200D2E666 /* UserDetailEntryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6589D59625A53D5200D2E666 /* UserDetailEntryViewModelTests.swift */; };
 		658F11262532747F003B6303 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F11242532747F003B6303 /* MessageCell.swift */; };
 		658F11272532747F003B6303 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658F11252532747F003B6303 /* MessageCell.xib */; };
 		658F112F25327B2C003B6303 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F112E25327B2C003B6303 /* Message.swift */; };
@@ -173,6 +174,7 @@
 		657D95AC25929AC20065187A /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		657D95B12592AC990065187A /* Tondu_Beta.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Tondu_Beta.ttf; path = ../../../../Library/Fonts/Tondu_Beta.ttf; sourceTree = "<group>"; };
 		657D95B62592AE940065187A /* Superstar M54.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Superstar M54.ttf"; path = "../../../../Library/Fonts/Superstar M54.ttf"; sourceTree = "<group>"; };
+		6589D59625A53D5200D2E666 /* UserDetailEntryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailEntryViewModelTests.swift; sourceTree = "<group>"; };
 		658F11242532747F003B6303 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		658F11252532747F003B6303 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		658F112E25327B2C003B6303 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -463,6 +465,7 @@
 		656D9464252BF60100EDEB7F /* CHUGGRTests */ = {
 			isa = PBXGroup;
 			children = (
+				6589D59625A53D5200D2E666 /* UserDetailEntryViewModelTests.swift */,
 				656D9465252BF60100EDEB7F /* CHUGGRTests.swift */,
 				65AF9BE22585995800FA96F2 /* BetModelTests.swift */,
 				656D9467252BF60100EDEB7F /* Info.plist */,
@@ -1039,6 +1042,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6589D59725A53D5200D2E666 /* UserDetailEntryViewModelTests.swift in Sources */,
 				656D9466252BF60100EDEB7F /* CHUGGRTests.swift in Sources */,
 				65AF9BE32585995800FA96F2 /* BetModelTests.swift in Sources */,
 			);

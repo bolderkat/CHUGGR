@@ -21,10 +21,10 @@ class UserDetailEntryViewModel {
         }
     }
     
-    var firstNameInput = ""
-    var lastNameInput = ""
-    var userNameInput = ""
-    var bioInput = ""
+    private(set) var firstNameInput = ""
+    private(set) var lastNameInput = ""
+    private(set) var userNameInput = ""
+    private(set) var bioInput = ""
     
     var reloadTableViewClosure: (() -> ())?
     var updateButtonStatus: (() -> ())?

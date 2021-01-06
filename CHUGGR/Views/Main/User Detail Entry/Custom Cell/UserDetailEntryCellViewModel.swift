@@ -7,7 +7,8 @@
 
 import Foundation
 
-enum UserEntryRowType: String, Hashable {
+enum UserEntryRowType: String, Hashable, CaseIterable {
+    // Conforms to CaseIterable for unit testing
     case firstName = "First Name"
     case lastName = "Last Name"
     case userName = "Username"
