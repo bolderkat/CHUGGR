@@ -86,7 +86,7 @@ class UserDetailEntryViewModelTests: XCTestCase {
         var falseActionCounter = 0
         var trueClosureCalls = 0
         var falseClosureCalls = 0
-        sut.updateButtonStatus = { isInputValid in
+        sut.didValidateInput = { isInputValid in
             if isInputValid {
                 trueClosureCalls += 1
             } else {

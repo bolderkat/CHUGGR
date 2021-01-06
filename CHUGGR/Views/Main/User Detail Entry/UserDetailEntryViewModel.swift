@@ -21,7 +21,7 @@ class UserDetailEntryViewModel {
     private(set) var bioInput = ""
     
     var reloadTableViewClosure: (() -> Void)?
-    var updateButtonStatus: ((Bool) -> ())?
+    var didValidateInput: ((Bool) -> Void)?
     var ifUserNameTaken: (() -> Void)?
     var onUserLoad: (() -> Void)? // notes from ian call: pass result type or bool as closure parameter
     
@@ -67,16 +67,16 @@ class UserDetailEntryViewModel {
     }
     
     func validateInput() {
-        guard let updateButtonStatus = updateButtonStatus else { return }
+        guard let didValidateInput = didValidateInput else { return }
         // Make sure all fields have input before marking input complete
         if !firstNameInput.isEmpty,
            !lastNameInput.isEmpty,
            !userNameInput.isEmpty,
            !bioInput.isEmpty {
             // Return a bool via closure reflecting validity of user's input
-            updateButtonStatus(true)
+            didValidateInput(true)
         } else {
-            updateButtonStatus(false)
+            didValidateInput(false)
         }
     }
     
