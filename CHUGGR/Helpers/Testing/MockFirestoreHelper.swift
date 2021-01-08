@@ -28,7 +28,7 @@ class MockFirestoreHelper: FirestoreHelping {
     private(set) var friends: [FriendSnippet] = []
     private(set) var allUsers: [FullFriend] = []
     private(set) var involvedBets: [Bet] = []
-    var currentUserDidChange: ((CurrentUser) -> ())? // for use by profile view ONLY
+    var currentUserDidChange: ((CurrentUser) -> Void)? // for use by profile view ONLY
     
     private(set) var isUserCreated = false
     private(set) var isUserWrittenToDB = false
@@ -65,15 +65,15 @@ class MockFirestoreHelper: FirestoreHelping {
     private(set) var friendRemoves = 0
     
     // MARK:- Closures (named based on parameters)
-    var voidCompletion: (() -> ())!
-    var onUserDocNotFound: (() -> ())!
-    var voidFailure: (() -> ())!
-    var betCompletion: ((Bet) -> ())!
-    var betsArrayCompletion: (([Bet]) -> ())!
-    var optionalBetCompletion: ((Bet?) -> ())!
-    var messagesCompletion: (([Message]) -> ())!
-    var friendSnippetCompletion: (([FriendSnippet]) -> ())!
-    var friendCompletion: ((FullFriend) -> ())!
+    var voidCompletion: (() -> Void)!
+    var onUserDocNotFound: (() -> Void)!
+    var voidFailure: (() -> Void)!
+    var betCompletion: ((Bet) -> Void)!
+    var betsArrayCompletion: (([Bet]) -> Void)!
+    var optionalBetCompletion: ((Bet?) -> Void)!
+    var messagesCompletion: (([Message]) -> Void)!
+    var friendSnippetCompletion: (([FriendSnippet]) -> Void)!
+    var friendCompletion: ((FullFriend) -> Void)!
     
 
     
@@ -83,8 +83,8 @@ class MockFirestoreHelper: FirestoreHelping {
         lastName: String,
         userName: String,
         bio: String,
-        ifUserNameTaken: @escaping (() -> ()),
-        completion: (() -> ())?
+        ifUserNameTaken: @escaping (() -> Void),
+        completion: (() -> Void)?
     ) {
         let emptyDrinks = Drinks(beers: 0, shots: 0)
         let user = CurrentUser(
@@ -111,16 +111,16 @@ class MockFirestoreHelper: FirestoreHelping {
         }
     }
     
-    func writeNewUser(_ user: CurrentUser, completion: (() -> ())?) {
+    func writeNewUser(_ user: CurrentUser, completion: (() -> Void)?) {
         isUserWrittenToDB = true
         readUserOnLogin(with: user.uid, completion: completion, onUserDocNotFound: nil, failure: nil)
     }
     
     func readUserOnLogin(
         with uid: String,
-        completion: (() -> ())?,
-        onUserDocNotFound: (() -> ())?,
-        failure: (() -> ())?
+        completion: (() -> Void)?,
+        onUserDocNotFound: (() -> Void)?,
+        failure: (() -> Void)?
     ) {
         isUserStoredFromDB = true
         addCurrentUserListener(with: uid)
@@ -157,14 +157,14 @@ class MockFirestoreHelper: FirestoreHelping {
         return bet.betID
     }
     
-    func readBet(withBetID id: BetID?, completion: @escaping (Bet) -> ()) {
+    func readBet(withBetID id: BetID?, completion: @escaping (Bet) -> Void) {
         if id != nil {
             betReads += 1
             betCompletion = completion
         }
     }
     
-    func updateBet(_ bet: Bet, completion: ((Bet?) -> ())?) {
+    func updateBet(_ bet: Bet, completion: ((Bet?) -> Void)?) {
         betUpdates += 1
         
         if completion != nil {
@@ -178,7 +178,7 @@ class MockFirestoreHelper: FirestoreHelping {
         updateBetCounter(increasing: false)
     }
     
-    func closeBet(_ bet: Bet, betAlreadyClosed: @escaping ((Bet?) -> ()), completion: (() -> ())?) {
+    func closeBet(_ bet: Bet, betAlreadyClosed: @escaping ((Bet?) -> Void), completion: (() -> Void)?) {
         if bet.betID == "alreadyClosed" {
             optionalBetCompletion = betAlreadyClosed
             return
@@ -215,7 +215,7 @@ class MockFirestoreHelper: FirestoreHelping {
     }
     
     // MARK:- Bet Detail methods
-    func addBetDetailListener(with id: BetID, in tab: Tab, completion: @escaping (Bet) -> ()) {
+    func addBetDetailListener(with id: BetID, in tab: Tab, completion: @escaping (Bet) -> Void) {
         betDetailListeners += 1
         betCompletion = completion
     }
@@ -225,77 +225,77 @@ class MockFirestoreHelper: FirestoreHelping {
         messagesSent += 1
     }
     
-    func addBetMessageListener(with id: BetID, in tab: Tab, completion: @escaping ([Message]) -> ()) {
+    func addBetMessageListener(with id: BetID, in tab: Tab, completion: @escaping ([Message]) -> Void) {
         messageListeners += 1
         messagesCompletion = completion
     }
     
     // MARK:- Bet dashboard methods
-    func addUserInvolvedBetsListener(completion: @escaping ([Bet]) -> ()) {
+    func addUserInvolvedBetsListener(completion: @escaping ([Bet]) -> Void) {
         userInvolvedBetsListeners += 1
         betsArrayCompletion = completion
     }
     
-    func initFetchOtherBets(completion: @escaping ([Bet]) -> ()) {
+    func initFetchOtherBets(completion: @escaping ([Bet]) -> Void) {
         initOtherBetFetches += 1
         betsArrayCompletion = completion
     }
     
-    func fetchAdditionalBets(completion: @escaping ([Bet]) -> ()) {
+    func fetchAdditionalBets(completion: @escaping ([Bet]) -> Void) {
         subsequentOtherBetFetches += 1
         betsArrayCompletion = completion
     }
     
     // MARK:- Friend/Profile bet methods
-    func addFriendActiveBetListener(for user: UID, completion: @escaping ([Bet]) -> ()) {
+    func addFriendActiveBetListener(for user: UID, completion: @escaping ([Bet]) -> Void) {
         friendActiveBetListeners += 1
         betsArrayCompletion = completion
     }
     
-    func addFriendOutstandingBetListener(for user: UID, completion: @escaping ([Bet]) -> ()) {
+    func addFriendOutstandingBetListener(for user: UID, completion: @escaping ([Bet]) -> Void) {
         friendOutstandingBetListeners += 1
         betsArrayCompletion = completion
     }
     
-    func initFetchPastBets(for user: UID, completion: @escaping ([Bet]) -> ()) {
+    func initFetchPastBets(for user: UID, completion: @escaping ([Bet]) -> Void) {
         initPastBetFetches += 1
         betsArrayCompletion = completion
     }
     
-    func fetchAdditionalPastBets(for user: UID, completion: @escaping ([Bet]) -> ()) {
+    func fetchAdditionalPastBets(for user: UID, completion: @escaping ([Bet]) -> Void) {
         subsequentPastBetFetches += 1
         betsArrayCompletion = completion
     }
     
     // MARK:- Friend CRUD
-    func addFriendsListener(completion: @escaping ([FriendSnippet]) -> ()) {
+    func addFriendsListener(completion: @escaping ([FriendSnippet]) -> Void) {
         friendListeners += 1
         friendSnippetCompletion = completion
     }
     
-    func addAllUserListener(completion: @escaping () -> ()) {
+    func addAllUserListener(completion: @escaping () -> Void) {
         allUserListeners += 1
         voidCompletion = completion
     }
     
-    func addFriend(_ friend: FullFriend, completion: (() -> ())?) {
+    func addFriend(_ friend: FullFriend, completion: (() -> Void)?) {
         friendAdds += 1
         if completion != nil {
             voidCompletion = completion
         }
     }
     
-    func getFriend(withUID uid: UID, completion: @escaping (FullFriend) -> ()) {
+    func getFriend(withUID uid: UID, completion: @escaping (FullFriend) -> Void) {
         friendFetches += 1
         friendCompletion = completion
     }
     
-    func setFriendDetailListener(with uid: UID, completion: @escaping (FullFriend) -> ()) {
+    func setFriendDetailListener(with uid: UID, completion: @escaping (FullFriend) -> Void) {
         friendDetailListeners += 1
         friendCompletion = completion
     }
     
-    func removeFriend(withUID friendUID: UID, completion: @escaping () -> ()) {
+    func removeFriend(withUID friendUID: UID, completion: @escaping () -> Void) {
         friendRemoves += 1
         voidCompletion = completion
     }

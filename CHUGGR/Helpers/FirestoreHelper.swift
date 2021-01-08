@@ -56,7 +56,7 @@ class FirestoreHelper: FirestoreHelping {
     private var profilePastBetQuery: Query?
     private var profileLastBet: QueryDocumentSnapshot?
     
-    var currentUserDidChange: ((CurrentUser) -> ())? // for use by profile view ONLY
+    var currentUserDidChange: ((CurrentUser) -> Void)? // for use by profile view ONLY
     
     // MARK:- User CRUD
     func createNewUser(
@@ -64,8 +64,8 @@ class FirestoreHelper: FirestoreHelping {
         lastName: String,
         userName: String,
         bio: String,
-        ifUserNameTaken: @escaping (() -> ()),
-        completion: (() -> ())?
+        ifUserNameTaken: @escaping (() -> Void),
+        completion: (() -> Void)?
     ) {
         // Get userID and email and instantiate current user
         guard let uid = Auth.auth().currentUser?.uid,
@@ -127,9 +127,9 @@ class FirestoreHelper: FirestoreHelping {
     // Notes from Ian call: can consolidate all these closures with custom Error enum
     func readUserOnLogin(
         with uid: String,
-        completion: (() -> ())?,
-        onUserDocNotFound: (() -> ())?,
-        failure: (() -> ())?
+        completion: (() -> Void)?,
+        onUserDocNotFound: (() -> Void)?,
+        failure: (() -> Void)?
     ) {
         db.collection(K.Firestore.users).whereField(K.Firestore.uid, isEqualTo: uid)
             .getDocuments { [weak self] (querySnapshot, error) in
@@ -220,7 +220,7 @@ class FirestoreHelper: FirestoreHelping {
         return ref.documentID
     }
     
-    func readBet(withBetID id: BetID?, completion: @escaping (_ bet: Bet) -> ()) {
+    func readBet(withBetID id: BetID?, completion: @escaping (_ bet: Bet) -> Void) {
         // One time bet reads
         guard let id = id else { return }
         self.db.collection(K.Firestore.bets).whereField(K.Firestore.betID, isEqualTo: id)
@@ -252,7 +252,7 @@ class FirestoreHelper: FirestoreHelping {
     }
     
     
-    func updateBet(_ bet: Bet, completion: ((Bet?) -> ())?) {
+    func updateBet(_ bet: Bet, completion: ((Bet?) -> Void)?) {
         guard let id = bet.betID else { return }
         do {
             try db.collection(K.Firestore.bets).document(id).setData(from: bet)
@@ -279,7 +279,7 @@ class FirestoreHelper: FirestoreHelping {
         }
     }
     
-    func closeBet(_ bet: Bet, betAlreadyClosed: @escaping ((Bet?) -> ()), completion: (() -> ())?) {
+    func closeBet(_ bet: Bet, betAlreadyClosed: @escaping ((Bet?) -> Void), completion: (() -> Void)?) {
         guard let id = bet.betID else { return }
         // Get fresh bet data to double check that another user didn't close the bet first
         // TODO: if both users try to close at the exact same time, looks like they both win and lose... and one person gets stuck with the outstanding drinks and can't resolve it. Moving off increments and using an actual method to count drinks will be the move later.
@@ -361,7 +361,7 @@ class FirestoreHelper: FirestoreHelping {
     
 // MARK:- Bet Detail methods
     
-    func addBetDetailListener(with id: BetID, in tab: Tab, completion: @escaping (_ bet: Bet) -> ()) {
+    func addBetDetailListener(with id: BetID, in tab: Tab, completion: @escaping (_ bet: Bet) -> Void) {
         
         var listenerToCheck: ListenerRegistration?
         
@@ -449,7 +449,7 @@ class FirestoreHelper: FirestoreHelping {
     }
     
     
-    func addBetMessageListener(with id: BetID, in tab: Tab, completion: @escaping (_ messages: [Message]) -> ()) {
+    func addBetMessageListener(with id: BetID, in tab: Tab, completion: @escaping (_ messages: [Message]) -> Void) {
         
         var listenerToCheck: ListenerRegistration?
         
@@ -522,7 +522,7 @@ class FirestoreHelper: FirestoreHelping {
     
     // MARK:- Bet dashboard methods
     
-    func addUserInvolvedBetsListener(completion: @escaping (_ bets: [Bet]) -> ()) {
+    func addUserInvolvedBetsListener(completion: @escaping (_ bets: [Bet]) -> Void) {
         guard let uid = currentUser?.uid else { return }
         
         // Query for all bets user is involved in. Filter in the view models based on invited/accepted
@@ -564,7 +564,7 @@ class FirestoreHelper: FirestoreHelping {
     
     
     
-    func initFetchOtherBets(completion: @escaping (_ bets: [Bet]) -> ()) {
+    func initFetchOtherBets(completion: @escaping (_ bets: [Bet]) -> Void) {
         guard let uid = currentUser?.uid else { return }
         
         // Query for other ACTIVE bets around the platform where user is not involved.
@@ -609,7 +609,7 @@ class FirestoreHelper: FirestoreHelping {
         }
     }
     
-    func fetchAdditionalBets(completion: @escaping (_ bets: [Bet]) -> ()) {
+    func fetchAdditionalBets(completion: @escaping (_ bets: [Bet]) -> Void) {
         guard let uid = currentUser?.uid,
               let query = otherBetQuery,
               let bet = lastBet else { return }
@@ -655,7 +655,7 @@ class FirestoreHelper: FirestoreHelping {
     
     func addFriendActiveBetListener(
         for user: UID,
-        completion: @escaping (_ bets: [Bet]) -> ()
+        completion: @escaping (_ bets: [Bet]) -> Void
     ) {
         // Check that there isn't already a listener
         guard friendActiveBetListener == nil else { return }
@@ -697,7 +697,7 @@ class FirestoreHelper: FirestoreHelping {
     
     func addFriendOutstandingBetListener(
         for user: UID,
-        completion: @escaping (_ bets: [Bet]) -> ()
+        completion: @escaping (_ bets: [Bet]) -> Void
     ) {
         // Check that there isn't already a listener
         guard friendOutstandingBetListener == nil else { return }
@@ -736,7 +736,7 @@ class FirestoreHelper: FirestoreHelping {
             }
     }
     
-    func initFetchPastBets(for user: UID, completion: @escaping (_ bets: [Bet]) -> ()) {
+    func initFetchPastBets(for user: UID, completion: @escaping (_ bets: [Bet]) -> Void) {
         // To populate profile and friend detail bet tables
         // NOTE: Must filter out outstanding bets in VM due to Firestore query limitations (no not-in query for arrays)
         guard let uid = currentUser?.uid else { return }
@@ -790,7 +790,7 @@ class FirestoreHelper: FirestoreHelping {
         }
     }
     
-    func fetchAdditionalPastBets(for user: UID, completion: @escaping (_ bets: [Bet]) -> ()) {
+    func fetchAdditionalPastBets(for user: UID, completion: @escaping (_ bets: [Bet]) -> Void) {
         guard let uid = currentUser?.uid else { return }
         var newQuery: Query?
         
@@ -845,7 +845,7 @@ class FirestoreHelper: FirestoreHelping {
 
     
     // MARK:- Friend CRUD
-    func addFriendsListener(completion: @escaping (_ friends: [FriendSnippet]) -> ()) {
+    func addFriendsListener(completion: @escaping (_ friends: [FriendSnippet]) -> Void) {
         // Check that there isn't already a friends listener
         guard let uid = currentUser?.uid,
               friendsListener == nil else { return }
@@ -883,7 +883,7 @@ class FirestoreHelper: FirestoreHelping {
             }
     }
     
-    func addAllUserListener(completion: @escaping () -> ()) {
+    func addAllUserListener(completion: @escaping () -> Void) {
         // Listen to all users to provide up to date pool for user to search from.
         // Check that there isn't already a listener for all users
         guard let uid = currentUser?.uid,
@@ -921,7 +921,7 @@ class FirestoreHelper: FirestoreHelping {
             }
     }
     
-    func addFriend(_ friend: FullFriend, completion: (() -> ())?) {
+    func addFriend(_ friend: FullFriend, completion: (() -> Void)?) {
         guard let user = currentUser else { return }
 //        let currentUserSnippet = FriendSnippet(fromCurrentUser: user)
         let friendSnippet = FriendSnippet(fromFriend: friend)
@@ -965,7 +965,7 @@ class FirestoreHelper: FirestoreHelping {
 //        }
     }
     
-    func getFriend(withUID uid: UID, completion: @escaping (_ friend: FullFriend) -> ()) {
+    func getFriend(withUID uid: UID, completion: @escaping (_ friend: FullFriend) -> Void) {
         db.collection(K.Firestore.users)
             .document(uid)
             .getDocument { (document, error) in
@@ -993,7 +993,7 @@ class FirestoreHelper: FirestoreHelping {
             }
     }
     
-    func setFriendDetailListener(with uid: UID, completion: @escaping (_ friend: FullFriend) -> ()) {
+    func setFriendDetailListener(with uid: UID, completion: @escaping (_ friend: FullFriend) -> Void) {
         guard friendDetailListener == nil else { return } // check if listener already exists
         friendDetailListener = db.collection(K.Firestore.users)
             .document(uid)
@@ -1022,7 +1022,7 @@ class FirestoreHelper: FirestoreHelping {
             }
     }
     
-    func removeFriend(withUID friendUID: UID, completion: @escaping () -> ()) {
+    func removeFriend(withUID friendUID: UID, completion: @escaping () -> Void) {
         // It's not you, it's me...
         guard let user = currentUser else { return }
         
