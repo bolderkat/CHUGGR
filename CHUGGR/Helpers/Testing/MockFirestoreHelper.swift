@@ -8,7 +8,23 @@
 import Foundation
 
 class MockFirestoreHelper: FirestoreHelping {
-    private(set) var currentUser: CurrentUser?
+    var currentUser: CurrentUser? = CurrentUser(
+        uid: "uid",
+        email: "email",
+        firstName: "firstName",
+        lastName: "lastName",
+        userName: "userName",
+        bio: "bio",
+        numBets: 0,
+        numFriends: 0,
+        betsWon: 0,
+        betsLost: 0,
+        drinksGiven: Drinks(beers: 0, shots: 0),
+        drinksReceived: Drinks(beers: 0, shots: 0),
+        drinksOutstanding: Drinks(beers: 0, shots: 0),
+        recentFriends: [String]()
+    )
+    
     private(set) var friends: [FriendSnippet] = []
     private(set) var allUsers: [FullFriend] = []
     private(set) var involvedBets: [Bet] = []
@@ -153,19 +169,28 @@ class MockFirestoreHelper: FirestoreHelping {
         
         if completion != nil {
             optionalBetCompletion = completion
+            completion?(bet)
         }
     }
     
     func deleteBet(_ bet: Bet) {
         betDeletes += 1
+        updateBetCounter(increasing: false)
     }
     
     func closeBet(_ bet: Bet, betAlreadyClosed: @escaping ((Bet?) -> ()), completion: (() -> ())?) {
-        if betCloses == 0 {
-            betCloses += 1
-        } else {
+        if bet.betID == "alreadyClosed" {
             optionalBetCompletion = betAlreadyClosed
+            return
+        } else {
+            optionalBetCompletion = { bet in
+                // do nothing
+            }
         }
+        
+        betCloses += 1
+        betUpdateIncrements += 1
+        
         if completion != nil {
             voidCompletion = completion
         }

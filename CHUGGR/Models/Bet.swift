@@ -15,13 +15,13 @@ enum BetInvolvementType {
     case outstanding
     case closed
 }
-enum BetType: String, Codable {
+enum BetType: String, Codable, CaseIterable {
     case spread
     case moneyline
     case event
 }
 
-enum Side: String, Codable {
+enum Side: String, Codable, CaseIterable {
     case one
     case two
 }
@@ -36,12 +36,12 @@ enum BetUserAction {
 }
 
 struct Bet: Codable {
-    let type: BetType
+    var type: BetType
     private(set) var betID: BetID?
-    let title: String
+    var title: String
     var line: Double?
-    let team1: String?
-    let team2: String?
+    var team1: String?
+    var team2: String?
     private(set) var invitedUsers = [UID: String]() // UID and firstName
     private(set) var side1Users = [UID: String]()
     private(set) var side2Users = [UID: String]()

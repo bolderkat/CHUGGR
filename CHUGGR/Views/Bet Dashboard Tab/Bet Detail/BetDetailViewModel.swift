@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Firebase
 
 class BetDetailViewModel {
     private let firestoreHelper: FirestoreHelping
@@ -14,7 +13,7 @@ class BetDetailViewModel {
     private let parentTab: Tab
     private(set) var bet: Bet? {
         didSet {
-            updateBetCard?()
+            didUpdateBet?()
             checkInvolvementStatus()
             setMessageListener()
         }
@@ -22,20 +21,20 @@ class BetDetailViewModel {
     
     private(set) var userInvolvement: BetInvolvementType {
         didSet {
-            setUpForInvolvementState?()
+            didChangeInvolvementStatus?()
         }
     }
     
     private(set) var messageCellVMs: [MessageCellViewModel] = [] {
         didSet {
-            updateMessageTable?()
+            didUpdateMessages?()
         }
     }
 
-    var updateBetCard: (() -> ())?
-    var setUpForInvolvementState: (() -> ())?
-    var showAlreadyClosedAlert: (() -> ())?
-    var updateMessageTable: (() -> ())?
+    var didUpdateBet: (() -> Void)?
+    var didChangeInvolvementStatus: (() -> Void)?
+    var betAlreadyClosed: (() -> Void)?
+    var didUpdateMessages: (() -> Void)?
     
     init(firestoreHelper: FirestoreHelping,
          betID: BetID,
@@ -136,10 +135,11 @@ class BetDetailViewModel {
         firestoreHelper.closeBet(
             bet,
             betAlreadyClosed: { [weak self] _ in
-                self?.showAlreadyClosedAlert?()
+                self?.betAlreadyClosed?()
             },
             completion: nil
-        )        }
+        )
+    }
     
     func unjoinBet() {
         guard userInvolvement == .accepted,
@@ -240,6 +240,7 @@ class BetDetailViewModel {
         return String(format: format, line)
     }
     
+    
     func getSideNames(forSide side: Side) -> String? {
         guard let bet = bet else { return nil }
         var names = [String]()
@@ -282,30 +283,37 @@ class BetDetailViewModel {
     }
     
     func getBetStatusAndColor() -> (label: String, color: String) {
-        guard let bet = bet else { return ("", K.colors.orange) }
+        guard let bet = bet else {
+            return ("", K.colors.orange)
+        }
         
         // Check if bet is finished/has winner. If not, display "IN PLAY" or "OVERDUE"
-        guard let winner = bet.winner else {
+        if let winner = bet.winner {
+            return getClosedBetStatusAndColor(bet: bet, winner: winner)
+        } else {
             if Date.init().timeIntervalSince1970 > bet.dueDate {
                 return("OVERDUE", K.colors.burntUmber)
             } else {
                 return ("IN PLAY", K.colors.orange)
             }
         }
+    }
+    
+    func getClosedBetStatusAndColor(bet: Bet, winner: Side) -> (label: String, color: String) {
+        guard let uid = firestoreHelper.currentUser?.uid else { return ("", K.colors.orange) }
+        
+        // If user has stake outstanding
+        if bet.outstandingUsers.contains(uid) {
+            return ("OUTSTANDING", K.colors.burntUmber)
+        }
         
         // Check if user is involved and which side they are on
         var userSide: Side? = nil
-        guard let uid = firestoreHelper.currentUser?.uid else {
-            return ("", K.colors.orange)
-        }
         
-        let nameString = "YOU"
         
-
         if let _ = bet.side1Users[uid] {
             userSide = .one
         }
-        
         
         if let _ = bet.side2Users[uid] {
             userSide = .two
@@ -314,18 +322,13 @@ class BetDetailViewModel {
         // If user is on winning side
         if let side = userSide,
            side == winner {
-            return ("\(nameString) WON", K.colors.forestGreen)
-        }
-        
-        // If user has stake outstanding
-        if bet.outstandingUsers.contains(uid) {
-            return ("OUTSTANDING", K.colors.burntUmber)
+            return ("YOU WON", K.colors.forestGreen)
         }
         
         // If user is on losing side
         if let side = userSide,
            side != winner {
-            return ("\(nameString) LOST", K.colors.burntUmber)
+            return ("YOU LOST", K.colors.burntUmber)
         }
         
         // If user uninvolved, need to switch on possible outcomes to display

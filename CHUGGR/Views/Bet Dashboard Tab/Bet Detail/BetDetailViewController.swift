@@ -118,25 +118,25 @@ class BetDetailViewController: UIViewController {
     
 
     func initViewModel() {
-        viewModel.updateBetCard = { [weak self] in
+        viewModel.didUpdateBet = { [weak self] in
             DispatchQueue.main.async {
                 self?.updateBetCard()
             }
         }
         
-        viewModel.updateMessageTable = { [weak self] in
+        viewModel.didUpdateMessages = { [weak self] in
             DispatchQueue.main.async {
                 self?.updateMessageTable()
             }
         }
         
-        viewModel.setUpForInvolvementState = { [weak self] in
+        viewModel.didChangeInvolvementStatus = { [weak self] in
             DispatchQueue.main.async {
                 self?.setUpForInvolvementState()
             }
         }
         
-        viewModel.showAlreadyClosedAlert = { [weak self] in
+        viewModel.betAlreadyClosed = { [weak self] in
             DispatchQueue.main.async {
                 self?.showAlreadyClosedAlert()
             }
