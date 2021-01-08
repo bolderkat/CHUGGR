@@ -84,6 +84,7 @@
 		65C6E409257F408600EA7AA4 /* FirestoreHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6E408257F408600EA7AA4 /* FirestoreHelper.swift */; };
 		65C97625256C4EF800AA46BA /* BetsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C97624256C4EF800AA46BA /* BetsCoordinator.swift */; };
 		65CA8D7025A9195000E11E5B /* WelcomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA8D6F25A9195000E11E5B /* WelcomeViewModelTests.swift */; };
+		65CA8D7525A9233200E11E5B /* MessageCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA8D7425A9233200E11E5B /* MessageCellViewModelTests.swift */; };
 		65D18D972580266F00E562C1 /* BetDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D18D962580266F00E562C1 /* BetDetailViewModel.swift */; };
 		65D18DAD258053EC00E562C1 /* Drinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D18DAC258053EC00E562C1 /* Drinks.swift */; };
 		65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D34C1F252CF494005C6F98 /* BetsViewController.swift */; };
@@ -214,6 +215,7 @@
 		65C6E408257F408600EA7AA4 /* FirestoreHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreHelper.swift; sourceTree = "<group>"; };
 		65C97624256C4EF800AA46BA /* BetsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsCoordinator.swift; sourceTree = "<group>"; };
 		65CA8D6F25A9195000E11E5B /* WelcomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModelTests.swift; sourceTree = "<group>"; };
+		65CA8D7425A9233200E11E5B /* MessageCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellViewModelTests.swift; sourceTree = "<group>"; };
 		65D18D962580266F00E562C1 /* BetDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetDetailViewModel.swift; sourceTree = "<group>"; };
 		65D18DAC258053EC00E562C1 /* Drinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drinks.swift; sourceTree = "<group>"; };
 		65D34C1F252CF494005C6F98 /* BetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsViewController.swift; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 		656D9464252BF60100EDEB7F /* CHUGGRTests */ = {
 			isa = PBXGroup;
 			children = (
+				65CA8D7425A9233200E11E5B /* MessageCellViewModelTests.swift */,
 				65CA8D6F25A9195000E11E5B /* WelcomeViewModelTests.swift */,
 				656ABCED25A691AF00EA38A1 /* BetDetailViewModelTests.swift */,
 				6589D59625A53D5200D2E666 /* UserDetailEntryViewModelTests.swift */,
@@ -1050,6 +1053,7 @@
 			files = (
 				6589D59725A53D5200D2E666 /* UserDetailEntryViewModelTests.swift in Sources */,
 				656ABCEE25A691AF00EA38A1 /* BetDetailViewModelTests.swift in Sources */,
+				65CA8D7525A9233200E11E5B /* MessageCellViewModelTests.swift in Sources */,
 				656D9466252BF60100EDEB7F /* CHUGGRTests.swift in Sources */,
 				65AF9BE32585995800FA96F2 /* BetModelTests.swift in Sources */,
 				65CA8D7025A9195000E11E5B /* WelcomeViewModelTests.swift in Sources */,
