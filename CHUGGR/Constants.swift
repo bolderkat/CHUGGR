@@ -37,14 +37,22 @@ struct K {
         static let yellow = "Yellow"
     }
     struct Firestore {
+        #if DEBUG
+        static let bets = "testBets"
+        static let users = "testUsers"
+        static let chatRooms = "testChatRooms"
+        #else
+        static let bets = "bets"
+        static let users = "users"
+        static let chatRooms = "chatRooms"
+        #endif
+        
         static let acceptedUsers = "acceptedUsers"
         static let actualMessages = "actualMessages"
         static let allUsers = "allUsers"
         static let betID = "betID"
-        static let bets = "testBets"
         static let betsLost = "betsLost"
         static let betsWon = "betsWon"
-        static let chatRooms = "testChatRooms"
         static let dateOpened = "dateOpened"
         static let firstName = "firstName"
         static let friends = "friends"
@@ -56,7 +64,6 @@ struct K {
         static let timestamp = "timestamp"
         static let userName = "userName"
         static let uid = "uid"
-        static let users = "testUsers"
         static let videos = "videos"
         
         static let beersGiven = "drinksGiven.beers"
