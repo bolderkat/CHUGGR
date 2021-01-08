@@ -122,6 +122,17 @@ class MockFirestoreHelper: FirestoreHelping {
         onUserDocNotFound: (() -> Void)?,
         failure: (() -> Void)?
     ) {
+        
+        if uid == "nonexistentUser" {
+            onUserDocNotFound?()
+            return
+        }
+        
+        if uid == "failedRead" {
+            failure?()
+            return
+        }
+        
         isUserStoredFromDB = true
         addCurrentUserListener(with: uid)
         let emptyDrinks = Drinks(beers: 0, shots: 0)

@@ -9,9 +9,9 @@ import Foundation
 
 class WelcomeViewModel {
     private let firestoreHelper: FirestoreHelping
-    var onUserRead: (() -> ())?
-    var onUserDocNotFound: (() -> ())?
-    var onUserReadFail: (() -> ())?
+    var onUserRead: (() -> Void)?
+    var onUserDocNotFound: (() -> Void)?
+    var onUserReadFail: (() -> Void)?
     
     init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
