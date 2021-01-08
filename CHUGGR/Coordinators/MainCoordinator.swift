@@ -10,13 +10,12 @@ import UIKit
 class MainCoordinator: ParentCoordinating {
     var window: UIWindow
     var childCoordinators = [ChildCoordinating]()
-    let firestoreHelper: FirestoreHelper
+    let firestoreHelper = FirestoreHelper()
     let tabController = MainTabBarController()
     
-    init?(window: UIWindow?, firestoreHelper: FirestoreHelper) {
+    init?(window: UIWindow?) {
         guard let window = window else { return nil } // fail init if no window
         self.window = window
-        self.firestoreHelper = firestoreHelper
     }
     
     func start() {
