@@ -717,54 +717,54 @@ class BetDetailViewModelTests: XCTestCase {
         }
     }
     
-    func test_getUninvolvedClosedBetStatus() {
-        for type in BetType.allCases {
-            sampleBet.type = type
-            switch type {
-            case .spread:
-                for side in Side.allCases {
-                    var bet = sampleBet!
-                    bet.closeBetWith(winningSide: side)
-                    passBetToSUT(bet)
-                    switch side {
-                    case .one:
-                        XCTAssertEqual(sut.getBetStatusAndColor().label, "OVER")
-                        XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
-                    case .two:
-                        XCTAssertEqual(sut.getBetStatusAndColor().label, "UNDER")
-                        XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
-                    }
-                }
-            case .moneyline:
-                sampleBet.team1 = "team1"
-                sampleBet.team2 = "team2"
-                for side in Side.allCases {
-                    var bet = sampleBet!
-                    bet.closeBetWith(winningSide: side)
-                    passBetToSUT(bet)
-                    switch side {
-                    case .one:
-                        XCTAssertEqual(sut.getBetStatusAndColor().label, "TEAM1")
-                        XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
-                    case .two:
-                        XCTAssertEqual(sut.getBetStatusAndColor().label, "TEAM2")
-                        XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
-                    }
-                }
-            case .event:
-                for side in Side.allCases {
-                    var bet = sampleBet!
-                    bet.closeBetWith(winningSide: side)
-                    passBetToSUT(bet)
-                    switch side {
-                    case .one:
-                        XCTAssertEqual(sut.getBetStatusAndColor().label, "FOR WINS")
-                        XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
-                    case .two:
-                        XCTAssertEqual(sut.getBetStatusAndColor().label, "AGAINST WINS")
-                        XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
-                    }
-                }
+    func test_getUninvolvedClosedSpreadBetStatus() {
+        for side in Side.allCases {
+            var bet = sampleBet!
+            bet.closeBetWith(winningSide: side)
+            passBetToSUT(bet)
+            switch side {
+            case .one:
+                XCTAssertEqual(sut.getBetStatusAndColor().label, "OVER")
+                XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
+            case .two:
+                XCTAssertEqual(sut.getBetStatusAndColor().label, "UNDER")
+                XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
+            }
+        }
+    }
+    
+    func test_getUninvolvedClosedMoneylineBetStatus() {
+        sampleBet.type = .moneyline
+        sampleBet.team1 = "team1"
+        sampleBet.team2 = "team2"
+        for side in Side.allCases {
+            var bet = sampleBet!
+            bet.closeBetWith(winningSide: side)
+            passBetToSUT(bet)
+            switch side {
+            case .one:
+                XCTAssertEqual(sut.getBetStatusAndColor().label, "TEAM1")
+                XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
+            case .two:
+                XCTAssertEqual(sut.getBetStatusAndColor().label, "TEAM2")
+                XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
+            }
+        }
+    }
+    
+    func test_getUninvolvedClosedEventBetStatus() {
+        sampleBet.type = .event
+        for side in Side.allCases {
+            var bet = sampleBet!
+            bet.closeBetWith(winningSide: side)
+            passBetToSUT(bet)
+            switch side {
+            case .one:
+                XCTAssertEqual(sut.getBetStatusAndColor().label, "FOR WINS")
+                XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
+            case .two:
+                XCTAssertEqual(sut.getBetStatusAndColor().label, "AGAINST WINS")
+                XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.midBlue)
             }
         }
     }
