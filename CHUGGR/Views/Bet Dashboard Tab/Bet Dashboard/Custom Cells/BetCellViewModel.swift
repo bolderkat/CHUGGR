@@ -83,10 +83,10 @@ struct BetCellViewModel {
     }
     
     func getStakeString() -> String {
-        if bet.stake.shots == 0 {
+        if bet.stake.shots == 0 && bet.stake.beers != 0 {
             return "\(bet.stake.beers) 🍺"
         }
-        if bet.stake.beers == 0 {
+        if bet.stake.beers == 0 && bet.stake.shots != 0 {
             return "\(bet.stake.shots) 🥃"
         } else {
             return "\(bet.stake.beers) 🍺 \(bet.stake.shots) 🥃"
@@ -95,18 +95,27 @@ struct BetCellViewModel {
     
     func getBetStatusAndColor() -> (label: String, color: String) {
         // Check if bet is finished/has winner. If not, display "IN PLAY" or "OVERDUE"
-        guard let winner = bet.winner else {
+        if let winner = bet.winner {
+            return getClosedBetStatusAndColor(winner: winner)
+        } else {
             if Date.init().timeIntervalSince1970 > bet.dueDate {
                 return("OVERDUE", K.colors.burntUmber)
             } else {
                 return ("IN PLAY", K.colors.orange)
             }
         }
-        
+    }
+    
+    func getClosedBetStatusAndColor(winner: Side) -> (label: String, color: String) {
         // Check if user is involved and which side they are on
         var userSide: Side? = nil
         guard var uid = firestoreHelper.currentUser?.uid else {
             return ("", K.colors.orange)
+        }
+        
+        // If user has stake outstanding
+        if bet.outstandingUsers.contains(uid) {
+            return ("OUTSTANDING", K.colors.burntUmber)
         }
         
         var nameString = "YOU"
@@ -132,11 +141,6 @@ struct BetCellViewModel {
             return ("\(nameString) WON", K.colors.forestGreen)
         }
         
-        // If user has stake outstanding
-        if bet.outstandingUsers.contains(uid) {
-            return ("OUTSTANDING", K.colors.burntUmber)
-        }
-        
         // If user is on losing side
         if let side = userSide,
            side != winner {
@@ -150,7 +154,7 @@ struct BetCellViewModel {
             case .spread:
                 return ("OVER", K.colors.midBlue)
             case .moneyline:
-                return (String(bet.team1 ?? "").capitalized, K.colors.midBlue)
+                return (String(bet.team1 ?? "").uppercased(), K.colors.midBlue)
             case .event:
                 return ("FOR WINS", K.colors.midBlue)
             }
@@ -159,7 +163,7 @@ struct BetCellViewModel {
             case .spread:
                 return ("UNDER", K.colors.midBlue)
             case .moneyline:
-                return (String(bet.team2 ?? "").capitalized, K.colors.midBlue)
+                return (String(bet.team2 ?? "").uppercased(), K.colors.midBlue)
             case .event:
                 return ("AGAINST WINS", K.colors.midBlue)
             }
