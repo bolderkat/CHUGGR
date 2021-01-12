@@ -24,6 +24,7 @@ class MockFirestoreHelper: FirestoreHelping {
         drinksOutstanding: Drinks(beers: 0, shots: 0),
         recentFriends: [String]()
     )
+    var sampleBets: [Bet] = []
     
     private(set) var friends: [FriendSnippet] = []
     private(set) var allUsers: [FullFriend] = []
@@ -245,16 +246,39 @@ class MockFirestoreHelper: FirestoreHelping {
     func addUserInvolvedBetsListener(completion: @escaping ([Bet]) -> Void) {
         userInvolvedBetsListeners += 1
         betsArrayCompletion = completion
+        let bets = sampleBets
+            .filter { $0.allUsers.contains("uid") }
+            .sorted { $0.dateOpened < $1.dateOpened }
+        completion(bets)
+        involvedBets = bets
     }
     
     func initFetchOtherBets(completion: @escaping ([Bet]) -> Void) {
         initOtherBetFetches += 1
         betsArrayCompletion = completion
+        var bets = sampleBets
+            .filter { !$0.allUsers.contains("uid") }
+            .sorted { $0.dateOpened < $1.dateOpened }
+        // Simulate Firestore query limit
+        if bets.count == 3 {
+            bets.remove(at: 2)
+        }
+        completion(bets)
     }
     
     func fetchAdditionalBets(completion: @escaping ([Bet]) -> Void) {
         subsequentOtherBetFetches += 1
         betsArrayCompletion = completion
+        var bets = sampleBets
+            .filter { !$0.allUsers.contains("uid") }
+            .sorted { $0.dateOpened < $1.dateOpened }
+        // Simulate subsequent Firestore query
+        if bets.count == 3 {
+            bets.remove(at: 0)
+            bets.remove(at: 0)
+        }
+        completion(bets)
+
     }
     
     // MARK:- Friend/Profile bet methods

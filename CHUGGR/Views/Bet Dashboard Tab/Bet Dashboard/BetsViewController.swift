@@ -59,14 +59,14 @@ class BetsViewController: UIViewController {
     func initViewModel() {
         viewModel.initFetchBets()
         
-        viewModel.updatePendingBetsLabel = { [weak self] in
+        viewModel.didUpdatePendingBets = { [weak self] in
             DispatchQueue.main.async {
                 self?.showPlaceholderIfEmpty()
                 self?.updateBetsPendingLabel()
             }
         }
         
-        viewModel.reloadTableViewClosure = { [weak self] in
+        viewModel.didUpdateBetCellVMs = { [weak self] in
             DispatchQueue.main.async {
                 self?.updateTableView()
             }

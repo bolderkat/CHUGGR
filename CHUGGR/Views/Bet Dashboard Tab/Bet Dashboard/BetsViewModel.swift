@@ -9,22 +9,22 @@ import Foundation
 
 class BetsViewModel {
     private var firestoreHelper: FirestoreHelping
-    private(set) var pendingBets = [Bet]() {
-        didSet {
-            updatePendingBetsLabel?()
-        }
-    }
     private(set) var userInvolvedBets = [Bet]()
     private(set) var otherBets = [Bet]()
+    private(set) var pendingBets = [Bet]() {
+        didSet {
+            didUpdatePendingBets?()
+        }
+    }
     
     private(set) var userInvolvedBetCellVMs = [BetCellViewModel]() {
         didSet {
-            reloadTableViewClosure?()
+            didUpdateBetCellVMs?()
         }
     }
     private(set) var otherBetCellVMs = [BetCellViewModel]() {
         didSet {
-            reloadTableViewClosure?()
+            didUpdateBetCellVMs?()
         }
     }
     
@@ -35,13 +35,13 @@ class BetsViewModel {
     
     private(set) var isLoading = false {
         didSet {
-            updateLoadingStatus?()
+            didChangeLoadingStatus?()
         }
     }
     
-    var updatePendingBetsLabel: (() -> ())?
-    var reloadTableViewClosure: (() -> ())?
-    var updateLoadingStatus: (() -> ())?
+    var didUpdatePendingBets: (() -> Void)?
+    var didUpdateBetCellVMs: (() -> Void)?
+    var didChangeLoadingStatus: (() -> Void)?
     
     init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
