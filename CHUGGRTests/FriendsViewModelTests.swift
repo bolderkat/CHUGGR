@@ -107,6 +107,16 @@ class FriendsViewModelTests: XCTestCase {
         }
     }
     
+    func test_lowercaseSearch() {
+        let queries = ["zz", "yy", "xx", "ww", "vv", "uu", "tt", "ss"]
+        sut.fetchFriends()
+        for query in queries {
+            let vms = sut.provideCellVMs(forString: query)
+            XCTAssertEqual(vms.count, 1)
+            XCTAssertEqual(vms[0].userName, query.uppercased())
+        }
+    }
+    
     func test_getFriendUIDWithEmptySearchBar() {
         sut.fetchFriends()
         for i in 0..<sut.cellVMs.count {
