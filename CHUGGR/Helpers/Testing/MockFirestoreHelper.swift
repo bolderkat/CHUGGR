@@ -34,7 +34,7 @@ class MockFirestoreHelper: FirestoreHelping {
         return friends
     }
     
-    private(set) var allUsers: [FullFriend] = []
+    private(set) var allUsers: [FullFriend] = TestingData.users
     private(set) var involvedBets: [Bet] = []
     var currentUserDidChange: ((CurrentUser) -> Void)? // for use by profile view ONLY
     
@@ -319,6 +319,7 @@ class MockFirestoreHelper: FirestoreHelping {
     func addAllUserListener(completion: @escaping () -> Void) {
         allUserListeners += 1
         voidCompletion = completion
+        completion()
     }
     
     func addFriend(_ friend: FullFriend, completion: (() -> Void)?) {

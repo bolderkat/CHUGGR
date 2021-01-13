@@ -47,7 +47,7 @@ class AddFriendViewController: UIViewController {
     
     func initViewModel() {
         viewModel.initSetUpAllUserListener()
-        viewModel.updateLoadingStatus = { [weak self] in
+        viewModel.didChangeloadingStatus = { [weak self] in
             DispatchQueue.main.async {
                 self?.showLoadingStatus()
             }

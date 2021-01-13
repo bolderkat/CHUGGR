@@ -51,6 +51,7 @@
 		657D95AD25929AC20065187A /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D95AC25929AC20065187A /* Tab.swift */; };
 		657D95B22592AC990065187A /* Tondu_Beta.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 657D95B12592AC990065187A /* Tondu_Beta.ttf */; };
 		657D95B72592AE950065187A /* Superstar M54.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 657D95B62592AE940065187A /* Superstar M54.ttf */; };
+		657F169D25AED63A00D5C500 /* AddFriendViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657F169C25AED63A00D5C500 /* AddFriendViewModelTests.swift */; };
 		6589D59725A53D5200D2E666 /* UserDetailEntryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6589D59625A53D5200D2E666 /* UserDetailEntryViewModelTests.swift */; };
 		658F11262532747F003B6303 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F11242532747F003B6303 /* MessageCell.swift */; };
 		658F11272532747F003B6303 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658F11252532747F003B6303 /* MessageCell.xib */; };
@@ -187,6 +188,7 @@
 		657D95AC25929AC20065187A /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		657D95B12592AC990065187A /* Tondu_Beta.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Tondu_Beta.ttf; path = ../../../../Library/Fonts/Tondu_Beta.ttf; sourceTree = "<group>"; };
 		657D95B62592AE940065187A /* Superstar M54.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Superstar M54.ttf"; path = "../../../../Library/Fonts/Superstar M54.ttf"; sourceTree = "<group>"; };
+		657F169C25AED63A00D5C500 /* AddFriendViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModelTests.swift; sourceTree = "<group>"; };
 		6589D59625A53D5200D2E666 /* UserDetailEntryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailEntryViewModelTests.swift; sourceTree = "<group>"; };
 		658F11242532747F003B6303 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		658F11252532747F003B6303 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
@@ -482,6 +484,7 @@
 		656D9464252BF60100EDEB7F /* CHUGGRTests */ = {
 			isa = PBXGroup;
 			children = (
+				657F169C25AED63A00D5C500 /* AddFriendViewModelTests.swift */,
 				6536EF1425AE7DB3008AF0F1 /* FriendsViewModelTests.swift */,
 				6536EF0A25AE6970008AF0F1 /* PendingBetsViewModelTests.swift */,
 				6536EF0525AD3CFD008AF0F1 /* BetCellViewModelTests.swift */,
@@ -1069,6 +1072,7 @@
 			files = (
 				6536EF0625AD3CFD008AF0F1 /* BetCellViewModelTests.swift in Sources */,
 				6589D59725A53D5200D2E666 /* UserDetailEntryViewModelTests.swift in Sources */,
+				657F169D25AED63A00D5C500 /* AddFriendViewModelTests.swift in Sources */,
 				656ABCEE25A691AF00EA38A1 /* BetDetailViewModelTests.swift in Sources */,
 				65CA8D7525A9233200E11E5B /* MessageCellViewModelTests.swift in Sources */,
 				6536EF1525AE7DB3008AF0F1 /* FriendsViewModelTests.swift in Sources */,

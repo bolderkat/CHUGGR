@@ -16,12 +16,12 @@ class AddFriendViewModel {
     private var searchResults: [FriendCellViewModel] = []
     private(set) var isLoading = false {
         didSet {
-            updateLoadingStatus?()
+            didChangeloadingStatus?()
         }
     }
     
-    var updateLoadingStatus: (() -> ())?
-    var onFriendFetch: ((FullFriend) -> ())?
+    var didChangeloadingStatus: (() -> Void)?
+    var onFriendFetch: ((FullFriend) -> Void)?
     
     init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
