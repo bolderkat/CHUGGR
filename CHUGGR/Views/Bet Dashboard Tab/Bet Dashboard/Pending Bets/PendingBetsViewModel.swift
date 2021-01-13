@@ -16,11 +16,11 @@ class PendingBetsViewModel {
     }
     private(set) var betCellVMs: [BetCellViewModel] = [] {
         didSet {
-            reloadTableView?()
+            didUpdateBetCellVMs?()
         }
     }
     
-    var reloadTableView: (() -> ())?
+    var didUpdateBetCellVMs: (() -> Void)?
     
     init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper

@@ -16,6 +16,7 @@
 		6535F503256F479F00C5FC72 /* BetEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6535F501256F479F00C5FC72 /* BetEntryCell.swift */; };
 		6535F504256F479F00C5FC72 /* BetEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6535F502256F479F00C5FC72 /* BetEntryCell.xib */; };
 		6536EF0625AD3CFD008AF0F1 /* BetCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6536EF0525AD3CFD008AF0F1 /* BetCellViewModelTests.swift */; };
+		6536EF0B25AE6970008AF0F1 /* PendingBetsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6536EF0A25AE6970008AF0F1 /* PendingBetsViewModelTests.swift */; };
 		6537BC272583054200880C2B /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6537BC262583054200880C2B /* WelcomeViewModel.swift */; };
 		6537BC312583135200880C2B /* UserDetailEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6537BC2F2583135200880C2B /* UserDetailEntryViewController.swift */; };
 		6537BC322583135200880C2B /* UserDetailEntryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6537BC302583135200880C2B /* UserDetailEntryView.xib */; };
@@ -143,6 +144,7 @@
 		6535F501256F479F00C5FC72 /* BetEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetEntryCell.swift; sourceTree = "<group>"; };
 		6535F502256F479F00C5FC72 /* BetEntryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetEntryCell.xib; sourceTree = "<group>"; };
 		6536EF0525AD3CFD008AF0F1 /* BetCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetCellViewModelTests.swift; sourceTree = "<group>"; };
+		6536EF0A25AE6970008AF0F1 /* PendingBetsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingBetsViewModelTests.swift; sourceTree = "<group>"; };
 		6537BC262583054200880C2B /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		6537BC2F2583135200880C2B /* UserDetailEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailEntryViewController.swift; sourceTree = "<group>"; };
 		6537BC302583135200880C2B /* UserDetailEntryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailEntryView.xib; sourceTree = "<group>"; };
@@ -475,6 +477,7 @@
 		656D9464252BF60100EDEB7F /* CHUGGRTests */ = {
 			isa = PBXGroup;
 			children = (
+				6536EF0A25AE6970008AF0F1 /* PendingBetsViewModelTests.swift */,
 				6536EF0525AD3CFD008AF0F1 /* BetCellViewModelTests.swift */,
 				65CA8D7925A93A3100E11E5B /* BetsViewModelTests.swift */,
 				65CA8D7425A9233200E11E5B /* MessageCellViewModelTests.swift */,
@@ -1061,6 +1064,7 @@
 				6589D59725A53D5200D2E666 /* UserDetailEntryViewModelTests.swift in Sources */,
 				656ABCEE25A691AF00EA38A1 /* BetDetailViewModelTests.swift in Sources */,
 				65CA8D7525A9233200E11E5B /* MessageCellViewModelTests.swift in Sources */,
+				6536EF0B25AE6970008AF0F1 /* PendingBetsViewModelTests.swift in Sources */,
 				656D9466252BF60100EDEB7F /* CHUGGRTests.swift in Sources */,
 				65AF9BE32585995800FA96F2 /* BetModelTests.swift in Sources */,
 				65CA8D7A25A93A3100E11E5B /* BetsViewModelTests.swift in Sources */,

@@ -45,7 +45,7 @@ class PendingBetsViewController: UIViewController {
     }
     
     func initViewModel() {
-        viewModel.reloadTableView = { [weak self] in
+        viewModel.didUpdateBetCellVMs = { [weak self] in
             self?.reloadTableView()
         }
         
