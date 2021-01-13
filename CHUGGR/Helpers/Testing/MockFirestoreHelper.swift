@@ -26,7 +26,14 @@ class MockFirestoreHelper: FirestoreHelping {
     )
     var sampleBets: [Bet] = []
     
-    private(set) var friends: [FriendSnippet] = []
+    var friends: [FriendSnippet] {
+        var friends = [FriendSnippet]()
+        for friend in TestingData.friends {
+            friends.append(FriendSnippet(fromFriend: friend))
+        }
+        return friends
+    }
+    
     private(set) var allUsers: [FullFriend] = []
     private(set) var involvedBets: [Bet] = []
     var currentUserDidChange: ((CurrentUser) -> Void)? // for use by profile view ONLY
@@ -306,6 +313,7 @@ class MockFirestoreHelper: FirestoreHelping {
     func addFriendsListener(completion: @escaping ([FriendSnippet]) -> Void) {
         friendListeners += 1
         friendSnippetCompletion = completion
+        completion(friends)
     }
     
     func addAllUserListener(completion: @escaping () -> Void) {
@@ -323,6 +331,9 @@ class MockFirestoreHelper: FirestoreHelping {
     func getFriend(withUID uid: UID, completion: @escaping (FullFriend) -> Void) {
         friendFetches += 1
         friendCompletion = completion
+        if let index = friends.firstIndex(where: { $0.uid == uid }) {
+            completion(TestingData.friends[index])
+        }
     }
     
     func setFriendDetailListener(with uid: UID, completion: @escaping (FullFriend) -> Void) {

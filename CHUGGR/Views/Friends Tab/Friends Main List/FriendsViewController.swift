@@ -59,7 +59,7 @@ class FriendsViewController: UIViewController {
     
     func initViewModel() {
         viewModel.fetchFriends()
-        viewModel.updateTableViewClosure = { [weak self] in
+        viewModel.didUpdateFriendCellVMs = { [weak self] in
             self?.updateTableView()
         }
         

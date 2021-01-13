@@ -12,14 +12,14 @@ class FriendsViewModel {
     private var friendSnippets: [FriendSnippet] = []
     private(set) var cellVMs: [FriendCellViewModel] = [] {
         didSet {
-            updateTableViewClosure?()
+            didUpdateFriendCellVMs?()
         }
     }
     private var searchResults: [FriendCellViewModel] = []
     private var isSearchBarEmpty = true
     
-    var updateTableViewClosure: (() -> ())?
-    var onFriendLoad: ((_ friend: FullFriend) -> ())?
+    var didUpdateFriendCellVMs: (() -> Void)?
+    var onFriendLoad: ((_ friend: FullFriend) -> Void)?
     
     init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
