@@ -12,7 +12,7 @@ class FriendDetailViewModel {
     private(set) var friend: FullFriend {
         didSet {
             checkFriendStatus()
-            updateVCLabels?()
+            didUpdateFriend?()
         }
     }
     private(set) var isAlreadyFriends = false {
@@ -27,63 +27,66 @@ class FriendDetailViewModel {
     // Flag to prevent fast 2x button press triggering add method twice
     private var doesAddButtonTriggerAdd = true {
         didSet {
-            setVCForFriendStatus?()
+            didReceiveFriendStatusChangeAction?()
         }
     }
     // Flag to prevent extra unfollow actions if network is slow to update
+    // TODO: replace stored state with closure?
     private(set) var isRemoveButtonActive = false
     
     enum SegmentedControlChoice {
         case active
         case pastBets
     }
+    
     var selectedTable: SegmentedControlChoice = .active {
         didSet {
-            updateTableView?()
             if selectedTable == .pastBets {
                 // Trigger re-fetch when user selects Past Bets to avoid presenting stale data
                 initFetchPastBets()
+            } else {
+                onBetUpdateOrTableChange?()
             }
         }
     }
     
-    var outstandingBets: [Bet] = [] { // array to be updated by outstanding bet listener
+    private(set) var outstandingBets: [Bet] = [] { // array to be updated by outstanding bet listener
         didSet {
             // Listener changes to array will update cell VMs as well
             processActiveBets(outstandingBets, outstanding: true)
         }
     }
-    var outstandingBetCellVMs: [BetCellViewModel] = [] {
+    private(set) var outstandingBetCellVMs: [BetCellViewModel] = [] {
         didSet {
             if selectedTable == .active {
-                updateTableView?()
+                onBetUpdateOrTableChange?()
             }
         }
     }
-    var activeBets: [Bet] = [] {// array to be updated by active bet listener
+    private(set) var activeBets: [Bet] = [] {// array to be updated by active bet listener
         didSet {
             // Listener changes to array will update cell VMs as well
             processActiveBets(activeBets, outstanding: false)
         }
     }
-    var activeBetCellVMs: [BetCellViewModel] = [] {
+    private(set) var activeBetCellVMs: [BetCellViewModel] = [] {
         didSet {
             if selectedTable == .active {
-                updateTableView?()
+                onBetUpdateOrTableChange?()
             }
         }
     }
-    var pastBetCellVMs: [BetCellViewModel] = [] {
+    private(set) var pastBetCellVMs: [BetCellViewModel] = [] {
         didSet {
             if selectedTable == .pastBets {
-                updateTableView?()
+                onBetUpdateOrTableChange?()
             }
         }
     }
     
-    var updateVCLabels: (() -> ())?
-    var setVCForFriendStatus: (() -> ())?
-    var updateTableView: (() -> ())?
+    var didUpdateFriend: (() -> Void)?
+    var didReceiveFriendStatusChangeAction: (() -> Void)?
+    var onBetUpdateOrTableChange: (() -> Void)?
 
     
     init(firestoreHelper: FirestoreHelping, friend: FullFriend) {
@@ -231,3 +234,4 @@ class FriendDetailViewModel {
     }
     
 }
+

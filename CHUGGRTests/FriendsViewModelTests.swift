@@ -131,7 +131,7 @@ class FriendsViewModelTests: XCTestCase {
         let _ = sut.provideCellVMs(forString: "A")
         let indexPath = IndexPath(row: 0, section: 0)
         let uid = sut.getFriendUID(at: indexPath)
-        XCTAssertEqual(uid, "friend1")
+        XCTAssertEqual(uid, "friend0")
     }
     
     func test_getFriend() {
@@ -150,7 +150,7 @@ class FriendsViewModelTests: XCTestCase {
     }
     
     func test_getFriendReturnsIfNoClosure() {
-        sut.getFriend(withUID: "friend1")
+        sut.getFriend(withUID: "friend0")
         XCTAssertEqual(mock.friendFetches, 0)
     }
 

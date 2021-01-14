@@ -76,19 +76,19 @@ class FriendDetailViewController: UIViewController {
     }
     
     func initViewModel() {
-        viewModel.updateVCLabels = { [weak self] in
+        viewModel.didUpdateFriend = { [weak self] in
             DispatchQueue.main.async {
                 self?.updateLabels()
             }
         }
         
-        viewModel.setVCForFriendStatus = { [weak self] in
+        viewModel.didReceiveFriendStatusChangeAction = { [weak self] in
             DispatchQueue.main.async {
                 self?.configureForFriendStatus()
             }
         }
         
-        viewModel.updateTableView = { [weak self] in
+        viewModel.onBetUpdateOrTableChange = { [weak self] in
             DispatchQueue.main.async {
                 self?.updateTableView()
             }

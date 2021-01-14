@@ -26,13 +26,7 @@ class MockFirestoreHelper: FirestoreHelping {
     )
     var sampleBets: [Bet] = []
     
-    var friends: [FriendSnippet] {
-        var friends = [FriendSnippet]()
-        for friend in TestingData.friends {
-            friends.append(FriendSnippet(fromFriend: friend))
-        }
-        return friends
-    }
+    var friends: [FriendSnippet] = TestingData.friendSnippets
     
     private(set) var allUsers: [FullFriend] = TestingData.users
     private(set) var involvedBets: [Bet] = []
@@ -291,22 +285,39 @@ class MockFirestoreHelper: FirestoreHelping {
     // MARK:- Friend/Profile bet methods
     func addFriendActiveBetListener(for user: UID, completion: @escaping ([Bet]) -> Void) {
         friendActiveBetListeners += 1
+        let bets = TestingData.friendDetailBets.filter {
+            $0.isFinished == false && $0.acceptedUsers.contains(user)
+        }
         betsArrayCompletion = completion
+        completion(bets)
+        
     }
     
     func addFriendOutstandingBetListener(for user: UID, completion: @escaping ([Bet]) -> Void) {
         friendOutstandingBetListeners += 1
+        let bets = TestingData.friendDetailBets.filter { $0.outstandingUsers.contains(user) }
         betsArrayCompletion = completion
+        completion(bets)
     }
     
     func initFetchPastBets(for user: UID, completion: @escaping ([Bet]) -> Void) {
         initPastBetFetches += 1
+        let bets = user == currentUser?.uid ? TestingData.currentUserDetailBets : TestingData.friendDetailBets
+        var sortedBets = bets.filter { $0.isFinished }.sorted { $0.betID! < $1.betID! }
+        
+        // Provide first 3 bets only to simulate limited Firestore query
+        sortedBets.removeSubrange(3...5)
         betsArrayCompletion = completion
+        completion(sortedBets)
     }
     
     func fetchAdditionalPastBets(for user: UID, completion: @escaping ([Bet]) -> Void) {
         subsequentPastBetFetches += 1
+        let bets = user == currentUser?.uid ? TestingData.currentUserDetailBets : TestingData.friendDetailBets
+        var sortedBets = bets.filter { $0.isFinished }.sorted { $0.betID! < $1.betID! }
+        sortedBets.removeSubrange(0...2)
         betsArrayCompletion = completion
+        completion(sortedBets)
     }
     
     // MARK:- Friend CRUD
@@ -324,6 +335,8 @@ class MockFirestoreHelper: FirestoreHelping {
     
     func addFriend(_ friend: FullFriend, completion: (() -> Void)?) {
         friendAdds += 1
+        let snippet = FriendSnippet(fromFriend: friend)
+        friends.append(snippet)
         if completion != nil {
             voidCompletion = completion
         }
@@ -344,6 +357,9 @@ class MockFirestoreHelper: FirestoreHelping {
     
     func removeFriend(withUID friendUID: UID, completion: @escaping () -> Void) {
         friendRemoves += 1
+        if let index = friends.firstIndex(where: { $0.uid == friendUID }) {
+            friends.remove(at: index)
+        }
         voidCompletion = completion
     }
     

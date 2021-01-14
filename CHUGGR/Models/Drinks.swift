@@ -12,7 +12,7 @@ struct Drinks: Codable {
     var shots: Int
 }
 
-enum DrinkStatType {
+enum DrinkStatType: CaseIterable {
     case given
     case received
     case outstanding
