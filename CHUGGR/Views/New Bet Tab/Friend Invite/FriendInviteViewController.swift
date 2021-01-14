@@ -60,10 +60,10 @@ class FriendInviteViewController: UIViewController {
 
     func initViewModel() {
         viewModel.fetchFriends()
-        viewModel.updateTableViewClosure = { [weak self] string in
+        viewModel.didUpdateCellVMs = { [weak self] string in
             self?.updateTableView(withString: string)
         }
-        viewModel.updateRecipientView = { [weak self] in
+        viewModel.didChangeSelectedFriends = { [weak self] in
             self?.updateRecipientView()
         }
 

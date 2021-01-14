@@ -12,20 +12,20 @@ class FriendInviteViewModel {
     private var friendSnippets: [FriendSnippet] = []
     private(set) var cellVMs: [InviteCellViewModel] = [] {
         didSet {
-            updateTableViewClosure?(searchString)
+            didUpdateCellVMs?(searchString)
         }
     }
     private(set) var selectedFriends: [FriendSnippet] = [] {
         didSet {
-            updateRecipientView?()
+            didChangeSelectedFriends?()
         }
     }
     private var searchResults: [InviteCellViewModel] = []
     private var isSearchBarEmpty = true
     private var searchString: String = ""
     
-    var updateTableViewClosure: ((String) -> ())?
-    var updateRecipientView: (() -> ())?
+    var didUpdateCellVMs: ((String) -> Void)?
+    var didChangeSelectedFriends: (() -> Void)?
     
     init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
@@ -103,7 +103,6 @@ class FriendInviteViewModel {
                 selectedFriends.remove(at: index)
             }
         }
-        updateTableViewClosure?(searchString)
     }
     
     

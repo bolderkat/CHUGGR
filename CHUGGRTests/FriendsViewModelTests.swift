@@ -18,6 +18,7 @@ class FriendsViewModelTests: XCTestCase {
         super.setUp()
         mock = MockFirestoreHelper()
         sut = FriendsViewModel(firestoreHelper: mock)
+        friendUpdateClosureCalls = 0
         sut.didUpdateFriendCellVMs = { [weak self] in
             self?.friendUpdateClosureCalls += 1
         }
