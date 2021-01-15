@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Drinks: Codable {
+struct Drinks: Codable, Equatable {
     var beers: Int
     var shots: Int
 }

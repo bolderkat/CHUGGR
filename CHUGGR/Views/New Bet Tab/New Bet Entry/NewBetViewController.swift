@@ -44,19 +44,19 @@ class NewBetViewController: UIViewController {
     
     func setUpViewController() {
         title = viewModel.getVCTitle()
-        updateButtonStatus()
+        updateButtonStatus(isInputValid: false)
         sendBetButton.layer.cornerRadius = 15
     }
     
     
     func initViewModel() {        
         // Pass UI update functions to VM so view can reflect state in VM
-        viewModel.reloadTableViewClosure = { [weak self] in
+        viewModel.didUpdateCellVMs = { [weak self] in
             self?.updateUI()
         }
         
-        viewModel.updateButtonStatus = { [weak self] in
-            self?.updateButtonStatus()
+        viewModel.didValidateInput = { [weak self] isInputValid in
+            self?.updateButtonStatus(isInputValid: isInputValid)
         }
         viewModel.createCellVMs()
     }
@@ -102,8 +102,8 @@ class NewBetViewController: UIViewController {
         bottomControl.setTitle(rightLabel, forSegmentAt: 1)
     }
     
-    func updateButtonStatus() {
-        sendBetButton.isEnabled = viewModel.isInputComplete
+    func updateButtonStatus(isInputValid: Bool) {
+        sendBetButton.isEnabled = isInputValid
         sendBetButton.backgroundColor = sendBetButton.isEnabled ?
             UIColor(named: K.colors.orange) : UIColor(named: K.colors.gray3)
     }

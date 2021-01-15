@@ -38,6 +38,7 @@ class MockFirestoreHelper: FirestoreHelping {
     private(set) var currentUserListeners = 0
     
     private(set) var newBetWrites = 0
+    private(set) var newBet: Bet?
     private(set) var betReads = 0
     private(set) var betUpdates = 0
     private(set) var betDeletes = 0
@@ -167,6 +168,7 @@ class MockFirestoreHelper: FirestoreHelping {
     func writeNewBet(bet: inout Bet) -> BetID? {
         newBetWrites += 1
         bet.setBetID(withID: "betID")
+        newBet = bet
         return bet.betID
     }
     

@@ -14,21 +14,15 @@ class NewBetViewModel {
     
     private(set) var selectedBetType: BetType = .spread {
         didSet {
-            createCellVMs() // initiate VMs for new cells when bet type changed
-            clearInputStorage() // start fresh when user changes bet type
+            createCellVMs()
+            clearInputStorage()
         }
     }
     private(set) var selectedSide: Side = .one
     
     private(set) var cellViewModels: [BetEntryCellViewModel] = [BetEntryCellViewModel]() {
         didSet {
-            reloadTableViewClosure?() // update tableview when cell VMs change
-        }
-    }
-    
-    private(set) var isInputComplete = false {
-        didSet {
-            updateButtonStatus?() // enable/disable button based on user input
+            didUpdateCellVMs?() // update tableview when cell VMs change
         }
     }
     
@@ -39,9 +33,8 @@ class NewBetViewModel {
     var dueDateInput: TimeInterval?
     var stakeInput: Drinks?
     
-    var reloadTableViewClosure: (() -> ())?
-    var updateButtonStatus: (() -> ())?
-    var setSendButtonState: (() -> ())?
+    var didUpdateCellVMs: (() -> Void)?
+    var didValidateInput: ((Bool) -> Void)? 
     
     init(firestoreHelper: FirestoreHelping, invitedFriends: [FriendSnippet]) {
         self.firestoreHelper = firestoreHelper
@@ -203,7 +196,7 @@ class NewBetViewModel {
     func validateInput() {
         guard let date = dueDateInput,
               let stake = stakeInput else {
-            isInputComplete = false
+            didValidateInput?(false)
             return
         }
         
@@ -218,7 +211,7 @@ class NewBetViewModel {
                lineInput != nil,
                isSelectedDateInFuture,
                isStakeValid {
-                isInputComplete = true
+                didValidateInput?(true)
                 return
             }
         case .moneyline:
@@ -226,19 +219,19 @@ class NewBetViewModel {
                !(team2Input ?? "").isEmpty,
                isSelectedDateInFuture,
                isStakeValid {
-                isInputComplete = true
+                didValidateInput?(true)
                 return
             }
         case .event:
             if !(titleInput ?? "").isEmpty,
                isSelectedDateInFuture,
                isStakeValid {
-                isInputComplete = true
+                didValidateInput?(true)
                 return
             }
         }
         // If none of the above conditions are satisfied, input is incomplete.
-        isInputComplete = false
+        didValidateInput?(false)
     }
     
     
@@ -249,7 +242,8 @@ class NewBetViewModel {
         // Check for user auth
         guard let currentUserID = firestoreHelper.currentUser?.uid,
               let currentUserFirstName = firestoreHelper.currentUser?.firstName else {
-            fatalError("Unable to find current authorized user.")
+            print("Unable to find current authorized user.")
+            return nil
         }
         
         var bet: Bet?
@@ -262,7 +256,8 @@ class NewBetViewModel {
                   let line = lineInput,
                   let dueDate = dueDateInput,
                   let stake = stakeInput else {
-                fatalError("Invalid data for creation of spread bet.")
+                print("Invalid data for creation of spread bet.")
+                return nil
             }
             
             bet = Bet(
@@ -281,7 +276,8 @@ class NewBetViewModel {
                   let team2 = team2Input,
                   let dueDate = dueDateInput,
                   let stake = stakeInput else {
-                fatalError("Invalid data for creation of moneyline bet.")
+                print("Invalid data for creation of moneyline bet.")
+                return nil
             }
             
             bet = Bet(
@@ -298,7 +294,8 @@ class NewBetViewModel {
             guard let title = titleInput,
                   let dueDate = dueDateInput,
                   let stake = stakeInput else {
-                fatalError("Invalid data for creation of event bet.")
+                print("Invalid data for creation of event bet.")
+                return nil
             }
             
             bet = Bet(type: selectedBetType,
