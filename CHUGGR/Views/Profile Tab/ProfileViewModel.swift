@@ -14,7 +14,7 @@ class ProfileViewModel {
     private var firestoreHelper: FirestoreHelping
     private(set) var user: CurrentUser {
         didSet {
-            updateVCLabels?()
+            currentUserDataDidChange?()
         }
     }
 
@@ -24,12 +24,12 @@ class ProfileViewModel {
     
     var pastBetCellVMs: [BetCellViewModel] = [] {
         didSet {
-            updateTableView?()
+            didUpdatePastBetCells?()
         }
     }
     
-    var updateVCLabels: (() -> ())?
-    var updateTableView: (() -> ())?
+    var currentUserDataDidChange: (() -> Void)?
+    var didUpdatePastBetCells: (() -> Void)?
 
     
     init(firestoreHelper: FirestoreHelping, user: CurrentUser) {

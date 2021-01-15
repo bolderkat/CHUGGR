@@ -76,13 +76,13 @@ class ProfileViewController: UIViewController {
     }
     
     func initViewModel() {
-        viewModel.updateVCLabels = { [weak self] in
+        viewModel.currentUserDataDidChange = { [weak self] in
             DispatchQueue.main.async {
                 self?.updateLabels()
             }
         }
         
-        viewModel.updateTableView = { [weak self] in
+        viewModel.didUpdatePastBetCells = { [weak self] in
             DispatchQueue.main.async {
                 self?.updateTableView()
             }

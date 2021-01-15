@@ -98,6 +98,7 @@
 		65D18DAD258053EC00E562C1 /* Drinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D18DAC258053EC00E562C1 /* Drinks.swift */; };
 		65D34C20252CF494005C6F98 /* BetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D34C1F252CF494005C6F98 /* BetsViewController.swift */; };
 		65D6ECAE258B354A00E0A720 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6ECAD258B354A00E0A720 /* Friend.swift */; };
+		65DCAC3625B1682200A3E7BF /* ProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DCAC3525B1682200A3E7BF /* ProfileViewModelTests.swift */; };
 		65E6F787256C5A2400252974 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6F786256C5A2400252974 /* ProfileCoordinator.swift */; };
 		65E947F62589791200A71365 /* BetsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E947F52589791200A71365 /* BetsTableDataSource.swift */; };
 		65E948282589A4C800A71365 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E948262589A4C800A71365 /* AddFriendViewController.swift */; };
@@ -238,6 +239,7 @@
 		65D18DAC258053EC00E562C1 /* Drinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drinks.swift; sourceTree = "<group>"; };
 		65D34C1F252CF494005C6F98 /* BetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsViewController.swift; sourceTree = "<group>"; };
 		65D6ECAD258B354A00E0A720 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		65DCAC3525B1682200A3E7BF /* ProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTests.swift; sourceTree = "<group>"; };
 		65E6F786256C5A2400252974 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		65E947F52589791200A71365 /* BetsTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetsTableDataSource.swift; sourceTree = "<group>"; };
 		65E948262589A4C800A71365 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 		656D9464252BF60100EDEB7F /* CHUGGRTests */ = {
 			isa = PBXGroup;
 			children = (
+				65DCAC3525B1682200A3E7BF /* ProfileViewModelTests.swift */,
 				657F16AB25B10B6600D5C500 /* NewBetViewModelTests.swift */,
 				657F16A625B0267300D5C500 /* FriendInviteViewModelTests.swift */,
 				657F16A125AFC7C100D5C500 /* FriendDetailViewModelTests.swift */,
@@ -1089,6 +1092,7 @@
 				6536EF1525AE7DB3008AF0F1 /* FriendsViewModelTests.swift in Sources */,
 				6536EF0B25AE6970008AF0F1 /* PendingBetsViewModelTests.swift in Sources */,
 				656D9466252BF60100EDEB7F /* CHUGGRTests.swift in Sources */,
+				65DCAC3625B1682200A3E7BF /* ProfileViewModelTests.swift in Sources */,
 				65AF9BE32585995800FA96F2 /* BetModelTests.swift in Sources */,
 				65CA8D7A25A93A3100E11E5B /* BetsViewModelTests.swift in Sources */,
 				657F16A225AFC7C100D5C500 /* FriendDetailViewModelTests.swift in Sources */,

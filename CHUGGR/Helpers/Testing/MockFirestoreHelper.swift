@@ -23,7 +23,14 @@ class MockFirestoreHelper: FirestoreHelping {
         drinksReceived: Drinks(beers: 0, shots: 0),
         drinksOutstanding: Drinks(beers: 0, shots: 0),
         recentFriends: [String]()
-    )
+    ) {
+        didSet {
+            if currentUser != nil {
+                currentUserDidChange?(currentUser!)
+            }
+        }
+    }
+    
     var sampleBets: [Bet] = []
     
     var friends: [FriendSnippet] = TestingData.friendSnippets
@@ -66,6 +73,8 @@ class MockFirestoreHelper: FirestoreHelping {
     private(set) var friendFetches = 0
     private(set) var friendDetailListeners = 0
     private(set) var friendRemoves = 0
+    
+    private(set) var logOuts = 0
     
     // MARK:- Closures (named based on parameters)
     var voidCompletion: (() -> Void)!
@@ -367,11 +376,16 @@ class MockFirestoreHelper: FirestoreHelping {
     
     // MARK:- Clean-up
     func logOut() {
+        logOuts += 1
         cleanUp()
         unsubscribeAllSnapshotListeners()
     }
     
     func cleanUp() {
+        currentUser = nil
+        friends = []
+        allUsers = []
+        involvedBets = []
         isUserStoredFromDB = false
     }
     
