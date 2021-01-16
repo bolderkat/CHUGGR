@@ -254,6 +254,7 @@
 		65F69D8D257B2D5000CE7371 /* UITextField+InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+InputView.swift"; sourceTree = "<group>"; };
 		65F69D96257B2EFF00CE7371 /* DateEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateEntryCell.swift; sourceTree = "<group>"; };
 		65F69D97257B2EFF00CE7371 /* DateEntryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateEntryCell.xib; sourceTree = "<group>"; };
+		65F71B1C25B2707600006000 /* CHUGGR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CHUGGR.entitlements; sourceTree = "<group>"; };
 		65FBCBC0253257CE00227121 /* BetDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetDetailViewController.swift; sourceTree = "<group>"; };
 		65FCE6DE2569BB930066BDC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		65FCE6EB256B35530066BDC5 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -475,6 +476,7 @@
 		656D944A252BF5FE00EDEB7F /* CHUGGR */ = {
 			isa = PBXGroup;
 			children = (
+				65F71B1C25B2707600006000 /* CHUGGR.entitlements */,
 				65C6E407257F407500EA7AA4 /* Helpers */,
 				659DCB75252E9AD3009D330E /* Constants.swift */,
 				65650A4D2568B7E900812395 /* Coordinators */,
@@ -1258,6 +1260,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CHUGGR/CHUGGR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 33755HM6BY;
@@ -1281,6 +1284,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CHUGGR/CHUGGR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 33755HM6BY;

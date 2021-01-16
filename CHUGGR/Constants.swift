@@ -74,6 +74,10 @@ struct K {
         static let shotsReceived = "drinksReceived.shots"
     }
     
+    struct CloudMessaging {
+        static let gcmID = "gcm.Message_id"
+    }
+    
     struct Images {
         static let profPicPlaceholder = "ProfPicPlaceholder"
         static let chuggrLogoWhite = "CHUGGRLogoWhite"
