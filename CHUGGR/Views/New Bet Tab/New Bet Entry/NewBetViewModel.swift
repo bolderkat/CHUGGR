@@ -34,6 +34,7 @@ class NewBetViewModel {
     var stakeInput: Drinks?
     
     var didUpdateCellVMs: (() -> Void)?
+    var userDidSelectFutureDate: ((Bool) -> Void)?
     var didValidateInput: ((Bool) -> Void)? 
     
     init(firestoreHelper: FirestoreHelping, invitedFriends: [FriendSnippet]) {
@@ -179,6 +180,7 @@ class NewBetViewModel {
     
     func handle(date: TimeInterval) {
         dueDateInput = date
+        validateDate()
         validateInput()
     }
     
@@ -192,6 +194,20 @@ class NewBetViewModel {
     
     
     // MARK:- Input validation to determine if user allowed to submit bet
+    func validateDate() {
+        guard let date = dueDateInput else {
+            userDidSelectFutureDate?(false)
+            return
+        }
+        
+        let isSelectedDateInFuture: Bool = (date - Date.init().timeIntervalSince1970) > 0
+        if isSelectedDateInFuture {
+            userDidSelectFutureDate?(true)
+            return
+        } else {
+            userDidSelectFutureDate?(false)
+        }
+    }
     
     func validateInput() {
         guard let date = dueDateInput,
@@ -200,8 +216,8 @@ class NewBetViewModel {
             return
         }
         
-        // Do not allow due date in the past
         let isSelectedDateInFuture: Bool = (date - Date.init().timeIntervalSince1970) > 0
+        
         
         // Stake must have positive value in at least one field
         let isStakeValid: Bool = !(stake.beers == 0 && stake.shots == 0)

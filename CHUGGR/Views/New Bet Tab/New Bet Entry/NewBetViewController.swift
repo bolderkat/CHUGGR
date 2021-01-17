@@ -16,6 +16,7 @@ class NewBetViewController: UIViewController {
     @IBOutlet weak var topControl: UISegmentedControl!
     @IBOutlet weak var entryTable: UITableView!
     @IBOutlet weak var bottomControl: UISegmentedControl!
+    @IBOutlet weak var dateWarningLabel: UILabel!
     @IBOutlet weak var sendBetButton: UIButton!
     
     init(
@@ -53,6 +54,10 @@ class NewBetViewController: UIViewController {
         // Pass UI update functions to VM so view can reflect state in VM
         viewModel.didUpdateCellVMs = { [weak self] in
             self?.updateUI()
+        }
+        
+        viewModel.userDidSelectFutureDate = { [weak self] isSelectedDateInFuture in
+            self?.showOrHideDateWarning(isSelectedDateInFuture: isSelectedDateInFuture)
         }
         
         viewModel.didValidateInput = { [weak self] isInputValid in
@@ -100,6 +105,11 @@ class NewBetViewController: UIViewController {
         }
         bottomControl.setTitle(leftLabel, forSegmentAt: 0)
         bottomControl.setTitle(rightLabel, forSegmentAt: 1)
+        dateWarningLabel.isHidden = false
+    }
+    
+    func showOrHideDateWarning(isSelectedDateInFuture: Bool) {
+        dateWarningLabel.isHidden = isSelectedDateInFuture
     }
     
     func updateButtonStatus(isInputValid: Bool) {

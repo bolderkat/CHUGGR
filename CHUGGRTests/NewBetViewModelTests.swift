@@ -13,7 +13,9 @@ class NewBetViewModelTests: XCTestCase {
     var sut: NewBetViewModel!
     var mock: MockFirestoreHelper!
     var updateCellVMClosureCalls = 0
+    var dateValidationClosureCalls = 0
     var validateInputClosureCalls = 0
+    var isSelectedDateInFuture = false
     var isInputValid = false
     
     override func setUp() {
@@ -21,10 +23,18 @@ class NewBetViewModelTests: XCTestCase {
         mock = MockFirestoreHelper()
         sut = NewBetViewModel(firestoreHelper: mock, invitedFriends: [])
         updateCellVMClosureCalls = 0
+        dateValidationClosureCalls = 0
         validateInputClosureCalls = 0
+        isSelectedDateInFuture = false
+        isInputValid = false
         
         sut.didUpdateCellVMs = { [weak self] in
             self?.updateCellVMClosureCalls += 1
+        }
+        
+        sut.userDidSelectFutureDate = { [weak self] isSelectedDateInFuture in
+            self?.dateValidationClosureCalls += 1
+            self?.isSelectedDateInFuture = isSelectedDateInFuture
         }
         
         sut.didValidateInput = { [weak self] isInputValid in
@@ -262,11 +272,22 @@ class NewBetViewModelTests: XCTestCase {
         XCTAssertEqual(validateInputClosureCalls, 2)
     }
     
-    func test_handleDateInput() {
-        let timeInterval: TimeInterval = 12345678
+    func test_handlePastDateInput() {
+        let timeInterval: TimeInterval = 1000
         sut.handle(date: timeInterval)
         XCTAssertEqual(sut.dueDateInput, timeInterval)
         XCTAssertEqual(validateInputClosureCalls, 1)
+        XCTAssertEqual(dateValidationClosureCalls, 1)
+        XCTAssertFalse(isSelectedDateInFuture)
+    }
+    
+    func test_handleFutureDateInput() {
+        let timeInterval: TimeInterval = Date.init().timeIntervalSince1970 + 1000
+        sut.handle(date: timeInterval)
+        XCTAssertEqual(sut.dueDateInput, timeInterval)
+        XCTAssertEqual(validateInputClosureCalls, 1)
+        XCTAssertEqual(dateValidationClosureCalls, 1)
+        XCTAssertTrue(isSelectedDateInFuture)
     }
     
     func test_handleStakeInput() {
@@ -301,6 +322,8 @@ class NewBetViewModelTests: XCTestCase {
         sut.handle(beerStake: "1", shotStake: "1")
         XCTAssertEqual(validateInputClosureCalls, 4)
         XCTAssertTrue(isInputValid)
+        XCTAssertEqual(dateValidationClosureCalls, 1)
+        XCTAssertTrue(isSelectedDateInFuture)
     }
     
     func test_validateMoneylineInput() {
@@ -315,6 +338,8 @@ class NewBetViewModelTests: XCTestCase {
         sut.handle(beerStake: "1", shotStake: "1")
         XCTAssertEqual(validateInputClosureCalls, 5)
         XCTAssertTrue(isInputValid)
+        XCTAssertEqual(dateValidationClosureCalls, 1)
+        XCTAssertTrue(isSelectedDateInFuture)
     }
     
     func test_validateEventInput() {
@@ -327,6 +352,8 @@ class NewBetViewModelTests: XCTestCase {
         sut.handle(beerStake: "1", shotStake: "1")
         XCTAssertEqual(validateInputClosureCalls, 4)
         XCTAssertTrue(isInputValid)
+        XCTAssertEqual(dateValidationClosureCalls, 1)
+        XCTAssertTrue(isSelectedDateInFuture)
     }
     
     func test_InputInvalidatesIfFieldCleared() {
@@ -341,7 +368,27 @@ class NewBetViewModelTests: XCTestCase {
         XCTAssertTrue(isInputValid)
         sut.handle(text: "", for: .stat)
         XCTAssertFalse(isInputValid)
+        XCTAssertEqual(dateValidationClosureCalls, 1)
+        XCTAssertTrue(isSelectedDateInFuture)
     }
+    
+    func test_InputInvalidatesIfDateSetToPast() {
+        XCTAssertFalse(isInputValid)
+        sut.handle(text: "title", for: .stat)
+        XCTAssertFalse(isInputValid)
+        sut.handle(text: "6.5", for: .line)
+        XCTAssertFalse(isInputValid)
+        sut.handle(date: Date.init().timeIntervalSince1970 + 100)
+        XCTAssertFalse(isInputValid)
+        sut.handle(beerStake: "1", shotStake: "1")
+        XCTAssertTrue(isInputValid)
+        sut.handle(date: Date.init().timeIntervalSince1970 - 100)
+
+        XCTAssertFalse(isInputValid)
+        XCTAssertEqual(dateValidationClosureCalls, 2)
+        XCTAssertFalse(isSelectedDateInFuture)
+    }
+
     
     func test_createBetReturnsNilIfNoLoggedInUser() {
         mock.currentUser = nil
