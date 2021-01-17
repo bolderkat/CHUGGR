@@ -39,7 +39,7 @@ struct BetEntryCellViewModel: Hashable {
             title = "Team 2"
             placeholder = "Ex: Dodgers"
         case .gameday:
-            title = "Gameday"
+            title = "Due date"
             placeholder = "Date bet will occur"
         case .event:
             title = "Event"

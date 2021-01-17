@@ -25,14 +25,14 @@
                         <color key="textColor" name="Gray 3"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Qcu-mY-X0x">
+                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="10" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Qcu-mY-X0x">
                         <rect key="frame" x="108" y="7" width="196" height="36"/>
                         <color key="tintColor" name="Mid Blue"/>
                         <constraints>
-                            <constraint firstAttribute="height" priority="999" constant="36" id="cDV-ip-DHb"/>
+                            <constraint firstAttribute="height" constant="36" id="cDV-ip-DHb"/>
                         </constraints>
-                        <date key="minimumDate" timeIntervalSinceReferenceDate="628772400">
-                            <!--2020-12-04 11:00:00 +0000-->
+                        <date key="minimumDate" timeIntervalSinceReferenceDate="632487600">
+                            <!--2021-01-16 11:00:00 +0000-->
                         </date>
                         <connections>
                             <action selector="dateSelected:" destination="KGk-i7-Jjw" eventType="valueChanged" id="Atc-QZ-fAy"/>

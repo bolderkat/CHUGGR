@@ -387,13 +387,13 @@ extension BetDetailViewModel {
             static let leftLabel1 = "Line"
             static let leftLabel2 = "Over"
             static let leftLabel3 = "Under"
-            static let leftLabel4 = "Gameday"
+            static let leftLabel4 = "Due Date"
             static let leftLabel5 = "At stake"
             static let leftLabel6 = "Status"
         }
         struct Moneyline {
             static let leftLabel1: String? = nil
-            static let leftLabel4 = "Gameday"
+            static let leftLabel4 = "Due Date"
             static let leftLabel5 = "At stake"
             static let leftLabel6 = "Status"
         }
