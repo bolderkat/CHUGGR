@@ -17,6 +17,7 @@ class BetDetailViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var betTypeLabel: UILabel!
+    @IBOutlet weak var typeLabelToLeftLabel1Constraint: NSLayoutConstraint!
     @IBOutlet weak var leftLabel1: UILabel!
     @IBOutlet weak var rightLabel1: UILabel!
     @IBOutlet weak var leftLabel2: UILabel!
@@ -30,7 +31,9 @@ class BetDetailViewController: UIViewController {
     @IBOutlet weak var leftLabel6: UILabel!
     @IBOutlet weak var rightLabel6: UILabel!
     @IBOutlet weak var betCard: UIView!
-
+    @IBOutlet weak var betCardHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var betCardLabelStackView: UIStackView!
+    
     @IBOutlet weak var firstButton: UIButton!
     @IBOutlet weak var secondButton: UIButton!
     @IBOutlet weak var thirdButton: UIButton!
@@ -97,6 +100,15 @@ class BetDetailViewController: UIViewController {
         titleLabel.text = nil
         textField.delegate = self
         setUpKeyboardNotifications()
+        
+        let iphone8ScreenHeight: CGFloat = 667.0
+        if UIScreen.main.bounds.height > iphone8ScreenHeight {
+            betCardLabelStackView.spacing = 8
+            betCardHeightConstraint.constant = 320
+        } else {
+            betCardLabelStackView.spacing = 6
+            betCardHeightConstraint.constant = 290
+        }
     }
     
     func setUpKeyboardNotifications() {
@@ -150,6 +162,7 @@ class BetDetailViewController: UIViewController {
         case .spread:
             titleLabel.text = bet?.title
             betTypeLabel.text = bet?.type.rawValue.capitalized
+            typeLabelToLeftLabel1Constraint.constant = 12
             leftLabel1.text = BetDetailViewModel.Labels.Spread.leftLabel1
             rightLabel1.text = viewModel.getBetLine()
             leftLabel2.text = BetDetailViewModel.Labels.Spread.leftLabel2
@@ -167,6 +180,7 @@ class BetDetailViewController: UIViewController {
         case .moneyline:
             titleLabel.text = bet?.title
             betTypeLabel.text = bet?.type.rawValue.capitalized
+            typeLabelToLeftLabel1Constraint.constant = -12
             leftLabel1.text = BetDetailViewModel.Labels.Moneyline.leftLabel1
             rightLabel1.text = nil
             leftLabel2.text = bet?.team1
@@ -184,6 +198,7 @@ class BetDetailViewController: UIViewController {
         case .event:
             titleLabel.text = bet?.title
             betTypeLabel.text = bet?.type.rawValue.capitalized
+            typeLabelToLeftLabel1Constraint.constant = -12
             leftLabel1.text = BetDetailViewModel.Labels.Event.leftLabel1
             rightLabel1.text = nil
             leftLabel2.text = BetDetailViewModel.Labels.Event.leftLabel2

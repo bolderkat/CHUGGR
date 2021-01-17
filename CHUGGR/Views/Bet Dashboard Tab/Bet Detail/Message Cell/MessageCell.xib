@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -18,10 +19,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="145"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VSZ-Ig-Xf1" customClass="MessageCell" customModule="CHUGGR" customModuleProvider="target">
+                    <view contentMode="scaleToFill" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="VSZ-Ig-Xf1" customClass="MessageCell" customModule="CHUGGR" customModuleProvider="target">
                         <rect key="frame" x="10" y="26" width="278" height="115"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dku-gW-yY7">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dku-gW-yY7">
                                 <rect key="frame" x="4" y="2" width="266" height="111"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -47,7 +48,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7:41pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eIs-hk-tXo">
-                        <rect key="frame" x="69" y="6.5" width="45" height="18.5"/>
+                        <rect key="frame" x="69" y="8" width="45" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" name="Gray 4"/>
                         <nil key="highlightedColor"/>
@@ -60,8 +61,7 @@
                     <constraint firstAttribute="trailing" secondItem="VSZ-Ig-Xf1" secondAttribute="trailing" constant="32" id="Qa9-Yp-il4"/>
                     <constraint firstAttribute="bottom" secondItem="VSZ-Ig-Xf1" secondAttribute="bottom" constant="4" id="bHc-1n-E55"/>
                     <constraint firstItem="VSZ-Ig-Xf1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="26" id="fQh-Rc-g2S"/>
-                    <constraint firstItem="eIs-hk-tXo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6.5" id="iHP-8W-St9"/>
-                    <constraint firstItem="VSZ-Ig-Xf1" firstAttribute="top" secondItem="eIs-hk-tXo" secondAttribute="bottom" constant="1" id="lbD-zJ-krX"/>
+                    <constraint firstItem="VSZ-Ig-Xf1" firstAttribute="top" secondItem="eIs-hk-tXo" secondAttribute="bottom" constant="2" id="lbD-zJ-krX"/>
                     <constraint firstItem="5jq-pp-haU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="xD7-Xb-t5P"/>
                 </constraints>
             </tableViewCellContentView>

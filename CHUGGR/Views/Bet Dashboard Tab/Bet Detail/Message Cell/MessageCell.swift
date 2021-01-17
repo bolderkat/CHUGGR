@@ -31,7 +31,7 @@ class MessageCell: UITableViewCell {
             messageBubble.backgroundColor = UIColor(named: K.colors.midBlue)
             bodyLabel.textColor = .white
         } else {
-            messageBubble.backgroundColor = UIColor(named: K.colors.gray5)
+            messageBubble.backgroundColor = UIColor(named: K.colors.gray6)
             bodyLabel.textColor = .black
         }
         
