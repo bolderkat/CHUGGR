@@ -485,6 +485,7 @@ extension BetDetailViewController {
                 fatalError("Message cell xib not found.")
             }
             cell.configure(with: rowVM)
+            cell.layoutIfNeeded()
             return cell
         }
     }
@@ -493,7 +494,7 @@ extension BetDetailViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section, MessageCellViewModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(viewModel.messageCellVMs)
-        dataSource.apply(snapshot)
+        dataSource.apply(snapshot, animatingDifferences: false)
     
         // Scroll to bottom of table when new messages are loaded.
         // TODO: May want to change this behavior depending on user feedback
@@ -518,10 +519,9 @@ extension BetDetailViewController {
 extension BetDetailViewController: UITableViewDelegate {
     func configureTableView() {
         messageTableView.delegate = self
-        messageTableView.rowHeight = UITableView.automaticDimension
-        messageTableView.estimatedRowHeight = 400
         messageTableView.register(UINib(nibName: K.cells.messageCell, bundle: nil),
                                   forCellReuseIdentifier: K.cells.messageCell)
+        messageTableView.rowHeight = UITableView.automaticDimension
     }
 }
 
