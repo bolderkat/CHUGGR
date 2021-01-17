@@ -123,7 +123,7 @@ struct BetCellViewModel {
         if friend != nil {
             // Perform bet status logic on friend uid instead if this friend cell is being presented in a Friend Detail view
             uid = friend!.uid
-            nameString = friend!.firstName.uppercased()
+            nameString = friend!.userName.uppercased()
         }
         
         if let _ = bet.side1Users[uid] {

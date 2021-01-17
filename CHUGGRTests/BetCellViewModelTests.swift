@@ -13,9 +13,9 @@ class BetCellViewModelTests: XCTestCase {
     private var sut: BetCellViewModel!
     private var mock: MockFirestoreHelper!
     let uid = "uid"
-    let firstName = "firstName"
+    let userName = "userName"
     var userDict: [UID: String] {
-        [uid: firstName]
+        [uid: userName]
     }
     let friend = FullFriend(uid: "friendUID", firstName: "friendFName", lastName: "friendLName", userName: "friendUserName", bio: "friendBio", profilePic: "friendProfPic", numBets: 0, numFriends: 0, betsWon: 0, betsLost: 0, drinksGiven: Drinks(beers: 0, shots: 0), drinksReceived: Drinks(beers: 0, shots: 0), drinksOutstanding: Drinks(beers: 0, shots: 0))
     
@@ -248,7 +248,7 @@ class BetCellViewModelTests: XCTestCase {
             team2: nil,
             invitedUsers: [:],
             side1Users: [:],
-            side2Users: ["uid": "firstName"],
+            side2Users: ["uid": "userName"],
             outstandingUsers: Set<UID>(),
             allUsers: Set<UID>(),
             acceptedUsers: Set<UID>(),
@@ -351,16 +351,16 @@ class BetCellViewModelTests: XCTestCase {
             switch side {
             case .one:
                 var bet = eventBet
-                bet.perform(action: .invite, withID: uid, firstName: firstName)
-                bet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+                bet.perform(action: .invite, withID: uid, userName: userName)
+                bet.perform(action: .addToSide1, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .two)
                 sut = BetCellViewModel(bet: bet, firestoreHelper: mock, friend: nil)
                 XCTAssertEqual(sut.getBetStatusAndColor().label, "OUTSTANDING")
                 XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.burntUmber)
             case .two:
                 var bet = eventBet
-                bet.perform(action: .invite, withID: uid, firstName: firstName)
-                bet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+                bet.perform(action: .invite, withID: uid, userName: userName)
+                bet.perform(action: .addToSide2, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .one)
                 sut = BetCellViewModel(bet: bet, firestoreHelper: mock, friend: nil)
                 XCTAssertEqual(sut.getBetStatusAndColor().label, "OUTSTANDING")
@@ -374,16 +374,16 @@ class BetCellViewModelTests: XCTestCase {
             switch side {
             case .one:
                 var bet = spreadBet
-                bet.perform(action: .invite, withID: uid, firstName: firstName)
-                bet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+                bet.perform(action: .invite, withID: uid, userName: userName)
+                bet.perform(action: .addToSide1, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .one)
                 sut = BetCellViewModel(bet: bet, firestoreHelper: mock, friend: nil)
                 XCTAssertEqual(sut.getBetStatusAndColor().label, "YOU WON")
                 XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.forestGreen)
             case .two:
                 var bet = spreadBet
-                bet.perform(action: .invite, withID: uid, firstName: firstName)
-                bet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+                bet.perform(action: .invite, withID: uid, userName: userName)
+                bet.perform(action: .addToSide2, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .two)
                 sut = BetCellViewModel(bet: bet, firestoreHelper: mock, friend: nil)
                 XCTAssertEqual(sut.getBetStatusAndColor().label, "YOU WON")
@@ -397,19 +397,19 @@ class BetCellViewModelTests: XCTestCase {
             switch side {
             case .one:
                 var bet = spreadBet
-                bet.perform(action: .invite, withID: friend.uid, firstName: friend.firstName)
-                bet.perform(action: .addToSide1, withID: friend.uid, firstName: friend.uid)
+                bet.perform(action: .invite, withID: friend.uid, userName: friend.firstName)
+                bet.perform(action: .addToSide1, withID: friend.uid, userName: friend.uid)
                 bet.closeBetWith(winningSide: .one)
                 sut = BetCellViewModel(bet: bet, firestoreHelper: mock, friend: friend)
-                XCTAssertEqual(sut.getBetStatusAndColor().label, "\(friend.firstName.uppercased()) WON")
+                XCTAssertEqual(sut.getBetStatusAndColor().label, "\(friend.userName.uppercased()) WON")
                 XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.forestGreen)
             case .two:
                 var bet = spreadBet
-                bet.perform(action: .invite, withID: friend.uid, firstName: friend.uid)
-                bet.perform(action: .addToSide2, withID: friend.uid, firstName: friend.uid)
+                bet.perform(action: .invite, withID: friend.uid, userName: friend.uid)
+                bet.perform(action: .addToSide2, withID: friend.uid, userName: friend.uid)
                 bet.closeBetWith(winningSide: .two)
                 sut = BetCellViewModel(bet: bet, firestoreHelper: mock, friend: friend)
-                XCTAssertEqual(sut.getBetStatusAndColor().label, "\(friend.firstName.uppercased()) WON")
+                XCTAssertEqual(sut.getBetStatusAndColor().label, "\(friend.userName.uppercased()) WON")
                 XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.forestGreen)
             }
         }
@@ -420,8 +420,8 @@ class BetCellViewModelTests: XCTestCase {
             switch side {
             case .one:
                 var bet = spreadBet
-                bet.perform(action: .invite, withID: uid, firstName: firstName)
-                bet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+                bet.perform(action: .invite, withID: uid, userName: userName)
+                bet.perform(action: .addToSide1, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .two)
                 bet.fulfill(forUser: uid)
                 sut = BetCellViewModel(bet: bet, firestoreHelper: mock, friend: nil)
@@ -429,8 +429,8 @@ class BetCellViewModelTests: XCTestCase {
                 XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.burntUmber)
             case .two:
                 var bet = spreadBet
-                bet.perform(action: .invite, withID: uid, firstName: firstName)
-                bet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+                bet.perform(action: .invite, withID: uid, userName: userName)
+                bet.perform(action: .addToSide2, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .one)
                 bet.fulfill(forUser: uid)
                 sut = BetCellViewModel(bet: bet, firestoreHelper: mock, friend: nil)
@@ -445,21 +445,21 @@ class BetCellViewModelTests: XCTestCase {
             switch side {
             case .one:
                 var bet = spreadBet
-                bet.perform(action: .invite, withID: friend.uid, firstName: friend.firstName)
-                bet.perform(action: .addToSide1, withID: friend.uid, firstName: friend.uid)
+                bet.perform(action: .invite, withID: friend.uid, userName: friend.userName)
+                bet.perform(action: .addToSide1, withID: friend.uid, userName: friend.uid)
                 bet.closeBetWith(winningSide: .two)
                 bet.fulfill(forUser: friend.uid)
                 sut = BetCellViewModel(bet: bet, firestoreHelper: mock, friend: friend)
-                XCTAssertEqual(sut.getBetStatusAndColor().label, "\(friend.firstName.uppercased()) LOST")
+                XCTAssertEqual(sut.getBetStatusAndColor().label, "\(friend.userName.uppercased()) LOST")
                 XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.burntUmber)
             case .two:
                 var bet = spreadBet
-                bet.perform(action: .invite, withID: friend.uid, firstName: friend.uid)
-                bet.perform(action: .addToSide2, withID: friend.uid, firstName: friend.uid)
+                bet.perform(action: .invite, withID: friend.uid, userName: friend.userName)
+                bet.perform(action: .addToSide2, withID: friend.uid, userName: friend.userName)
                 bet.closeBetWith(winningSide: .one)
                 bet.fulfill(forUser: friend.uid)
                 sut = BetCellViewModel(bet: bet, firestoreHelper: mock, friend: friend)
-                XCTAssertEqual(sut.getBetStatusAndColor().label, "\(friend.firstName.uppercased()) LOST")
+                XCTAssertEqual(sut.getBetStatusAndColor().label, "\(friend.userName.uppercased()) LOST")
                 XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.burntUmber)
             }
         }

@@ -13,7 +13,7 @@ class MessageCellViewModelTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        let message = Message(uid: "uid", firstName: "firstName", body: "body", timestamp: 1610149619)
+        let message = Message(uid: "uid", userName: "userName", body: "body", timestamp: 1610149619)
         
         sut = MessageCellViewModel(
             message: message,

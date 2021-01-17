@@ -14,9 +14,9 @@ class BetDetailViewModelTests: XCTestCase {
     private var mock: MockFirestoreHelper!
     var sampleBet: Bet!
     let uid = "uid"
-    let firstName = "firstName"
+    let userName = "userName"
     var userDict: [UID: String] {
-        [uid: firstName]
+        [uid: userName]
     }
     
     override func setUp() {
@@ -79,7 +79,7 @@ class BetDetailViewModelTests: XCTestCase {
     
     // MARK:- Bet Involvement Status tests
     func test_checkInvitedStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
         
         passBetToSUT(sampleBet)
         
@@ -87,8 +87,8 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_checkSide1AcceptedStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide1, withID: uid, userName: userName)
         
         passBetToSUT(sampleBet)
         
@@ -96,8 +96,8 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_checkSide2AcceptedStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide2, withID: uid, userName: userName)
         
         passBetToSUT(sampleBet)
         
@@ -105,8 +105,8 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_checkSide1OutstandingStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide1, withID: uid, userName: userName)
         sampleBet.closeBetWith(winningSide: .two)
         
         passBetToSUT(sampleBet)
@@ -115,8 +115,8 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_checkSide2OutstandingStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide2, withID: uid, userName: userName)
         sampleBet.closeBetWith(winningSide: .one)
         
         passBetToSUT(sampleBet)
@@ -125,8 +125,8 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_checkSide1FinishedAfterFulfillingLostBetStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide1, withID: uid, userName: userName)
         sampleBet.closeBetWith(winningSide: .two)
         sampleBet.fulfill(forUser: uid)
         
@@ -136,8 +136,8 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_checkSide2FinishedAfterFulfillingLostBetStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide2, withID: uid, userName: userName)
         sampleBet.closeBetWith(winningSide: .one)
         sampleBet.fulfill(forUser: uid)
         
@@ -147,8 +147,8 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_checkSide1WinningBetStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide1, withID: uid, userName: userName)
         sampleBet.closeBetWith(winningSide: .one)
         
         passBetToSUT(sampleBet)
@@ -157,8 +157,8 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_checkSide2WinningBetStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide2, withID: uid, userName: userName)
         sampleBet.closeBetWith(winningSide: .two)
         
         passBetToSUT(sampleBet)
@@ -171,7 +171,7 @@ class BetDetailViewModelTests: XCTestCase {
     func test_acceptBet() {
         for side in Side.allCases {
             // Given an invited bet
-            sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
+            sampleBet.perform(action: .invite, withID: uid, userName: userName)
             
             passBetToSUT(sampleBet)
             sut.acceptBet(side: side)
@@ -235,7 +235,7 @@ class BetDetailViewModelTests: XCTestCase {
     
     func test_uninvitedJoinBetReturnsIfWrongInvolvementStatus() {
         // Given an invited bet
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
         passBetToSUT(sampleBet)
         XCTAssertEqual(sut.userInvolvement, .invited)
         
@@ -245,7 +245,7 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_rejectBet() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
         passBetToSUT(sampleBet)
         sut.rejectBet()
         
@@ -263,8 +263,8 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_rejectBetReturnsIfWrongInvolvementStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide1, withID: uid, userName: userName)
         passBetToSUT(sampleBet)
         XCTAssertEqual(sut.userInvolvement, .accepted)
         
@@ -291,7 +291,7 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_closeBetReturnsIfWrongInvolvementStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
         passBetToSUT(sampleBet)
         XCTAssertEqual(sut.userInvolvement, .invited)
         
@@ -346,8 +346,8 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_unjoinBetReturnsIfNoUser() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide1, withID: uid, userName: userName)
         passBetToSUT(sampleBet)
         XCTAssertEqual(sut.userInvolvement, .accepted)
         mock.currentUser = nil
@@ -358,7 +358,7 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_unjoinBetReturnsIfWrongInvolvementStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
         passBetToSUT(sampleBet)
         XCTAssertEqual(sut.userInvolvement, .invited)
         
@@ -385,15 +385,15 @@ class BetDetailViewModelTests: XCTestCase {
     func test_fulfillBet() {
         for side in Side.allCases {
             // Set bet status to outstanding
-            sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
+            sampleBet.perform(action: .invite, withID: uid, userName: userName)
             switch side {
             case .one:
-                sampleBet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+                sampleBet.perform(action: .addToSide1, withID: uid, userName: userName)
                 sampleBet.closeBetWith(winningSide: .two)
                 passBetToSUT(sampleBet)
                 sut.fulfillBet()
             case .two:
-                sampleBet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+                sampleBet.perform(action: .addToSide2, withID: uid, userName: userName)
                 sampleBet.closeBetWith(winningSide: .one)
                 passBetToSUT(sampleBet)
                 sut.fulfillBet()
@@ -406,15 +406,15 @@ class BetDetailViewModelTests: XCTestCase {
     
     func test_fulfillBetReturnsIfWrongInvolvementStatus() {
         for side in Side.allCases {
-            sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
+            sampleBet.perform(action: .invite, withID: uid, userName: userName)
             switch side {
             case .one:
-                sampleBet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+                sampleBet.perform(action: .addToSide1, withID: uid, userName: userName)
                 sampleBet.closeBetWith(winningSide: .one)
                 passBetToSUT(sampleBet)
                 sut.fulfillBet()
             case .two:
-                sampleBet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+                sampleBet.perform(action: .addToSide2, withID: uid, userName: userName)
                 sampleBet.closeBetWith(winningSide: .two)
                 passBetToSUT(sampleBet)
                 sut.fulfillBet()
@@ -438,8 +438,8 @@ class BetDetailViewModelTests: XCTestCase {
    
     func test_setMessageListener() {
         // set to accepted status
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide1, withID: uid, userName: userName)
         passBetToSUT(sampleBet)
         
         // Listener is set in sut.bet's didSet
@@ -469,15 +469,15 @@ class BetDetailViewModelTests: XCTestCase {
     
     func test_messageCellVMCreation() {
         let sampleMessages: [Message] = [
-            Message(uid: "uid", firstName: "firstName", body: "1", timestamp: 0),
-            Message(uid: "me", firstName: "firstName", body: "2", timestamp: 0),
-            Message(uid: "you", firstName: "firstName", body: "3", timestamp: 0),
-            Message(uid: "you", firstName: "firstName", body: "4", timestamp: 0),
-            Message(uid: "you", firstName: "firstName", body: "4", timestamp: 0),
-            Message(uid: "me", firstName: "firstName", body: "2", timestamp: 0)
+            Message(uid: "uid", userName: "userName", body: "1", timestamp: 0),
+            Message(uid: "me", userName: "userName", body: "2", timestamp: 0),
+            Message(uid: "you", userName: "userName", body: "3", timestamp: 0),
+            Message(uid: "you", userName: "userName", body: "4", timestamp: 0),
+            Message(uid: "you", userName: "userName", body: "4", timestamp: 0),
+            Message(uid: "me", userName: "userName", body: "2", timestamp: 0)
         ]
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
-        sampleBet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
+        sampleBet.perform(action: .addToSide1, withID: uid, userName: userName)
         passBetToSUT(sampleBet)
         
         // Get messages
@@ -650,19 +650,19 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_getOutstandingBetStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
         for side in Side.allCases {
             switch side {
             case .one:
                 var bet = sampleBet!
-                bet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+                bet.perform(action: .addToSide1, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .two)
                 passBetToSUT(bet)
                 XCTAssertEqual(sut.getBetStatusAndColor().label, "OUTSTANDING")
                 XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.burntUmber)
             case .two:
                 var bet = sampleBet!
-                bet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+                bet.perform(action: .addToSide2, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .one)
                 passBetToSUT(bet)
                 XCTAssertEqual(sut.getBetStatusAndColor().label, "OUTSTANDING")
@@ -672,19 +672,19 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_getUserWonBetStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
         for side in Side.allCases {
             switch side {
             case .one:
                 var bet = sampleBet!
-                bet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+                bet.perform(action: .addToSide1, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .one)
                 passBetToSUT(bet)
                 XCTAssertEqual(sut.getBetStatusAndColor().label, "YOU WON")
                 XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.forestGreen)
             case .two:
                 var bet = sampleBet!
-                bet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+                bet.perform(action: .addToSide2, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .two)
                 passBetToSUT(bet)
                 XCTAssertEqual(sut.getBetStatusAndColor().label, "YOU WON")
@@ -694,12 +694,12 @@ class BetDetailViewModelTests: XCTestCase {
     }
     
     func test_getUserLostBetStatus() {
-        sampleBet.perform(action: .invite, withID: uid, firstName: firstName)
+        sampleBet.perform(action: .invite, withID: uid, userName: userName)
         for side in Side.allCases {
             switch side {
             case .one:
                 var bet = sampleBet!
-                bet.perform(action: .addToSide1, withID: uid, firstName: firstName)
+                bet.perform(action: .addToSide1, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .two)
                 bet.fulfill(forUser: uid)
                 passBetToSUT(bet)
@@ -707,7 +707,7 @@ class BetDetailViewModelTests: XCTestCase {
                 XCTAssertEqual(sut.getBetStatusAndColor().color, K.colors.burntUmber)
             case .two:
                 var bet = sampleBet!
-                bet.perform(action: .addToSide2, withID: uid, firstName: firstName)
+                bet.perform(action: .addToSide2, withID: uid, userName: userName)
                 bet.closeBetWith(winningSide: .one)
                 bet.fulfill(forUser: uid)
                 passBetToSUT(bet)

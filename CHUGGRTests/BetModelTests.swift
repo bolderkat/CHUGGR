@@ -11,7 +11,7 @@ import XCTest
 class BetModelTests: XCTestCase {
     
     var sut: Bet!
-    let fname = "daniel"
+    let userName = "userName"
     let uid = "uid"
     
     override func setUp() {
@@ -49,7 +49,7 @@ class BetModelTests: XCTestCase {
     func test_InviteUser() {
         inviteUser()
         XCTAssert(sut.allUsers.contains(uid))
-        XCTAssertEqual(sut.invitedUsers, [uid: fname])
+        XCTAssertEqual(sut.invitedUsers, [uid: userName])
     }
     
     func test_UninviteUser() {
@@ -64,7 +64,7 @@ class BetModelTests: XCTestCase {
     func test_AddToSide1() {
         inviteUser()
         addToSide1()
-        XCTAssertEqual(sut.side1Users, [uid: fname])
+        XCTAssertEqual(sut.side1Users, [uid: userName])
         XCTAssert(sut.acceptedUsers.contains(uid))
         XCTAssert(sut.allUsers.contains(uid))
     }
@@ -72,7 +72,7 @@ class BetModelTests: XCTestCase {
     func test_AddToSide2() {
         inviteUser()
         addToSide2()
-        XCTAssertEqual(sut.side2Users, [uid: fname])
+        XCTAssertEqual(sut.side2Users, [uid: userName])
         XCTAssert(sut.acceptedUsers.contains(uid))
         XCTAssert(sut.allUsers.contains(uid))
     }
@@ -110,7 +110,7 @@ class BetModelTests: XCTestCase {
         remove()
         inviteUser()
         XCTAssert(sut.allUsers.contains(uid))
-        XCTAssertEqual(sut.invitedUsers, [uid: fname])
+        XCTAssertEqual(sut.invitedUsers, [uid: userName])
         XCTAssertEqual(sut.side1Users, [:])
     }
     
@@ -121,7 +121,7 @@ class BetModelTests: XCTestCase {
         
         // This should not do anything, as the user has moved from invited to accepted
         XCTAssertEqual(sut.invitedUsers, [:])
-        XCTAssertEqual(sut.side2Users, [uid: fname])
+        XCTAssertEqual(sut.side2Users, [uid: userName])
         XCTAssert(sut.allUsers.contains(uid))
     }
     
@@ -146,23 +146,23 @@ class BetModelTests: XCTestCase {
 private extension BetModelTests {
     
     func inviteUser() {
-        sut.perform(action: .invite, withID: uid, firstName: fname)
+        sut.perform(action: .invite, withID: uid, userName: userName)
     }
     
     func uninviteUser() {
-        sut.perform(action: .uninvite, withID: uid, firstName: fname)
+        sut.perform(action: .uninvite, withID: uid, userName: userName)
     }
     
     func addToSide1() {
-        sut.perform(action: .addToSide1, withID: uid, firstName: fname)
+        sut.perform(action: .addToSide1, withID: uid, userName: userName)
     }
     
     func addToSide2() {
-        sut.perform(action: .addToSide2, withID: uid, firstName: fname)
+        sut.perform(action: .addToSide2, withID: uid, userName: userName)
     }
     
     func remove() {
-        sut.perform(action: .removeFromSide, withID: uid, firstName: fname)
+        sut.perform(action: .removeFromSide, withID: uid, userName: userName)
     }
     
 }

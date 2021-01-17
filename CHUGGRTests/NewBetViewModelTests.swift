@@ -65,7 +65,7 @@ class NewBetViewModelTests: XCTestCase {
         XCTAssertEqual(sut.cellViewModels.count, 4)
         XCTAssertEqual(sut.cellViewModels[0].title, "Stat")
         XCTAssertEqual(sut.cellViewModels[1].title, "Line")
-        XCTAssertEqual(sut.cellViewModels[2].title, "Gameday")
+        XCTAssertEqual(sut.cellViewModels[2].title, "Due date")
         XCTAssertEqual(sut.cellViewModels[3].title, "Stake")
     }
     
@@ -78,7 +78,7 @@ class NewBetViewModelTests: XCTestCase {
         XCTAssertEqual(sut.cellViewModels.count, 4)
         XCTAssertEqual(sut.cellViewModels[0].title, "Stat")
         XCTAssertEqual(sut.cellViewModels[1].title, "Line")
-        XCTAssertEqual(sut.cellViewModels[2].title, "Gameday")
+        XCTAssertEqual(sut.cellViewModels[2].title, "Due date")
         XCTAssertEqual(sut.cellViewModels[3].title, "Stake")
     }
     
@@ -91,7 +91,7 @@ class NewBetViewModelTests: XCTestCase {
         XCTAssertEqual(sut.cellViewModels.count, 4)
         XCTAssertEqual(sut.cellViewModels[0].title, "Team 1")
         XCTAssertEqual(sut.cellViewModels[1].title, "Team 2")
-        XCTAssertEqual(sut.cellViewModels[2].title, "Gameday")
+        XCTAssertEqual(sut.cellViewModels[2].title, "Due date")
         XCTAssertEqual(sut.cellViewModels[3].title, "Stake")
     }
     
@@ -102,7 +102,7 @@ class NewBetViewModelTests: XCTestCase {
         XCTAssertEqual(sut.cellViewModels.count, 4)
         XCTAssertEqual(sut.cellViewModels[0].title, "Team 1")
         XCTAssertEqual(sut.cellViewModels[1].title, "Team 2")
-        XCTAssertEqual(sut.cellViewModels[2].title, "Gameday")
+        XCTAssertEqual(sut.cellViewModels[2].title, "Due date")
         XCTAssertEqual(sut.cellViewModels[3].title, "Stake")
     }
     
