@@ -18,6 +18,7 @@ class AddFriendViewModelTests: XCTestCase {
         super.setUp()
         mock = MockFirestoreHelper()
         sut = AddFriendViewModel(firestoreHelper: mock)
+        sut.initSetUpAllUserListener()
     }
     
     override func tearDown() {
@@ -27,9 +28,17 @@ class AddFriendViewModelTests: XCTestCase {
     }
     
     func test_setUpAllUserListener() {
-        sut.initSetUpAllUserListener()
         XCTAssertEqual(mock.allUserListeners, 1)
         XCTAssertFalse(sut.isLoading)
+    }
+    
+    func test_cellVMsCorrectlyPopulatedAfterFetch() {
+        let usersNotYetFollowed = TestingData.users.dropLast(2)
+        XCTAssertEqual(sut.allUserVMs.count, usersNotYetFollowed.count)
+        
+        for i in 0..<sut.allUserVMs.count {
+            XCTAssertEqual(sut.allUserVMs[i].uid, usersNotYetFollowed[i].uid)
+        }
     }
     
     func test_provideCellVMsWithFirstNameQuery() {
@@ -83,6 +92,17 @@ class AddFriendViewModelTests: XCTestCase {
     func test_searchForGibberish() {
         let vms = sut.provideCellVMs(forString: "2380-*GW_(*-fj3iowh")
         XCTAssertEqual(vms.count, 0)
+    }
+    
+    func test_provideCellVMsAfterClearingSearch() {
+        let usersNotYetFollowed = TestingData.users.dropLast(2)
+        let _ = sut.provideCellVMs(forString: "2380-*GW_(*-fj3iowh")
+        let vms = sut.provideCellVMs(forString: "")
+        XCTAssertEqual(vms.count, usersNotYetFollowed.count)
+        
+        for i in 0..<vms.count {
+            XCTAssertEqual(vms[i].uid, usersNotYetFollowed[i].uid)
+        }
     }
     
     func test_provideCellVMsWithLetterAQuery() {

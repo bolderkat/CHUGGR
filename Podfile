@@ -8,6 +8,7 @@ target 'CHUGGR' do
   # Pods for CHUGGR
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'Firebase/Messaging'
   pod 'FirebaseUI', '~> 8.0'
   pod 'FirebaseFirestoreSwift'
 

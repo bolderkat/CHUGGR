@@ -26,6 +26,12 @@ class AddFriendViewController: UIViewController {
         configureTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.createCellVMs()
+        updateTableView(forString: searchBar.text)
+    }
+    
     init(
         viewModel: AddFriendViewModel,
         nibName: String? = nil,
@@ -47,11 +53,19 @@ class AddFriendViewController: UIViewController {
     
     func initViewModel() {
         viewModel.initSetUpAllUserListener()
+        
+        viewModel.didUpdateUserVMs = { [weak self] in
+            DispatchQueue.main.async {
+                self?.updateTableView(forString: "")
+            }
+        }
+        
         viewModel.didChangeloadingStatus = { [weak self] in
             DispatchQueue.main.async {
                 self?.showLoadingStatus()
             }
         }
+        
         viewModel.onFriendFetch = { [weak self] friend in
             self?.onFriendFetch(friend)
         }
@@ -69,6 +83,13 @@ class AddFriendViewController: UIViewController {
         }
     }
     
+    func updateTableView(forString searchString: String?) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, FriendCellViewModel>()
+        snapshot.appendSections(Section.allCases)
+        snapshot.appendItems(viewModel.provideCellVMs(forString: searchString ?? ""))
+        dataSource.apply(snapshot,animatingDifferences: false)
+    }
+    
     func onFriendFetch(_ friend: FullFriend) {
         // Passed to getFriend completion handler to provide fresh data when pushing friend detail
         coordinator?.showFriendDetail(for: friend)
@@ -79,12 +100,7 @@ class AddFriendViewController: UIViewController {
 // MARK:- SearchBar delegate
 extension AddFriendViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, FriendCellViewModel>()
-        snapshot.appendSections(Section.allCases)
-        
-        // Get cell VMs matching search criteria and apply to dataSource
-        snapshot.appendItems(viewModel.provideCellVMs(forString: searchText))
-        dataSource.apply(snapshot, animatingDifferences: true)
+        updateTableView(forString: searchText)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
