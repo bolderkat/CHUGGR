@@ -9,7 +9,7 @@ import Foundation
 
 struct Message: Codable {
     let uid: UID
-    let firstName: String
+    let userName: String
     let body: String
     let timestamp: TimeInterval
 }

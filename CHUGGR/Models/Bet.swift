@@ -42,7 +42,7 @@ struct Bet: Codable {
     var line: Double?
     var team1: String?
     var team2: String?
-    private(set) var invitedUsers = [UID: String]() // UID and firstName
+    private(set) var invitedUsers = [UID: String]() // UID and userName
     private(set) var side1Users = [UID: String]()
     private(set) var side2Users = [UID: String]()
     private(set) var outstandingUsers = Set<UID>()
@@ -85,12 +85,12 @@ struct Bet: Codable {
         outstandingUsers.remove(uid)
     }
     
-    mutating func perform(action: BetUserAction, withID uid: UID, firstName name: String) {
+    mutating func perform(action: BetUserAction, withID uid: UID, userName: String) {
         guard !isFinished else { return } // only allow action if bet still open
         switch action {
         case .invite:
             if !allUsers.contains(uid) {
-                invitedUsers[uid] = name
+                invitedUsers[uid] = userName
                 allUsers.insert(uid)
             }
         case .uninvite:
@@ -102,13 +102,13 @@ struct Bet: Codable {
         case .addToSide1:
             if invitedUsers[uid] != nil && side2Users[uid] == nil {
                 invitedUsers[uid] = nil
-                side1Users[uid] = name
+                side1Users[uid] = userName
                 acceptedUsers.insert(uid)
             }
         case .addToSide2:
             if invitedUsers[uid] != nil && side1Users[uid] == nil {
                 invitedUsers[uid] = nil
-                side2Users[uid] = name
+                side2Users[uid] = userName
                 acceptedUsers.insert(uid)
             }
         case .removeFromSide:

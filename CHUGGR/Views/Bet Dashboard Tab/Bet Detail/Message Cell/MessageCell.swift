@@ -22,7 +22,7 @@ class MessageCell: UITableViewCell {
     func configure(with vm: MessageCellViewModel) {
         messageBubble.layer.cornerRadius = 10
         // Fill labels
-        nameLabel.text = vm.message.firstName
+        nameLabel.text = vm.message.userName
         timeLabel.text = vm.getTimeString()
         bodyLabel.text = vm.message.body
         

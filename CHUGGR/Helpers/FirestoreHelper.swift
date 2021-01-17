@@ -427,12 +427,12 @@ class FirestoreHelper: FirestoreHelping {
     // MARK:- Bet chat message methods
     func sendMessage(for bet: BetID, with body: String) {
         guard let uid = currentUser?.uid,
-              let firstName = currentUser?.firstName else { return }
+              let userName = currentUser?.userName else { return }
         let timestamp = Date.init().timeIntervalSince1970
         
         let message = Message(
             uid: uid,
-            firstName: firstName,
+            userName: userName,
             body: body,
             timestamp: timestamp
         )

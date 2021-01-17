@@ -241,7 +241,7 @@ class NewBetViewModel {
         
         // Check for user auth
         guard let currentUserID = firestoreHelper.currentUser?.uid,
-              let currentUserFirstName = firestoreHelper.currentUser?.firstName else {
+              let currentUserName = firestoreHelper.currentUser?.userName else {
             print("Unable to find current authorized user.")
             return nil
         }
@@ -311,17 +311,17 @@ class NewBetViewModel {
         // Make sure we actually have a bet instance after all the above
         guard var enteredBet = bet else { return nil }
         // Add user to bet then assign to selected side.
-        enteredBet.perform(action: .invite, withID: currentUserID, firstName: currentUserFirstName)
+        enteredBet.perform(action: .invite, withID: currentUserID, userName: currentUserName)
         switch selectedSide {
         case .one:
-            enteredBet.perform(action: .addToSide1, withID: currentUserID, firstName: currentUserFirstName)
+            enteredBet.perform(action: .addToSide1, withID: currentUserID, userName: currentUserName)
         case .two:
-            enteredBet.perform(action: .addToSide2, withID: currentUserID, firstName: currentUserFirstName)
+            enteredBet.perform(action: .addToSide2, withID: currentUserID, userName: currentUserName)
         }
         
         // Invite any selected friends
         for friend in invitedFriends {
-            enteredBet.perform(action: .invite, withID: friend.uid, firstName: friend.firstName)
+            enteredBet.perform(action: .invite, withID: friend.uid, userName: friend.userName)
         }
         
         let docID = firestoreHelper.writeNewBet(bet: &enteredBet)

@@ -93,9 +93,9 @@ class BetDetailViewModel {
         // Wait to unwrap bet so we can update the viewModel before copying
         switch side {
         case .one:
-            bet?.perform(action: .addToSide1, withID: user.uid, firstName: user.firstName)
+            bet?.perform(action: .addToSide1, withID: user.uid, userName: user.userName)
         case .two:
-            bet?.perform(action: .addToSide2, withID: user.uid, firstName: user.firstName)
+            bet?.perform(action: .addToSide2, withID: user.uid, userName: user.userName)
         }
         
         guard let bet = bet else { return }
@@ -111,7 +111,7 @@ class BetDetailViewModel {
         guard let user = firestoreHelper.currentUser,
               userInvolvement == .uninvolved else { return }
         
-        bet?.perform(action: .invite, withID: user.uid, firstName: user.firstName)
+        bet?.perform(action: .invite, withID: user.uid, userName: user.userName)
         
         acceptBet(side: side)
     }
@@ -119,7 +119,7 @@ class BetDetailViewModel {
     func rejectBet() {
         guard let user = firestoreHelper.currentUser,
               userInvolvement == .invited else { return }
-        bet?.perform(action: .uninvite, withID: user.uid, firstName: user.firstName)
+        bet?.perform(action: .uninvite, withID: user.uid, userName: user.userName)
         
         guard let bet = bet else { return }
         firestoreHelper.updateBet(bet, completion: nil)
@@ -144,8 +144,8 @@ class BetDetailViewModel {
     func unjoinBet() {
         guard userInvolvement == .accepted,
               let uid = firestoreHelper.currentUser?.uid,
-              let firstName = firestoreHelper.currentUser?.firstName else { return }
-        bet?.perform(action: .removeFromSide, withID: uid, firstName: firstName)
+              let userName = firestoreHelper.currentUser?.userName else { return }
+        bet?.perform(action: .removeFromSide, withID: uid, userName: userName)
         
         guard let bet = bet else { return }
         firestoreHelper.updateBet(bet) { [weak self] _ in
