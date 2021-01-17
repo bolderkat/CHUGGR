@@ -404,7 +404,7 @@ class BetDetailViewController: UIViewController {
         // Give user options to choose the winner of the bet.
         let alert = UIAlertController(
             title: "Close bet",
-            message: "Choose a winner",
+            message: "Choose a winner. This is irreversible, so don't choose one until the event you're betting on has already finished or occured!",
             preferredStyle: .actionSheet
         )
         alert.addAction(
