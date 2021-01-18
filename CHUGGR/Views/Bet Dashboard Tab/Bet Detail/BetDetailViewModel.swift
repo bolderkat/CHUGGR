@@ -261,7 +261,7 @@ class BetDetailViewModel {
             return ""
         case 1:
             return names.first
-        case 2...3:
+        case 2:
             return names.joined(separator: ", ")
         default:
             return "\(names.count) people"
