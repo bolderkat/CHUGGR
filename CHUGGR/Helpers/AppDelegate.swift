@@ -18,22 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        #if DEBUG
         Messaging.messaging().delegate = self
-        
         UNUserNotificationCenter.current().delegate = self
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        
-        // Get user permission for push notifications
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { (_, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-        }
-        
         application.registerForRemoteNotifications()
-        #endif
         return true
     }
     

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class BetsViewController: UIViewController {
 
@@ -50,6 +51,18 @@ class BetsViewController: UIViewController {
         super.viewWillAppear(animated)
         // Refresh first set of other bets
         viewModel.initFetchOtherBets()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Get user permission for push notifications
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { (_, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+        }
     }
     
     func setUpViewController() {
