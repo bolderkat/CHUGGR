@@ -109,7 +109,7 @@ class ProfileViewModel {
         }
     }
 
-    func logOut() {
-        firestoreHelper.logOut()
+    func logOut(completion: @escaping () -> Void) {
+        firestoreHelper.logOut(completion: completion)
     }
 }

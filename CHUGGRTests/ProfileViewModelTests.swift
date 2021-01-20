@@ -177,7 +177,7 @@ class ProfileViewModelTests: XCTestCase {
     }
     
     func test_logOut() {
-        sut.logOut()
+        sut.logOut(completion: nil)
         
         XCTAssertNil(mock.currentUser)
         XCTAssertTrue(mock.friends.isEmpty)

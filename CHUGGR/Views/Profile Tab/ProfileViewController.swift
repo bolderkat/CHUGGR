@@ -92,9 +92,11 @@ class ProfileViewController: UIViewController {
     
 
     @objc func logOutPressed() {
-        viewModel.logOut()
-        if let coordinator = coordinator, let mainCoordinator = coordinator.parentCoordinator {
-            mainCoordinator.logOut()
+        viewModel.logOut { [weak self] in
+            if let coordinator = self?.coordinator,
+               let mainCoordinator = coordinator.parentCoordinator {
+                mainCoordinator.logOut()
+            }
         }
     }
     

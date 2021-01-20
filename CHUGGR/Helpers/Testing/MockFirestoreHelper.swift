@@ -375,7 +375,7 @@ class MockFirestoreHelper: FirestoreHelping {
     }
     
     // MARK:- Clean-up
-    func logOut() {
+    func logOut(completion: (() -> Void)?) {
         logOuts += 1
         cleanUp()
         unsubscribeAllSnapshotListeners()

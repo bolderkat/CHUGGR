@@ -23,6 +23,7 @@ class CurrentUser: User, Codable {
     private(set) var drinksReceived: Drinks
     private(set) var drinksOutstanding: Drinks
     private(set) var recentFriends: [String] // UIDs
+    private(set) var fcm: [String]?
     
     init(
         uid: String,
@@ -102,5 +103,20 @@ class CurrentUser: User, Codable {
     
     func updateRecentFriends(with friends: [String]) {
         self.recentFriends = friends
+    }
+    
+    func setFCMToken(token: String) {
+        if fcm == nil {
+            fcm = [token]
+        } else {
+            guard !fcm!.contains(token) else { return }
+            fcm!.append(token)
+        }
+    }
+    
+    func removeFCMToken(token: String) {
+        if let index = fcm?.firstIndex(of: token) {
+            fcm?.remove(at: index)
+        }
     }
 }

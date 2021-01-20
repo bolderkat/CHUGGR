@@ -75,7 +75,7 @@ protocol FirestoreHelping {
     func removeFriend(withUID friendUID: UID, completion: @escaping () -> ())
     
     // MARK:- Clean-up
-    func logOut()
+    func logOut(completion: (() -> Void)?)
     func cleanUp()
     func removeBetDetailListener(for tab: Tab)
     func removeAllBetDetailListeners()

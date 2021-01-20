@@ -150,7 +150,8 @@ class FirestoreHelper: FirestoreHelping {
                         self?.currentUser = user
                         // If successful, add a snapshot for this document.
                         self?.addCurrentUserListener(with: uid)
-                        
+                        self?.updateFCMTokenForUser()
+
                         DispatchQueue.main.async {
                             completion?()
                         }
@@ -163,7 +164,26 @@ class FirestoreHelper: FirestoreHelping {
                     failure?()
                 }
             }
-        
+    }
+    
+    func updateFCMTokenForUser() {
+        guard let user = currentUser else { return }
+        Messaging.messaging().token { [weak self] token, error in
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+            } else if let token = token {
+                user.setFCMToken(token: token)
+                guard let ref = self?.db.collection(K.Firestore.users).document(user.uid) else {
+                    print("Unable to retrieve user ref to update FCM token")
+                    return
+                }
+                do {
+                    try ref.setData(from: user)
+                } catch {
+                    print("Error updating FCM token for user")
+                }
+            }
+        }
     }
     
     func addCurrentUserListener(with uid: String) {
@@ -1057,20 +1077,49 @@ class FirestoreHelper: FirestoreHelping {
 //        }
     }
     
+    
+    
     // MARK:- Clean-up
-    func logOut() {
+    func logOut(completion: (() -> Void)?) {
+        // Remove FCM token from user on logout
+        Messaging.messaging().token { [weak self] token, error in
+            if let error = error {
+                print("Error fetching FCM registration token for removal from user: \(error)")
+            } else if let token = token {
+                self?.removeFCMTokenOnLogOut(token: token, completion: {
+                    completion?()
+                })
+            }
+        }
+    }
+    
+    func removeFCMTokenOnLogOut(token: String, completion: (() -> Void)?) {
+        guard let user = currentUser else { return }
+        user.removeFCMToken(token: token)
+        let ref = db.collection(K.Firestore.users).document(user.uid)
+        do {
+            try ref.setData(from: user, completion: { [weak self] _ in
+                self?.signOutFromFirebase()
+                completion?()
+                self?.currentUser = nil
+                self?.cleanUp()
+                self?.unsubscribeAllSnapshotListeners()
+            })
+        } catch {
+            print("Error removing FCM token from user")
+        }
+    }
+    
+    func signOutFromFirebase() {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
-        cleanUp()
-        unsubscribeAllSnapshotListeners()
     }
     
     func cleanUp() {
-        currentUser = nil
         friends = []
         allUsers = []
         involvedBets = []
