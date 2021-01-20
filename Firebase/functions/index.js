@@ -111,7 +111,7 @@ exports.sendNotificationOnBetClose = functions.firestore
         const message = {
           notification: {
             title: `You lost a bet!`,
-            body: betTitle,
+            body: `You have drinks outstanding for: ${betTitle},
           },
           token: token,
         }
