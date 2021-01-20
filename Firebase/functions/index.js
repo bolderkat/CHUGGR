@@ -52,6 +52,7 @@ exports.sendNotificationOnNewBet = functions.firestore
     await Promise.all(messagingPromisesToAwait);
   });
 
+
 exports.sendNotificationOnBetClose = functions.firestore
   .document("testBets/{docID}")
   .onUpdate(async (change, context) => {
@@ -121,6 +122,7 @@ exports.sendNotificationOnBetClose = functions.firestore
     await Promise.all(messagingPromisesToAwait);
   });
 
+
 exports.sendNewFollowerNotification = functions.firestore
   .document("testUsers/{userID}/friends/{friendID}")
   .onCreate(async (snap, context) => {
@@ -148,3 +150,48 @@ exports.sendNewFollowerNotification = functions.firestore
 
     await Promise.all(messagingPromisesToAwait);
   });
+
+
+exports.sendNewMessageNotification = functions.firestore
+  .document("testChatRooms/{betID}/actualMessages/{messageID}")
+  .onCreate(async (snap, context) => {
+    const message = snap.data();
+    const body = message.body;
+    const senderUserName = message.userName;
+    const senderUID = message.uid;
+
+    const betID = context.params.betID;
+    const associatedBetDoc = await admin.firestore().doc(`testBets/${betID}`).get();
+    const associatedBet = associatedBetDoc.data();
+    const betTitle = associatedBet.title;
+
+    const acceptedUsers = associatedBet.acceptedUsers;
+    const userDocPromisesToAwait = [];
+
+    for (const uid of acceptedUsers) {
+      if (uid === senderUID) continue
+      userDocPromisesToAwait.push(admin.firestore().doc(`testUsers/${uid}`).get());
+    }
+
+    const acceptedUserDocs = await Promise.all(userDocPromisesToAwait);
+    const messagingPromisesToAwait = [];
+
+    for (const userDoc of acceptedUserDocs) {
+      const user = userDoc.data();
+      const fcmTokens = user.fcm;
+
+      for (const token of fcmTokens) {
+        const message = {
+          notification: {
+            title: `${senderUserName} in ${betTitle}`,
+            body: body,
+          },
+          token: token,
+        }
+        messagingPromisesToAwait.push(admin.messaging().send(message));
+      }
+    }
+
+    await Promise.all(messagingPromisesToAwait);
+  });
+  
