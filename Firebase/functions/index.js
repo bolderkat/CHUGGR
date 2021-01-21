@@ -36,6 +36,7 @@ exports.sendNotificationOnNewBet = functions.firestore
     for (const userDoc of invitedUserDocs) {
       const user = userDoc.data();
       const fcmTokens = user.fcm;
+      if (typeof fcmTokens === 'undefined') continue
 
       for (const token of fcmTokens) {
         const message = {
@@ -90,6 +91,7 @@ exports.sendNotificationOnBetClose = functions.firestore
     for (const userDoc of winnerDocs) {
       const user = userDoc.data();
       const fcmTokens = user.fcm;
+      if (typeof fcmTokens === 'undefined') continue
 
       for (const token of fcmTokens) {
         const message = {
@@ -133,6 +135,7 @@ exports.sendNewFollowerNotification = functions.firestore
 
     const friend = friendDoc.data();
     const fcmTokens = friend.fcm;
+    if (typeof fcmTokens === 'undefined') return
     const addingUser = addingUserDoc.data();
 
     const messagingPromisesToAwait = [];
@@ -179,6 +182,7 @@ exports.sendNewMessageNotification = functions.firestore
     for (const userDoc of acceptedUserDocs) {
       const user = userDoc.data();
       const fcmTokens = user.fcm;
+      if (typeof fcmTokens === 'undefined') continue
 
       for (const token of fcmTokens) {
         const message = {
@@ -194,14 +198,45 @@ exports.sendNewMessageNotification = functions.firestore
 
     await Promise.all(messagingPromisesToAwait);
   });
-  
+
+  exports.sendOutstandingBetNotification = functions.pubsub.schedule("30 18 * * 5")
+  .timeZone("America/Los_Angeles")
+  .onRun(async (context) => {
+    const snapshot = await admin.firestore().collection("users").get();
+
+    const messagingPromisesToAwait = [];
+    
+    snapshot.forEach(doc => {
+      const user = doc.data();
+      const beers = user.drinksOutstanding.beers;
+      const shots = user.drinksOutstanding.shots;
+      if (beers > 0 || shots > 0) {
+        const fcmTokens = user.fcm;
+        if (typeof fcmTokens === 'undefined') return
+
+        for (const token of fcmTokens) {
+          const message = {
+            notification: {
+              title: `Bets outstanding`,
+              body: `You owe ${beers} 🍺 ${shots} 🥃 for lost bets. Remember to drink responsibly 😉`,
+            },
+            token: token,
+          }
+          messagingPromisesToAwait.push(admin.messaging().send(message));
+        }
+      }
+    });
+
+    await Promise.all(messagingPromisesToAwait);
+  });
 
 
 
 
-  // TEST Functions
 
-  exports.testSendNotificationOnNewBet = functions.firestore
+// TEST Functions
+
+exports.testSendNotificationOnNewBet = functions.firestore
   .document("testBets/{docId}")
   .onCreate(async (snap, context) => {
     const newBet = snap.data();
@@ -227,6 +262,7 @@ exports.sendNewMessageNotification = functions.firestore
     for (const userDoc of invitedUserDocs) {
       const user = userDoc.data();
       const fcmTokens = user.fcm;
+      if (typeof fcmTokens === 'undefined') continue
 
       for (const token of fcmTokens) {
         const message = {
@@ -281,6 +317,7 @@ exports.testSendNotificationOnBetClose = functions.firestore
     for (const userDoc of winnerDocs) {
       const user = userDoc.data();
       const fcmTokens = user.fcm;
+      if (typeof fcmTokens === 'undefined') continue
 
       for (const token of fcmTokens) {
         const message = {
@@ -324,6 +361,7 @@ exports.testSendNewFollowerNotification = functions.firestore
 
     const friend = friendDoc.data();
     const fcmTokens = friend.fcm;
+    if (typeof fcmTokens === 'undefined') return
     const addingUser = addingUserDoc.data();
 
     const messagingPromisesToAwait = [];
@@ -370,6 +408,7 @@ exports.testSendNewMessageNotification = functions.firestore
     for (const userDoc of acceptedUserDocs) {
       const user = userDoc.data();
       const fcmTokens = user.fcm;
+      if (typeof fcmTokens === 'undefined') continue
 
       for (const token of fcmTokens) {
         const message = {
@@ -382,6 +421,38 @@ exports.testSendNewMessageNotification = functions.firestore
         messagingPromisesToAwait.push(admin.messaging().send(message));
       }
     }
+
+    await Promise.all(messagingPromisesToAwait);
+  });
+
+
+exports.testSendOutstandingBetNotification = functions.pubsub.schedule("30 18 * * 5")
+  .timeZone("America/Los_Angeles")
+  .onRun(async (context) => {
+    const snapshot = await admin.firestore().collection("testUsers").get();
+
+    const messagingPromisesToAwait = [];
+    
+    snapshot.forEach(doc => {
+      const user = doc.data();
+      const beers = user.drinksOutstanding.beers;
+      const shots = user.drinksOutstanding.shots;
+      if (beers > 0 || shots > 0) {
+        const fcmTokens = user.fcm;
+        if (typeof fcmTokens === 'undefined') return
+
+        for (const token of fcmTokens) {
+          const message = {
+            notification: {
+              title: `Bets outstanding`,
+              body: `You owe ${beers} 🍺 ${shots} 🥃 for lost bets. Remember to drink responsibly 😉`,
+            },
+            token: token,
+          }
+          messagingPromisesToAwait.push(admin.messaging().send(message));
+        }
+      }
+    });
 
     await Promise.all(messagingPromisesToAwait);
   });
