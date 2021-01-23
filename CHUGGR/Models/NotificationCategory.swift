@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  NotificationCategory.swift
 //  CHUGGR
 //
 //  Created by Daniel Luo on 1/21/21.

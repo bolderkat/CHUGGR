@@ -67,6 +67,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
+        
+        guard let dict = userInfo["aps"] as? [String: Any],
+              let category = NotificationCategory.provideCategory(from: dict),
+              let coordinator = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.coordinator else { return }
+        
+        coordinator.start(fromNotification: category)
 
         print(userInfo)
         completionHandler()

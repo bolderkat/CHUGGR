@@ -27,6 +27,18 @@ class MainCoordinator: ParentCoordinating {
         window.makeKeyAndVisible()
     }
     
+    func start(fromNotification category: NotificationCategory) {
+        switch category {
+        case .newBet:
+            tabController.selectedIndex = 0
+            if let coordinator = childCoordinators[0] as? BetsCoordinator {
+                coordinator.openPendingBets()
+            }
+        default:
+            return
+        }
+    }
+    
     func presentUserDetailEntry() {
         let vc = UserDetailEntryViewController(
             viewModel: UserDetailEntryViewModel(firestoreHelper: firestoreHelper)
@@ -42,10 +54,7 @@ class MainCoordinator: ParentCoordinating {
     }
     
     func goToTabBar() {
-        tabController.coordinator = self
         tabController.selectedIndex = 0
-        startTabBarCoordinators()
-        tabController.viewControllers = childCoordinators.map { $0.navigationController }
         UIView.transition(
             with: window,
             duration: 0.8,
@@ -55,7 +64,8 @@ class MainCoordinator: ParentCoordinating {
         window.rootViewController = tabController
     }
     
-    func startTabBarCoordinators() {
+    func setUpTabBarAndCoordinators() {
+        tabController.coordinator = self
         childCoordinators = [
             BetsCoordinator(navigationController: UINavigationController(),
                             firestoreHelper: firestoreHelper),
@@ -72,6 +82,7 @@ class MainCoordinator: ParentCoordinating {
             $0.parentCoordinator = self
             $0.start()
         }
+        tabController.viewControllers = childCoordinators.map { $0.navigationController }
     }
     
     func openNewBetDetail(with id: BetID) {

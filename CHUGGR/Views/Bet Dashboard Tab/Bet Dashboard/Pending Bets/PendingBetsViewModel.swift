@@ -26,6 +26,12 @@ class PendingBetsViewModel {
         self.firestoreHelper = firestoreHelper
     }
     
+    func setBetListener() {
+        firestoreHelper.addUserInvolvedBetsListener { [weak self] _ in
+            self?.fetchPendingBets()
+        }
+    }
+    
     func fetchPendingBets() {
         // Get bets where user is in the invited category
         guard let uid = firestoreHelper.currentUser?.uid else { return }

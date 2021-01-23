@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Pass control of window to MainCoordinator
         coordinator = MainCoordinator(window: window)
         coordinator?.start()
+        coordinator?.setUpTabBarAndCoordinators()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

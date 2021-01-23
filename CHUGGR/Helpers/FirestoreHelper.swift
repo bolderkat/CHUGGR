@@ -15,6 +15,7 @@ class FirestoreHelper: FirestoreHelping {
         didSet {
             if currentUser != nil {
                 currentUserDidChange?(currentUser!)
+                persistUIDInDefaults()
             }
         }
     }
@@ -57,6 +58,7 @@ class FirestoreHelper: FirestoreHelping {
     private var profileLastBet: QueryDocumentSnapshot?
     
     var currentUserDidChange: ((CurrentUser) -> Void)? // for use by profile view ONLY
+    
     
     // MARK:- User CRUD
     func createNewUser(
@@ -212,7 +214,14 @@ class FirestoreHelper: FirestoreHelping {
             }
     }
     
+    func persistUIDInDefaults() {
+        guard let uid = currentUser?.uid else { return }
+        UserDefaults.standard.set(uid, forKey: K.Firestore.uid)
+    }
     
+    func deleteUIDfromDefaults() {
+        UserDefaults.standard.removeObject(forKey: K.Firestore.uid)
+    }
     
     
     
@@ -543,7 +552,15 @@ class FirestoreHelper: FirestoreHelping {
     // MARK:- Bet dashboard methods
     
     func addUserInvolvedBetsListener(completion: @escaping (_ bets: [Bet]) -> Void) {
-        guard let uid = currentUser?.uid else { return }
+        var uid = ""
+        
+        if let fetchedUID = currentUser?.uid {
+            uid = fetchedUID
+        } else if let storedUID = UserDefaults.standard.string(forKey: K.Firestore.uid) {
+            uid = storedUID
+        } else {
+            return
+        }
         
         // Query for all bets user is involved in. Filter in the view models based on invited/accepted
         betDashboardListener = db.collection(K.Firestore.bets)
@@ -1120,6 +1137,7 @@ class FirestoreHelper: FirestoreHelping {
     }
     
     func cleanUp() {
+        deleteUIDfromDefaults()
         friends = []
         allUsers = []
         involvedBets = []

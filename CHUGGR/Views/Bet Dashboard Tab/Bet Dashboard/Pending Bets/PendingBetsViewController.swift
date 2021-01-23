@@ -48,7 +48,7 @@ class PendingBetsViewController: UIViewController {
         viewModel.didUpdateBetCellVMs = { [weak self] in
             self?.reloadTableView()
         }
-        
+        viewModel.setBetListener()
         viewModel.fetchPendingBets()
     }
     

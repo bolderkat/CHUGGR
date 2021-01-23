@@ -119,4 +119,5 @@ class CurrentUser: User, Codable {
             fcm?.remove(at: index)
         }
     }
+    
 }
