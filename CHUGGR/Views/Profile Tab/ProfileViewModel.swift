@@ -12,9 +12,19 @@ import Foundation
 
 class ProfileViewModel {
     private var firestoreHelper: FirestoreHelping
-    private(set) var user: CurrentUser {
+    private(set) var user: CurrentUser? {
         didSet {
             currentUserDataDidChange?()
+        }
+    }
+    
+    private var uid: UID? {
+        if let fetchedUID = user?.uid {
+            return fetchedUID
+        } else if let storedUID = UserDefaults.standard.string(forKey: K.Firestore.uid) {
+            return storedUID
+        } else {
+            return nil
         }
     }
 
@@ -32,9 +42,8 @@ class ProfileViewModel {
     var didUpdatePastBetCells: (() -> Void)?
 
     
-    init(firestoreHelper: FirestoreHelping, user: CurrentUser) {
+    init(firestoreHelper: FirestoreHelping) {
         self.firestoreHelper = firestoreHelper
-        self.user = user
     }
     
     // MARK:- Firestore handlers and bet processing
@@ -51,25 +60,28 @@ class ProfileViewModel {
     }
     
     func initFetchPastBets() {
+        guard let uid = uid else { return }
         isLoading = true
-        firestoreHelper.initFetchPastBets(for: user.uid) { [weak self] bets in
+        firestoreHelper.initFetchPastBets(for: uid) { [weak self] bets in
             self?.processPastBets(bets, appending: false)
             self?.isLoading = false
         }
     }
     
     func loadAdditionalPastBets() {
+        guard let uid = uid else { return }
         isLoading = true
-        firestoreHelper.fetchAdditionalPastBets(for: user.uid) { [weak self] bets in
+        firestoreHelper.fetchAdditionalPastBets(for: uid) { [weak self] bets in
             self?.processPastBets(bets, appending: true)
             self?.isLoading = false
         }
     }
     
     func processPastBets(_ bets: [Bet], appending: Bool) {
+        guard let uid = uid else { return }
         var vms = [BetCellViewModel]()
         // Filter out outstanding bets because they are already displayed under active
-        let filteredBets = bets.filter { !$0.outstandingUsers.contains(user.uid) }
+        let filteredBets = bets.filter { !$0.outstandingUsers.contains(uid) }
         for bet in filteredBets {
             vms.append(createCellViewModel(for: bet))
         }
@@ -99,6 +111,9 @@ class ProfileViewModel {
     }
     
     func getDrinksString(forStat stat: DrinkStatType) -> String? {
+        guard let user = user else {
+            return "0 🍺 0 🥃"
+        }
         switch stat {
         case .given:
             return "\(user.drinksGiven.beers) 🍺 \(user.drinksGiven.shots) 🥃"

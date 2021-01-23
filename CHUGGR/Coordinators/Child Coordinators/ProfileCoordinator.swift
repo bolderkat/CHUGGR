@@ -30,9 +30,8 @@ class ProfileCoordinator: ChildCoordinating {
     }
     
     func start() {
-        guard let currentUser = firestoreHelper.currentUser else { return }
         let vc = ProfileViewController(
-            viewModel: ProfileViewModel(firestoreHelper: firestoreHelper, user: currentUser)
+            viewModel: ProfileViewModel(firestoreHelper: firestoreHelper)
         )
         vc.coordinator = self
         vc.tabBarItem = UITabBarItem(
