@@ -199,13 +199,13 @@ exports.sendNewMessageNotification = functions.firestore
     await Promise.all(messagingPromisesToAwait);
   });
 
-  exports.sendOutstandingBetNotification = functions.pubsub.schedule("30 18 * * 5")
+exports.sendOutstandingBetNotification = functions.pubsub.schedule("30 18 * * 5")
   .timeZone("America/Los_Angeles")
   .onRun(async (context) => {
     const snapshot = await admin.firestore().collection("users").get();
 
     const messagingPromisesToAwait = [];
-    
+
     snapshot.forEach(doc => {
       const user = doc.data();
       const beers = user.drinksOutstanding.beers;
@@ -271,6 +271,13 @@ exports.testSendNotificationOnNewBet = functions.firestore
             body: betTitle,
           },
           token: token,
+          apns: {
+            payload: {
+              aps: {
+                category: "NEW_BET"
+              }
+            }
+          }
         }
         messagingPromisesToAwait.push(admin.messaging().send(message));
       }
@@ -326,6 +333,13 @@ exports.testSendNotificationOnBetClose = functions.firestore
             body: betTitle,
           },
           token: token,
+          apns: {
+            payload: {
+              aps: {
+                category: "BET_WON"
+              }
+            }
+          }
         }
         messagingPromisesToAwait.push(admin.messaging().send(message));
       }
@@ -342,6 +356,13 @@ exports.testSendNotificationOnBetClose = functions.firestore
             body: `You have drinks outstanding for: ${betTitle}`,
           },
           token: token,
+          apns: {
+            payload: {
+              aps: {
+                category: "BET_LOST"
+              }
+            }
+          }
         }
         messagingPromisesToAwait.push(admin.messaging().send(message));
       }
@@ -373,6 +394,13 @@ exports.testSendNewFollowerNotification = functions.firestore
           body: `${addingUser.userName} (${addingUser.firstName} ${addingUser.lastName}) is now following you on CHUGGR. Tap to send them a bet!`,
         },
         token: token,
+        apns: {
+          payload: {
+            aps: {
+              category: "NEW_FOLLOWER"
+            }
+          }
+        }
       }
       messagingPromisesToAwait.push(admin.messaging().send(message));
     }
@@ -417,42 +445,17 @@ exports.testSendNewMessageNotification = functions.firestore
             body: body,
           },
           token: token,
+          apns: {
+            payload: {
+              aps: {
+                category: "NEW_MESSAGE"
+              }
+            }
+          }
         }
         messagingPromisesToAwait.push(admin.messaging().send(message));
       }
     }
-
-    await Promise.all(messagingPromisesToAwait);
-  });
-
-
-exports.testSendOutstandingBetNotification = functions.pubsub.schedule("30 18 * * 5")
-  .timeZone("America/Los_Angeles")
-  .onRun(async (context) => {
-    const snapshot = await admin.firestore().collection("testUsers").get();
-
-    const messagingPromisesToAwait = [];
-    
-    snapshot.forEach(doc => {
-      const user = doc.data();
-      const beers = user.drinksOutstanding.beers;
-      const shots = user.drinksOutstanding.shots;
-      if (beers > 0 || shots > 0) {
-        const fcmTokens = user.fcm;
-        if (typeof fcmTokens === 'undefined') return
-
-        for (const token of fcmTokens) {
-          const message = {
-            notification: {
-              title: `Bets outstanding`,
-              body: `You owe ${beers} 🍺 ${shots} 🥃 for lost bets. Remember to drink responsibly 😉`,
-            },
-            token: token,
-          }
-          messagingPromisesToAwait.push(admin.messaging().send(message));
-        }
-      }
-    });
 
     await Promise.all(messagingPromisesToAwait);
   });
