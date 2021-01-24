@@ -45,6 +45,14 @@ exports.sendNotificationOnNewBet = functions.firestore
             body: betTitle,
           },
           token: token,
+          apns: {
+            payload: {
+              aps: {
+                category: "NEW_BET",
+                sound: "default"
+              }
+            }
+          }
         }
         messagingPromisesToAwait.push(admin.messaging().send(message));
       }
@@ -100,6 +108,14 @@ exports.sendNotificationOnBetClose = functions.firestore
             body: betTitle,
           },
           token: token,
+          apns: {
+            payload: {
+              aps: {
+                category: "BET_WON",
+                sound: "default"
+              }
+            }
+          }
         }
         messagingPromisesToAwait.push(admin.messaging().send(message));
       }
@@ -116,6 +132,14 @@ exports.sendNotificationOnBetClose = functions.firestore
             body: `You have drinks outstanding for: ${betTitle}`,
           },
           token: token,
+          apns: {
+            payload: {
+              aps: {
+                category: "BET_LOST",
+                sound: "default"
+              }
+            }
+          }
         }
         messagingPromisesToAwait.push(admin.messaging().send(message));
       }
@@ -147,6 +171,14 @@ exports.sendNewFollowerNotification = functions.firestore
           body: `${addingUser.userName} (${addingUser.firstName} ${addingUser.lastName}) is now following you on CHUGGR. Tap to send them a bet!`,
         },
         token: token,
+        apns: {
+          payload: {
+            aps: {
+              category: "NEW_FOLLOWER",
+              sound: "default"
+            }
+          }
+        }
       }
       messagingPromisesToAwait.push(admin.messaging().send(message));
     }
@@ -191,6 +223,14 @@ exports.sendNewMessageNotification = functions.firestore
             body: body,
           },
           token: token,
+          apns: {
+            payload: {
+              aps: {
+                category: "NEW_MESSAGE",
+                sound: "default"
+              }
+            }
+          }
         }
         messagingPromisesToAwait.push(admin.messaging().send(message));
       }
@@ -221,6 +261,14 @@ exports.sendOutstandingBetNotification = functions.pubsub.schedule("30 18 * * 5"
               body: `You owe ${beers} 🍺 ${shots} 🥃 for lost bets. Remember to drink responsibly 😉`,
             },
             token: token,
+            apns: {
+              payload: {
+                aps: {
+                  category: "BET_OUTSTANDING",
+                  sound: "default"
+                }
+              }
+            }
           }
           messagingPromisesToAwait.push(admin.messaging().send(message));
         }
@@ -274,7 +322,9 @@ exports.testSendNotificationOnNewBet = functions.firestore
           apns: {
             payload: {
               aps: {
-                category: "NEW_BET"
+                category: "NEW_BET",
+                sound: "default",
+                badge: 1
               }
             }
           }
@@ -336,7 +386,9 @@ exports.testSendNotificationOnBetClose = functions.firestore
           apns: {
             payload: {
               aps: {
-                category: "BET_WON"
+                category: "BET_WON",
+                sound: "default",
+                badge: 1
               }
             }
           }
@@ -359,7 +411,9 @@ exports.testSendNotificationOnBetClose = functions.firestore
           apns: {
             payload: {
               aps: {
-                category: "BET_LOST"
+                category: "BET_LOST",
+                sound: "default",
+                badge: 1
               }
             }
           }
@@ -397,7 +451,9 @@ exports.testSendNewFollowerNotification = functions.firestore
         apns: {
           payload: {
             aps: {
-              category: "NEW_FOLLOWER"
+              category: "NEW_FOLLOWER",
+              sound: "default",
+              badge: 1
             }
           }
         }
@@ -448,8 +504,11 @@ exports.testSendNewMessageNotification = functions.firestore
           apns: {
             payload: {
               aps: {
-                category: "NEW_MESSAGE"
-              }
+                category: "NEW_MESSAGE",
+                sound: "default",
+                badge: 1
+              },
+              betID: betID
             }
           }
         }
