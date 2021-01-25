@@ -39,6 +39,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneWillResignActive(_ scene: UIScene) {
         window?.endEditing(true)
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {

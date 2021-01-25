@@ -635,8 +635,8 @@
 				65F4029A252EA103007892F8 /* Bet.swift */,
 				65D18DAC258053EC00E562C1 /* Drinks.swift */,
 				658F112E25327B2C003B6303 /* Message.swift */,
-				657D95AC25929AC20065187A /* Tab.swift */,
 				65A6BDA125BA634100B2DD95 /* NotificationCategory.swift */,
+				657D95AC25929AC20065187A /* Tab.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
