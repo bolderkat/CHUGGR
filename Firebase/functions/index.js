@@ -124,6 +124,7 @@ exports.sendNotificationOnBetClose = functions.firestore
     for (const userDoc of loserDocs) {
       const user = userDoc.data();
       const fcmTokens = user.fcm;
+      if (typeof fcmTokens === 'undefined') continue
 
       for (const token of fcmTokens) {
         const message = {
@@ -400,6 +401,7 @@ exports.testSendNotificationOnBetClose = functions.firestore
     for (const userDoc of loserDocs) {
       const user = userDoc.data();
       const fcmTokens = user.fcm;
+      if (typeof fcmTokens === 'undefined') continue
 
       for (const token of fcmTokens) {
         const message = {
