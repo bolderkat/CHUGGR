@@ -50,9 +50,10 @@ exports.sendNotificationOnNewBet = functions.firestore
             payload: {
               aps: {
                 category: "NEW_BET",
-                sound: "default"
+                sound: "default",
+                badge: 1,
               },
-              betID: betID
+              betID: betID,
             }
           }
         }
@@ -115,9 +116,10 @@ exports.sendNotificationOnBetClose = functions.firestore
             payload: {
               aps: {
                 category: "BET_WON",
-                sound: "default"
+                sound: "default",
+                badge: 1,
               },
-              betID: betID
+              betID: betID,
             }
           }
         }
@@ -141,9 +143,10 @@ exports.sendNotificationOnBetClose = functions.firestore
             payload: {
               aps: {
                 category: "BET_LOST",
-                sound: "default"
+                sound: "default",
+                badge: 1,
               },
-              betID: betID
+              betID: betID,
             }
           }
         }
@@ -174,16 +177,17 @@ exports.sendNewFollowerNotification = functions.firestore
       const message = {
         notification: {
           title: "New follower",
-          body: `${addingUser.userName} (${addingUser.firstName} ${addingUser.lastName}) is now following you on CHUGGR. Tap to view their profile!`,
+          body: `${addingUser.userName} (${addingUser.firstName} ${addingUser.lastName}) is now following you on CHUGGR. Tap to view your friends list.`,
         },
         token: token,
         apns: {
           payload: {
             aps: {
               category: "NEW_FOLLOWER",
-              sound: "default"
+              sound: "default",
+              badge: 1,
             },
-            addingUserID: addingUserID
+            addingUserID: addingUserID,
           }
         }
       }
@@ -234,9 +238,10 @@ exports.sendNewMessageNotification = functions.firestore
             payload: {
               aps: {
                 category: "NEW_MESSAGE",
-                sound: "default"
+                sound: "default",
+                badge: 1,
               },
-              betID: betID
+              betID: betID,
             }
           }
         }
@@ -273,7 +278,8 @@ exports.sendOutstandingBetNotification = functions.pubsub.schedule("30 18 * * 5"
               payload: {
                 aps: {
                   category: "BET_OUTSTANDING",
-                  sound: "default"
+                  sound: "default",
+                  badge: 1,
                 }
               }
             }
@@ -333,9 +339,9 @@ exports.testSendNotificationOnNewBet = functions.firestore
               aps: {
                 category: "NEW_BET",
                 sound: "default",
-                badge: 1
+                badge: 1,
               },
-              betID: betID
+              betID: betID,
             }
           }
         }
@@ -399,9 +405,9 @@ exports.testSendNotificationOnBetClose = functions.firestore
               aps: {
                 category: "BET_WON",
                 sound: "default",
-                badge: 1
+                badge: 1,
               },
-              betID: betID
+              betID: betID,
             }
           }
         }
@@ -426,9 +432,9 @@ exports.testSendNotificationOnBetClose = functions.firestore
               aps: {
                 category: "BET_LOST",
                 sound: "default",
-                badge: 1
+                badge: 1,
               },
-              betID: betID
+              betID: betID,
             }
           }
         }
@@ -459,7 +465,7 @@ exports.testSendNewFollowerNotification = functions.firestore
       const message = {
         notification: {
           title: "New follower",
-          body: `${addingUser.userName} (${addingUser.firstName} ${addingUser.lastName}) is now following you on CHUGGR. Tap to view their profile!`,
+          body: `${addingUser.userName} (${addingUser.firstName} ${addingUser.lastName}) is now following you on CHUGGR. Tap to view your friends list.`,
         },
         token: token,
         apns: {
@@ -469,7 +475,7 @@ exports.testSendNewFollowerNotification = functions.firestore
               sound: "default",
               badge: 1
             },
-            addingUserID: addingUserID
+            addingUserID: addingUserID,
           }
         }
       }
@@ -521,9 +527,9 @@ exports.testSendNewMessageNotification = functions.firestore
               aps: {
                 category: "NEW_MESSAGE",
                 sound: "default",
-                badge: 1
+                badge: 1,
               },
-              betID: betID
+              betID: betID,
             }
           }
         }
