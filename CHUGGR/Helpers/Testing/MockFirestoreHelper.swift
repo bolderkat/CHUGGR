@@ -266,6 +266,7 @@ class MockFirestoreHelper: FirestoreHelping {
     
     // MARK:- Bet dashboard methods
     func addUserInvolvedBetsListener(completion: @escaping ([Bet]) -> Void) {
+        if currentUser?.uid == nil { return }
         userInvolvedBetsListeners += 1
         betsArrayCompletion = completion
         let bets = sampleBets
