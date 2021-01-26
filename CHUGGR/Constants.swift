@@ -76,6 +76,8 @@ struct K {
     
     struct CloudMessaging {
         static let gcmID = "gcm.Message_id"
+        static let aps = "aps"
+        static let betID = "betID"
     }
     
     struct Images {

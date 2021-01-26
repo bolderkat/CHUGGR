@@ -60,24 +60,23 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         print(userInfo)
         completionHandler([.alert])
     }
-
+    
     // Handle notification while app not in foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        if let messageID = userInfo[gcmMessageIDKey] {
-            print("Message ID: \(messageID)")
-        }
         
-        guard let dict = userInfo["aps"] as? [String: Any],
+        handleNotification(with: userInfo)
+        completionHandler()
+    }
+    
+    func handleNotification(with userInfo: [AnyHashable: Any]) {
+        guard let dict = userInfo[K.CloudMessaging.aps] as? [String: Any],
               let category = NotificationCategory.provideCategory(from: dict),
               let coordinator = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.coordinator else { return }
         
-        let betID = userInfo["betID"] as? String
+        let betID = userInfo[K.CloudMessaging.betID] as? String
         
         coordinator.start(fromNotification: category, withBet: betID)
-
-        print(userInfo)
-        completionHandler()
     }
 
 
