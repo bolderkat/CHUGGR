@@ -132,5 +132,6 @@ class MainCoordinator: ParentCoordinating {
             options: .transitionCrossDissolve,
             animations: nil,
             completion: nil)
+        tabController.selectedIndex = 0 
     }
 }
