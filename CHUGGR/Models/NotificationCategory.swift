@@ -37,7 +37,7 @@ enum NotificationCategory {
         case NotificationCategoryConstants.newFollower:
             return newFollower
         case NotificationCategoryConstants.newMessage:
-            return newFollower
+            return newMessage
         default:
             return nil
         }

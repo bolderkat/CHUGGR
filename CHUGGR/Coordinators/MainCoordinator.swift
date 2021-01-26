@@ -27,12 +27,20 @@ class MainCoordinator: ParentCoordinating {
         window.makeKeyAndVisible()
     }
     
-    func start(fromNotification category: NotificationCategory) {
+    func start(fromNotification category: NotificationCategory, withBet betID: BetID?) {
         switch category {
         case .newBet:
             tabController.selectedIndex = 0
             if let coordinator = childCoordinators[0] as? BetsCoordinator {
+                coordinator.navigationController.popToRootViewController(animated: false)
                 coordinator.openPendingBets()
+            }
+        case .newMessage:
+            tabController.selectedIndex = 0
+            if let coordinator = childCoordinators[0] as? BetsCoordinator,
+               let betID = betID {
+                coordinator.navigationController.popToRootViewController(animated: false)
+                coordinator.openBetDetail(withBetID: betID)
             }
         default:
             return
@@ -94,6 +102,7 @@ class MainCoordinator: ParentCoordinating {
             completion: nil
         )
         tabController.selectedIndex = 0
+        childCoordinators[0].navigationController.popToRootViewController(animated: false)
         childCoordinators[0].openBetDetail(withBetID: id, userInvolvement: .accepted)
     }
     

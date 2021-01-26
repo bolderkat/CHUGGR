@@ -72,7 +72,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
               let category = NotificationCategory.provideCategory(from: dict),
               let coordinator = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.coordinator else { return }
         
-        coordinator.start(fromNotification: category)
+        let betID = userInfo["betID"] as? String
+        
+        coordinator.start(fromNotification: category, withBet: betID)
 
         print(userInfo)
         completionHandler()
