@@ -44,6 +44,10 @@ class NewBetsCoordinator: ChildCoordinating {
         navigationController.pushViewController(vc, animated: false)
     }
     
+    func restart() {
+        navigationController.popToRootViewController(animated: false)
+    }
+    
     func pop() {
         navigationController.popViewController(animated: true)
     }
@@ -65,7 +69,7 @@ class NewBetsCoordinator: ChildCoordinating {
 
         
         // Restart coordinator to provide fresh New Bet view when returining to this coordinator
-        start()
+        restart()
     }
 
 }
