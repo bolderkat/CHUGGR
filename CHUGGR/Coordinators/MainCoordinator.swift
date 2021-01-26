@@ -25,6 +25,7 @@ class MainCoordinator: ParentCoordinating {
         vc.mainCoordinator = self
         window.rootViewController = vc
         window.makeKeyAndVisible()
+        tabController.selectedIndex = 0
     }
     
     func start(fromNotification category: NotificationCategory, withBet betID: BetID?) {
@@ -35,6 +36,17 @@ class MainCoordinator: ParentCoordinating {
                 coordinator.navigationController.popToRootViewController(animated: false)
                 coordinator.openPendingBets()
             }
+        case .betWon, .betLost:
+            tabController.selectedIndex = 0
+            if let coordinator = childCoordinators[0] as? BetsCoordinator,
+               let betID = betID {
+                coordinator.navigationController.popToRootViewController(animated: false)
+                coordinator.openBetDetail(withBetID: betID)
+            }
+        case .newFollower:
+            tabController.selectedIndex = 1
+            guard let coordinator = childCoordinators[1] as? FriendsCoordinator else { return }
+            coordinator.navigationController.popToRootViewController(animated: false)
         case .newMessage:
             tabController.selectedIndex = 0
             if let coordinator = childCoordinators[0] as? BetsCoordinator,
@@ -42,8 +54,11 @@ class MainCoordinator: ParentCoordinating {
                 coordinator.navigationController.popToRootViewController(animated: false)
                 coordinator.openBetDetail(withBetID: betID)
             }
-        default:
-            return
+        case .betOutstanding:
+            tabController.selectedIndex = 0
+            if let coordinator = childCoordinators[0] as? BetsCoordinator {
+                coordinator.navigationController.popToRootViewController(animated: true)
+            }
         }
     }
     
@@ -62,7 +77,6 @@ class MainCoordinator: ParentCoordinating {
     }
     
     func goToTabBar() {
-        tabController.selectedIndex = 0
         UIView.transition(
             with: window,
             duration: 0.8,

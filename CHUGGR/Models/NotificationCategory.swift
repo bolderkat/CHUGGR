@@ -15,6 +15,7 @@ struct NotificationCategoryConstants {
     static let betLost = "BET_LOST"
     static let newFollower = "NEW_FOLLOWER"
     static let newMessage = "NEW_MESSAGE"
+    static let betOutstanding = "BET_OUTSTANDING"
     static let category = "category"
 }
 
@@ -24,6 +25,7 @@ enum NotificationCategory {
     case betLost
     case newFollower
     case newMessage
+    case betOutstanding
     
     static func provideCategory(from dict: [String: Any]?) -> NotificationCategory? {
         let category = dict?[NotificationCategoryConstants.category] as? String
@@ -38,6 +40,8 @@ enum NotificationCategory {
             return newFollower
         case NotificationCategoryConstants.newMessage:
             return newMessage
+        case NotificationCategoryConstants.betOutstanding:
+            return betOutstanding
         default:
             return nil
         }

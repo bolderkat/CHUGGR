@@ -887,7 +887,7 @@ class FirestoreHelper: FirestoreHelping {
     // MARK:- Friend CRUD
     func addFriendsListener(completion: @escaping (_ friends: [FriendSnippet]) -> Void) {
         // Check that there isn't already a friends listener
-        guard let uid = currentUser?.uid,
+        guard let uid = currentUID,
               friendsListener == nil else { return }
         
         // Query for all documents in user's friend subcollection
