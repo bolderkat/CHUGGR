@@ -18,7 +18,7 @@ class ProfileViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mock = MockFirestoreHelper()
-        sut = ProfileViewModel(firestoreHelper: mock, user: mock.currentUser!)
+        sut = ProfileViewModel(firestoreHelper: mock)
         userDataChangeClosureCalls = 0
         cellVMUpdateClosureCalls = 0
         
@@ -89,13 +89,14 @@ class ProfileViewModelTests: XCTestCase {
         
         
         XCTAssertEqual(userDataChangeClosureCalls, 3)
-        XCTAssertEqual(sut.user.drinksGiven, given)
-        XCTAssertEqual(sut.user.drinksReceived, received)
-        XCTAssertEqual(sut.user.drinksOutstanding, outstanding)
+        XCTAssertEqual(sut.user?.drinksGiven, given)
+        XCTAssertEqual(sut.user?.drinksReceived, received)
+        XCTAssertEqual(sut.user?.drinksOutstanding, outstanding)
         
     }
     
     func test_initFetchPastBets() {
+        sut.bindUserToListener()
         sut.initFetchPastBets()
         XCTAssertEqual(mock.initPastBetFetches, 1)
         XCTAssertEqual(sut.pastBetCellVMs.count, 3)
@@ -109,6 +110,7 @@ class ProfileViewModelTests: XCTestCase {
     }
     
     func test_loadAdditionalPastBets() {
+        sut.bindUserToListener()
         sut.initFetchPastBets()
         sut.loadAdditionalPastBets()
         XCTAssertEqual(sut.pastBetCellVMs.count, 6)
@@ -122,6 +124,7 @@ class ProfileViewModelTests: XCTestCase {
     }
     
     func test_getVMsForPastTable() {
+        sut.bindUserToListener()
         sut.initFetchPastBets()
         let vms = sut.getCellVMsForTable()
         XCTAssertEqual(vms.count, 3)
@@ -132,6 +135,7 @@ class ProfileViewModelTests: XCTestCase {
     }
     
     func test_getVMsAtIndexPath() {
+        sut.bindUserToListener()
         sut.initFetchPastBets()
         sut.loadAdditionalPastBets()
         
