@@ -10,6 +10,7 @@ import Foundation
 protocol FirestoreHelping {
     
     var currentUser: CurrentUser? { get }
+    var currentUID: UID? { get }
     var friends: [FriendSnippet] { get }
     var allUsers: [FullFriend] { get }
     var involvedBets: [Bet] { get }

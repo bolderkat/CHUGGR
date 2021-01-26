@@ -50,7 +50,7 @@ class BetsViewModel {
     func initFetchBets() {
         self.isLoading = true
         firestoreHelper.addUserInvolvedBetsListener { [weak self] bets in
-            guard let uid = self?.firestoreHelper.currentUser?.uid else { return }
+            guard let uid = self?.firestoreHelper.currentUID else { return }
             var pendingBets = [Bet]()
             var involvedBets = [Bet]()
             for bet in bets {

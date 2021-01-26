@@ -31,6 +31,16 @@ class MockFirestoreHelper: FirestoreHelping {
         }
     }
     
+    var currentUID: UID? {
+        if let fetchedUID = currentUser?.uid {
+            return fetchedUID
+        } else if let storedUID = UserDefaults.standard.string(forKey: K.Firestore.uid) {
+            return storedUID
+        } else {
+            return nil
+        }
+    }
+    
     var sampleBets: [Bet] = []
     
     var friends: [FriendSnippet] = TestingData.friendSnippets

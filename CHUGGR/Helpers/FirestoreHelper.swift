@@ -19,6 +19,17 @@ class FirestoreHelper: FirestoreHelping {
             }
         }
     }
+    
+    var currentUID: UID? {
+        if let fetchedUID = currentUser?.uid {
+            return fetchedUID
+        } else if let storedUID = UserDefaults.standard.string(forKey: K.Firestore.uid) {
+            return storedUID
+        } else {
+            return nil
+        }
+    }
+    
     private(set) var friends: [FriendSnippet] = []
     private(set) var allUsers: [FullFriend] = []
     private(set) var involvedBets: [Bet] = []
@@ -552,15 +563,7 @@ class FirestoreHelper: FirestoreHelping {
     // MARK:- Bet dashboard methods
     
     func addUserInvolvedBetsListener(completion: @escaping (_ bets: [Bet]) -> Void) {
-        var uid = ""
-        
-        if let fetchedUID = currentUser?.uid {
-            uid = fetchedUID
-        } else if let storedUID = UserDefaults.standard.string(forKey: K.Firestore.uid) {
-            uid = storedUID
-        } else {
-            return
-        }
+        guard let uid = currentUID else { return }
         
         // Query for all bets user is involved in. Filter in the view models based on invited/accepted
         betDashboardListener = db.collection(K.Firestore.bets)
