@@ -265,15 +265,15 @@ class MockFirestoreHelper: FirestoreHelping {
     }
     
     // MARK:- Bet dashboard methods
-    func addUserInvolvedBetsListener(completion: @escaping ([Bet]) -> Void) {
+    func addUserInvolvedBetsListener(completion: @escaping () -> Void) {
         if currentUser?.uid == nil { return }
         userInvolvedBetsListeners += 1
-        betsArrayCompletion = completion
+        voidCompletion = completion
         let bets = sampleBets
             .filter { $0.allUsers.contains("uid") }
             .sorted { $0.dateOpened < $1.dateOpened }
-        completion(bets)
         involvedBets = bets
+        completion()
     }
     
     func initFetchOtherBets(completion: @escaping ([Bet]) -> Void) {

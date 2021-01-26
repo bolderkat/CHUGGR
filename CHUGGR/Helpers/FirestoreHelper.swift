@@ -562,7 +562,7 @@ class FirestoreHelper: FirestoreHelping {
     
     // MARK:- Bet dashboard methods
     
-    func addUserInvolvedBetsListener(completion: @escaping (_ bets: [Bet]) -> Void) {
+    func addUserInvolvedBetsListener(completion: @escaping () -> Void) {
         guard let uid = currentUID else { return }
         
         // Query for all bets user is involved in. Filter in the view models based on invited/accepted
@@ -596,7 +596,7 @@ class FirestoreHelper: FirestoreHelping {
                         }
                     }
                     self?.involvedBets = bets
-                    completion(bets)
+                    completion()
                 }
             }
     }

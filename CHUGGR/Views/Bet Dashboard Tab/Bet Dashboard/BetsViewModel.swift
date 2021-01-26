@@ -49,21 +49,8 @@ class BetsViewModel {
     
     func initFetchBets() {
         self.isLoading = true
-        firestoreHelper.addUserInvolvedBetsListener { [weak self] bets in
-            guard let uid = self?.firestoreHelper.currentUID else { return }
-            var pendingBets = [Bet]()
-            var involvedBets = [Bet]()
-            for bet in bets {
-                if bet.invitedUsers[uid] != nil {
-                    // Get pending bets user still has to accept/reject
-                    pendingBets.append(bet)
-                } else if !bet.isFinished || bet.outstandingUsers.contains(uid) {
-                    // Show active bets: open bets or bets user has lost and still has to fulfill
-                    involvedBets.append(bet)
-                }
-            }
-            self?.pendingBets = pendingBets
-            self?.processInvolvedBets(bets: involvedBets)
+        firestoreHelper.addUserInvolvedBetsListener { [weak self] in
+            self?.sortPendingAndInvolvedBets()
         }
         initFetchOtherBets()
     }
@@ -80,6 +67,23 @@ class BetsViewModel {
         firestoreHelper.fetchAdditionalBets { [weak self] bets in
             self?.processOtherBets(bets: bets, appending: true)
         }
+    }
+    
+    func sortPendingAndInvolvedBets() {
+        guard let uid = firestoreHelper.currentUID else { return }
+        var pendingBets = [Bet]()
+        var involvedBets = [Bet]()
+        for bet in firestoreHelper.involvedBets {
+            if bet.invitedUsers[uid] != nil {
+                // Get pending bets user still has to accept/reject
+                pendingBets.append(bet)
+            } else if !bet.isFinished || bet.outstandingUsers.contains(uid) {
+                // Show active bets: open bets or bets user has lost and still has to fulfill
+                involvedBets.append(bet)
+            }
+        }
+        self.pendingBets = pendingBets
+        processInvolvedBets(bets: involvedBets)
     }
     
     func processInvolvedBets(bets: [Bet]) {

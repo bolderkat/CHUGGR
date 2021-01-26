@@ -27,7 +27,7 @@ class PendingBetsViewModel {
     }
     
     func setBetListener() {
-        firestoreHelper.addUserInvolvedBetsListener { [weak self] _ in
+        firestoreHelper.addUserInvolvedBetsListener { [weak self] in
             self?.fetchPendingBets()
         }
     }

@@ -49,7 +49,7 @@ class BetsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Refresh first set of other bets
+        viewModel.sortPendingAndInvolvedBets()
         viewModel.initFetchOtherBets()
     }
     
