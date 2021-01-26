@@ -36,7 +36,7 @@ class MessageCell: UITableViewCell {
         }
         
         // Configure to remove sender/time data if previous message from same sender
-        if vm.isPreviousMessageFromSameSender {
+        if vm.shouldHideSenderRow {
             nameLabel.isHidden = true
             timeLabel.isHidden = true
             messageBubbleTopConstraint.constant = 1 // bring bubble up to top of cell

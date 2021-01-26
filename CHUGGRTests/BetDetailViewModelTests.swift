@@ -470,11 +470,11 @@ class BetDetailViewModelTests: XCTestCase {
     func test_messageCellVMCreation() {
         let sampleMessages: [Message] = [
             Message(uid: "uid", userName: "userName", body: "1", timestamp: 0),
-            Message(uid: "me", userName: "userName", body: "2", timestamp: 0),
-            Message(uid: "you", userName: "userName", body: "3", timestamp: 0),
-            Message(uid: "you", userName: "userName", body: "4", timestamp: 0),
-            Message(uid: "you", userName: "userName", body: "4", timestamp: 0),
-            Message(uid: "me", userName: "userName", body: "2", timestamp: 0)
+            Message(uid: "me", userName: "userName", body: "2", timestamp: 1),
+            Message(uid: "you", userName: "userName", body: "3", timestamp: 2),
+            Message(uid: "you", userName: "userName", body: "4", timestamp: 3640),
+            Message(uid: "you", userName: "userName", body: "4", timestamp: 3700),
+            Message(uid: "me", userName: "userName", body: "2", timestamp: 3800)
         ]
         sampleBet.perform(action: .invite, withID: uid, userName: userName)
         sampleBet.perform(action: .addToSide1, withID: uid, userName: userName)
@@ -488,10 +488,10 @@ class BetDetailViewModelTests: XCTestCase {
         XCTAssertTrue(sut.messageCellVMs.first!.isMessageFromSelf)
         XCTAssertFalse(sut.messageCellVMs[1].isMessageFromSelf)
         XCTAssertFalse(sut.messageCellVMs[2].isMessageFromSelf)
-        XCTAssertFalse(sut.messageCellVMs[2].isPreviousMessageFromSameSender)
-        XCTAssertTrue(sut.messageCellVMs[3].isPreviousMessageFromSameSender)
-        XCTAssertTrue(sut.messageCellVMs[4].isPreviousMessageFromSameSender)
-        XCTAssertFalse(sut.messageCellVMs.last!.isPreviousMessageFromSameSender)
+        XCTAssertFalse(sut.messageCellVMs[2].shouldHideSenderRow)
+        XCTAssertFalse(sut.messageCellVMs[3].shouldHideSenderRow)
+        XCTAssertTrue(sut.messageCellVMs[4].shouldHideSenderRow)
+        XCTAssertFalse(sut.messageCellVMs.last!.shouldHideSenderRow)
     }
     
     

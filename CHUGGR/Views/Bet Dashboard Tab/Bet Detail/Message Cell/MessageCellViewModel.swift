@@ -12,27 +12,27 @@ struct MessageCellViewModel: Hashable {
     
     let message: Message
     let currentUID: UID
-    let isPreviousMessageFromSameSender: Bool
+    let shouldHideSenderRow: Bool
     var isMessageFromSelf: Bool {
         currentUID == message.uid
     }
     
     init(message: Message,
-         isPreviousMessageFromSameSender: Bool,
+         shouldHideSenderRow: Bool,
          currentUID: UID) {
         self.message = message
-        self.isPreviousMessageFromSameSender = isPreviousMessageFromSameSender
+        self.shouldHideSenderRow = shouldHideSenderRow
         self.currentUID = currentUID
     }
     
     func getTimeString() -> String {
         let formatter = DateFormatter()
-        formatter.dateStyle = .none
+        formatter.dateStyle = .short
         formatter.timeStyle = .short
         
         let date = Date(timeIntervalSince1970: message.timestamp)
         
-        // Stylize as "3:30 pm"
+        // Stylize as "1/25/21 3:30 pm"
         return formatter.string(from: date).lowercased()
     }
     

@@ -17,7 +17,7 @@ class MessageCellViewModelTests: XCTestCase {
         
         sut = MessageCellViewModel(
             message: message,
-            isPreviousMessageFromSameSender: false,
+            shouldHideSenderRow: false,
             currentUID: "uid"
         )
     }
@@ -28,7 +28,7 @@ class MessageCellViewModelTests: XCTestCase {
     }
     
     func test_getTimeString() {
-        XCTAssertEqual(sut.getTimeString(), "3:46 pm")
+        XCTAssertEqual(sut.getTimeString(), "1/8/21, 3:46 pm")
     }
 
 }

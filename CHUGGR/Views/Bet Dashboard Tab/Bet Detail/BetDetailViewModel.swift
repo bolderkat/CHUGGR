@@ -199,21 +199,23 @@ class BetDetailViewModel {
             if i == 0 {
                 vms.append(MessageCellViewModel(
                     message: messages[i],
-                    isPreviousMessageFromSameSender: false,
+                    shouldHideSenderRow: false,
                     currentUID: uid
                 ))
             } else {
-                // Current message sender matches previous sender
-                if messages[i].uid == messages[i - 1].uid {
+                // Current message sender matches previous sender and less than 1 hour since last message
+                let hourInSeconds = 3600.0
+                let timeInterval = messages[i].timestamp - messages[i - 1].timestamp
+                if messages[i].uid == messages[i - 1].uid && timeInterval < hourInSeconds {
                     vms.append(MessageCellViewModel(
                         message: messages[i],
-                        isPreviousMessageFromSameSender: true,
+                        shouldHideSenderRow: true,
                         currentUID: uid
                     ))
                 } else {
                     vms.append(MessageCellViewModel(
                         message: messages[i],
-                        isPreviousMessageFromSameSender: false,
+                        shouldHideSenderRow: false,
                         currentUID: uid
                     ))
                 }
