@@ -15,6 +15,7 @@ exports.sendNotificationOnNewBet = functions.firestore
   .onCreate(async (snap, context) => {
     const newBet = snap.data();
     let betTitle = newBet.title;
+    const betID = newBet.betID;
     const invitingUser = newBet.acceptedUsers[0];
     const invitingUserDoc = await admin.firestore().doc(`users/${invitingUser}`).get();
     const invitingUserName = invitingUserDoc.get("userName");
@@ -50,7 +51,8 @@ exports.sendNotificationOnNewBet = functions.firestore
               aps: {
                 category: "NEW_BET",
                 sound: "default"
-              }
+              },
+              betID: betID
             }
           }
         }
@@ -71,6 +73,7 @@ exports.sendNotificationOnBetClose = functions.firestore
 
     if (!isBetClosing) return
 
+    const betID = newValue.betID;
     const betTitle = newValue.title;
     const side1Users = newValue.side1Users;
     const side2Users = newValue.side2Users;
@@ -113,7 +116,8 @@ exports.sendNotificationOnBetClose = functions.firestore
               aps: {
                 category: "BET_WON",
                 sound: "default"
-              }
+              },
+              betID: betID
             }
           }
         }
@@ -138,7 +142,8 @@ exports.sendNotificationOnBetClose = functions.firestore
               aps: {
                 category: "BET_LOST",
                 sound: "default"
-              }
+              },
+              betID: betID
             }
           }
         }
@@ -169,7 +174,7 @@ exports.sendNewFollowerNotification = functions.firestore
       const message = {
         notification: {
           title: "New follower",
-          body: `${addingUser.userName} (${addingUser.firstName} ${addingUser.lastName}) is now following you on CHUGGR. Tap to send them a bet!`,
+          body: `${addingUser.userName} (${addingUser.firstName} ${addingUser.lastName}) is now following you on CHUGGR. Tap to view their profile!`,
         },
         token: token,
         apns: {
@@ -177,7 +182,8 @@ exports.sendNewFollowerNotification = functions.firestore
             aps: {
               category: "NEW_FOLLOWER",
               sound: "default"
-            }
+            },
+            addingUserID: addingUserID
           }
         }
       }
@@ -229,7 +235,8 @@ exports.sendNewMessageNotification = functions.firestore
               aps: {
                 category: "NEW_MESSAGE",
                 sound: "default"
-              }
+              },
+              betID: betID
             }
           }
         }
@@ -283,13 +290,14 @@ exports.sendOutstandingBetNotification = functions.pubsub.schedule("30 18 * * 5"
 
 
 
-// TEST Functions
+// ===================== TEST Functions ========================
 
 exports.testSendNotificationOnNewBet = functions.firestore
   .document("testBets/{docId}")
   .onCreate(async (snap, context) => {
     const newBet = snap.data();
     let betTitle = newBet.title;
+    const betID = newBet.betID;
     const invitingUser = newBet.acceptedUsers[0];
     const invitingUserDoc = await admin.firestore().doc(`testUsers/${invitingUser}`).get();
     const invitingUserName = invitingUserDoc.get("userName");
@@ -326,7 +334,8 @@ exports.testSendNotificationOnNewBet = functions.firestore
                 category: "NEW_BET",
                 sound: "default",
                 badge: 1
-              }
+              },
+              betID: betID
             }
           }
         }
@@ -347,6 +356,7 @@ exports.testSendNotificationOnBetClose = functions.firestore
 
     if (!isBetClosing) return
 
+    const betID = newValue.betID;
     const betTitle = newValue.title;
     const side1Users = newValue.side1Users;
     const side2Users = newValue.side2Users;
@@ -390,7 +400,8 @@ exports.testSendNotificationOnBetClose = functions.firestore
                 category: "BET_WON",
                 sound: "default",
                 badge: 1
-              }
+              },
+              betID: betID
             }
           }
         }
@@ -416,7 +427,8 @@ exports.testSendNotificationOnBetClose = functions.firestore
                 category: "BET_LOST",
                 sound: "default",
                 badge: 1
-              }
+              },
+              betID: betID
             }
           }
         }
@@ -447,7 +459,7 @@ exports.testSendNewFollowerNotification = functions.firestore
       const message = {
         notification: {
           title: "New follower",
-          body: `${addingUser.userName} (${addingUser.firstName} ${addingUser.lastName}) is now following you on CHUGGR. Tap to send them a bet!`,
+          body: `${addingUser.userName} (${addingUser.firstName} ${addingUser.lastName}) is now following you on CHUGGR. Tap to view their profile!`,
         },
         token: token,
         apns: {
@@ -456,7 +468,8 @@ exports.testSendNewFollowerNotification = functions.firestore
               category: "NEW_FOLLOWER",
               sound: "default",
               badge: 1
-            }
+            },
+            addingUserID: addingUserID
           }
         }
       }
