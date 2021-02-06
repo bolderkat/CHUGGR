@@ -494,7 +494,7 @@ extension BetDetailViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section, MessageCellViewModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(viewModel.messageCellVMs)
-        dataSource.apply(snapshot, animatingDifferences: false)
+        dataSource.apply(snapshot, animatingDifferences: true)
     
         // Scroll to bottom of table when new messages are loaded.
         // TODO: May want to change this behavior depending on user feedback
