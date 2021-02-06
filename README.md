@@ -1,7 +1,7 @@
 # CHUGGR
 <img src = "CHUGGR v1.1.1 Demo.gif" align = "right">
 
-CHUGGR is a social sports and event betting platform that uses challenges as currency. The app makes extensive use of Google’s Firebase platform to allow for social user interaction across the platform.
+CHUGGR is a social sports and event betting platform that uses drink challenges as currency. The app makes extensive use of Google’s Firebase platform to allow for social user interaction across the platform.
 
 Through building CHUGGR as an independent side project, I developed the following skills:
 
