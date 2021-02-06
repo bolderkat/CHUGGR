@@ -7,10 +7,10 @@ Through building CHUGGR as an independent side project, I developed the followin
 * UIKit/Swift
 * MVVM and Coordinator architectures
 * Unit testing, dependency injection, mock objects
-* Git version control, branching, and rebasing
-* App prototyping in Figma
 * Firebase Firestore NoSQL database for bet and message storage
 * Firebase Cloud Messaging for push notifications
 * Node.js Firebase Cloud Functions for backend notification management
-* Shipping of app to over fifteen users via ad-hoc Safari over-the-air distribution
+* Git version control, branching, and rebasing
+* App prototyping in Figma
 * Clear communication of data model and changes with friend who is developing the web app version of CHUGGR.
+* Shipping of app to over fifteen users via ad-hoc Safari over-the-air distribution
