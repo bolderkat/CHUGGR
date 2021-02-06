@@ -1,7 +1,7 @@
 # CHUGGR
 <img src = "CHUGGR v1.1.1 Demo.gif" align = "right">
 CHUGGR is a social sports and event betting platform that uses challenges as currency. The app makes extensive use of Google’s Firebase platform to allow for social user interaction across the platform.
-
+<br>
 Through building CHUGGR as an independent side project, I developed the following skills:
 
 * UIKit/Swift
@@ -12,5 +12,5 @@ Through building CHUGGR as an independent side project, I developed the followin
 * Node.js Firebase Cloud Functions for backend notification management
 * Git version control, branching, and rebasing
 * App prototyping in Figma
-* Clear communication of data model and changes with friend who is developing the web app version of CHUGGR.
+* Clear communication of data model and changes with friend who is developing the CHUGGR web app.
 * Shipping of app to over fifteen users via ad-hoc Safari over-the-air distribution
