@@ -9,6 +9,7 @@ import UIKit
 
 class MainCoordinator: ParentCoordinating {
     var window: UIWindow
+    var didUserLogOutThisSession = false
     var childCoordinators = [ChildCoordinating]()
     let firestoreHelper = FirestoreHelper()
     let tabController = MainTabBarController()
@@ -83,7 +84,14 @@ class MainCoordinator: ParentCoordinating {
             options: .transitionCurlUp,
             animations: nil,
             completion: nil)
+        tabController.selectedIndex = 0
         window.rootViewController = tabController
+        
+        if didUserLogOutThisSession {
+            // Reset VCs on tab bar if switching users
+            setUpTabBarAndCoordinators()
+            didUserLogOutThisSession = false
+        }
     }
     
     func setUpTabBarAndCoordinators() {
@@ -132,6 +140,6 @@ class MainCoordinator: ParentCoordinating {
             options: .transitionCrossDissolve,
             animations: nil,
             completion: nil)
-        tabController.selectedIndex = 0 
+        didUserLogOutThisSession = true
     }
 }
