@@ -15,3 +15,5 @@ Through building CHUGGR as an independent side project, I developed the followin
 * App prototyping in Figma
 * Clear communication of data model and changes with friend who is developing the CHUGGR web app.
 * Shipping of app to over fifteen users via ad-hoc Safari over-the-air distribution
+
+The [web app repo](https://github.com/mooch3/CHUGGR) is also available on GitHub.
