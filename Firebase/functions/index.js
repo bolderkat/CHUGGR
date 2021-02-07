@@ -19,37 +19,42 @@ exports.sendNotificationOnNewBet = functions.firestore
     const invitingUser = newBet.acceptedUsers[0];
     const invitingUserDoc = await admin.firestore().doc(`users/${invitingUser}`).get();
     const invitingUserName = invitingUserDoc.get("userName");
+    const invitedUsers = newBet.invitedUsers;
 
     if (newBet.type === "spread") {
       betTitle += `: ${newBet.line}`;
     }
 
-    const invitedUsers = newBet.invitedUsers;
-    const userDocPromisesToAwait = [];
-
-    for (const [key, value] of Object.entries(invitedUsers)) {
-      userDocPromisesToAwait.push(admin.firestore().doc(`users/${key}`).get());
-    }
-
-    const invitedUserDocs = await Promise.all(userDocPromisesToAwait);
     const messagingPromisesToAwait = [];
-
-    for (const userDoc of invitedUserDocs) {
-      const user = userDoc.data();
+    const snapshot = await admin.firestore().collection("users").get();
+    snapshot.forEach(doc => {
+      const user = doc.data();
+      const uid = user.uid;
+      if (uid === invitingUser) return
       const fcmTokens = user.fcm;
-      if (typeof fcmTokens === 'undefined') continue
+      if (typeof fcmTokens === 'undefined') return
+
+      let title = "";
+      let category = "";
+      if (uid in invitedUsers) {
+        title = `${invitingUserName} sent you a new bet!`;
+        category = "NEW_BET";
+      } else {
+        title = `${invitingUserName} created a new bet`;
+        category = "NEW_UNINVITED_BET";
+      }
 
       for (const token of fcmTokens) {
         const message = {
           notification: {
-            title: `New bet from ${invitingUserName}!`,
+            title: title,
             body: betTitle,
           },
           token: token,
           apns: {
             payload: {
               aps: {
-                category: "NEW_BET",
+                category: category,
                 sound: "default",
                 badge: 1,
               },
@@ -59,7 +64,7 @@ exports.sendNotificationOnNewBet = functions.firestore
         }
         messagingPromisesToAwait.push(admin.messaging().send(message));
       }
-    }
+    });
 
     await Promise.all(messagingPromisesToAwait);
   });

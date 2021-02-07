@@ -11,6 +11,7 @@ import Foundation
 
 struct NotificationCategoryConstants {
     static let newBet = "NEW_BET"
+    static let newUninvitedBet = "NEW_UNINVITED_BET"
     static let betWon = "BET_WON"
     static let betLost = "BET_LOST"
     static let newFollower = "NEW_FOLLOWER"
@@ -21,6 +22,7 @@ struct NotificationCategoryConstants {
 
 enum NotificationCategory {
     case newBet
+    case newUninvitedBet
     case betWon
     case betLost
     case newFollower
@@ -32,6 +34,8 @@ enum NotificationCategory {
         switch category {
         case NotificationCategoryConstants.newBet:
             return newBet
+        case NotificationCategoryConstants.newUninvitedBet:
+            return newUninvitedBet
         case NotificationCategoryConstants.betWon:
             return betWon
         case NotificationCategoryConstants.betLost:

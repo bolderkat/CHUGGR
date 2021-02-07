@@ -55,7 +55,7 @@ class MainCoordinator: ParentCoordinating {
                 coordinator.navigationController.popToRootViewController(animated: false)
                 coordinator.openBetDetail(withBetID: betID)
             }
-        case .betOutstanding:
+        case .betOutstanding, .newUninvitedBet:
             tabController.selectedIndex = 0
             if let coordinator = childCoordinators[0] as? BetsCoordinator {
                 coordinator.navigationController.popToRootViewController(animated: true)
