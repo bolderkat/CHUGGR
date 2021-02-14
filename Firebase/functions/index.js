@@ -19,42 +19,37 @@ exports.sendNotificationOnNewBet = functions.firestore
     const invitingUser = newBet.acceptedUsers[0];
     const invitingUserDoc = await admin.firestore().doc(`users/${invitingUser}`).get();
     const invitingUserName = invitingUserDoc.get("userName");
-    const invitedUsers = newBet.invitedUsers;
 
     if (newBet.type === "spread") {
       betTitle += `: ${newBet.line}`;
     }
 
-    const messagingPromisesToAwait = [];
-    const snapshot = await admin.firestore().collection("users").get();
-    snapshot.forEach(doc => {
-      const user = doc.data();
-      const uid = user.uid;
-      if (uid === invitingUser) return
-      const fcmTokens = user.fcm;
-      if (typeof fcmTokens === 'undefined') return
+    const invitedUsers = newBet.invitedUsers;
+    const userDocPromisesToAwait = [];
 
-      let title = "";
-      let category = "";
-      if (uid in invitedUsers) {
-        title = `${invitingUserName} sent you a new bet!`;
-        category = "NEW_BET";
-      } else {
-        title = `${invitingUserName} created a new bet`;
-        category = "NEW_UNINVITED_BET";
-      }
+    for (const [key, value] of Object.entries(invitedUsers)) {
+      userDocPromisesToAwait.push(admin.firestore().doc(`users/${key}`).get());
+    }
+
+    const invitedUserDocs = await Promise.all(userDocPromisesToAwait);
+    const messagingPromisesToAwait = [];
+
+    for (const userDoc of invitedUserDocs) {
+      const user = userDoc.data();
+      const fcmTokens = user.fcm;
+      if (typeof fcmTokens === 'undefined') continue
 
       for (const token of fcmTokens) {
         const message = {
           notification: {
-            title: title,
+            title: `New bet from ${invitingUserName}!`,
             body: betTitle,
           },
           token: token,
           apns: {
             payload: {
               aps: {
-                category: category,
+                category: "NEW_BET",
                 sound: "default",
                 badge: 1,
               },
@@ -64,7 +59,7 @@ exports.sendNotificationOnNewBet = functions.firestore
         }
         messagingPromisesToAwait.push(admin.messaging().send(message));
       }
-    });
+    }
 
     await Promise.all(messagingPromisesToAwait);
   });
