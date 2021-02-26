@@ -130,7 +130,7 @@ extension NewBetViewController {
     func configureDataSource() {
         dataSource = UITableViewDiffableDataSource<Section, BetEntryCellViewModel>(
             tableView: entryTable,
-            cellProvider: { tableView, indexPath, rowVM -> UITableViewCell? in
+            cellProvider: { [weak self] tableView, indexPath, rowVM -> UITableViewCell? in
                 
                 // Custom cell setup for stake entry cell
                 switch rowVM.type {

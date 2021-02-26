@@ -100,13 +100,13 @@ extension UserDetailEntryViewController {
     
     func configureDataSource() {
         dataSource = UITableViewDiffableDataSource<Section, UserDetailEntryCellViewModel>(
-            tableView: tableView) { (tableView, indexPath, rowVM) -> UITableViewCell? in
+            tableView: tableView) { [weak self] (tableView, indexPath, rowVM) -> UITableViewCell? in
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: K.cells.userEntryCell) as? UserDetailEntryCell else {
                 fatalError("User detail entry cell nib does not exist")
             }
             cell.configure(withVM: rowVM)
-            cell.onTextInput = self.viewModel.handle(text:for:)
+            cell.onTextInput = self?.viewModel.handle(text:for:)
             return cell
         }
     }
@@ -123,6 +123,7 @@ extension UserDetailEntryViewController {
         submitButton.backgroundColor = submitButton.isEnabled ?
             UIColor(named: K.colors.orange) : UIColor(named: K.colors.gray3)
     }
+    
 }
 
 
