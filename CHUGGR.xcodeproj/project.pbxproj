@@ -325,8 +325,8 @@
 			isa = PBXGroup;
 			children = (
 				6537BC3B2583143700880C2B /* UserDetailEntryCell.swift */,
-				6537BC3C2583143700880C2B /* UserDetailEntryCell.xib */,
 				6537BC452583145200880C2B /* UserDetailEntryCellViewModel.swift */,
+				6537BC3C2583143700880C2B /* UserDetailEntryCell.xib */,
 			);
 			path = "Custom Cell";
 			sourceTree = "<group>";
